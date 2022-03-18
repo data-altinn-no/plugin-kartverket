@@ -1,0 +1,109 @@
+{
+    "registerenhetsrettsandeler": [
+        {
+            "teller": 1,
+            "nevner": 35,
+            "registerenhetsrett": {
+                "registerenhetsrettstype": {
+                    "kodeverdi": "E",
+                    "navn": "Eiendomsrett"
+                },
+                "registerenhet": {
+                    "type": "Matrikkelenhet",
+                    "kommune": {
+                        "kommunenummer": "4618",
+                        "navn": "ULLENSVANG"
+                    },
+                    "gaardsnummer": 343,
+                    "bruksnummer": 82,
+                    "festenummer": 0,
+                    "seksjonsnummer": 0
+                }
+            }
+        },
+        {
+            "teller": 1,
+            "nevner": 1,
+            "registerenhetsrett": {
+                "registerenhetsrettstype": {
+                    "kodeverdi": "E",
+                    "navn": "Eiendomsrett"
+                },
+                "registerenhet": {
+                    "type": "Matrikkelenhet",
+                    "kommune": {
+                        "kommunenummer": "4601",
+                        "navn": "BERGEN"
+                    },
+                    "gaardsnummer": 199,
+                    "bruksnummer": 7,
+                    "festenummer": 0,
+                    "seksjonsnummer": 0
+                }
+            }
+        },
+        {
+            "teller": 1,
+            "nevner": 4,
+            "registerenhetsrett": {
+                "registerenhetsrettstype": {
+                    "kodeverdi": "E",
+                    "navn": "Eiendomsrett"
+                },
+                "registerenhet": {
+                    "type": "Matrikkelenhet",
+                    "kommune": {
+                        "kommunenummer": "4618",
+                        "navn": "ULLENSVANG"
+                    },
+                    "gaardsnummer": 350,
+                    "bruksnummer": 117,
+                    "festenummer": 0,
+                    "seksjonsnummer": 0
+                }
+            }
+        },
+        {
+            "teller": 1,
+            "nevner": 2,
+            "registerenhetsrett": {
+                "registerenhetsrettstype": {
+                    "kodeverdi": "E",
+                    "navn": "Eiendomsrett"
+                },
+                "registerenhet": {
+                    "type": "Matrikkelenhet",
+                    "kommune": {
+                        "kommunenummer": "4601",
+                        "navn": "BERGEN"
+                    },
+                    "gaardsnummer": 189,
+                    "bruksnummer": 435,
+                    "festenummer": 0,
+                    "seksjonsnummer": 39
+                }
+            }
+        },
+        {
+            "teller": 1,
+            "nevner": 1,
+            "registerenhetsrett": {
+                "registerenhetsrettstype": {
+                    "kodeverdi": "E",
+                    "navn": "Eiendomsrett"
+                },
+                "registerenhet": {
+                    "type": "Matrikkelenhet",
+                    "kommune": {
+                        "kommunenummer": "4618",
+                        "navn": "ULLENSVANG"
+                    },
+                    "gaardsnummer": 350,
+                    "bruksnummer": 86,
+                    "festenummer": 0,
+                    "seksjonsnummer": 0
+                }
+            }
+        }
+    ]
+}

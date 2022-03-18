@@ -1,0 +1,39 @@
+{
+    "adresser": [
+        {
+            "adressekode": 6016,
+            "adressenavn": "Finstadveien",
+            "adressetekst": "Finstadveien 24",
+            "adressetekstutenadressetilleggsnavn": "Finstadveien 24",
+            "adressetilleggsnavn": null,
+            "bokstav": "",
+            "bruksenhetsnummer": [],
+            "bruksnummer": 46,
+            "festenummer": 0,
+            "gardsnummer": 43,
+            "kommunenavn": "VESTVÅGØY",
+            "kommunenummer": "1860",
+            "nummer": 24,
+            "objtype": "Vegadresse",
+            "oppdateringsdato": "2021-08-03T08:08:08",
+            "postnummer": "8340",
+            "poststed": "STAMSUND",
+            "representasjonspunkt": {
+                "epsg": "EPSG:4258",
+                "lat": 68.15508962347175,
+                "lon": 13.746817379755898
+            },
+            "stedfestingverifisert": true,
+            "undernummer": null
+        }
+    ],
+    "metadata": {
+        "asciiKompatibel": true,
+        "side": 0,
+        "sokeStreng": "kommunenummer=1860&bruksnummer=46&gardsnummer=43&festenummer=0",
+        "totaltAntallTreff": 1,
+        "treffPerSide": 10,
+        "viserFra": 0,
+        "viserTil": 10
+    }
+}

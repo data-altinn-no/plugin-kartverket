@@ -1,0 +1,95 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"title": "Landbruk",
+		"description": "Søk på matrikkel",
+		"version": "1.0"
+	},
+	"servers": [
+		{
+			"url": "https://qa.landbruksdirektoratet.no/landbruksregisteret/api/mp/eiendom",
+			"description": "QA"
+		}
+	],
+	"paths": {
+		"/landbruksregisteret/api/mp/eiendom": {
+			"post": {
+				"operationId": "matrikkelSoek",				
+				"requestBody": {
+					"description": "Søk på matrikkel",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/MatrikkelNummerListe"
+							}
+						}
+					},				
+				},
+				"responses": {
+					"200": {
+						"description": "Søk gjennomført, responsen inneholder eventuelle treff og/eller responskoder",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MatrikkelResponsListe"
+								}
+							}
+						}
+					}
+				}		
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"MatrikkelNummerListe": {
+				"type": "array",
+				"items": {
+					"$ref": "#/components/schemas/MatrikkelNummer"
+				}
+			},
+			"MatrikkelResponsListe": {
+				"type": "array",
+				"items": {
+					"$ref": "#/components/schemas/MatrikkelRespons"
+				}
+			},			
+			"MatrikkelNummer": {
+				"type": "object",
+				"properties": {
+					"kommunenr": {
+						"type": "string"
+					},
+					"gardsnr": {
+						"type": "integer"
+					},
+					"bruksnr": {
+						"type": "integer"
+					},
+					"festenr": {
+						"type": "integer"
+					}
+				}
+			},
+			"MatrikkelRespons": {
+				"type": "object",
+				"properties": {
+					"matrikkelNummer": {
+						"$ref": "#/components/schemas/MatrikkelNummer"
+					},
+					"jordbruksAreal": {
+						"type": "number"
+					},
+					"skogbruksAreal": {
+						"type": "number"
+					},
+					"tilknyttetLandbrukseiendom": {
+						"$ref": "#/components/schemas/MatrikkelRespons",
+						"nullable": true
+					}
+				}
+			}
+		}
+	}
+}
