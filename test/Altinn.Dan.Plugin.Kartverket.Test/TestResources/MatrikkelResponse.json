@@ -1,0 +1,55 @@
+[
+    {
+        "matrikkelnummer": {
+            "kommunenr": "1860",
+            "gardsnr": 134,
+            "bruksnr": 14,
+            "festenr": 0
+        },
+        "jordbruksAreal": 6.0,
+        "skogbruksAreal": 1.0,
+        "tilknyttetLandbrukseiendom": {
+            "matrikkelnummer": {
+                "kommunenr": "1860",
+                "gardsnr": 134,
+                "bruksnr": 14,
+                "festenr": 0
+            },
+            "jordbruksAreal": 6.0,
+            "skogbruksAreal": 1.0,
+            "tilknyttetLandbrukseiendom": null
+        }
+    },
+    {
+        "matrikkelnummer": {
+            "kommunenr": "3014",
+            "gardsnr": 848,
+            "bruksnr": 1,
+            "festenr": 0
+        },
+        "jordbruksAreal": 516.0,
+        "skogbruksAreal": 1722.0,
+        "tilknyttetLandbrukseiendom": {
+            "matrikkelnummer": {
+                "kommunenr": "3014",
+                "gardsnr": 848,
+                "bruksnr": 1,
+                "festenr": 0
+            },
+            "jordbruksAreal": 516.0,
+            "skogbruksAreal": 1722.0,
+            "tilknyttetLandbrukseiendom": null
+        }
+    },
+    {
+        "matrikkelnummer": {
+            "kommunenr": "1860",
+            "gardsnr": 43,
+            "bruksnr": 3,
+            "festenr": 0
+        },
+        "jordbruksAreal": 20.0,
+        "skogbruksAreal": 60.0,
+        "tilknyttetLandbrukseiendom": null
+    }
+]

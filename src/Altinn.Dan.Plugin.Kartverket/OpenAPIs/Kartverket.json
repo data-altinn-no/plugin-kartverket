@@ -1,0 +1,442 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "REST-tjenester mot grunnboken som en del av informasjonsgrunnlaget til oppgjør etter dødsfall. Det er 2 tjenester som tilsammen gir en oversikt over en (avdød) person sine eierforhold og rettigheter, som tinglyst i grunnboken. I tillegg finnes en tjeneste for å hente adresse for en borettslagsandel.\n\nTjenestene ligger ikke åpent, og autentisering og tilgangskontroll for datautveksling gjøres vha. Maskinporten (Digdir). \nFor å få tilgang til tjenestene, må virksomheten ta kontakt med Kartverket for å bli registrert (i Maskinporten) som konsument av tjenestene , basert på sine organisasjonsnummer. \nRegistrerte API-konsumenter kan opprette sin API-klientregistrering for disse tjenestene. Når klientene er registrert kan disse brukes for å få tildelt token og gjennomføre api-kall.",
+        "version": "1",
+        "title": "API for prosjektet 'Oppgjør etter dødsfall'"
+    },
+    "host": "syntest.grunnbok.no",
+    "basePath": "/oed",
+    "tags": [
+        {
+            "name": "oed-controller",
+            "description": "Tjenester for oppgjør etter dødsfall"
+        }
+    ],
+    "paths": {
+        "/adresse/for/borettslagsandel/{organisasjonsnummer}/{andelsnummer}": {
+            "get": {
+                "tags": [
+                    "oed-controller"
+                ],
+                "summary": "Gir adressen for en borettslagsandel. Adressen kan være i Norge eller i et annet land. Adresser i Norge kan være på tekstlig format, eller de kan være på et mer strukturert format. Adresser i utlandet er alltid på tekstlig format.",
+                "operationId": "adresseForBorettslagsandelUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "andelsnummer",
+                        "in": "path",
+                        "description": "Andelsnummeret til borettslagsandelen",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "organisasjonsnummer",
+                        "in": "path",
+                        "description": "Organisasjonsnummer til borettslaget",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/RettigheterResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/registerenhetsrettsandeler/for/person/{identifikasjonsnummer}": {
+            "get": {
+                "tags": [
+                    "oed-controller"
+                ],
+                "summary": "Lister ut gjeldende registerenhetsrettsandeler (eierandeler) for personen.",
+                "operationId": "findRegisterenhetsrettsandelerForPersonUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "identifikasjonsnummer",
+                        "in": "path",
+                        "description": "Fødselsnummer til en person",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/RegisterenhetsrettsandelerResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/rettigheter/for/person/{identifikasjonsnummer}": {
+            "get": {
+                "tags": [
+                    "oed-controller"
+                ],
+                "summary": "Lister ut gjeldende rettigheter for personen, og hvilke registerenhetsretter som er involvert.",
+                "operationId": "findRettigheterForPersonUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "identifikasjonsnummer",
+                        "in": "path",
+                        "description": "Fødselsnummeret til en person",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/RettigheterResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        }
+    },
+    "definitions": {
+        "Adresse": {
+            "type": "object",
+            "properties": {
+                "utenlandskAdresse": {
+                    "type": "boolean"
+                },
+                "land": {
+                    "type": "string"
+                },
+                "tekstligAdresse": {
+                    "type": "string"
+                },
+                "vegadresse": {
+                    "$ref": "#/definitions/Vegadresse"
+                },
+                "matrikkeladresse": {
+                    "$ref": "#/definitions/Matrikkeladresse"
+                }
+            },
+            "title": "Adresse",
+            "description": "Adresse for en borettslagsandel. Adressen kan være i Norge eller i utlandet. Adresser i Norge kan være på tekstlig format eller på strukturert format, mens adresser i utlandet alltid er på tekstlig format. Det er alltid kun ett av formatene som brukes."
+        },
+        "AdresseResponse": {
+            "type": "object",
+            "properties": {
+                "adresse": {
+                    "$ref": "#/definitions/Adresse"
+                }
+            },
+            "title": "AdresseResponse",
+            "description": "Adresse for en borettslagsandel"
+        },
+        "Borettslag": {
+            "type": "object",
+            "properties": {
+                "organisasjonsnummer": {
+                    "type": "string"
+                },
+                "navn": {
+                    "type": "string"
+                }
+            },
+            "title": "Borettslag",
+            "description": "Ident for et borettslag, bestående av organisasjonsnummer og navn"
+        },
+        "Borettslagsandel": {
+            "title": "Borettslagsandel",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Registerenhet"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "borettslag": {
+                            "$ref": "#/definitions/Borettslag"
+                        },
+                        "andelsnummer": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "title": "Borettslagsandel",
+                    "description": "Ident for en borettslagsandel, bestående av et borettslag og et andelsnummer"
+                }
+            ],
+            "description": "Ident for en borettslagsandel, bestående av et borettslag og et andelsnummer"
+        },
+        "Kommune": {
+            "type": "object",
+            "properties": {
+                "kommunenummer": {
+                    "type": "string"
+                },
+                "navn": {
+                    "type": "string"
+                }
+            },
+            "title": "Kommune",
+            "description": "Ident som består av kommunenummer og kommunenavn (norsk bokmål)"
+        },
+        "Matrikkeladresse": {
+            "type": "object",
+            "properties": {
+                "kommune": {
+                    "$ref": "#/definitions/Kommune"
+                },
+                "gaardsnummer": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "bruksnummer": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "festenummer": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "undernummer": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "bolignummer": {
+                    "type": "string"
+                }
+            },
+            "title": "Matrikkeladresse",
+            "description": "Adresseinformasjon i form av registerbetegnelsen fra matrikkelen. Brukes normalt ikke ved registrering av borettslagsandeler i grunnboken. Undernummer brukes der hvor det er flere matrikkeladresser på samme matrikkelenhet."
+        },
+        "Matrikkelenhet": {
+            "title": "Matrikkelenhet",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Registerenhet"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "kommune": {
+                            "$ref": "#/definitions/Kommune"
+                        },
+                        "gaardsnummer": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "bruksnummer": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "festenummer": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "seksjonsnummer": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "title": "Matrikkelenhet",
+                    "description": "Ident for en matrikkelenhet, bestående av kommune, gårdsnummer, bruksnummer, festenummer og seksjonsnummer"
+                }
+            ],
+            "description": "Ident for en matrikkelenhet, bestående av kommune, gårdsnummer, bruksnummer, festenummer og seksjonsnummer"
+        },
+        "Registerenhet": {
+            "type": "object",
+            "discriminator": "type",
+            "title": "Registerenhet",
+            "description": "Ident for matrikkelenhet eller borettslagsandel"
+        },
+        "Registerenhetsrett": {
+            "type": "object",
+            "properties": {
+                "registerenhetsrettstype": {
+                    "$ref": "#/definitions/Registerenhetsrettstype"
+                },
+                "registerenhet": {
+                    "$ref": "#/definitions/Registerenhet"
+                }
+            },
+            "title": "Registerenhetsrett",
+            "description": "Ident som består av en registerenhetsrettstype og en matrikkelenhet/borettslagsandel"
+        },
+        "Registerenhetsrettsandel": {
+            "type": "object",
+            "properties": {
+                "teller": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "nevner": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "registerenhetsrett": {
+                    "$ref": "#/definitions/Registerenhetsrett"
+                }
+            },
+            "title": "Registerenhetsrettsandel",
+            "description": "Ident som består av en brøk og en Registerenhetsrett"
+        },
+        "RegisterenhetsrettsandelerResponse": {
+            "type": "object",
+            "properties": {
+                "registerenhetsrettsandeler": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Registerenhetsrettsandel"
+                    }
+                }
+            },
+            "title": "RegisterenhetsrettsandelerResponse",
+            "description": "Resultatsett med liste av registerenhetsrettsandeler"
+        },
+        "Registerenhetsrettstype": {
+            "type": "object",
+            "properties": {
+                "kodeverdi": {
+                    "type": "string",
+                    "enum": [
+                        "E",
+                        "F",
+                        "F1",
+                        "F2",
+                        "F3",
+                        "B"
+                    ]
+                },
+                "navn": {
+                    "type": "string"
+                }
+            },
+            "title": "Registerenhetsrettstype",
+            "description": "Kode for hvilken eierform en rettighetshaver har til en registerenhet (matrikkelenhet eller borettslagsandel)"
+        },
+        "RettighetOgInvolverte": {
+            "type": "object",
+            "properties": {
+                "rettighet": {
+                    "$ref": "#/definitions/Rettsstiftelse"
+                },
+                "involvererRegisterenhetsretter": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Registerenhetsrett"
+                    }
+                }
+            },
+            "title": "RettighetOgInvolverte",
+            "description": "Rettighet med en liste over registerenhetsretter som er involvert. Disse registerenhetsrettene kan brukes til å finne relevante grunnboksutskrifter. Siden Grunnboken er et realregister, er rettighetene ordnet etter eiendom. Derfor vil man finne disse rettighetene under overskrften Heftelser i grunnboksutskriften."
+        },
+        "RettigheterResponse": {
+            "type": "object",
+            "properties": {
+                "rettigheter": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RettighetOgInvolverte"
+                    }
+                }
+            },
+            "title": "RettigheterResponse",
+            "description": "Resultatsett med liste av rettigheter for en person."
+        },
+        "Rettsstiftelse": {
+            "type": "object",
+            "properties": {
+                "dokumentaar": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "dokumentnummer": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "embetenummer": {
+                    "type": "string"
+                },
+                "rettsstiftelsesnummer": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "rettsstiftelsetype": {
+                    "type": "string"
+                }
+            },
+            "title": "Rettsstiftelse",
+            "description": "Ident for en rettsstiftelse, bestående av dokumentår, dokumentnummer, embetenummer, rettsstiftelsetype og rettsstiftelsesnummer"
+        },
+        "Vegadresse": {
+            "type": "object",
+            "properties": {
+                "kommune": {
+                    "$ref": "#/definitions/Kommune"
+                },
+                "adressekode": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "adressenavn": {
+                    "type": "string"
+                },
+                "husnummer": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "bokstav": {
+                    "type": "string"
+                },
+                "bolignummer": {
+                    "type": "string"
+                }
+            },
+            "title": "Vegadresse",
+            "description": "Offisiell adresse for en borettslagsandel. Består av kommunenummer, adressekode og navn, eventuelt husnummer og bokstav og eventuelt bolignummer dersom borettslagsandelen ikke er en frittliggende enebolig."
+        }
+    }
+}

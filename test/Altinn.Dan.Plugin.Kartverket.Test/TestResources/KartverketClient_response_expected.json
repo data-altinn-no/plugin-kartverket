@@ -1,0 +1,235 @@
+{
+    "PropertyRights": {
+        "Properties": [
+            {
+                "Address": null,
+                "City": null,
+                "PostalCode": null,
+                "Type": "Eiendomsrett",
+                "Municipality": "ULLENSVANG",
+                "MunicipalityNumber": "4618",
+                "HoldingNumber": "343",
+                "SubholdingNumber": "82",
+                "LeaseNumber": "0",
+                "SectionNumber": "0",
+                "FractionOwnership": "1/35",
+                "IsAgriculture": false
+            },
+            {
+                "Address": null,
+                "City": null,
+                "PostalCode": null,
+                "Type": "Eiendomsrett",
+                "Municipality": "BERGEN",
+                "MunicipalityNumber": "4601",
+                "HoldingNumber": "199",
+                "SubholdingNumber": "7",
+                "LeaseNumber": "0",
+                "SectionNumber": "0",
+                "FractionOwnership": "1/1",
+                "IsAgriculture": false
+            },
+            {
+                "Address": null,
+                "City": null,
+                "PostalCode": null,
+                "Type": "Eiendomsrett",
+                "Municipality": "ULLENSVANG",
+                "MunicipalityNumber": "4618",
+                "HoldingNumber": "350",
+                "SubholdingNumber": "117",
+                "LeaseNumber": "0",
+                "SectionNumber": "0",
+                "FractionOwnership": "1/4",
+                "IsAgriculture": false
+            },
+            {
+                "Address": null,
+                "City": null,
+                "PostalCode": null,
+                "Type": "Eiendomsrett",
+                "Municipality": "BERGEN",
+                "MunicipalityNumber": "4601",
+                "HoldingNumber": "189",
+                "SubholdingNumber": "435",
+                "LeaseNumber": "0",
+                "SectionNumber": "39",
+                "FractionOwnership": "1/2",
+                "IsAgriculture": false
+            },
+            {
+                "Address": null,
+                "City": null,
+                "PostalCode": null,
+                "Type": "Eiendomsrett",
+                "Municipality": "ULLENSVANG",
+                "MunicipalityNumber": "4618",
+                "HoldingNumber": "350",
+                "SubholdingNumber": "86",
+                "LeaseNumber": "0",
+                "SectionNumber": "0",
+                "FractionOwnership": "1/1",
+                "IsAgriculture": false
+            }
+        ],
+        "PropertiesWithRights": [
+            {
+                "Rights": [
+                    {
+                        "DocumentYear": "2014",
+                        "DocumentNumber": "921391",
+                        "OfficeNumber": "200",
+                        "JudgementNumber": "1",
+                        "JudgmentType": "PANTEDOKUMENT"
+                    },
+                    {
+                        "DocumentYear": "2013",
+                        "DocumentNumber": "442775",
+                        "OfficeNumber": "200",
+                        "JudgementNumber": "1",
+                        "JudgmentType": "RETT TIL UTSKILT TOMT"
+                    },
+                    {
+                        "DocumentYear": "2014",
+                        "DocumentNumber": "921391",
+                        "OfficeNumber": "200",
+                        "JudgementNumber": "2",
+                        "JudgmentType": "URÅDIGHET"
+                    }
+                ],
+                "Address": null,
+                "City": null,
+                "PostalCode": null,
+                "Type": "Eiendomsrett",
+                "Municipality": "BERGEN",
+                "MunicipalityNumber": "4601",
+                "HoldingNumber": "199",
+                "SubholdingNumber": "234",
+                "LeaseNumber": "0",
+                "SectionNumber": "0",
+                "FractionOwnership": null,
+                "IsAgriculture": false
+            },
+            {
+                "Rights": [
+                    {
+                        "DocumentYear": "2013",
+                        "DocumentNumber": "442775",
+                        "OfficeNumber": "200",
+                        "JudgementNumber": "1",
+                        "JudgmentType": "RETT TIL UTSKILT TOMT"
+                    },
+                    {
+                        "DocumentYear": "2013",
+                        "DocumentNumber": "298339",
+                        "OfficeNumber": "200",
+                        "JudgementNumber": "2",
+                        "JudgmentType": "URÅDIGHET"
+                    },
+                    {
+                        "DocumentYear": "2013",
+                        "DocumentNumber": "298339",
+                        "OfficeNumber": "200",
+                        "JudgementNumber": "1",
+                        "JudgmentType": "PANTEDOKUMENT"
+                    },
+                    {
+                        "DocumentYear": "2021",
+                        "DocumentNumber": "11",
+                        "OfficeNumber": "200",
+                        "JudgementNumber": "1",
+                        "JudgmentType": "PANT I RETTIGHET"
+                    }
+                ],
+                "Address": null,
+                "City": null,
+                "PostalCode": null,
+                "Type": "Eiendomsrett",
+                "Municipality": "BERGEN",
+                "MunicipalityNumber": "4601",
+                "HoldingNumber": "199",
+                "SubholdingNumber": "8",
+                "LeaseNumber": "0",
+                "SectionNumber": "0",
+                "FractionOwnership": null,
+                "IsAgriculture": false
+            },
+            {
+                "Rights": [
+                    {
+                        "DocumentYear": "2021",
+                        "DocumentNumber": "4",
+                        "OfficeNumber": "200",
+                        "JudgementNumber": "1",
+                        "JudgmentType": "PANTEDOKUMENT"
+                    }
+                ],
+                "Address": null,
+                "City": null,
+                "PostalCode": null,
+                "Type": "Eiendomsrett",
+                "Municipality": "KARMØY",
+                "MunicipalityNumber": "1149",
+                "HoldingNumber": "13",
+                "SubholdingNumber": "5",
+                "LeaseNumber": "0",
+                "SectionNumber": "0",
+                "FractionOwnership": null,
+                "IsAgriculture": false
+            },
+            {
+                "Rights": [
+                    {
+                        "DocumentYear": "2010",
+                        "DocumentNumber": "105352",
+                        "OfficeNumber": "200",
+                        "JudgementNumber": "2",
+                        "JudgmentType": "URÅDIGHET"
+                    },
+                    {
+                        "DocumentYear": "2010",
+                        "DocumentNumber": "105352",
+                        "OfficeNumber": "200",
+                        "JudgementNumber": "1",
+                        "JudgmentType": "PANTEDOKUMENT"
+                    }
+                ],
+                "Address": null,
+                "City": null,
+                "PostalCode": null,
+                "Type": "Eiendomsrett",
+                "Municipality": "BERGEN",
+                "MunicipalityNumber": "4601",
+                "HoldingNumber": "171",
+                "SubholdingNumber": "161",
+                "LeaseNumber": "0",
+                "SectionNumber": "0",
+                "FractionOwnership": null,
+                "IsAgriculture": false
+            },
+            {
+                "Rights": [
+                    {
+                        "DocumentYear": "2014",
+                        "DocumentNumber": "985127",
+                        "OfficeNumber": "200",
+                        "JudgementNumber": "2",
+                        "JudgmentType": "BRUKSRETT"
+                    }
+                ],
+                "Address": null,
+                "City": null,
+                "PostalCode": null,
+                "Type": "Eiendomsrett",
+                "Municipality": "ULLENSVANG",
+                "MunicipalityNumber": "4618",
+                "HoldingNumber": "343",
+                "SubholdingNumber": "22",
+                "LeaseNumber": "0",
+                "SectionNumber": "0",
+                "FractionOwnership": null,
+                "IsAgriculture": false
+            }
+        ]
+    }
+}

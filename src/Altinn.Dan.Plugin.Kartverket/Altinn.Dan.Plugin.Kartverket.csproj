@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AzureFunctionsVersion>v4</AzureFunctionsVersion>
+    <OutputType>Exe</OutputType>
+    <_FunctionsSkipCleanOutput>true</_FunctionsSkipCleanOutput>
+    <UseAppHost>false</UseAppHost>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Altinn.ApiClients.Maskinporten" Version="2.0.0" />
+    <PackageReference Include="Azure.Identity" Version="1.5.0" />
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.WorkerService" Version="2.20.0" />
+    <PackageReference Include="Microsoft.Azure.Core.NewtonsoftJson" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.6.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.3.0" OutputItemType="Analyzer" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.0.13" />
+    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="6.0.3" />
+    <PackageReference Include="Nadobe.Common" Version="2.0.0-rc-20220214003" />
+    <PackageReference Include="NJsonSchema" Version="10.6.10" />
+    <PackageReference Include="Polly" Version="7.2.3" />
+    <PackageReference Include="Polly.Caching.Distributed" Version="3.0.1" />
+    <PackageReference Include="Polly.Caching.Serialization.Json" Version="3.0.0" />
+    <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
+    <PackageReference Include="NSwag.ApiDescription.Client" Version="13.15.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="host.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="local.settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
+    <None Update="Certs\mycert.p12">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <OpenApiReference Include="OpenAPIs\Kartverket.json" CodeGenerator="NSwagCSharp" Namespace="Altinn.Dan.Plugin.Kartverket.Clients" ClassName="Kartverket">
+      <SourceUri>https://syntest.grunnbok.no/oed/v2/api-docs</SourceUri>
+      <Options>/GenerateOptionalPropertiesAsNullable:true /GenerateClientClasses:false /GenerateExceptionClasses:false</Options>
+    </OpenApiReference>
+    <OpenApiReference Include="OpenAPIs\Landbruk.json" CodeGenerator="NSwagCSharp" Namespace="Altinn.Dan.Plugin.Kartverket.Clients" ClassName="Landbruk">
+      <Options>/GenerateOptionalPropertiesAsNullable:true /GenerateClientClasses:false /GenerateExceptionClasses:false</Options>
+    </OpenApiReference>
+    <OpenApiReference Include="OpenAPIs\AddressLookup.json" CodeGenerator="NSwagCSharp" Namespace="Altinn.App.ExternalApi.AddressLookup" ClassName="AddressLookup">
+      <SourceUri>https://ws.geonorge.no/adresser/v1/openapi.json</SourceUri>
+      <Options>/GenerateOptionalPropertiesAsNullable:true /GenerateClientClasses:false /GenerateExceptionClasses:false</Options>
+    </OpenApiReference>
+  </ItemGroup>
+</Project>

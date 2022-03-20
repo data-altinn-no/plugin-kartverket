@@ -1,0 +1,39 @@
+{
+    "adresser": [
+        {
+            "adressekode": 7007,
+            "adressenavn": "Valbergsveien",
+            "adressetekst": "Valbergsveien 1682",
+            "adressetekstutenadressetilleggsnavn": "Valbergsveien 1682",
+            "adressetilleggsnavn": null,
+            "bokstav": "",
+            "bruksenhetsnummer": [],
+            "bruksnummer": 1,
+            "festenummer": 0,
+            "gardsnummer": 134,
+            "kommunenavn": "VESTVÅGØY",
+            "kommunenummer": "1860",
+            "nummer": 1682,
+            "objtype": "Vegadresse",
+            "oppdateringsdato": "2020-06-15T14:15:15",
+            "postnummer": "8357",
+            "poststed": "VALBERG",
+            "representasjonspunkt": {
+                "epsg": "EPSG:4258",
+                "lat": 68.20233025540549,
+                "lon": 13.996089528655551
+            },
+            "stedfestingverifisert": false,
+            "undernummer": null
+        }
+    ],
+    "metadata": {
+        "asciiKompatibel": true,
+        "side": 0,
+        "sokeStreng": "kommunenummer=1860&bruksnummer=1&gardsnummer=134&festenummer=0",
+        "totaltAntallTreff": 1,
+        "treffPerSide": 10,
+        "viserFra": 0,
+        "viserTil": 10
+    }
+}

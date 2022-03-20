@@ -1,0 +1,301 @@
+{
+    "rettigheter": [
+        {
+            "rettighet": {
+                "rettsstiftelsetype": "PANTEDOKUMENT",
+                "dokumentaar": 2014,
+                "dokumentnummer": 921391,
+                "rettsstiftelsesnummer": 1,
+                "embetenummer": "200"
+            },
+            "involvererRegisterenhetsretter": [
+                {
+                    "registerenhetsrettstype": {
+                        "kodeverdi": "E",
+                        "navn": "Eiendomsrett"
+                    },
+                    "registerenhet": {
+                        "type": "Matrikkelenhet",
+                        "kommune": {
+                            "kommunenummer": "4601",
+                            "navn": "BERGEN"
+                        },
+                        "gaardsnummer": 199,
+                        "bruksnummer": 234,
+                        "festenummer": 0,
+                        "seksjonsnummer": 0
+                    }
+                }
+            ]
+        },
+        {
+            "rettighet": {
+                "rettsstiftelsetype": "RETT TIL UTSKILT TOMT",
+                "dokumentaar": 2013,
+                "dokumentnummer": 442775,
+                "rettsstiftelsesnummer": 1,
+                "embetenummer": "200"
+            },
+            "involvererRegisterenhetsretter": [
+                {
+                    "registerenhetsrettstype": {
+                        "kodeverdi": "E",
+                        "navn": "Eiendomsrett"
+                    },
+                    "registerenhet": {
+                        "type": "Matrikkelenhet",
+                        "kommune": {
+                            "kommunenummer": "4601",
+                            "navn": "BERGEN"
+                        },
+                        "gaardsnummer": 199,
+                        "bruksnummer": 234,
+                        "festenummer": 0,
+                        "seksjonsnummer": 0
+                    }
+                },
+                {
+                    "registerenhetsrettstype": {
+                        "kodeverdi": "E",
+                        "navn": "Eiendomsrett"
+                    },
+                    "registerenhet": {
+                        "type": "Matrikkelenhet",
+                        "kommune": {
+                            "kommunenummer": "4601",
+                            "navn": "BERGEN"
+                        },
+                        "gaardsnummer": 199,
+                        "bruksnummer": 8,
+                        "festenummer": 0,
+                        "seksjonsnummer": 0
+                    }
+                }
+            ]
+        },
+        {
+            "rettighet": {
+                "rettsstiftelsetype": "PANTEDOKUMENT",
+                "dokumentaar": 2021,
+                "dokumentnummer": 4,
+                "rettsstiftelsesnummer": 1,
+                "embetenummer": "200"
+            },
+            "involvererRegisterenhetsretter": [
+                {
+                    "registerenhetsrettstype": {
+                        "kodeverdi": "E",
+                        "navn": "Eiendomsrett"
+                    },
+                    "registerenhet": {
+                        "type": "Matrikkelenhet",
+                        "kommune": {
+                            "kommunenummer": "1149",
+                            "navn": "KARMØY"
+                        },
+                        "gaardsnummer": 13,
+                        "bruksnummer": 5,
+                        "festenummer": 0,
+                        "seksjonsnummer": 0
+                    }
+                }
+            ]
+        },
+        {
+            "rettighet": {
+                "rettsstiftelsetype": "URÅDIGHET",
+                "dokumentaar": 2010,
+                "dokumentnummer": 105352,
+                "rettsstiftelsesnummer": 2,
+                "embetenummer": "200"
+            },
+            "involvererRegisterenhetsretter": [
+                {
+                    "registerenhetsrettstype": {
+                        "kodeverdi": "E",
+                        "navn": "Eiendomsrett"
+                    },
+                    "registerenhet": {
+                        "type": "Matrikkelenhet",
+                        "kommune": {
+                            "kommunenummer": "4601",
+                            "navn": "BERGEN"
+                        },
+                        "gaardsnummer": 171,
+                        "bruksnummer": 161,
+                        "festenummer": 0,
+                        "seksjonsnummer": 0
+                    }
+                }
+            ]
+        },
+        {
+            "rettighet": {
+                "rettsstiftelsetype": "URÅDIGHET",
+                "dokumentaar": 2014,
+                "dokumentnummer": 921391,
+                "rettsstiftelsesnummer": 2,
+                "embetenummer": "200"
+            },
+            "involvererRegisterenhetsretter": [
+                {
+                    "registerenhetsrettstype": {
+                        "kodeverdi": "E",
+                        "navn": "Eiendomsrett"
+                    },
+                    "registerenhet": {
+                        "type": "Matrikkelenhet",
+                        "kommune": {
+                            "kommunenummer": "4601",
+                            "navn": "BERGEN"
+                        },
+                        "gaardsnummer": 199,
+                        "bruksnummer": 234,
+                        "festenummer": 0,
+                        "seksjonsnummer": 0
+                    }
+                }
+            ]
+        },
+        {
+            "rettighet": {
+                "rettsstiftelsetype": "URÅDIGHET",
+                "dokumentaar": 2013,
+                "dokumentnummer": 298339,
+                "rettsstiftelsesnummer": 2,
+                "embetenummer": "200"
+            },
+            "involvererRegisterenhetsretter": [
+                {
+                    "registerenhetsrettstype": {
+                        "kodeverdi": "E",
+                        "navn": "Eiendomsrett"
+                    },
+                    "registerenhet": {
+                        "type": "Matrikkelenhet",
+                        "kommune": {
+                            "kommunenummer": "4601",
+                            "navn": "BERGEN"
+                        },
+                        "gaardsnummer": 199,
+                        "bruksnummer": 8,
+                        "festenummer": 0,
+                        "seksjonsnummer": 0
+                    }
+                }
+            ]
+        },
+        {
+            "rettighet": {
+                "rettsstiftelsetype": "PANTEDOKUMENT",
+                "dokumentaar": 2013,
+                "dokumentnummer": 298339,
+                "rettsstiftelsesnummer": 1,
+                "embetenummer": "200"
+            },
+            "involvererRegisterenhetsretter": [
+                {
+                    "registerenhetsrettstype": {
+                        "kodeverdi": "E",
+                        "navn": "Eiendomsrett"
+                    },
+                    "registerenhet": {
+                        "type": "Matrikkelenhet",
+                        "kommune": {
+                            "kommunenummer": "4601",
+                            "navn": "BERGEN"
+                        },
+                        "gaardsnummer": 199,
+                        "bruksnummer": 8,
+                        "festenummer": 0,
+                        "seksjonsnummer": 0
+                    }
+                }
+            ]
+        },
+        {
+            "rettighet": {
+                "rettsstiftelsetype": "BRUKSRETT",
+                "dokumentaar": 2014,
+                "dokumentnummer": 985127,
+                "rettsstiftelsesnummer": 2,
+                "embetenummer": "200"
+            },
+            "involvererRegisterenhetsretter": [
+                {
+                    "registerenhetsrettstype": {
+                        "kodeverdi": "E",
+                        "navn": "Eiendomsrett"
+                    },
+                    "registerenhet": {
+                        "type": "Matrikkelenhet",
+                        "kommune": {
+                            "kommunenummer": "4618",
+                            "navn": "ULLENSVANG"
+                        },
+                        "gaardsnummer": 343,
+                        "bruksnummer": 22,
+                        "festenummer": 0,
+                        "seksjonsnummer": 0
+                    }
+                }
+            ]
+        },
+        {
+            "rettighet": {
+                "rettsstiftelsetype": "PANTEDOKUMENT",
+                "dokumentaar": 2010,
+                "dokumentnummer": 105352,
+                "rettsstiftelsesnummer": 1,
+                "embetenummer": "200"
+            },
+            "involvererRegisterenhetsretter": [
+                {
+                    "registerenhetsrettstype": {
+                        "kodeverdi": "E",
+                        "navn": "Eiendomsrett"
+                    },
+                    "registerenhet": {
+                        "type": "Matrikkelenhet",
+                        "kommune": {
+                            "kommunenummer": "4601",
+                            "navn": "BERGEN"
+                        },
+                        "gaardsnummer": 171,
+                        "bruksnummer": 161,
+                        "festenummer": 0,
+                        "seksjonsnummer": 0
+                    }
+                }
+            ]
+        },
+        {
+            "rettighet": {
+                "rettsstiftelsetype": "PANT I RETTIGHET",
+                "dokumentaar": 2021,
+                "dokumentnummer": 11,
+                "rettsstiftelsesnummer": 1,
+                "embetenummer": "200"
+            },
+            "involvererRegisterenhetsretter": [
+                {
+                    "registerenhetsrettstype": {
+                        "kodeverdi": "E",
+                        "navn": "Eiendomsrett"
+                    },
+                    "registerenhet": {
+                        "type": "Matrikkelenhet",
+                        "kommune": {
+                            "kommunenummer": "4601",
+                            "navn": "BERGEN"
+                        },
+                        "gaardsnummer": 199,
+                        "bruksnummer": 8,
+                        "festenummer": 0,
+                        "seksjonsnummer": 0
+                    }
+                }
+            ]
+        }
+    ]
+}

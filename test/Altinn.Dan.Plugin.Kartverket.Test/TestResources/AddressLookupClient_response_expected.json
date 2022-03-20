@@ -1,0 +1,52 @@
+{
+    "PropertyRights": {
+        "Properties": [
+            {
+                "Address": "Finstadveien 24",
+                "City": "STAMSUND",
+                "PostalCode": "8340",
+                "Type": null,
+                "Municipality": "VESTVÅGØY",
+                "MunicipalityNumber": "1860",
+                "HoldingNumber": "43",
+                "SubholdingNumber": "46",
+                "LeaseNumber": "0",
+                "SectionNumber": null,
+                "FractionOwnership": null,
+                "IsAgriculture": false
+            }
+        ],
+        "PropertiesWithRights": [
+            {
+                "Rights": null,
+                "Address": "Valbergsveien 1682",
+                "City": "VALBERG",
+                "PostalCode": "8357",
+                "Type": null,
+                "Municipality": "VESTVÅGØY",
+                "MunicipalityNumber": "1860",
+                "HoldingNumber": "134",
+                "SubholdingNumber": "1",
+                "LeaseNumber": "0",
+                "SectionNumber": null,
+                "FractionOwnership": null,
+                "IsAgriculture": false
+            },
+            {
+                "Rights": null,
+                "Address": "Myrdalsvegen 48A",
+                "City": "NYBORG",
+                "PostalCode": "5130",
+                "Type": null,
+                "Municipality": "BERGEN",
+                "MunicipalityNumber": "4601",
+                "HoldingNumber": "189",
+                "SubholdingNumber": "435",
+                "LeaseNumber": "0",
+                "SectionNumber": null,
+                "FractionOwnership": null,
+                "IsAgriculture": false
+            }
+        ]
+    }
+}

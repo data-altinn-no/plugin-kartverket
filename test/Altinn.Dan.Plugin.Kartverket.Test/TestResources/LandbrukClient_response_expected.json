@@ -1,0 +1,66 @@
+{
+    "PropertyRights": {
+        "Properties": [
+            {
+                "Address": null,
+                "City": null,
+                "PostalCode": null,
+                "Type": null,
+                "Municipality": null,
+                "MunicipalityNumber": "1860",
+                "HoldingNumber": "134",
+                "SubholdingNumber": "14",
+                "LeaseNumber": "0",
+                "SectionNumber": null,
+                "FractionOwnership": null,
+                "IsAgriculture": true
+            },
+            {
+                "Address": null,
+                "City": null,
+                "PostalCode": null,
+                "Type": null,
+                "Municipality": null,
+                "MunicipalityNumber": "1860",
+                "HoldingNumber": "134",
+                "SubholdingNumber": "14",
+                "LeaseNumber": null,
+                "SectionNumber": null,
+                "FractionOwnership": null,
+                "IsAgriculture": false
+            }
+        ],
+        "PropertiesWithRights": [
+            {
+                "Rights": null,
+                "Address": null,
+                "City": null,
+                "PostalCode": null,
+                "Type": null,
+                "Municipality": null,
+                "MunicipalityNumber": "3014",
+                "HoldingNumber": "848",
+                "SubholdingNumber": "1",
+                "LeaseNumber": "0",
+                "SectionNumber": null,
+                "FractionOwnership": null,
+                "IsAgriculture": true
+            },
+            {
+                "Rights": null,
+                "Address": null,
+                "City": null,
+                "PostalCode": null,
+                "Type": null,
+                "Municipality": null,
+                "MunicipalityNumber": "1860",
+                "HoldingNumber": "43",
+                "SubholdingNumber": "3",
+                "LeaseNumber": "0",
+                "SectionNumber": null,
+                "FractionOwnership": null,
+                "IsAgriculture": false
+            }
+        ]
+    }
+}
