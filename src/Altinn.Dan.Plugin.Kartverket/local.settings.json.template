@@ -5,7 +5,22 @@
         "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
         "BreakerRetryWaitTime": "10",
         "IsTestEnv": true,
-        "KartverketRegisterenhetsrettsandelerForPersonUrl": "",
-        "LandbrukUrl": ""
+
+        "KartverketRegisterenhetsrettsandelerForPersonUrl": "https://<Kartverket URL>/registerenhetsrettsandeler/for/person/{identifikasjonsnummer}",
+        "KartverketRettigheterForPersonUrl": "https://<Kartverket URL>/rettigheter/for/person/{identifikasjonsnummer}",
+        "MPKartverket:Environment": "ver1",
+        "MPKartverket:ClientId": "",
+        "MPKartverket:Scope": "",
+        "MPKartverket:AzureKeyVaultName": "",
+        "MPKartverket:SecretName": "",
+
+        "LandbrukUrl": "https://<Landbruksdirektoratet URL>",
+        "MP3Landbruk:Environment": "ver2",
+        "MP3Landbruk:ClientId": "",
+        "MP3Landbruk:Scope": "",
+        "MP3Landbruk:AzureKeyVaultName": "",
+        "MP3Landbruk:SecretName": "",
+
+        "AddressLookupUrl": "https://<Geonorge URL>"
     }
 }
