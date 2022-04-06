@@ -49,17 +49,17 @@ namespace Altinn.Dan.Plugin.Kartverket
 
         private async Task<List<EvidenceValue>> GetEvidenceValuesGrunnbok(EvidenceHarvesterRequest evidenceHarvesterRequest)
         {
-            var ssn = evidenceHarvesterRequest.OrganizationNumber;
+            var subject = evidenceHarvesterRequest.SubjectParty;
             try
             {
                 var ecb = new EvidenceBuilder(new Metadata(), "Grunnbok");
-                ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(await _kartverketClient.Get(ssn)), Metadata.SOURCE);
+                ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(await _kartverketClient.Get(subject?.NorwegianSocialSecurityNumber)), Metadata.SOURCE);
 
                 return ecb.GetEvidenceValues();
             }
             catch (Exception e)
             {
-                _logger.LogError("Func 'Grunnbok' failed for input '{Ssn}' ({Length} chars): {Message}", ssn[..6] + "...", ssn.Length, e.Message);
+                _logger.LogError($"Func 'Grunnbok' failed for input '{(subject?.NorwegianSocialSecurityNumber.Length < 6 ? subject.NorwegianSocialSecurityNumber : subject?.GetAsString())}': {e.Message}");
 
                 throw;
             }
