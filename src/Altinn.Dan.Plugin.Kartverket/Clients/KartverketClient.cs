@@ -33,7 +33,7 @@ namespace Altinn.Dan.Plugin.Kartverket.Clients
 
         public async Task<KartverketResponse> Get(string ssn)
         {
-            if (string.IsNullOrEmpty(ssn.Trim()))
+            if (string.IsNullOrEmpty(ssn))
             {
                 throw new EvidenceSourcePermanentClientException(Metadata.ERROR_CCR_UPSTREAM_ERROR, $"Bad request (ssn cannot be empty)");
             }
