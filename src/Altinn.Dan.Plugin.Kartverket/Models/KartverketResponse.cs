@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Altinn.Dan.Plugin.Kartverket.Models
+namespace Dan.Plugin.Kartverket.Models
 {
     public class KartverketResponse
     {

@@ -1,18 +1,18 @@
+using Dan.Common.Exceptions;
+using Dan.Plugin.Kartverket.Clients;
+using Dan.Plugin.Kartverket.Models;
+using Dan.Plugin.Kartverket.Test.TestHelpers;
+using Moq;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Altinn.Dan.Plugin.Kartverket.Clients;
-using Altinn.Dan.Plugin.Kartverket.Models;
-using Altinn.Dan.Plugin.Kartverket.Test.TestHelpers;
-using Moq;
-using Nadobe.Common.Exceptions;
-using Newtonsoft.Json;
 using Xunit;
-using static Altinn.Dan.Plugin.Kartverket.Test.TestHelpers.TestHelpers;
+using static Dan.Plugin.Kartverket.Test.TestHelpers.TestHelpers;
 
-namespace Altinn.Dan.Plugin.Kartverket.Test.Clients;
+namespace Dan.Plugin.Kartverket.Test.Clients;
 
 public class LandbrukClientTest
 {
@@ -41,7 +41,7 @@ public class LandbrukClientTest
             }
         };
 
-        var client = new LandbrukClient(_httpClientFactory.Object, GetSettingsForTest());
+        var client = new LandbrukClient(httpClient, GetSettingsForTest());
         var response = await client.Get(kv);
 
         var actualNormalized = JsonConvert.SerializeObject(response).NormalizeJson();
@@ -85,7 +85,7 @@ public class LandbrukClientTest
             }
         };
 
-        var client = new LandbrukClient(_httpClientFactory.Object, GetSettingsForTest());
+        var client = new LandbrukClient(httpClient, GetSettingsForTest());
         var response = await client.Get(inputMissingParameter);
 
         Assert.True(response.PropertyRights.Properties.Count() == 1);
@@ -100,6 +100,9 @@ public class LandbrukClientTest
     [Fact]
     public async Task Get_MissingParameters_Exception()
     {
+        var httpClient = GetHttpClientMock("unittest", HttpStatusCode.BadRequest);
+        _httpClientFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(httpClient);
+
         KartverketResponse inputMissingParameter = new KartverketResponse
         {
             PropertyRights = new PropertyRights
@@ -117,7 +120,7 @@ public class LandbrukClientTest
             }
         };
 
-        var client = new LandbrukClient(_httpClientFactory.Object, GetSettingsForTest());
+        var client = new LandbrukClient(httpClient, GetSettingsForTest());
 
         var exception = await Assert.ThrowsAsync<EvidenceSourcePermanentClientException>(() => client.Get(inputMissingParameter));
 
@@ -146,7 +149,7 @@ public class LandbrukClientTest
             }
         };
 
-        var client = new LandbrukClient(_httpClientFactory.Object, GetSettingsForTest());
+        var client = new LandbrukClient(httpClient, GetSettingsForTest());
         var exception = await Assert.ThrowsAsync<EvidenceSourcePermanentClientException>(() => client.Get(kv));
 
         Assert.Equal(Metadata.ERROR_CCR_UPSTREAM_ERROR, exception.DetailErrorCode);
@@ -175,7 +178,7 @@ public class LandbrukClientTest
             }
         };
 
-        var client = new LandbrukClient(_httpClientFactory.Object, GetSettingsForTest());
+        var client = new LandbrukClient(httpClient, GetSettingsForTest());
 
         var exception = await Assert.ThrowsAsync<EvidenceSourcePermanentServerException>(() => client.Get(kv));
 

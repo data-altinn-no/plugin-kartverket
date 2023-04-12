@@ -1,3 +1,10 @@
+using Altinn.App.ExternalApi.AddressLookup;
+using Dan.Common.Exceptions;
+using Dan.Plugin.Kartverket.Config;
+using Dan.Plugin.Kartverket.Models;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,15 +12,8 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Altinn.App.ExternalApi.AddressLookup;
-using Altinn.Dan.Plugin.Kartverket.Config;
-using Altinn.Dan.Plugin.Kartverket.Models;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Nadobe.Common.Exceptions;
-using Newtonsoft.Json;
 
-namespace Altinn.Dan.Plugin.Kartverket.Clients
+namespace Dan.Plugin.Kartverket.Clients
 {
     public interface IAddressLookupClient
     {

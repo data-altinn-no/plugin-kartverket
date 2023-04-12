@@ -1,33 +1,29 @@
+using Dan.Common;
+using Dan.Common.Models;
+using Dan.Common.Util;
+using Dan.Plugin.Kartverket.Clients;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
-using Altinn.Dan.Plugin.Kartverket.Clients;
-using Altinn.Dan.Plugin.Kartverket.Config;
-using Azure.Core.Serialization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Nadobe;
-using Nadobe.Common.Models;
-using Nadobe.Common.Util;
-using Newtonsoft.Json;
 
-namespace Altinn.Dan.Plugin.Kartverket
+namespace Dan.Plugin.Kartverket
 {
     public class Main
     {
         private ILogger _logger;
-        private readonly ApplicationSettings _settings;
         private readonly KartverketClient _kartverketClient;
+        private readonly IDDWrapper _ddWrapper;
 
-        public Main(IOptions<ApplicationSettings> settings, KartverketClient kartverketClient)
+        public Main(ILoggerFactory loggerFactory, IDDWrapper ddWrapper)
         {
-            _settings = settings.Value;
-            _kartverketClient = kartverketClient;
+            _logger = loggerFactory.CreateLogger<Main>();
+            _ddWrapper = ddWrapper;
         }
 
         [Function("Grunnbok")]
@@ -35,31 +31,25 @@ namespace Altinn.Dan.Plugin.Kartverket
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequestData req,
             FunctionContext context)
         {
-            _logger = context.GetLogger(context.FunctionDefinition.Name);
             _logger.LogInformation("Running func 'Grunnbok'");
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
 
-            var actionResult = await EvidenceSourceResponse.CreateResponse(null, () => GetEvidenceValuesGrunnbok(evidenceHarvesterRequest)) as ObjectResult;
-            var response = req.CreateResponse(HttpStatusCode.OK);
-            await response.WriteAsJsonAsync(actionResult?.Value);
-
-            return response;
+            return await EvidenceSourceResponse.CreateResponse(null, () => GetEvidenceValuesGrunnbok(evidenceHarvesterRequest));
         }
 
         private async Task<List<EvidenceValue>> GetEvidenceValuesGrunnbok(EvidenceHarvesterRequest evidenceHarvesterRequest)
         {
-            var subject = evidenceHarvesterRequest.SubjectParty;
             try
             {
                 var ecb = new EvidenceBuilder(new Metadata(), "Grunnbok");
-                ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(await _kartverketClient.Get(subject?.NorwegianSocialSecurityNumber)), Metadata.SOURCE);
+                ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(await _ddWrapper.GetDDGrunnbok(evidenceHarvesterRequest.SubjectParty.NorwegianSocialSecurityNumber)), Metadata.SOURCE);
 
                 return ecb.GetEvidenceValues();
             }
             catch (Exception e)
             {
-                _logger.LogError($"Func 'Grunnbok' failed for input '{(subject?.NorwegianSocialSecurityNumber.Length < 6 ? subject.NorwegianSocialSecurityNumber : subject?.GetAsString())}': {e.Message}");
+                _logger.LogError($"Func 'Grunnbok' failed for input '{(evidenceHarvesterRequest.SubjectParty.GetAsString())}': {e.Message}");
 
                 throw;
             }
@@ -70,11 +60,9 @@ namespace Altinn.Dan.Plugin.Kartverket
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequestData req,
             FunctionContext context)
         {
-            _logger = context.GetLogger(context.FunctionDefinition.Name);
             _logger.LogInformation($"Running func metadata for {Constants.EvidenceSourceMetadataFunctionName}");
             var response = req.CreateResponse(HttpStatusCode.OK);
-            await response.WriteAsJsonAsync(new Metadata().GetEvidenceCodes(),
-                new NewtonsoftJsonObjectSerializer(new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto }));
+            await response.WriteAsJsonAsync(new Metadata().GetEvidenceCodes());
 
             return response;
         }

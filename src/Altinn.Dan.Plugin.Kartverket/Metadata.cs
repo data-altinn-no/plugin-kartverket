@@ -1,12 +1,12 @@
-using System.Collections.Generic;
-using Altinn.Dan.Plugin.Kartverket.Models;
-using Nadobe.Common.Interfaces;
-using Nadobe.Common.Models;
-using Nadobe.Common.Models.Enums;
+using Dan.Common.Enums;
+using Dan.Common.Interfaces;
+using Dan.Common.Models;
+using Dan.Plugin.Kartverket.Models;
 using Newtonsoft.Json;
 using NJsonSchema;
+using System.Collections.Generic;
 
-namespace Altinn.Dan.Plugin.Kartverket
+namespace Dan.Plugin.Kartverket
 {
     public class Metadata : IEvidenceSourceMetadata
     {

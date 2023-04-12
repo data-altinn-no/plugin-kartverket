@@ -5,13 +5,13 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Altinn.Dan.Plugin.Kartverket.Config;
+using Dan.Plugin.Kartverket.Config;
 using Microsoft.Extensions.Options;
 using Moq;
 using Moq.Protected;
 using Newtonsoft.Json;
 
-namespace Altinn.Dan.Plugin.Kartverket.Test.TestHelpers
+namespace Dan.Plugin.Kartverket.Test.TestHelpers
 {
     public static class TestHelpers
     {
@@ -89,11 +89,6 @@ namespace Altinn.Dan.Plugin.Kartverket.Test.TestHelpers
             {
                 return r.ReadToEnd();
             }
-        }
-
-        public static T LoadJson<T>(string filename)
-        {
-            return JsonConvert.DeserializeObject<T>(LoadJson(filename));
         }
 
         public static IOptions<ApplicationSettings> GetSettingsForTest()

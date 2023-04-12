@@ -1,0 +1,16 @@
+{
+    "Logging": {
+        "LogLevel": {
+            "Default": "Information",
+            "Dan.Plugin.Kartverket": "Information",
+            "Microsoft": "Warning",
+            "Function": "Warning",
+            "System.Net": "Warning"
+        },
+        "ApplicationInsights": {
+            "SamplingSettings": {
+                "IsEnabled": false
+            }
+        }
+    }
+}

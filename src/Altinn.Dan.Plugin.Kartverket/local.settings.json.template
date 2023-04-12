@@ -1,26 +1,23 @@
 {
     "IsEncrypted": false,
-    "Values": {
-        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-        "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
-        "BreakerRetryWaitTime": "10",
-        "IsTestEnv": true,
-
-        "KartverketRegisterenhetsrettsandelerForPersonUrl": "https://<Kartverket URL>/registerenhetsrettsandeler/for/person/{identifikasjonsnummer}",
-        "KartverketRettigheterForPersonUrl": "https://<Kartverket URL>/rettigheter/for/person/{identifikasjonsnummer}",
-        "MPKartverket:Environment": "ver1",
-        "MPKartverket:ClientId": "",
-        "MPKartverket:Scope": "",
-        "MPKartverket:AzureKeyVaultName": "",
-        "MPKartverket:SecretName": "",
-
-        "LandbrukUrl": "https://<Landbruksdirektoratet URL>",
-        "MP3Landbruk:Environment": "ver2",
-        "MP3Landbruk:ClientId": "",
-        "MP3Landbruk:Scope": "",
-        "MP3Landbruk:AzureKeyVaultName": "",
-        "MP3Landbruk:SecretName": "",
-
-        "AddressLookupUrl": "https://<Geonorge URL>"
-    }
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "BreakerRetryWaitTime": "10",
+    "IsTestEnv": true,
+    "KartverketRegisterenhetsrettsandelerForPersonUrl": "https://syntest.grunnbok.no/oed/registerenhetsrettsandeler/for/person/{identifikasjonsnummer}",
+    "KartverketRettigheterForPersonUrl": "https://syntest.grunnbok.no/oed/rettigheter/for/person/{identifikasjonsnummer}",
+    "MPKartverketEnvironment": "ver1",
+    "MPKartverketClientId": "40bb9c4b-c20e-4d78-b150-6c6d952674f1",
+    "MPKartverketScope": "kartverk:grunnbok/oed.read",
+    "MPKartverketAzureKeyVaultName": "kv-nadobe-prod-staging",
+    "MPKartverketSecretName": "digdir-cert",
+    "LandbrukUrl": "https://qa.landbruksdirektoratet.no/landbruksregisteret/api/mp/eiendom",
+    "MP3LandbrukEnvironment": "ver2",
+    "MP3LandbrukClientId": "40bb9c4b-c20e-4d78-b150-6c6d952674f1",
+    "MP3LandbrukScope": "ldir:eiendom",
+    "MP3LandbrukAzureKeyVaultName": "kv-nadobe-prod-staging",
+    "MP3LandbrukSecretName": "digdir-cert",
+    "AddressLookupUrl": "https://ws.geonorge.no/adresser/v1"
+  }
 }

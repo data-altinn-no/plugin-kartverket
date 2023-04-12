@@ -1,29 +1,26 @@
-using System;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 using Altinn.ApiClients.Maskinporten.Config;
 using Altinn.ApiClients.Maskinporten.Interfaces;
 using Altinn.ApiClients.Maskinporten.Models;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
-namespace Altinn.Dan.Plugin.Kartverket.Config
+namespace Dan.Plugin.Kartverket.Config
 {
-    public class KeyVaultClientDefinition : IClientDefinition
+    public class KeyVaultMaskinportenClientDefinition : IClientDefinition
     {
+        private readonly ILogger<KeyVaultMaskinportenClientDefinition> _logger;
+
         public MaskinportenSettings ClientSettings { get; set; }
-        public KeyVaultClientDefinitionSettings KeyVaultClientDefinitionSettings { get; set; }
+        public KeyVaultMaskinportenSettings KeyVaultMaskinportenSettings { get; set; } = new();
         private ClientSecrets _clientSecrets;
 
-        protected KeyVaultClientDefinition()
+        public KeyVaultMaskinportenClientDefinition(ILogger<KeyVaultMaskinportenClientDefinition> logger)
         {
-        }
-
-        public KeyVaultClientDefinition(IOptions<KeyVaultClientDefinitionSettings> clientSettings)
-        {
-            ClientSettings = clientSettings.Value;
-            KeyVaultClientDefinitionSettings = clientSettings.Value;
+            _logger = logger;
         }
 
         public async Task<ClientSecrets> GetClientSecrets()
@@ -34,10 +31,10 @@ namespace Altinn.Dan.Plugin.Kartverket.Config
             }
 
             var secretClient = new SecretClient(
-                new Uri($"https://{KeyVaultClientDefinitionSettings.AzureKeyVaultName}.vault.azure.net/"),
+                new Uri($"https://{KeyVaultMaskinportenSettings.AzureKeyVaultName}.vault.azure.net/"),
                 new DefaultAzureCredential());
 
-            var secret = await secretClient.GetSecretAsync(KeyVaultClientDefinitionSettings.SecretName);
+            var secret = await secretClient.GetSecretAsync(KeyVaultMaskinportenSettings.SecretName);
             var base64Str = secret.Value.Value;
             if (base64Str == null)
             {
@@ -55,15 +52,6 @@ namespace Altinn.Dan.Plugin.Kartverket.Config
             };
 
             return _clientSecrets;
-        }
-    }
-
-    public class KeyVaultClientDefinition<T> : KeyVaultClientDefinition where T : IClientDefinition
-    {
-        public KeyVaultClientDefinition(IOptions<KeyVaultClientDefinitionSettings<KeyVaultClientDefinition<T>>> clientSettings)
-        {
-            ClientSettings = clientSettings.Value;
-            KeyVaultClientDefinitionSettings = clientSettings.Value;
         }
     }
 }

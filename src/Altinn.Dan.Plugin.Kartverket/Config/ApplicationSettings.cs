@@ -1,6 +1,6 @@
 using System;
 
-namespace Altinn.Dan.Plugin.Kartverket.Config
+namespace Dan.Plugin.Kartverket.Config
 {
     public class ApplicationSettings
     {

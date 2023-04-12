@@ -1,18 +1,18 @@
+using Dan.Common.Exceptions;
+using Dan.Plugin.Kartverket.Clients;
+using Dan.Plugin.Kartverket.Models;
+using Dan.Plugin.Kartverket.Test.TestHelpers;
+using Moq;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Altinn.Dan.Plugin.Kartverket.Clients;
-using Altinn.Dan.Plugin.Kartverket.Models;
-using Altinn.Dan.Plugin.Kartverket.Test.TestHelpers;
-using Moq;
-using Nadobe.Common.Exceptions;
-using Newtonsoft.Json;
 using Xunit;
-using static Altinn.Dan.Plugin.Kartverket.Test.TestHelpers.TestHelpers;
+using static Dan.Plugin.Kartverket.Test.TestHelpers.TestHelpers;
 
-namespace Altinn.Dan.Plugin.Kartverket.Test.Clients;
+namespace Dan.Plugin.Kartverket.Test.Clients;
 
 public class AddressLookupClientTest
 {
@@ -21,13 +21,13 @@ public class AddressLookupClientTest
     [Fact]
     public async Task Get_ok()
     {
-        var httpClient = GetHttpClientMockWithResponseConfig(new List<ResponseConfig>
+        var httpClient = GetHttpClientMockWithResponseConfig(new List<TestHelpers.TestHelpers.ResponseConfig>
         {
-            new ResponseConfig
+            new TestHelpers.TestHelpers.ResponseConfig
                 { ResponseContent = LoadJson("OutputAdresseList_Finstadveien.json"), QueryStringContains = "kommunenummer=1860&bruksnummer=46&gardsnummer=43&festenummer=0" },
-            new ResponseConfig
+            new TestHelpers.TestHelpers.ResponseConfig
                 { ResponseContent = LoadJson("OutputAdresseList_Myrdalsvegen.json"), QueryStringContains = "kommunenummer=4601&bruksnummer=435&gardsnummer=189&festenummer=0" },
-            new ResponseConfig
+            new TestHelpers.TestHelpers.ResponseConfig
                 { ResponseContent = LoadJson("OutputAdresseList_Valbergsveien.json"), QueryStringContains = "kommunenummer=1860&bruksnummer=1&gardsnummer=134&festenummer=0" }
         });
         _httpClientFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(httpClient);
