@@ -35,7 +35,7 @@ namespace Dan.Plugin.Kartverket
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
 
-            return await EvidenceSourceResponse.CreateResponse(null, () => GetEvidenceValuesGrunnbok(evidenceHarvesterRequest));
+            return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesGrunnbok(evidenceHarvesterRequest));
         }
 
         private async Task<List<EvidenceValue>> GetEvidenceValuesGrunnbok(EvidenceHarvesterRequest evidenceHarvesterRequest)
@@ -43,7 +43,8 @@ namespace Dan.Plugin.Kartverket
             try
             {
                 var ecb = new EvidenceBuilder(new Metadata(), "Grunnbok");
-                ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(await _ddWrapper.GetDDGrunnbok(evidenceHarvesterRequest.SubjectParty.NorwegianSocialSecurityNumber)), Metadata.SOURCE);
+                var result = await _ddWrapper.GetDDGrunnbok(evidenceHarvesterRequest.SubjectParty.NorwegianSocialSecurityNumber);
+                ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
 
                 return ecb.GetEvidenceValues();
             }
