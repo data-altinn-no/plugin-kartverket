@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Altinn.Dan.Plugin.Kartverket\Dan.Plugin.Kartverket.csproj" />
+    <ProjectReference Include="..\..\src\Dan.Plugin.Kartverket\Dan.Plugin.Kartverket.csproj" />
   </ItemGroup>
 
   <ItemGroup>
