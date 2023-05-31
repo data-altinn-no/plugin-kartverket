@@ -14,7 +14,7 @@ namespace Dan.Plugin.Kartverket.Config
     {
         private readonly ILogger<KeyVaultMaskinportenClientDefinition> _logger;
 
-        public MaskinportenSettings ClientSettings { get; set; }
+        public IMaskinportenSettings ClientSettings { get; set; }
         public KeyVaultMaskinportenSettings KeyVaultMaskinportenSettings { get; set; } = new();
         private ClientSecrets _clientSecrets;
 
