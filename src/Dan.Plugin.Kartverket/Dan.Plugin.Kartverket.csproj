@@ -19,6 +19,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="System.ServiceModel.Duplex" Version="4.10.*" />
+    <PackageReference Include="System.ServiceModel.Federation" Version="4.10.*" />
+    <PackageReference Include="System.ServiceModel.Http" Version="4.10.*" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.10.*" />
+    <PackageReference Include="System.ServiceModel.Security" Version="4.10.*" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
@@ -44,5 +49,8 @@
       <SourceUri>https://ws.geonorge.no/adresser/v1/openapi.json</SourceUri>
       <Options>/GenerateOptionalPropertiesAsNullable:true /GenerateClientClasses:false /GenerateExceptionClasses:false</Options>
     </OpenApiReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Clients\Matrikkel\" />
   </ItemGroup>
 </Project>

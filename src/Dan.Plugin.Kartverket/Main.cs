@@ -17,13 +17,15 @@ namespace Dan.Plugin.Kartverket
     public class Main
     {
         private ILogger _logger;
-        private readonly KartverketClient _kartverketClient;
+        private IKartverketGrunnbokMatrikkelService _kartverketGrunnbokMatrikkelService;
         private readonly IDDWrapper _ddWrapper;
 
-        public Main(ILoggerFactory loggerFactory, IDDWrapper ddWrapper)
+
+        public Main(ILoggerFactory loggerFactory, IDDWrapper ddWrapper, IKartverketGrunnbokMatrikkelService kartverketGrunnbokMatrikkelService)
         {
             _logger = loggerFactory.CreateLogger<Main>();
             _ddWrapper = ddWrapper;
+            _kartverketGrunnbokMatrikkelService = kartverketGrunnbokMatrikkelService;
         }
 
         [Function("Grunnbok")]
@@ -36,6 +38,24 @@ namespace Dan.Plugin.Kartverket
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
 
             return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesGrunnbok(evidenceHarvesterRequest));
+        }
+
+        [Function("Eiendommer")]
+        public async Task<HttpResponseData> Eiendommer(
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequestData req,
+            FunctionContext context)
+        {
+            _logger.LogInformation("Running func 'Eiendommer'");
+            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
+
+            return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesEiendommer(evidenceHarvesterRequest));
+        }
+
+        private async Task<List<EvidenceValue>> GetEvidenceValuesEiendommer(EvidenceHarvesterRequest request)
+        {
+            var result = await _kartverketGrunnbokMatrikkelService.FindProperties(request.SubjectParty.NorwegianOrganizationNumber);
+            return new List<EvidenceValue>();
         }
 
         private async Task<List<EvidenceValue>> GetEvidenceValuesGrunnbok(EvidenceHarvesterRequest evidenceHarvesterRequest)
