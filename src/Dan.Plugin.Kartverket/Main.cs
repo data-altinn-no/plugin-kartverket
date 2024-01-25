@@ -55,7 +55,10 @@ namespace Dan.Plugin.Kartverket
         private async Task<List<EvidenceValue>> GetEvidenceValuesEiendommer(EvidenceHarvesterRequest request)
         {
             var result = await _kartverketGrunnbokMatrikkelService.FindProperties(request.SubjectParty.NorwegianOrganizationNumber);
-            return new List<EvidenceValue>();
+
+            var ecb = new EvidenceBuilder(new Metadata(), "Eiendommer");
+            ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
+            return ecb.GetEvidenceValues();
         }
 
         private async Task<List<EvidenceValue>> GetEvidenceValuesGrunnbok(EvidenceHarvesterRequest evidenceHarvesterRequest)

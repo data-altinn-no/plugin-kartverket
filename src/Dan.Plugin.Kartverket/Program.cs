@@ -4,6 +4,7 @@ using Dan.Common.Extensions;
 using Dan.Plugin.Kartverket;
 using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
+using Dan.Plugin.Kartverket.Clients.Matrikkel;
 using Dan.Plugin.Kartverket.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +22,16 @@ var host = new HostBuilder()
             //Matrikkel og grunnbok services
             services.AddScoped<IKartverketGrunnbokMatrikkelService, KartverketGrunnbokMatrikkelService>();
             services.AddScoped<IIdentServiceClientService, IdentServiceClientService>();
+            services.AddScoped<IStoreServiceClientService, StoreServiceClientService>();
+            services.AddScoped<IMatrikkelenhetClientService, MatrikkelenhetClientService>();
+            services.AddScoped<IMatrikkelKommuneClientService, MatrikkelKommuneClientService>();
             services.AddScoped<IRegisterenhetsRettsandelsServiceClientService, RegisterenhetsRettsandelsServiceClientService>();
+            services.AddScoped<IMatrikkelStoreClientService, MatrikkelStoreClientService>();
+            services.AddScoped<IMatrikkelPersonClientService, MatrikkelPersonClientService>();
+            services.AddScoped<IOverfoeringServiceClientService, OverfoeringServiceClientService>();
+            services.AddScoped<IRettsstiftelseClientService, RettsstiftelseClientService>();
+            services.AddScoped<IRegisterenhetsrettClientService, RegisterenhetsrettClientService>();
+            services.AddScoped<IInformasjonsServiceClientService, InformasjonsServiceClientService>();
 
             //KartverketClient
             services.AddMaskinportenHttpClient<KeyVaultMaskinportenClientDefinition, KartverketClient>(configurationRoot.GetSection("MPKartverket"),

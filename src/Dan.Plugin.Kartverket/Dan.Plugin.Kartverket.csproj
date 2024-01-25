@@ -51,6 +51,6 @@
     </OpenApiReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Clients\Matrikkel\" />
+    <Folder Include="Models\Grunnbok\" />
   </ItemGroup>
 </Project>

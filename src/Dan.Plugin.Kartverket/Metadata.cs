@@ -11,6 +11,7 @@ namespace Dan.Plugin.Kartverket
     public class Metadata : IEvidenceSourceMetadata
     {
         private const string SERIVCECONTEXT_OED = "OED";
+        private const string SERVICECONTEXT_EDUEDILIGENCE = "eDueDiligence";
         public const string SOURCE = "Kartverket";
 
         public const int ERROR_CCR_UPSTREAM_ERROR = 2;
@@ -49,7 +50,30 @@ namespace Dan.Plugin.Kartverket
                             RequiredScopes = new List<string> { "altinn:dataaltinnno/oed" }
                         }
                     }
-                }
+                },
+                new EvidenceCode()
+                {
+                    EvidenceCodeName = "Eiendommer",
+                    EvidenceSource = SOURCE,
+                    BelongsToServiceContexts = new List<string>() { SERVICECONTEXT_EDUEDILIGENCE },
+                    RequiredScopes = "",
+                    Values = new List<EvidenceValue>
+                    {
+                        new()
+                        {
+                            EvidenceValueName = "default",
+                            ValueType = EvidenceValueType.JsonSchema,
+                            JsonSchemaDefintion = JsonSchema.FromType<List<PropertyModel>>().ToJson(Formatting.Indented)
+                        }
+                    },
+                    AuthorizationRequirements = new List<Requirement>
+                    {
+                        new MaskinportenScopeRequirement
+                        {
+                            RequiredScopes = new List<string> { "altinn:dataaltinnno/eduediligence" }
+                        }
+                    }
+                },
             };
         }
     }
