@@ -2,28 +2,11 @@ using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Clients.Matrikkel;
 using Dan.Plugin.Kartverket.Config;
 using Dan.Plugin.Kartverket.Models;
-using Kartverket.Grunnbok.RegisterenhetsrettsandelService;
-using Kartverket.Grunnbok.StoreService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.ServiceModel;
 using System.Threading.Tasks;
-using Kartverket.Matrikkel.StoreService;
-using Namotion.Reflection;
-using getObjectRequest = Kartverket.Grunnbok.StoreService.getObjectRequest;
-using Matrikkelenhet = Kartverket.Grunnbok.StoreService.Matrikkelenhet;
-using PersonId = Kartverket.Grunnbok.RegisterenhetsrettsandelService.PersonId;
-using RegisterenhetId = Kartverket.Grunnbok.StoreService.RegisterenhetId;
-using RegisterenhetsrettId = Kartverket.Grunnbok.StoreService.RegisterenhetsrettId;
-using RegisterenhetsrettsandelId = Kartverket.Grunnbok.StoreService.RegisterenhetsrettsandelId;
-using RegisterenhetsrettsandelIdRR = Kartverket.Grunnbok.RegisterenhetsrettsandelService.RegisterenhetsrettsandelId;
-using OverdragelseAvRegisterenhetsrett = Kartverket.Grunnbok.InformasjonsService.OverdragelseAvRegisterenhetsrett;
-using StoreServiceClient = Kartverket.Grunnbok.StoreService.StoreServiceClient;
-using Teig = Kartverket.Matrikkel.MatrikkelenhetService.Teig;
 
 namespace Dan.Plugin.Kartverket.Clients
 {
@@ -48,10 +31,13 @@ namespace Dan.Plugin.Kartverket.Clients
         private IRettsstiftelseClientService _rettsstiftelseClientService;
         private IRegisterenhetsrettClientService _registerenhetsrettClientService;
         private IInformasjonsServiceClientService _informasjonsServiceClientService;
+        private IRegisterenhetsRettsandelsServiceClientService _regRettsandelsClientService;
+        private IMatrikkelBygningClientService _matrikkelbygningClientService;
 
         public KartverketGrunnbokMatrikkelService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IIdentServiceClientService identService, IStoreServiceClientService storeService, IMatrikkelenhetClientService matrikkelService,
             IMatrikkelKommuneClientService matrikkelKommuneService, IMatrikkelStoreClientService matrikkelStoreService, IMatrikkelPersonClientService matrikkelPersonClientService, IOverfoeringServiceClientService overfoeringsClientService,
-            IRettsstiftelseClientService rettsstiftelseClientService, IRegisterenhetsrettClientService registerenhetsrettClientService, IInformasjonsServiceClientService informasjonsServiceClientService)
+            IRettsstiftelseClientService rettsstiftelseClientService, IRegisterenhetsrettClientService registerenhetsrettClientService, IInformasjonsServiceClientService informasjonsServiceClientService, IRegisterenhetsRettsandelsServiceClientService regRettsandelsClientService,
+            IMatrikkelBygningClientService matrikkelbygningClientService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger(this.GetType().FullName);
@@ -65,6 +51,8 @@ namespace Dan.Plugin.Kartverket.Clients
             _rettsstiftelseClientService = rettsstiftelseClientService;
             _registerenhetsrettClientService = registerenhetsrettClientService;
             _informasjonsServiceClientService = informasjonsServiceClientService;
+            _regRettsandelsClientService = regRettsandelsClientService;
+            _matrikkelbygningClientService = matrikkelbygningClientService;
         }
 
         public async Task<List<PropertyModel>> FindProperties(string identifier)
@@ -96,6 +84,14 @@ namespace Dan.Plugin.Kartverket.Clients
 
             //var personidtest = await _matrikkelPersonClient.GetOrganization(identifier);
             //var personTest = await _matrikkelenhetServiceClient.GetMatrikkelenheterForPerson(personidtest);
+
+            //var matrikkelenhetgrunnbok = await GetGrunnbokProperties(testprop);
+
+            //var matrikkelEnhet = await _matrikkelStoreClient.GetMatrikkelenhet(matrikkelenhetid.value);
+            //var matrikkelenhetmedteiger = await _matrikkelenhetServiceClient.GetMatrikkelEnhetMedTeiger(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer, matrikkelenhetgrunnbok.festenummer, matrikkelenhetgrunnbok.seksjonsnummer, kommune.Number);
+
+            //var matrikkelEnhet = matrikkelenhetmedteiger.bubbleObjects.OfType<Grunneiendom>().FirstOrDefault();
+            //var teiger = matrikkelenhetmedteiger.bubbleObjects.OfType<Teig>().Select(x=>x.lagretBeregnetAreal).ToList();
             #endregion
 
             var result = new List<PropertyModel>();
@@ -104,40 +100,38 @@ namespace Dan.Plugin.Kartverket.Clients
             var ident = await _identServiceClient.GetPersonIdentity(identifier);
 
             //Get all properties owned by identifier
-            var propertyids = await GetGrunnBokAndelerForRettighetshavere(ident);
+            var regrettsandelListe = await _regRettsandelsClientService.GetAndelerForRettighetshaver(ident);
 
-            /* For debug purposes with random test data 
-            Random x = new Random(DateTime.Now.Second);
-            var temp = x.Next(0, propertyids.Count-1);
+           // regrettsandelListe.RemoveRange(10, regrettsandelListe.Count - 10);
 
-            string testprop = propertyids.ElementAt(temp).value; */
-
-
-            foreach (var propertyid in propertyids)
+            foreach (var registerenhetsrettsandelid in regrettsandelListe)
             {
-                string testprop = propertyid.value;
+                var regenhetsandelfromstore = await _storeServiceClient.GetRettighetsandeler(registerenhetsrettsandelid);
 
-                var regenhetsandelfromstore = await _storeServiceClient.GetRettighetsandeler(testprop);
-
-                var matrikkelenhetgrunnbok = await GetGrunnbokProperties(testprop);
+                var matrikkelenhetgrunnbok = await _storeServiceClient.GetMatrikkelEnhetFromRegisterRettighetsandel(regenhetsandelfromstore.registerenhetsrettId.value);
 
                 var heftelserFromRettsstiftelse = await _rettsstiftelseClientService.GetHeftelser(matrikkelenhetgrunnbok.id.value);
 
                 heftelserFromRettsstiftelse = await _storeServiceClient.GetPawnOwnerNames(heftelserFromRettsstiftelse);
 
                 var ownershipTransfer = await _informasjonsServiceClientService.GetOwnershipInfo(matrikkelenhetgrunnbok.id.value);
-     
 
                 var kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
-
 
                 var matrikkelenhetid =
                     await _matrikkelenhetServiceClient.GetMatrikkelenhet(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer, matrikkelenhetgrunnbok.festenummer, matrikkelenhetgrunnbok.seksjonsnummer, kommune.Number);
 
-                var matrikkelEnhet = await _matrikkelStoreClient.GetMatrikkelenhet(matrikkelenhetid.value);
-                var matrikkelenhetmedteiger = await _matrikkelenhetServiceClient.GetMatrikkelEnhetMedTeiger(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer, matrikkelenhetgrunnbok.festenummer, matrikkelenhetgrunnbok.seksjonsnummer, kommune.Number);
+                var bygningsider = await _matrikkelbygningClientService.GetBygningerForMatrikkelenhet(matrikkelenhetid.value);
 
-                var teiger = matrikkelenhetmedteiger.bubbleObjects.OfType<Teig>().Select(x=>x.lagretBeregnetAreal).ToList();
+                var buildings = new List<double>();
+                foreach (var id in bygningsider)
+                {
+                    var temp = await _matrikkelStoreClient.GetBygning(id);
+                    buildings.Add(temp == null ? 0 : temp.bebygdAreal);
+                }
+
+                var matrikkelEnhet = await _matrikkelenhetServiceClient.GetMatrikkelEnhetTeig(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer,
+                    matrikkelenhetgrunnbok.festenummer, matrikkelenhetgrunnbok.seksjonsnummer, kommune.Number);
 
                 result.Add(new PropertyModel()
                 {
@@ -145,163 +139,20 @@ namespace Dan.Plugin.Kartverket.Clients
                     {
                         bnr = matrikkelenhetgrunnbok.bruksnummer.ToString(),
                         gnr = matrikkelenhetgrunnbok.gaardsnummer.ToString(),
-                        TeigAreas = teiger,
-                        CountyMunicipality = kommune.Name
+                        TeigAreas = matrikkelEnhet.Teiger,
+                        CountyMunicipality = kommune.Name,
+                        BuildingArea = buildings.Sum()
                     },
                     Documents = heftelserFromRettsstiftelse,
-                    HasCulturalHeritageSite = matrikkelEnhet.harKulturminne,
+                    HasCulturalHeritageSite = matrikkelEnhet.HasCulturalHeritageSite,
                     Owners = new Rettighetshavere()
                     {
-                        EstablishedDate = ownershipTransfer.EstablishedDate, 
+                        EstablishedDate = (ownershipTransfer == null) ? null : ownershipTransfer.EstablishedDate, 
                         Share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}",
-                        Price = $"{ownershipTransfer.Price} {ownershipTransfer.CurrencyCode}" }
+                        Price = (ownershipTransfer == null) ? "" : $"{ownershipTransfer.Price} {ownershipTransfer.CurrencyCode}" }
                 });
             }
             return result;
-        }
-
-
-        private async Task<Matrikkelenhet> GetGrunnbokProperties(string propertyid)
-        {
-            //Find ident for identifier
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            StoreServiceClient storeservice = new StoreServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "StoreServiceWS"));
-            GrunnbokHelpers.SetGrunnbokWSCredentials(storeservice.ClientCredentials, _settings);
-
-            var request = new getObjectRequest()
-            {
-                grunnbokContext = new()
-                {
-                    clientIdentification = "eDueDiligence",
-                    clientTraceInfo = "eDueDiligence_1",
-                    locale = "no_578",
-                    snapshotVersion = new()
-                    {
-                        timestamp = new DateTime(9999, 1, 1, 0, 0, 0)
-                    },
-                    systemVersion = "1"
-                },
-                id = new RegisterenhetsrettsandelId()
-                {
-                    value = propertyid
-                }
-            };
-
-            try
-            {
-                var storeResponse = await storeservice.getObjectAsync(request);
-                var retter = (Registerenhetsrettsandel) storeResponse.@return;
-
-                var request2 = new getObjectRequest()
-                {
-                    grunnbokContext = new()
-                    {
-                        clientIdentification = "eDueDiligence",
-                        clientTraceInfo = "eDueDiligence_1",
-                        locale = "no_578",
-                        snapshotVersion = new()
-                        {
-                            timestamp = new DateTime(9999, 1, 1, 0, 0, 0)
-                        },
-                        systemVersion = "1"
-                    },
-                    id = new RegisterenhetsrettId()
-                    {
-                        value = retter.registerenhetsrettId.value
-                    }
-                };
-
-                var registerenhetsrett = await storeservice.getObjectAsync(request2);
-                var rrrett = (Registerenhetsrett) registerenhetsrett.@return;
-
-                var request3 = new getObjectRequest()
-                {
-                    grunnbokContext = new()
-                    {
-                        clientIdentification = "eDueDiligence",
-                        clientTraceInfo = "eDueDiligence_1",
-                        locale = "no_578",
-                        snapshotVersion = new()
-                        {
-                            timestamp = new DateTime(9999, 1, 1, 0, 0, 0)
-                        },
-                        systemVersion = "1"
-                    },
-                    id = new RegisterenhetId()
-                    {
-                        value = rrrett.registerenhetId.value
-                    }
-                };
-
-                var regenhet = await storeservice.getObjectAsync(request3);
-                var rregenhet = (Matrikkelenhet) regenhet.@return;
-
-                return rregenhet;
-
-            }
-            catch (FaultException fex)
-            {
-                _logger.LogError(fex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-            }
-
-            return new Matrikkelenhet();
-        }
-
-        private async Task<List<RegisterenhetsrettsandelIdRR>> GetGrunnBokAndelerForRettighetshavere(string ident)
-        {
-            //Find ident for identifier
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-            var retter = new List<RegisterenhetsrettsandelIdRR>();
-
-            RegisterenhetsrettsandelServiceClient rettighetsservice = new RegisterenhetsrettsandelServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "RegisterenhetsrettsandelServiceWS"));
-           GrunnbokHelpers.SetGrunnbokWSCredentials(rettighetsservice.ClientCredentials, _settings);
-
-            var request = new findAndelerForRettighetshavereRequest()
-            {
-                Body = new findAndelerForRettighetshavereRequestBody()
-                {
-                    personIds = new PersonIdList()
-                    {
-                        new()
-                        {
-                            value = ident
-                        }
-                    },
-                    grunnbokContext = new()
-                    {
-                        clientIdentification = "eDueDiligence",
-                        clientTraceInfo = "eDueDiligence_1",
-                        locale = "no_578",
-                        snapshotVersion = new()
-                        {
-                            timestamp = new DateTime(9999, 1, 1, 0, 0, 0)
-                        },
-                        systemVersion = "1"
-                    }
-                }
-            };
-
-            try
-            {
-                var rettighetsresponse = await rettighetsservice.findAndelerForRettighetshavereAsync(request);
-                retter = rettighetsresponse.Body.@return.SelectMany(d => d.Value).ToList();
-              
-            }
-            catch (FaultException fex)
-            {
-                _logger.LogError(fex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-            }
-
-            return retter;
         }
     }
 }

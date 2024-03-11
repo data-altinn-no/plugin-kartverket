@@ -33,6 +33,9 @@ namespace Dan.Plugin.Kartverket.Models
         [JsonProperty("bruksnummer")]
         public string bnr { get; set; }
 
+        [JsonProperty("bygningsareal")]
+        public double BuildingArea { get; set; }
+
         [JsonProperty("teigarealer")]
         public List<double> TeigAreas { get; set; }
     }
@@ -40,7 +43,7 @@ namespace Dan.Plugin.Kartverket.Models
     public class Rettighetshavere
     {
         [JsonProperty("datoHjemmelEiendomsrett")]
-        public DateTime EstablishedDate { get; set; }
+        public DateTime? EstablishedDate { get; set; }
         [JsonProperty("vederlag")]
         public string Price { get; set; }
         [JsonProperty("eierandel")]
@@ -64,7 +67,7 @@ namespace Dan.Plugin.Kartverket.Models
         public decimal Price { get; set; }
         public string CurrencyCode { get; set; }
 
-        public DateTime EstablishedDate { get; set; }
+        public DateTime? EstablishedDate { get; set; }
     }
 
     public class Amount
@@ -86,6 +89,18 @@ namespace Dan.Plugin.Kartverket.Models
         public string Number { get; set; }
     }
 
+    public class MatrikkelEnhetMedteig
+    {
+        public List<double> Teiger { get; set; }
+
+        public string Gaardsnummer { get; set; }
+
+        public string Bruksnummer { get; set; }
+
+        public bool HasCulturalHeritageSite { get; set; }
+    }
+
+ 
 
     /*
      * Grunnboksinformasjon

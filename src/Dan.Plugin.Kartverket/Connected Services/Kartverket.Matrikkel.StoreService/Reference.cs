@@ -530,16 +530,11 @@ namespace Kartverket.Matrikkel.StoreService
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ExportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AtkomsttypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpphavKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakEndringStedsnavnKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressetilleggsnavnKildeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsKildeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VertikalBarekonstrKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegReferanseKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RenovasjonsKodeId))]
@@ -555,17 +550,24 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningReferanseKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukAvGrunnKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseReferanseKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AtkomsttypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpphavKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakEndringStedsnavnKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressetilleggsnavnKildeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbStatusKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DomeneAvgrensningId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AksessTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SprakformId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukergruppeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerAktiveringsstatusKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsstatusKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TerrengdetaljKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIForretningKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MediumId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetstypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HjelpelinjetypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensepunkttypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensemerkeNedsattIKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningsklasseKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FormalSeksjonKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EierforholdKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilFeilrettingKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmerknadKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealkildeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenMatrikkelenhetsKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggstypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdministrativGrenseKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KontaktpersonKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KjokkentilgangKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BruksenhetstypeKodeId))]
@@ -598,31 +600,29 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(FasadeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EtasjetallKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsgradKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DomeneAvgrensningId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AksessTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SprakformId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukergruppeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerAktiveringsstatusKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbtypeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingFeilKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsKildeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsstatusKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TerrengdetaljKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIForretningKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MediumId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HjelpelinjetypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensepunkttypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensemerkeNedsattIKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningsklasseKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FormalSeksjonKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EierforholdKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilFeilrettingKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmerknadKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealkildeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenMatrikkelenhetsKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdministrativGrenseKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbStatusKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ByggBrukstilfelleKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIMeldingId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MeldingstypeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MeldingStatusId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ExportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportTypeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonKategoriKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonStatusKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonIdKodeId))]
@@ -640,16 +640,11 @@ namespace Kartverket.Matrikkel.StoreService
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelEnumKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ExportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AtkomsttypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpphavKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakEndringStedsnavnKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressetilleggsnavnKildeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsKildeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VertikalBarekonstrKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegReferanseKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RenovasjonsKodeId))]
@@ -665,17 +660,24 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningReferanseKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukAvGrunnKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseReferanseKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AtkomsttypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpphavKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakEndringStedsnavnKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressetilleggsnavnKildeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbStatusKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DomeneAvgrensningId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AksessTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SprakformId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukergruppeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerAktiveringsstatusKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsstatusKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TerrengdetaljKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIForretningKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MediumId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetstypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HjelpelinjetypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensepunkttypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensemerkeNedsattIKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningsklasseKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FormalSeksjonKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EierforholdKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilFeilrettingKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmerknadKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealkildeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenMatrikkelenhetsKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggstypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdministrativGrenseKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KontaktpersonKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KjokkentilgangKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BruksenhetstypeKodeId))]
@@ -708,31 +710,29 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(FasadeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EtasjetallKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsgradKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DomeneAvgrensningId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AksessTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SprakformId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukergruppeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerAktiveringsstatusKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbtypeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingFeilKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsKildeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsstatusKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TerrengdetaljKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIForretningKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MediumId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HjelpelinjetypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensepunkttypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensemerkeNedsattIKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningsklasseKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FormalSeksjonKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EierforholdKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilFeilrettingKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmerknadKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealkildeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenMatrikkelenhetsKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdministrativGrenseKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbStatusKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ByggBrukstilfelleKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIMeldingId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MeldingstypeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MeldingStatusId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ExportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportTypeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonKategoriKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonStatusKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonIdKodeId))]
@@ -745,15 +745,15 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretstypeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKretstypeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GenerellKretstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VedtakstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PavirkningsgradKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MyndighetKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VernetypeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminnekategoriKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminneArtKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EnkeltminneArtKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetEgenerklaringKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LandKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VedtakstypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PavirkningsgradKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MyndighetKodeId))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kodeliste")]
@@ -764,16 +764,11 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelEnumKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ExportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AtkomsttypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpphavKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakEndringStedsnavnKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressetilleggsnavnKildeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsKildeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VertikalBarekonstrKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegReferanseKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RenovasjonsKodeId))]
@@ -789,17 +784,24 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningReferanseKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukAvGrunnKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseReferanseKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AtkomsttypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpphavKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakEndringStedsnavnKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressetilleggsnavnKildeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbStatusKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DomeneAvgrensningId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AksessTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SprakformId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukergruppeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerAktiveringsstatusKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsstatusKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TerrengdetaljKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIForretningKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MediumId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetstypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HjelpelinjetypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensepunkttypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensemerkeNedsattIKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningsklasseKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FormalSeksjonKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EierforholdKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilFeilrettingKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmerknadKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealkildeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenMatrikkelenhetsKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggstypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdministrativGrenseKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KontaktpersonKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KjokkentilgangKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BruksenhetstypeKodeId))]
@@ -832,31 +834,29 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(FasadeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EtasjetallKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsgradKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DomeneAvgrensningId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AksessTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SprakformId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukergruppeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerAktiveringsstatusKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbtypeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingFeilKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsKildeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsstatusKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TerrengdetaljKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIForretningKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MediumId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HjelpelinjetypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensepunkttypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensemerkeNedsattIKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningsklasseKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FormalSeksjonKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EierforholdKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilFeilrettingKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmerknadKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealkildeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenMatrikkelenhetsKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdministrativGrenseKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbStatusKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ByggBrukstilfelleKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIMeldingId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MeldingstypeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MeldingStatusId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ExportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportTypeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonKategoriKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonStatusKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonIdKodeId))]
@@ -869,15 +869,15 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretstypeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKretstypeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GenerellKretstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VedtakstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PavirkningsgradKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MyndighetKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VernetypeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminnekategoriKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminneArtKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EnkeltminneArtKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetEgenerklaringKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LandKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VedtakstypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PavirkningsgradKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MyndighetKodeId))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kodeliste")]
@@ -886,11 +886,39 @@ namespace Kartverket.Matrikkel.StoreService
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BruksenhetId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ByggId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsendringId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KursId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunelisteId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerRettighetListeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerHistorikkListeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsflateId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedFlereKommunerId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TettstedId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PostnummeromradeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedEnKommuneId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SvalbardomradeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ValgkretsId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKretsId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KirkesognId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrunnkretsId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressemerkeBestillingId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegadresseId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkeladresseId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunevapenId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FylkeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommuneId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminneId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FredetBygningId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrunnforurensingId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetLedetekstId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetBekreftelseId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsforholdUtskriftId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsforholdId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetFraEgenerklaringId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsvedtakId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetForretningId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndreForretningsdataForretningId))]
@@ -950,24 +978,24 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(DigitaliseringAvKoordinatForretningId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmalingForretningId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AktiverUtgattMatrikkelenhetForretningId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskPersonId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenPersonId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelEndringId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbOppgaveId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AvtaleStedbundenRettighetMeldingId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ByggesakmeldingId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingMeldingId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MeldingId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningMeldingId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetMeldingId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbOppgaveId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetLedetekstId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetBekreftelseId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsforholdUtskriftId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsforholdId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetFraEgenerklaringId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsvedtakId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MetadataObjektId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminneId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FredetBygningId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakMinneId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BruksenhetId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ByggId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsendringId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeiggrensepunktId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeiggrenseId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeigId))]
@@ -987,48 +1015,15 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonspunktId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsgrenseId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsflateId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakMinneId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KursId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunelisteId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerRettighetListeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerHistorikkListeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskPersonId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenPersonId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsflateId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedFlereKommunerId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TettstedId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PostnummeromradeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedEnKommuneId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SvalbardomradeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ValgkretsId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKretsId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KirkesognId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrunnkretsId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressemerkeBestillingId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegadresseId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkeladresseId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunevapenId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FylkeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommuneId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MetadataObjektId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelEnumKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ExportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AtkomsttypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpphavKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakEndringStedsnavnKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressetilleggsnavnKildeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsKildeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VertikalBarekonstrKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegReferanseKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RenovasjonsKodeId))]
@@ -1044,17 +1039,24 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningReferanseKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukAvGrunnKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseReferanseKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AtkomsttypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpphavKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakEndringStedsnavnKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressetilleggsnavnKildeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbStatusKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DomeneAvgrensningId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AksessTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SprakformId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukergruppeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerAktiveringsstatusKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsstatusKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TerrengdetaljKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIForretningKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MediumId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetstypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HjelpelinjetypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensepunkttypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensemerkeNedsattIKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningsklasseKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FormalSeksjonKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EierforholdKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilFeilrettingKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmerknadKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealkildeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenMatrikkelenhetsKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggstypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdministrativGrenseKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KontaktpersonKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KjokkentilgangKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BruksenhetstypeKodeId))]
@@ -1087,31 +1089,29 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(FasadeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EtasjetallKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsgradKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DomeneAvgrensningId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AksessTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SprakformId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukergruppeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerAktiveringsstatusKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbtypeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingFeilKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsKildeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsstatusKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TerrengdetaljKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIForretningKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MediumId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HjelpelinjetypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensepunkttypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensemerkeNedsattIKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningsklasseKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FormalSeksjonKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EierforholdKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilFeilrettingKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmerknadKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealkildeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenMatrikkelenhetsKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdministrativGrenseKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbStatusKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ByggBrukstilfelleKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIMeldingId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MeldingstypeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MeldingStatusId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ExportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportTypeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonKategoriKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonStatusKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonIdKodeId))]
@@ -1124,15 +1124,15 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretstypeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKretstypeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GenerellKretstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VedtakstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PavirkningsgradKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MyndighetKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VernetypeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminnekategoriKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminneArtKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EnkeltminneArtKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetEgenerklaringKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LandKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VedtakstypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PavirkningsgradKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MyndighetKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KodelisteId))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1160,34 +1160,226 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
-    public partial class BruksenhetId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsendringId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningId))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
-    public partial class ByggId : MatrikkelBubbleId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
+    public partial class KursId : MatrikkelBubbleId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
-    public partial class BygningsendringId : ByggId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
+    public partial class KommunelisteId : MatrikkelBubbleId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
-    public partial class BygningId : ByggId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
+    public partial class BrukerRettighetListeId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
+    public partial class BrukerHistorikkListeId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
+    public partial class BrukerId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class VegId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class KretsflateId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedFlereKommunerId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TettstedId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PostnummeromradeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedEnKommuneId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SvalbardomradeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ValgkretsId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKretsId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KirkesognId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrunnkretsId))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class KretsId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TettstedId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PostnummeromradeId))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class KretsMedFlereKommunerId : KretsId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class TettstedId : KretsMedFlereKommunerId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class PostnummeromradeId : KretsMedFlereKommunerId
+    {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SvalbardomradeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ValgkretsId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKretsId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KirkesognId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrunnkretsId))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class KretsMedEnKommuneId : KretsId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class SvalbardomradeId : KretsMedEnKommuneId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class ValgkretsId : KretsMedEnKommuneId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class KommunalKretsId : KretsMedEnKommuneId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class KirkesognId : KretsMedEnKommuneId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class GrunnkretsId : KretsMedEnKommuneId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class AdressemerkeBestillingId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegadresseId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkeladresseId))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class AdresseId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class VegadresseId : AdresseId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class MatrikkeladresseId : AdresseId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
+    public partial class KommunevapenId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
+    public partial class FylkeId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
+    public partial class KommuneId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kulturminne")]
+    public partial class KulturminneId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kulturminne")]
+    public partial class FredetBygningId : MatrikkelBubbleId
     {
     }
     
@@ -1196,6 +1388,56 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/grunnforurensing")]
     public partial class GrunnforurensingId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
+    public partial class KonsesjonsfrihetLedetekstId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
+    public partial class KonsesjonsfrihetBekreftelseId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
+    public partial class KonsesjonsforholdUtskriftId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetFraEgenerklaringId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsvedtakId))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
+    public partial class KonsesjonsforholdId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
+    public partial class KonsesjonsfrihetFraEgenerklaringId : KonsesjonsforholdId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
+    public partial class KonsesjonsvedtakId : KonsesjonsforholdId
     {
     }
     
@@ -1846,10 +2088,61 @@ namespace Kartverket.Matrikkel.StoreService
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskPersonId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenPersonId))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/person")]
+    public partial class PersonId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/person")]
+    public partial class FysiskPersonId : PersonId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/person")]
+    public partial class JuridiskPersonId : PersonId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/person")]
+    public partial class AnnenPersonId : PersonId
+    {
+    }
+    
+    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/endringslogg")]
     public partial class MatrikkelEndringId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb")]
+    public partial class JobbOppgaveId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb")]
+    public partial class JobbId : MatrikkelBubbleId
     {
     }
     
@@ -1905,90 +2198,42 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb")]
-    public partial class JobbOppgaveId : MatrikkelBubbleId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class SefrakMinneId : MatrikkelBubbleId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb")]
-    public partial class JobbId : MatrikkelBubbleId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
+    public partial class BruksenhetId : MatrikkelBubbleId
+    {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsendringId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningId))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
+    public partial class ByggId : MatrikkelBubbleId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
-    public partial class KonsesjonsfrihetLedetekstId : MatrikkelBubbleId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
+    public partial class BygningsendringId : ByggId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
-    public partial class KonsesjonsfrihetBekreftelseId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
-    public partial class KonsesjonsforholdUtskriftId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetFraEgenerklaringId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsvedtakId))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
-    public partial class KonsesjonsforholdId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
-    public partial class KonsesjonsfrihetFraEgenerklaringId : KonsesjonsforholdId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
-    public partial class KonsesjonsvedtakId : KonsesjonsforholdId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/metadata")]
-    public partial class MetadataObjektId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kulturminne")]
-    public partial class KulturminneId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kulturminne")]
-    public partial class FredetBygningId : MatrikkelBubbleId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
+    public partial class BygningId : ByggId
     {
     }
     
@@ -2153,253 +2398,8 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class SefrakMinneId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
-    public partial class KursId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
-    public partial class KommunelisteId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
-    public partial class BrukerRettighetListeId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
-    public partial class BrukerHistorikkListeId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
-    public partial class BrukerId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskPersonId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenPersonId))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/person")]
-    public partial class PersonId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/person")]
-    public partial class FysiskPersonId : PersonId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/person")]
-    public partial class JuridiskPersonId : PersonId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/person")]
-    public partial class AnnenPersonId : PersonId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class VegId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class KretsflateId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedFlereKommunerId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TettstedId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PostnummeromradeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedEnKommuneId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SvalbardomradeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ValgkretsId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKretsId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KirkesognId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrunnkretsId))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class KretsId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TettstedId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PostnummeromradeId))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class KretsMedFlereKommunerId : KretsId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class TettstedId : KretsMedFlereKommunerId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class PostnummeromradeId : KretsMedFlereKommunerId
-    {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SvalbardomradeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ValgkretsId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKretsId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KirkesognId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrunnkretsId))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class KretsMedEnKommuneId : KretsId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class SvalbardomradeId : KretsMedEnKommuneId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class ValgkretsId : KretsMedEnKommuneId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class KommunalKretsId : KretsMedEnKommuneId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class KirkesognId : KretsMedEnKommuneId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class GrunnkretsId : KretsMedEnKommuneId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class AdressemerkeBestillingId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegadresseId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkeladresseId))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class AdresseId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class VegadresseId : AdresseId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class MatrikkeladresseId : AdresseId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
-    public partial class KommunevapenId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
-    public partial class FylkeId : MatrikkelBubbleId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
-    public partial class KommuneId : MatrikkelBubbleId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/metadata")]
+    public partial class MetadataObjektId : MatrikkelBubbleId
     {
     }
     
@@ -2415,15 +2415,15 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretstypeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKretstypeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GenerellKretstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VedtakstypeKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PavirkningsgradKodeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MyndighetKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VernetypeKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminnekategoriKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminneArtKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EnkeltminneArtKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetEgenerklaringKodeId))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LandKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VedtakstypeKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PavirkningsgradKodeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MyndighetKodeId))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kodeliste")]
@@ -2454,30 +2454,6 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
     public partial class GenerellKretstypeKodeId : KretstypeKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/grunnforurensing/koder")]
-    public partial class VedtakstypeKodeId : MatrikkelDbKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/grunnforurensing/koder")]
-    public partial class PavirkningsgradKodeId : MatrikkelDbKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/grunnforurensing/koder")]
-    public partial class MyndighetKodeId : MatrikkelDbKodeId
     {
     }
     
@@ -2532,88 +2508,64 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class ExportTypeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportTypeId))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportTypeId))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class RapportTypeId : MatrikkelEnumKodeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/grunnforurensing/koder")]
+    public partial class VedtakstypeKodeId : MatrikkelDbKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class KonsesjonRapportTypeId : RapportTypeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/grunnforurensing/koder")]
+    public partial class PavirkningsgradKodeId : MatrikkelDbKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class VegRapportTypeId : RapportTypeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/grunnforurensing/koder")]
+    public partial class MyndighetKodeId : MatrikkelDbKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class MatrikkelenhetRapportTypeId : RapportTypeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
+    public partial class AtkomsttypeKodeId : MatrikkelEnumKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class MassivRapportTypeId : RapportTypeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
+    public partial class OpphavKodeId : MatrikkelEnumKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class EndringRapportTypeId : RapportTypeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
+    public partial class ArsakEndringStedsnavnKodeId : MatrikkelEnumKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class DriftRapportTypeId : RapportTypeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
+    public partial class AdressetilleggsnavnKildeKodeId : MatrikkelEnumKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class BygningRapportTypeId : RapportTypeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class AdresseRapportTypeId : RapportTypeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/endringslogg/koder")]
+    public partial class EndringsKildeKodeId : MatrikkelEnumKodeId
     {
     }
     
@@ -2740,88 +2692,144 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
-    public partial class AtkomsttypeKodeId : MatrikkelEnumKodeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class TinglysingsstatusKodeId : MatrikkelEnumKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
-    public partial class OpphavKodeId : MatrikkelEnumKodeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class TerrengdetaljKodeId : MatrikkelEnumKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
-    public partial class ArsakEndringStedsnavnKodeId : MatrikkelEnumKodeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class RolleIForretningKodeId : MatrikkelEnumKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
-    public partial class AdressetilleggsnavnKildeKodeId : MatrikkelEnumKodeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class MediumId : MatrikkelEnumKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb/koder")]
-    public partial class JobbStatusKodeId : MatrikkelEnumKodeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class MatrikkelenhetstypeKodeId : MatrikkelEnumKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
-    public partial class DomeneAvgrensningId : MatrikkelEnumKodeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class HjelpelinjetypeKodeId : MatrikkelEnumKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
-    public partial class AksessTypeId : MatrikkelEnumKodeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class GrensepunkttypeKodeId : MatrikkelEnumKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
-    public partial class RolleId : MatrikkelEnumKodeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class GrensemerkeNedsattIKodeId : MatrikkelEnumKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
-    public partial class SprakformId : MatrikkelEnumKodeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class ForretningstypeKodeId : MatrikkelEnumKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
-    public partial class BrukergruppeKodeId : MatrikkelEnumKodeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class ForretningsklasseKodeId : MatrikkelEnumKodeId
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
-    public partial class BrukerAktiveringsstatusKodeId : MatrikkelEnumKodeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class FormalSeksjonKodeId : MatrikkelEnumKodeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class EierforholdKodeId : MatrikkelEnumKodeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class ArsakTilFeilrettingKodeId : MatrikkelEnumKodeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class ArealmerknadKodeId : MatrikkelEnumKodeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class ArealkildeKodeId : MatrikkelEnumKodeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class AnnenMatrikkelenhetsKodeId : MatrikkelEnumKodeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class AnleggstypeKodeId : MatrikkelEnumKodeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class AdministrativGrenseKodeId : MatrikkelEnumKodeId
     {
     }
     
@@ -3076,6 +3084,54 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
+    public partial class DomeneAvgrensningId : MatrikkelEnumKodeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
+    public partial class AksessTypeId : MatrikkelEnumKodeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
+    public partial class RolleId : MatrikkelEnumKodeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
+    public partial class SprakformId : MatrikkelEnumKodeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
+    public partial class BrukergruppeKodeId : MatrikkelEnumKodeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
+    public partial class BrukerAktiveringsstatusKodeId : MatrikkelEnumKodeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb")]
     public partial class JobbtypeKodeId : MatrikkelEnumKodeId
     {
@@ -3092,152 +3148,8 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/endringslogg/koder")]
-    public partial class EndringsKildeKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class TinglysingsstatusKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class TerrengdetaljKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class RolleIForretningKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class MediumId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class MatrikkelenhetstypeKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class HjelpelinjetypeKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class GrensepunkttypeKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class GrensemerkeNedsattIKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class ForretningstypeKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class ForretningsklasseKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class FormalSeksjonKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class EierforholdKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class ArsakTilFeilrettingKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class ArealmerknadKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class ArealkildeKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class AnnenMatrikkelenhetsKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class AnleggstypeKodeId : MatrikkelEnumKodeId
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class AdministrativGrenseKodeId : MatrikkelEnumKodeId
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb/koder")]
+    public partial class JobbStatusKodeId : MatrikkelEnumKodeId
     {
     }
     
@@ -3270,6 +3182,94 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/aktivitetsliste/koder")]
     public partial class MeldingStatusId : MatrikkelEnumKodeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class ExportTypeId : MatrikkelEnumKodeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportTypeId))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportTypeId))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class RapportTypeId : MatrikkelEnumKodeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class KonsesjonRapportTypeId : RapportTypeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class VegRapportTypeId : RapportTypeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class MatrikkelenhetRapportTypeId : RapportTypeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class MassivRapportTypeId : RapportTypeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class EndringRapportTypeId : RapportTypeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class DriftRapportTypeId : RapportTypeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class BygningRapportTypeId : RapportTypeId
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class AdresseRapportTypeId : RapportTypeId
     {
     }
     
@@ -3886,19 +3886,7 @@ namespace Kartverket.Matrikkel.StoreService
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ByggIdent))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsendringIdent))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningIdent))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningIdent))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeigIdent))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetIdent))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FestegrunnIdent))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakIdent))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerIdent))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonIdent))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonIdent))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenPersonIdent))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskPersonIdent))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsIdent))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KirkesognIdent))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegIdent))]
@@ -3906,6 +3894,18 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkeladresseIdent))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegadresseIdent))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(FylkeIdent))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningIdent))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonIdent))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonIdent))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenPersonIdent))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskPersonIdent))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakIdent))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ByggIdent))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsendringIdent))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningIdent))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeigIdent))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetIdent))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FestegrunnIdent))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommuneIdent))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KodeIdent))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretstypeKodeIdent))]
@@ -3923,27 +3923,83 @@ namespace Kartverket.Matrikkel.StoreService
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsendringIdent))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningIdent))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
-    public partial class ByggIdent : Ident
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
+    public partial class BrukerIdent : Ident
     {
         
-        private long bygningsnummerField;
+        private string brukernavnField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long bygningsnummer
+        public string brukernavn
         {
             get
             {
-                return this.bygningsnummerField;
+                return this.brukernavnField;
             }
             set
             {
-                this.bygningsnummerField = value;
+                this.brukernavnField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KirkesognIdent))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class KretsIdent : Ident
+    {
+        
+        private string[] kommunenrField;
+        
+        private int kretsnrField;
+        
+        private string kretsTypeKodeverdiField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
+        public string[] kommunenr
+        {
+            get
+            {
+                return this.kommunenrField;
+            }
+            set
+            {
+                this.kommunenrField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int kretsnr
+        {
+            get
+            {
+                return this.kretsnrField;
+            }
+            set
+            {
+                this.kretsnrField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string kretsTypeKodeverdi
+        {
+            get
+            {
+                return this.kretsTypeKodeverdiField;
+            }
+            set
+            {
+                this.kretsTypeKodeverdiField = value;
             }
         }
     }
@@ -3951,23 +4007,55 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
-    public partial class BygningsendringIdent : ByggIdent
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class KirkesognIdent : KretsIdent
     {
         
-        private int lopenummerField;
+        private int bispedommeField;
+        
+        private int prostiField;
+        
+        private int prestegjeldField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int lopenummer
+        public int bispedomme
         {
             get
             {
-                return this.lopenummerField;
+                return this.bispedommeField;
             }
             set
             {
-                this.lopenummerField = value;
+                this.bispedommeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int prosti
+        {
+            get
+            {
+                return this.prostiField;
+            }
+            set
+            {
+                this.prostiField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int prestegjeld
+        {
+            get
+            {
+                return this.prestegjeldField;
+            }
+            set
+            {
+                this.prestegjeldField = value;
             }
         }
     }
@@ -3975,9 +4063,243 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
-    public partial class BygningIdent : ByggIdent
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class VegIdent : Ident
     {
+        
+        private KommuneIdent kommuneIdentField;
+        
+        private int adressekodeField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public KommuneIdent kommuneIdent
+        {
+            get
+            {
+                return this.kommuneIdentField;
+            }
+            set
+            {
+                this.kommuneIdentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int adressekode
+        {
+            get
+            {
+                return this.adressekodeField;
+            }
+            set
+            {
+                this.adressekodeField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
+    public partial class KommuneIdent : Ident
+    {
+        
+        private string kommunenummerField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string kommunenummer
+        {
+            get
+            {
+                return this.kommunenummerField;
+            }
+            set
+            {
+                this.kommunenummerField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkeladresseIdent))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegadresseIdent))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public abstract partial class AdresseIdent : Ident
+    {
+        
+        private KommuneIdent kommuneIdentField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public KommuneIdent kommuneIdent
+        {
+            get
+            {
+                return this.kommuneIdentField;
+            }
+            set
+            {
+                this.kommuneIdentField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class MatrikkeladresseIdent : AdresseIdent
+    {
+        
+        private int gardsnummerField;
+        
+        private int bruksnummerField;
+        
+        private int festenummerField;
+        
+        private int undernummerField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int gardsnummer
+        {
+            get
+            {
+                return this.gardsnummerField;
+            }
+            set
+            {
+                this.gardsnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int bruksnummer
+        {
+            get
+            {
+                return this.bruksnummerField;
+            }
+            set
+            {
+                this.bruksnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int festenummer
+        {
+            get
+            {
+                return this.festenummerField;
+            }
+            set
+            {
+                this.festenummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public int undernummer
+        {
+            get
+            {
+                return this.undernummerField;
+            }
+            set
+            {
+                this.undernummerField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class VegadresseIdent : AdresseIdent
+    {
+        
+        private int adressekodeField;
+        
+        private int nummerField;
+        
+        private string bokstavField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int adressekode
+        {
+            get
+            {
+                return this.adressekodeField;
+            }
+            set
+            {
+                this.adressekodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int nummer
+        {
+            get
+            {
+                return this.nummerField;
+            }
+            set
+            {
+                this.nummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string bokstav
+        {
+            get
+            {
+                return this.bokstavField;
+            }
+            set
+            {
+                this.bokstavField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
+    public partial class FylkeIdent : Ident
+    {
+        
+        private string fylkesnummerField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string fylkesnummer
+        {
+            get
+            {
+                return this.fylkesnummerField;
+            }
+            set
+            {
+                this.fylkesnummerField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -4016,279 +4338,6 @@ namespace Kartverket.Matrikkel.StoreService
             set
             {
                 this.lopenrFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class TeigIdent : Ident
-    {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FestegrunnIdent))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class MatrikkelenhetIdent : Ident
-    {
-        
-        private KommuneIdent kommuneIdentField;
-        
-        private int gardsnummerField;
-        
-        private bool gardsnummerFieldSpecified;
-        
-        private int bruksnummerField;
-        
-        private bool bruksnummerFieldSpecified;
-        
-        private int festenummerField;
-        
-        private bool festenummerFieldSpecified;
-        
-        private int seksjonsnummerField;
-        
-        private bool seksjonsnummerFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public KommuneIdent kommuneIdent
-        {
-            get
-            {
-                return this.kommuneIdentField;
-            }
-            set
-            {
-                this.kommuneIdentField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int gardsnummer
-        {
-            get
-            {
-                return this.gardsnummerField;
-            }
-            set
-            {
-                this.gardsnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool gardsnummerSpecified
-        {
-            get
-            {
-                return this.gardsnummerFieldSpecified;
-            }
-            set
-            {
-                this.gardsnummerFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int bruksnummer
-        {
-            get
-            {
-                return this.bruksnummerField;
-            }
-            set
-            {
-                this.bruksnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool bruksnummerSpecified
-        {
-            get
-            {
-                return this.bruksnummerFieldSpecified;
-            }
-            set
-            {
-                this.bruksnummerFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public int festenummer
-        {
-            get
-            {
-                return this.festenummerField;
-            }
-            set
-            {
-                this.festenummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool festenummerSpecified
-        {
-            get
-            {
-                return this.festenummerFieldSpecified;
-            }
-            set
-            {
-                this.festenummerFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public int seksjonsnummer
-        {
-            get
-            {
-                return this.seksjonsnummerField;
-            }
-            set
-            {
-                this.seksjonsnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool seksjonsnummerSpecified
-        {
-            get
-            {
-                return this.seksjonsnummerFieldSpecified;
-            }
-            set
-            {
-                this.seksjonsnummerFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
-    public partial class KommuneIdent : Ident
-    {
-        
-        private string kommunenummerField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string kommunenummer
-        {
-            get
-            {
-                return this.kommunenummerField;
-            }
-            set
-            {
-                this.kommunenummerField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class FestegrunnIdent : MatrikkelenhetIdent
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class SefrakIdent : Ident
-    {
-        
-        private int kommunenummerField;
-        
-        private int registreringskretsnummerField;
-        
-        private int huslopenummerField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int kommunenummer
-        {
-            get
-            {
-                return this.kommunenummerField;
-            }
-            set
-            {
-                this.kommunenummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int registreringskretsnummer
-        {
-            get
-            {
-                return this.registreringskretsnummerField;
-            }
-            set
-            {
-                this.registreringskretsnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int huslopenummer
-        {
-            get
-            {
-                return this.huslopenummerField;
-            }
-            set
-            {
-                this.huslopenummerField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
-    public partial class BrukerIdent : Ident
-    {
-        
-        private string brukernavnField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string brukernavn
-        {
-            get
-            {
-                return this.brukernavnField;
-            }
-            set
-            {
-                this.brukernavnField = value;
             }
         }
     }
@@ -4498,115 +4547,83 @@ namespace Kartverket.Matrikkel.StoreService
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KirkesognIdent))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class KretsIdent : Ident
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class SefrakIdent : Ident
     {
         
-        private string[] kommunenrField;
+        private int kommunenummerField;
         
-        private int kretsnrField;
+        private int registreringskretsnummerField;
         
-        private string kretsTypeKodeverdiField;
+        private int huslopenummerField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
-        public string[] kommunenr
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int kommunenummer
         {
             get
             {
-                return this.kommunenrField;
+                return this.kommunenummerField;
             }
             set
             {
-                this.kommunenrField = value;
+                this.kommunenummerField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int kretsnr
+        public int registreringskretsnummer
         {
             get
             {
-                return this.kretsnrField;
+                return this.registreringskretsnummerField;
             }
             set
             {
-                this.kretsnrField = value;
+                this.registreringskretsnummerField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string kretsTypeKodeverdi
+        public int huslopenummer
         {
             get
             {
-                return this.kretsTypeKodeverdiField;
+                return this.huslopenummerField;
             }
             set
             {
-                this.kretsTypeKodeverdiField = value;
+                this.huslopenummerField = value;
             }
         }
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsendringIdent))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningIdent))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class KirkesognIdent : KretsIdent
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
+    public partial class ByggIdent : Ident
     {
         
-        private int bispedommeField;
-        
-        private int prostiField;
-        
-        private int prestegjeldField;
+        private long bygningsnummerField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int bispedomme
+        public long bygningsnummer
         {
             get
             {
-                return this.bispedommeField;
+                return this.bygningsnummerField;
             }
             set
             {
-                this.bispedommeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int prosti
-        {
-            get
-            {
-                return this.prostiField;
-            }
-            set
-            {
-                this.prostiField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int prestegjeld
-        {
-            get
-            {
-                return this.prestegjeldField;
-            }
-            set
-            {
-                this.prestegjeldField = value;
+                this.bygningsnummerField = value;
             }
         }
     }
@@ -4614,86 +4631,85 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class VegIdent : Ident
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
+    public partial class BygningsendringIdent : ByggIdent
+    {
+        
+        private int lopenummerField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int lopenummer
+        {
+            get
+            {
+                return this.lopenummerField;
+            }
+            set
+            {
+                this.lopenummerField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
+    public partial class BygningIdent : ByggIdent
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class TeigIdent : Ident
+    {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FestegrunnIdent))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class MatrikkelenhetIdent : Ident
     {
         
         private KommuneIdent kommuneIdentField;
-        
-        private int adressekodeField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public KommuneIdent kommuneIdent
-        {
-            get
-            {
-                return this.kommuneIdentField;
-            }
-            set
-            {
-                this.kommuneIdentField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int adressekode
-        {
-            get
-            {
-                return this.adressekodeField;
-            }
-            set
-            {
-                this.adressekodeField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkeladresseIdent))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegadresseIdent))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public abstract partial class AdresseIdent : Ident
-    {
-        
-        private KommuneIdent kommuneIdentField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public KommuneIdent kommuneIdent
-        {
-            get
-            {
-                return this.kommuneIdentField;
-            }
-            set
-            {
-                this.kommuneIdentField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class MatrikkeladresseIdent : AdresseIdent
-    {
         
         private int gardsnummerField;
         
+        private bool gardsnummerFieldSpecified;
+        
         private int bruksnummerField;
+        
+        private bool bruksnummerFieldSpecified;
         
         private int festenummerField;
         
-        private int undernummerField;
+        private bool festenummerFieldSpecified;
+        
+        private int seksjonsnummerField;
+        
+        private bool seksjonsnummerFieldSpecified;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public KommuneIdent kommuneIdent
+        {
+            get
+            {
+                return this.kommuneIdentField;
+            }
+            set
+            {
+                this.kommuneIdentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
         public int gardsnummer
         {
             get
@@ -4707,7 +4723,21 @@ namespace Kartverket.Matrikkel.StoreService
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool gardsnummerSpecified
+        {
+            get
+            {
+                return this.gardsnummerFieldSpecified;
+            }
+            set
+            {
+                this.gardsnummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
         public int bruksnummer
         {
             get
@@ -4721,7 +4751,21 @@ namespace Kartverket.Matrikkel.StoreService
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool bruksnummerSpecified
+        {
+            get
+            {
+                return this.bruksnummerFieldSpecified;
+            }
+            set
+            {
+                this.bruksnummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
         public int festenummer
         {
             get
@@ -4735,16 +4779,44 @@ namespace Kartverket.Matrikkel.StoreService
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public int undernummer
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool festenummerSpecified
         {
             get
             {
-                return this.undernummerField;
+                return this.festenummerFieldSpecified;
             }
             set
             {
-                this.undernummerField = value;
+                this.festenummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public int seksjonsnummer
+        {
+            get
+            {
+                return this.seksjonsnummerField;
+            }
+            set
+            {
+                this.seksjonsnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool seksjonsnummerSpecified
+        {
+            get
+            {
+                return this.seksjonsnummerFieldSpecified;
+            }
+            set
+            {
+                this.seksjonsnummerFieldSpecified = value;
             }
         }
     }
@@ -4752,85 +4824,12 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class VegadresseIdent : AdresseIdent
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class FestegrunnIdent : MatrikkelenhetIdent
     {
-        
-        private int adressekodeField;
-        
-        private int nummerField;
-        
-        private string bokstavField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int adressekode
-        {
-            get
-            {
-                return this.adressekodeField;
-            }
-            set
-            {
-                this.adressekodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int nummer
-        {
-            get
-            {
-                return this.nummerField;
-            }
-            set
-            {
-                this.nummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string bokstav
-        {
-            get
-            {
-                return this.bokstavField;
-            }
-            set
-            {
-                this.bokstavField = value;
-            }
-        }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
-    public partial class FylkeIdent : Ident
-    {
-        
-        private string fylkesnummerField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string fylkesnummer
-        {
-            get
-            {
-                return this.fylkesnummerField;
-            }
-            set
-            {
-                this.fylkesnummerField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsUtfallBegrunnelse))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractIkkeElektroniskTinglysningGrunn))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TimeoutMotGrunnboken))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(FestegrunnEndretGnrEllerBnr))]
@@ -4855,6 +4854,7 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKanIkkeTinglyses))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MeldingHarVedlegg))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(FeilAntallInvolverte))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsUtfallBegrunnelse))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/elektronisktinglysing")]
@@ -4874,142 +4874,6 @@ namespace Kartverket.Matrikkel.StoreService
             set
             {
                 this.localizedMessageField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/aktivitetsliste")]
-    public partial class TinglysingsUtfallBegrunnelse : IkkeElektroniskTinglysningGrunn
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private string kontrollkodeField;
-        
-        private string kontrollnavnField;
-        
-        private string kontrollutfallField;
-        
-        private string begrunnelsekodeField;
-        
-        private string begrunnelsetekstField;
-        
-        private string begrunnelseelementnavnField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string kontrollkode
-        {
-            get
-            {
-                return this.kontrollkodeField;
-            }
-            set
-            {
-                this.kontrollkodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string kontrollnavn
-        {
-            get
-            {
-                return this.kontrollnavnField;
-            }
-            set
-            {
-                this.kontrollnavnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string kontrollutfall
-        {
-            get
-            {
-                return this.kontrollutfallField;
-            }
-            set
-            {
-                this.kontrollutfallField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string begrunnelsekode
-        {
-            get
-            {
-                return this.begrunnelsekodeField;
-            }
-            set
-            {
-                this.begrunnelsekodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string begrunnelsetekst
-        {
-            get
-            {
-                return this.begrunnelsetekstField;
-            }
-            set
-            {
-                this.begrunnelsetekstField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public string begrunnelseelementnavn
-        {
-            get
-            {
-                return this.begrunnelseelementnavnField;
-            }
-            set
-            {
-                this.begrunnelseelementnavnField = value;
             }
         }
     }
@@ -5622,19 +5486,6 @@ namespace Kartverket.Matrikkel.StoreService
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegTillegg))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeigTillegg))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeiggrenseTillegg))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetTillegg))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsTillegg))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeiggrensepunktTillegg))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningTillegg))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonspunktTillegg))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsgrenseTillegg))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsflateTillegg))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseTillegg))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Etasjedata))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleMatrikkelenhetMelding))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Representasjonspunkt))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Posisjonskvalitet))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(CurveSegment))]
@@ -5645,6 +5496,10 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsPolyline))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsArc))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsComplexSurface))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MottakerAdresse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bostedsadresse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Hjemlandsadresse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleMatrikkelenhetMelding))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakRubrikk))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VernevedtakRubrikk))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakReferanserRubrikk))]
@@ -5673,12 +5528,44 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EtasjetallRubrikk))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningerRubrikk))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AntallSkorsteinerRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MottakerAdresse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bostedsadresse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Hjemlandsadresse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Matrikkelnummer))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegTillegg))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeigTillegg))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeiggrenseTillegg))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetTillegg))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsTillegg))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeiggrensepunktTillegg))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningTillegg))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonspunktTillegg))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsgrenseTillegg))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsflateTillegg))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseTillegg))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Etasjedata))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Position))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Matrikkelnummer))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelComponentWithHistory))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KursForBruker))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LagForWMS))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DataForWMS))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Forvaltningsomrade))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LandForvaltningsomrade))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommuneForvaltningsomrade))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerRettighet))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerHistorikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(CurveDirection))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Boundary))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsBoundary))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Atkomst))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FredetBygning))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vedtak))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonMedAndelForKonsesjonsforhold))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SammenslaReseksjonering))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SammenslaOmmatrikuleringFestegrunn))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommuneendringOmadressering))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealIForretning))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Fotohenvisning))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Endringsvurdering))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Ajourforing))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegReferanse))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Referanse))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeigReferanse))]
@@ -5696,17 +5583,6 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskKontaktperson))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsstatusHistorikk))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Etasje))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vedtak))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SammenslaReseksjonering))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SammenslaOmmatrikuleringFestegrunn))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommuneendringOmadressering))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealIForretning))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonMedAndelForKonsesjonsforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MetadataFelt))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(CurveDirection))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Boundary))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsBoundary))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FredetBygning))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeigForMatrikkelenhet))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrenhForSamlaFastEdm))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RettsstiftelseForStedbundenRettighet))]
@@ -5721,19 +5597,7 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonIkkeTinglystEierforhold))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetIkkeTinglystEierforhold))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsflateForMatrikkelenhet))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Fotohenvisning))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Endringsvurdering))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Ajourforing))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KursForBruker))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LagForWMS))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DataForWMS))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Forvaltningsomrade))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LandForvaltningsomrade))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommuneForvaltningsomrade))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerRettighet))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerHistorikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Atkomst))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MetadataFelt))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
@@ -5761,41 +5625,443 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
-    public partial class VegTillegg : MatrikkelComponent
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class Representasjonspunkt : MatrikkelComponent
     {
         
-        private VegReferanse[] vegReferanserField;
+        private KoordinatsystemKodeId koordinatsystemKodeIdField;
         
-        private Kommentar[] kommentarerField;
+        private KoordinatsystemKodeId originalKoordinatsystemKodeIdField;
+        
+        private Position positionField;
+        
+        private Posisjonskvalitet kvalitetField;
+        
+        private KoordinatkvalitetKodeId koordinatkvalitetKodeIdField;
+        
+        private bool stedfestingVerifisertField;
+        
+        private bool stedfestingVerifisertFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public KoordinatsystemKodeId koordinatsystemKodeId
+        {
+            get
+            {
+                return this.koordinatsystemKodeIdField;
+            }
+            set
+            {
+                this.koordinatsystemKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public KoordinatsystemKodeId originalKoordinatsystemKodeId
+        {
+            get
+            {
+                return this.originalKoordinatsystemKodeIdField;
+            }
+            set
+            {
+                this.originalKoordinatsystemKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public Position position
+        {
+            get
+            {
+                return this.positionField;
+            }
+            set
+            {
+                this.positionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public Posisjonskvalitet kvalitet
+        {
+            get
+            {
+                return this.kvalitetField;
+            }
+            set
+            {
+                this.kvalitetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public KoordinatkvalitetKodeId koordinatkvalitetKodeId
+        {
+            get
+            {
+                return this.koordinatkvalitetKodeIdField;
+            }
+            set
+            {
+                this.koordinatkvalitetKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public bool stedfestingVerifisert
+        {
+            get
+            {
+                return this.stedfestingVerifisertField;
+            }
+            set
+            {
+                this.stedfestingVerifisertField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool stedfestingVerifisertSpecified
+        {
+            get
+            {
+                return this.stedfestingVerifisertFieldSpecified;
+            }
+            set
+            {
+                this.stedfestingVerifisertFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class Position : MatrikkelComponent
+    {
+        
+        private double xField;
+        
+        private bool xFieldSpecified;
+        
+        private double yField;
+        
+        private bool yFieldSpecified;
+        
+        private double zField;
+        
+        private bool zFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public double x
+        {
+            get
+            {
+                return this.xField;
+            }
+            set
+            {
+                this.xField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool xSpecified
+        {
+            get
+            {
+                return this.xFieldSpecified;
+            }
+            set
+            {
+                this.xFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public double y
+        {
+            get
+            {
+                return this.yField;
+            }
+            set
+            {
+                this.yField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ySpecified
+        {
+            get
+            {
+                return this.yFieldSpecified;
+            }
+            set
+            {
+                this.yFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public double z
+        {
+            get
+            {
+                return this.zField;
+            }
+            set
+            {
+                this.zField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool zSpecified
+        {
+            get
+            {
+                return this.zFieldSpecified;
+            }
+            set
+            {
+                this.zFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class Posisjonskvalitet : MatrikkelComponent
+    {
+        
+        private MalemetodeKodeId malemetodeIdField;
+        
+        private int noyaktighetField;
+        
+        private bool noyaktighetFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public MalemetodeKodeId malemetodeId
+        {
+            get
+            {
+                return this.malemetodeIdField;
+            }
+            set
+            {
+                this.malemetodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int noyaktighet
+        {
+            get
+            {
+                return this.noyaktighetField;
+            }
+            set
+            {
+                this.noyaktighetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool noyaktighetSpecified
+        {
+            get
+            {
+                return this.noyaktighetFieldSpecified;
+            }
+            set
+            {
+                this.noyaktighetFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Polyline))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Arc))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class CurveSegment : MatrikkelComponent
+    {
+        
+        private TeiggrensepunktId startpunktIdField;
+        
+        private TeiggrensepunktId endpunktIdField;
+        
+        private KoordinatsystemKodeId koordinatsystemKodeIdField;
+        
+        private KoordinatsystemKodeId originalKoordinatsystemKodeIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public TeiggrensepunktId startpunktId
+        {
+            get
+            {
+                return this.startpunktIdField;
+            }
+            set
+            {
+                this.startpunktIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public TeiggrensepunktId endpunktId
+        {
+            get
+            {
+                return this.endpunktIdField;
+            }
+            set
+            {
+                this.endpunktIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public KoordinatsystemKodeId koordinatsystemKodeId
+        {
+            get
+            {
+                return this.koordinatsystemKodeIdField;
+            }
+            set
+            {
+                this.koordinatsystemKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public KoordinatsystemKodeId originalKoordinatsystemKodeId
+        {
+            get
+            {
+                return this.originalKoordinatsystemKodeIdField;
+            }
+            set
+            {
+                this.originalKoordinatsystemKodeIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class Polyline : CurveSegment
+    {
+        
+        private Position[] kurvepunkterField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public VegReferanse[] vegReferanser
+        public Position[] kurvepunkter
         {
             get
             {
-                return this.vegReferanserField;
+                return this.kurvepunkterField;
             }
             set
             {
-                this.vegReferanserField = value;
+                this.kurvepunkterField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class Arc : CurveSegment
+    {
+        
+        private Position buepunktField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public Position buepunkt
+        {
+            get
+            {
+                return this.buepunktField;
+            }
+            set
+            {
+                this.buepunktField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class ComplexSurface : MatrikkelComponent
+    {
+        
+        private Boundary exteriorField;
+        
+        private Boundary[] interiorField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public Boundary exterior
+        {
+            get
+            {
+                return this.exteriorField;
+            }
+            set
+            {
+                this.exteriorField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
         [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public Kommentar[] kommentarer
+        public Boundary[] interior
         {
             get
             {
-                return this.kommentarerField;
+                return this.interiorField;
             }
             set
             {
-                this.kommentarerField = value;
+                this.interiorField = value;
             }
         }
     }
@@ -5803,1929 +6069,15 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
-    public partial class VegReferanse : MatrikkelComponentWithHistory
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class Boundary : MatrikkelComponentWithHistory
     {
         
         private long idField;
         
         private bool idFieldSpecified;
         
-        private VegReferanseKodeId vegReferanseKodeIdField;
-        
-        private string referanseField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public VegReferanseKodeId vegReferanseKodeId
-        {
-            get
-            {
-                return this.vegReferanseKodeIdField;
-            }
-            set
-            {
-                this.vegReferanseKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string referanse
-        {
-            get
-            {
-                return this.referanseField;
-            }
-            set
-            {
-                this.referanseField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Referanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeigReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeiggrenseReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeiggrensepunktReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonspunktReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsgrenseReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsflateReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kommentar))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kontaktperson))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskKontaktperson))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsstatusHistorikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Etasje))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vedtak))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SammenslaReseksjonering))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SammenslaOmmatrikuleringFestegrunn))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommuneendringOmadressering))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealIForretning))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonMedAndelForKonsesjonsforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MetadataFelt))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(CurveDirection))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Boundary))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsBoundary))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FredetBygning))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeigForMatrikkelenhet))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrenhForSamlaFastEdm))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RettsstiftelseForStedbundenRettighet))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Eierforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglystEierforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonTinglystEierforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonTinglystEierforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetTinglystEierforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kontaktinstans))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(IkkeTinglystEierforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonIkkeTinglystEierforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonIkkeTinglystEierforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetIkkeTinglystEierforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsflateForMatrikkelenhet))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Fotohenvisning))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Endringsvurdering))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Ajourforing))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KursForBruker))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LagForWMS))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DataForWMS))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Forvaltningsomrade))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LandForvaltningsomrade))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommuneForvaltningsomrade))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerRettighet))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerHistorikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Atkomst))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
-    public partial class MatrikkelComponentWithHistory : MatrikkelComponent
-    {
-        
-        private Timestamp oppdateringsdatoField;
-        
-        private Timestamp sluttdatoField;
-        
-        private long versjonIdField;
-        
-        private string oppdatertAvField;
-        
-        private string avsluttetAvField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
-        public Timestamp oppdateringsdato
-        {
-            get
-            {
-                return this.oppdateringsdatoField;
-            }
-            set
-            {
-                this.oppdateringsdatoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public Timestamp sluttdato
-        {
-            get
-            {
-                return this.sluttdatoField;
-            }
-            set
-            {
-                this.sluttdatoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public long versjonId
-        {
-            get
-            {
-                return this.versjonIdField;
-            }
-            set
-            {
-                this.versjonIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
-        public string oppdatertAv
-        {
-            get
-            {
-                return this.oppdatertAvField;
-            }
-            set
-            {
-                this.oppdatertAvField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string avsluttetAv
-        {
-            get
-            {
-                return this.avsluttetAvField;
-            }
-            set
-            {
-                this.avsluttetAvField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeigReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeiggrenseReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeiggrensepunktReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonspunktReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsgrenseReferanse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsflateReferanse))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
-    public partial class Referanse : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private MatrikkelenhetReferanseKodeId matrikkelenhetReferanseKodeIdField;
-        
-        private string referanseField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public MatrikkelenhetReferanseKodeId matrikkelenhetReferanseKodeId
-        {
-            get
-            {
-                return this.matrikkelenhetReferanseKodeIdField;
-            }
-            set
-            {
-                this.matrikkelenhetReferanseKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string referanse
-        {
-            get
-            {
-                return this.referanseField;
-            }
-            set
-            {
-                this.referanseField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
-    public partial class TeigReferanse : Referanse
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
-    public partial class TeiggrenseReferanse : Referanse
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
-    public partial class TeiggrensepunktReferanse : Referanse
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
-    public partial class MatrikkelenhetReferanse : Referanse
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
-    public partial class AnleggsprojeksjonspunktReferanse : Referanse
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
-    public partial class AnleggsprojeksjonsgrenseReferanse : Referanse
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
-    public partial class AnleggsprojeksjonsflateReferanse : Referanse
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
-    public partial class KretsReferanse : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private KretsReferanseKodeId kretsReferanseKodeIdField;
-        
-        private string referanseField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public KretsReferanseKodeId kretsReferanseKodeId
-        {
-            get
-            {
-                return this.kretsReferanseKodeIdField;
-            }
-            set
-            {
-                this.kretsReferanseKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string referanse
-        {
-            get
-            {
-                return this.referanseField;
-            }
-            set
-            {
-                this.referanseField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
-    public partial class Kommentar : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private LocalDate datoField;
-        
-        private string tekstField;
-        
-        private string saksnummerField;
-        
-        private KommentartypeKodeId kommentartypeKodeIdField;
-        
-        private EtatsKodeId etatsKodeIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public LocalDate dato
-        {
-            get
-            {
-                return this.datoField;
-            }
-            set
-            {
-                this.datoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string tekst
-        {
-            get
-            {
-                return this.tekstField;
-            }
-            set
-            {
-                this.tekstField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string saksnummer
-        {
-            get
-            {
-                return this.saksnummerField;
-            }
-            set
-            {
-                this.saksnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public KommentartypeKodeId kommentartypeKodeId
-        {
-            get
-            {
-                return this.kommentartypeKodeIdField;
-            }
-            set
-            {
-                this.kommentartypeKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public EtatsKodeId etatsKodeId
-        {
-            get
-            {
-                return this.etatsKodeIdField;
-            }
-            set
-            {
-                this.etatsKodeIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
-    public partial class LocalDate
-    {
-        
-        private System.DateTime dateField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType="date", Order=0)]
-        public System.DateTime date
-        {
-            get
-            {
-                return this.dateField;
-            }
-            set
-            {
-                this.dateField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
-    public partial class BygningsReferanse : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private BygningReferanseKodeId bygningsReferanseKodeIdField;
-        
-        private string referanseField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public BygningReferanseKodeId bygningsReferanseKodeId
-        {
-            get
-            {
-                return this.bygningsReferanseKodeIdField;
-            }
-            set
-            {
-                this.bygningsReferanseKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string referanse
-        {
-            get
-            {
-                return this.referanseField;
-            }
-            set
-            {
-                this.referanseField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
-    public partial class AdresseReferanse : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private AdresseReferanseKodeId adresseReferanseKodeIdField;
-        
-        private string referanseField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public AdresseReferanseKodeId adresseReferanseKodeId
-        {
-            get
-            {
-                return this.adresseReferanseKodeIdField;
-            }
-            set
-            {
-                this.adresseReferanseKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string referanse
-        {
-            get
-            {
-                return this.referanseField;
-            }
-            set
-            {
-                this.referanseField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskKontaktperson))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
-    public partial class Kontaktperson : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private PersonId personIdField;
-        
-        private KontaktpersonKodeId kontaktpersonKodeIdField;
-        
-        private LocalDate datoFraField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public PersonId personId
-        {
-            get
-            {
-                return this.personIdField;
-            }
-            set
-            {
-                this.personIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public KontaktpersonKodeId kontaktpersonKodeId
-        {
-            get
-            {
-                return this.kontaktpersonKodeIdField;
-            }
-            set
-            {
-                this.kontaktpersonKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public LocalDate datoFra
-        {
-            get
-            {
-                return this.datoFraField;
-            }
-            set
-            {
-                this.datoFraField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
-    public partial class JuridiskKontaktperson : Kontaktperson
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
-    public partial class BygningsstatusHistorikk : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private BygningsstatusKodeId bygningsstatusKodeIdField;
-        
-        private ArsakTilForingKodeId arsakTilForingKodeIdField;
-        
-        private string signaturField;
-        
-        private string referanseField;
-        
-        private LocalDate datoField;
-        
-        private Timestamp registrertDatoField;
-        
-        private Timestamp slettetDatoField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public BygningsstatusKodeId bygningsstatusKodeId
-        {
-            get
-            {
-                return this.bygningsstatusKodeIdField;
-            }
-            set
-            {
-                this.bygningsstatusKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public ArsakTilForingKodeId arsakTilForingKodeId
-        {
-            get
-            {
-                return this.arsakTilForingKodeIdField;
-            }
-            set
-            {
-                this.arsakTilForingKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string signatur
-        {
-            get
-            {
-                return this.signaturField;
-            }
-            set
-            {
-                this.signaturField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string referanse
-        {
-            get
-            {
-                return this.referanseField;
-            }
-            set
-            {
-                this.referanseField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public LocalDate dato
-        {
-            get
-            {
-                return this.datoField;
-            }
-            set
-            {
-                this.datoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public Timestamp registrertDato
-        {
-            get
-            {
-                return this.registrertDatoField;
-            }
-            set
-            {
-                this.registrertDatoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public Timestamp slettetDato
-        {
-            get
-            {
-                return this.slettetDatoField;
-            }
-            set
-            {
-                this.slettetDatoField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
-    public partial class Etasje : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private EtasjeplanKodeId etasjeplanKodeIdField;
-        
-        private int etasjenummerField;
-        
-        private bool etasjenummerFieldSpecified;
-        
-        private int antallBoenheterField;
-        
-        private bool antallBoenheterFieldSpecified;
-        
-        private double bruksarealTilBoligField;
-        
-        private bool bruksarealTilBoligFieldSpecified;
-        
-        private double bruksarealTilAnnetField;
-        
-        private bool bruksarealTilAnnetFieldSpecified;
-        
-        private double bruksarealTotaltField;
-        
-        private bool bruksarealTotaltFieldSpecified;
-        
-        private double alternativtArealField;
-        
-        private bool alternativtArealFieldSpecified;
-        
-        private double alternativtAreal2Field;
-        
-        private bool alternativtAreal2FieldSpecified;
-        
-        private double bruttoarealTilBoligField;
-        
-        private bool bruttoarealTilBoligFieldSpecified;
-        
-        private double bruttoarealTilAnnetField;
-        
-        private bool bruttoarealTilAnnetFieldSpecified;
-        
-        private double bruttoarealTotaltField;
-        
-        private bool bruttoarealTotaltFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public EtasjeplanKodeId etasjeplanKodeId
-        {
-            get
-            {
-                return this.etasjeplanKodeIdField;
-            }
-            set
-            {
-                this.etasjeplanKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int etasjenummer
-        {
-            get
-            {
-                return this.etasjenummerField;
-            }
-            set
-            {
-                this.etasjenummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool etasjenummerSpecified
-        {
-            get
-            {
-                return this.etasjenummerFieldSpecified;
-            }
-            set
-            {
-                this.etasjenummerFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public int antallBoenheter
-        {
-            get
-            {
-                return this.antallBoenheterField;
-            }
-            set
-            {
-                this.antallBoenheterField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool antallBoenheterSpecified
-        {
-            get
-            {
-                return this.antallBoenheterFieldSpecified;
-            }
-            set
-            {
-                this.antallBoenheterFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public double bruksarealTilBolig
-        {
-            get
-            {
-                return this.bruksarealTilBoligField;
-            }
-            set
-            {
-                this.bruksarealTilBoligField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool bruksarealTilBoligSpecified
-        {
-            get
-            {
-                return this.bruksarealTilBoligFieldSpecified;
-            }
-            set
-            {
-                this.bruksarealTilBoligFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public double bruksarealTilAnnet
-        {
-            get
-            {
-                return this.bruksarealTilAnnetField;
-            }
-            set
-            {
-                this.bruksarealTilAnnetField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool bruksarealTilAnnetSpecified
-        {
-            get
-            {
-                return this.bruksarealTilAnnetFieldSpecified;
-            }
-            set
-            {
-                this.bruksarealTilAnnetFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public double bruksarealTotalt
-        {
-            get
-            {
-                return this.bruksarealTotaltField;
-            }
-            set
-            {
-                this.bruksarealTotaltField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool bruksarealTotaltSpecified
-        {
-            get
-            {
-                return this.bruksarealTotaltFieldSpecified;
-            }
-            set
-            {
-                this.bruksarealTotaltFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public double alternativtAreal
-        {
-            get
-            {
-                return this.alternativtArealField;
-            }
-            set
-            {
-                this.alternativtArealField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool alternativtArealSpecified
-        {
-            get
-            {
-                return this.alternativtArealFieldSpecified;
-            }
-            set
-            {
-                this.alternativtArealFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public double alternativtAreal2
-        {
-            get
-            {
-                return this.alternativtAreal2Field;
-            }
-            set
-            {
-                this.alternativtAreal2Field = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool alternativtAreal2Specified
-        {
-            get
-            {
-                return this.alternativtAreal2FieldSpecified;
-            }
-            set
-            {
-                this.alternativtAreal2FieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public double bruttoarealTilBolig
-        {
-            get
-            {
-                return this.bruttoarealTilBoligField;
-            }
-            set
-            {
-                this.bruttoarealTilBoligField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool bruttoarealTilBoligSpecified
-        {
-            get
-            {
-                return this.bruttoarealTilBoligFieldSpecified;
-            }
-            set
-            {
-                this.bruttoarealTilBoligFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public double bruttoarealTilAnnet
-        {
-            get
-            {
-                return this.bruttoarealTilAnnetField;
-            }
-            set
-            {
-                this.bruttoarealTilAnnetField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool bruttoarealTilAnnetSpecified
-        {
-            get
-            {
-                return this.bruttoarealTilAnnetFieldSpecified;
-            }
-            set
-            {
-                this.bruttoarealTilAnnetFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
-        public double bruttoarealTotalt
-        {
-            get
-            {
-                return this.bruttoarealTotaltField;
-            }
-            set
-            {
-                this.bruttoarealTotaltField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool bruttoarealTotaltSpecified
-        {
-            get
-            {
-                return this.bruttoarealTotaltFieldSpecified;
-            }
-            set
-            {
-                this.bruttoarealTotaltFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/grunnforurensing")]
-    public partial class Vedtak : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private LocalDate vedtaksdatoField;
-        
-        private VedtakstypeKodeId vedtakstypeKodeIdField;
-        
-        private MatrikkelenhetId[] matrikkelenhetIdsField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public LocalDate vedtaksdato
-        {
-            get
-            {
-                return this.vedtaksdatoField;
-            }
-            set
-            {
-                this.vedtaksdatoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public VedtakstypeKodeId vedtakstypeKodeId
-        {
-            get
-            {
-                return this.vedtakstypeKodeIdField;
-            }
-            set
-            {
-                this.vedtakstypeKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=3)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-        public MatrikkelenhetId[] matrikkelenhetIds
-        {
-            get
-            {
-                return this.matrikkelenhetIdsField;
-            }
-            set
-            {
-                this.matrikkelenhetIdsField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/forretning")]
-    public partial class SammenslaReseksjonering : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private SeksjonId seksjonIdField;
-        
-        private Matrikkelnummer matrikkelnummerField;
-        
-        private Andel sameiebrokField;
-        
-        private FormalSeksjonKodeId formalSeksjonKodeIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public SeksjonId seksjonId
-        {
-            get
-            {
-                return this.seksjonIdField;
-            }
-            set
-            {
-                this.seksjonIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public Matrikkelnummer matrikkelnummer
-        {
-            get
-            {
-                return this.matrikkelnummerField;
-            }
-            set
-            {
-                this.matrikkelnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public Andel sameiebrok
-        {
-            get
-            {
-                return this.sameiebrokField;
-            }
-            set
-            {
-                this.sameiebrokField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public FormalSeksjonKodeId formalSeksjonKodeId
-        {
-            get
-            {
-                return this.formalSeksjonKodeIdField;
-            }
-            set
-            {
-                this.formalSeksjonKodeIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class Matrikkelnummer : MatrikkelComponent
-    {
-        
-        private KommuneId kommuneIdField;
-        
-        private int gardsnummerField;
-        
-        private bool gardsnummerFieldSpecified;
-        
-        private int bruksnummerField;
-        
-        private bool bruksnummerFieldSpecified;
-        
-        private int festenummerField;
-        
-        private bool festenummerFieldSpecified;
-        
-        private int seksjonsnummerField;
-        
-        private bool seksjonsnummerFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public KommuneId kommuneId
-        {
-            get
-            {
-                return this.kommuneIdField;
-            }
-            set
-            {
-                this.kommuneIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int gardsnummer
-        {
-            get
-            {
-                return this.gardsnummerField;
-            }
-            set
-            {
-                this.gardsnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool gardsnummerSpecified
-        {
-            get
-            {
-                return this.gardsnummerFieldSpecified;
-            }
-            set
-            {
-                this.gardsnummerFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int bruksnummer
-        {
-            get
-            {
-                return this.bruksnummerField;
-            }
-            set
-            {
-                this.bruksnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool bruksnummerSpecified
-        {
-            get
-            {
-                return this.bruksnummerFieldSpecified;
-            }
-            set
-            {
-                this.bruksnummerFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public int festenummer
-        {
-            get
-            {
-                return this.festenummerField;
-            }
-            set
-            {
-                this.festenummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool festenummerSpecified
-        {
-            get
-            {
-                return this.festenummerFieldSpecified;
-            }
-            set
-            {
-                this.festenummerFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public int seksjonsnummer
-        {
-            get
-            {
-                return this.seksjonsnummerField;
-            }
-            set
-            {
-                this.seksjonsnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool seksjonsnummerSpecified
-        {
-            get
-            {
-                return this.seksjonsnummerFieldSpecified;
-            }
-            set
-            {
-                this.seksjonsnummerFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/util")]
-    public partial class Andel
-    {
-        
-        private long tellerField;
-        
-        private long nevnerField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long teller
-        {
-            get
-            {
-                return this.tellerField;
-            }
-            set
-            {
-                this.tellerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public long nevner
-        {
-            get
-            {
-                return this.nevnerField;
-            }
-            set
-            {
-                this.nevnerField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/forretning")]
-    public partial class SammenslaOmmatrikuleringFestegrunn : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private FestegrunnId festegrunnIdField;
-        
-        private Matrikkelnummer matrikkelnummerField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public FestegrunnId festegrunnId
-        {
-            get
-            {
-                return this.festegrunnIdField;
-            }
-            set
-            {
-                this.festegrunnIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public Matrikkelnummer matrikkelnummer
-        {
-            get
-            {
-                return this.matrikkelnummerField;
-            }
-            set
-            {
-                this.matrikkelnummerField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/forretning")]
-    public partial class KommuneendringOmadressering : MatrikkelComponentWithHistory
-    {
-        
-        private VegadresseId vegadresseIdField;
-        
-        private KommuneId kommuneIdField;
-        
-        private VegId vegIdField;
-        
-        private int husnummerField;
-        
-        private bool husnummerFieldSpecified;
-        
-        private string bokstavField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public VegadresseId vegadresseId
-        {
-            get
-            {
-                return this.vegadresseIdField;
-            }
-            set
-            {
-                this.vegadresseIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public KommuneId kommuneId
-        {
-            get
-            {
-                return this.kommuneIdField;
-            }
-            set
-            {
-                this.kommuneIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public VegId vegId
-        {
-            get
-            {
-                return this.vegIdField;
-            }
-            set
-            {
-                this.vegIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public int husnummer
-        {
-            get
-            {
-                return this.husnummerField;
-            }
-            set
-            {
-                this.husnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool husnummerSpecified
-        {
-            get
-            {
-                return this.husnummerFieldSpecified;
-            }
-            set
-            {
-                this.husnummerFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string bokstav
-        {
-            get
-            {
-                return this.bokstavField;
-            }
-            set
-            {
-                this.bokstavField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/forretning")]
-    public partial class ArealIForretning : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private MatrikkelenhetId matrikkelenhetIdField;
-        
-        private int lopenummerField;
-        
-        private bool lopenummerFieldSpecified;
-        
-        private RolleIForretningKodeId rolleIdField;
-        
-        private double arealendringField;
-        
-        private bool arealendringFieldSpecified;
-        
-        private Matrikkelnummer omnummerertFraField;
-        
-        private Matrikkelnummer omnummerertTilField;
-        
-        private double volumendringField;
-        
-        private bool volumendringFieldSpecified;
+        private CurveDirection[] curveDirectionsField;
         
         private UUID uuidField;
         
@@ -7758,147 +6110,22 @@ namespace Kartverket.Matrikkel.StoreService
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public MatrikkelenhetId matrikkelenhetId
+        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public CurveDirection[] curveDirections
         {
             get
             {
-                return this.matrikkelenhetIdField;
+                return this.curveDirectionsField;
             }
             set
             {
-                this.matrikkelenhetIdField = value;
+                this.curveDirectionsField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int lopenummer
-        {
-            get
-            {
-                return this.lopenummerField;
-            }
-            set
-            {
-                this.lopenummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool lopenummerSpecified
-        {
-            get
-            {
-                return this.lopenummerFieldSpecified;
-            }
-            set
-            {
-                this.lopenummerFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public RolleIForretningKodeId rolleId
-        {
-            get
-            {
-                return this.rolleIdField;
-            }
-            set
-            {
-                this.rolleIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public double arealendring
-        {
-            get
-            {
-                return this.arealendringField;
-            }
-            set
-            {
-                this.arealendringField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool arealendringSpecified
-        {
-            get
-            {
-                return this.arealendringFieldSpecified;
-            }
-            set
-            {
-                this.arealendringFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public Matrikkelnummer omnummerertFra
-        {
-            get
-            {
-                return this.omnummerertFraField;
-            }
-            set
-            {
-                this.omnummerertFraField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public Matrikkelnummer omnummerertTil
-        {
-            get
-            {
-                return this.omnummerertTilField;
-            }
-            set
-            {
-                this.omnummerertTilField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public double volumendring
-        {
-            get
-            {
-                return this.volumendringField;
-            }
-            set
-            {
-                this.volumendringField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool volumendringSpecified
-        {
-            get
-            {
-                return this.volumendringFieldSpecified;
-            }
-            set
-            {
-                this.volumendringFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
         public UUID uuid
         {
             get
@@ -7908,174 +6135,6 @@ namespace Kartverket.Matrikkel.StoreService
             set
             {
                 this.uuidField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
-    public partial class UUID
-    {
-        
-        private string navneromField;
-        
-        private string uuidField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string navnerom
-        {
-            get
-            {
-                return this.navneromField;
-            }
-            set
-            {
-                this.navneromField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string uuid
-        {
-            get
-            {
-                return this.uuidField;
-            }
-            set
-            {
-                this.uuidField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
-    public partial class PersonMedAndelForKonsesjonsforhold : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private PersonId personIdField;
-        
-        private Andel andelField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public PersonId personId
-        {
-            get
-            {
-                return this.personIdField;
-            }
-            set
-            {
-                this.personIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public Andel andel
-        {
-            get
-            {
-                return this.andelField;
-            }
-            set
-            {
-                this.andelField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/metadata")]
-    public partial class MetadataFelt : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private string navnField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string navn
-        {
-            get
-            {
-                return this.navnField;
-            }
-            set
-            {
-                this.navnField = value;
             }
         }
     }
@@ -8187,64 +6246,31 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class Boundary : MatrikkelComponentWithHistory
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
+    public partial class UUID
     {
         
-        private long idField;
+        private string navneromField;
         
-        private bool idFieldSpecified;
-        
-        private CurveDirection[] curveDirectionsField;
-        
-        private UUID uuidField;
+        private string uuidField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
+        public string navnerom
         {
             get
             {
-                return this.idField;
+                return this.navneromField;
             }
             set
             {
-                this.idField = value;
+                this.navneromField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public CurveDirection[] curveDirections
-        {
-            get
-            {
-                return this.curveDirectionsField;
-            }
-            set
-            {
-                this.curveDirectionsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public UUID uuid
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string uuid
         {
             get
             {
@@ -8258,480 +6284,50 @@ namespace Kartverket.Matrikkel.StoreService
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class AnleggsprojeksjonsBoundary : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private AnleggsprojeksjonsgrenseId[] grenseIdsField;
-        
-        private UUID uuidField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-        public AnleggsprojeksjonsgrenseId[] grenseIds
-        {
-            get
-            {
-                return this.grenseIdsField;
-            }
-            set
-            {
-                this.grenseIdsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public UUID uuid
-        {
-            get
-            {
-                return this.uuidField;
-            }
-            set
-            {
-                this.uuidField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kulturminne")]
-    public partial class FredetBygning : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private string enkeltminnenummerField;
-        
-        private EnkeltminneArtKodeId enkeltminneArtKodeIdField;
-        
-        private VernetypeKodeId vernetypeKodeIdField;
-        
-        private KulturminnekategoriKodeId kategoriKodeIdField;
-        
-        private BygningId bygningIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string enkeltminnenummer
-        {
-            get
-            {
-                return this.enkeltminnenummerField;
-            }
-            set
-            {
-                this.enkeltminnenummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public EnkeltminneArtKodeId enkeltminneArtKodeId
-        {
-            get
-            {
-                return this.enkeltminneArtKodeIdField;
-            }
-            set
-            {
-                this.enkeltminneArtKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public VernetypeKodeId vernetypeKodeId
-        {
-            get
-            {
-                return this.vernetypeKodeIdField;
-            }
-            set
-            {
-                this.vernetypeKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public KulturminnekategoriKodeId kategoriKodeId
-        {
-            get
-            {
-                return this.kategoriKodeIdField;
-            }
-            set
-            {
-                this.kategoriKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public BygningId bygningId
-        {
-            get
-            {
-                return this.bygningIdField;
-            }
-            set
-            {
-                this.bygningIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class TeigForMatrikkelenhet : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private bool hovedteigField;
-        
-        private bool hovedteigFieldSpecified;
-        
-        private TeigId teigIdField;
-        
-        private UUID uuidField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public bool hovedteig
-        {
-            get
-            {
-                return this.hovedteigField;
-            }
-            set
-            {
-                this.hovedteigField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool hovedteigSpecified
-        {
-            get
-            {
-                return this.hovedteigFieldSpecified;
-            }
-            set
-            {
-                this.hovedteigFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public TeigId teigId
-        {
-            get
-            {
-                return this.teigIdField;
-            }
-            set
-            {
-                this.teigIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public UUID uuid
-        {
-            get
-            {
-                return this.uuidField;
-            }
-            set
-            {
-                this.uuidField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class MatrenhForSamlaFastEdm : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private MatrikkelenhetId matrikkelenhetIdField;
-        
-        private bool hovedmatrikkelenhetField;
-        
-        private bool hovedmatrikkelenhetFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public MatrikkelenhetId matrikkelenhetId
-        {
-            get
-            {
-                return this.matrikkelenhetIdField;
-            }
-            set
-            {
-                this.matrikkelenhetIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public bool hovedmatrikkelenhet
-        {
-            get
-            {
-                return this.hovedmatrikkelenhetField;
-            }
-            set
-            {
-                this.hovedmatrikkelenhetField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool hovedmatrikkelenhetSpecified
-        {
-            get
-            {
-                return this.hovedmatrikkelenhetFieldSpecified;
-            }
-            set
-            {
-                this.hovedmatrikkelenhetFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class RettsstiftelseForStedbundenRettighet : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private long rettsstiftelseIdField;
-        
-        private bool rettsstiftelseIdFieldSpecified;
-        
-        private MatrikkelenhetId[] matrikkelenhetIdsField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public long rettsstiftelseId
-        {
-            get
-            {
-                return this.rettsstiftelseIdField;
-            }
-            set
-            {
-                this.rettsstiftelseIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool rettsstiftelseIdSpecified
-        {
-            get
-            {
-                return this.rettsstiftelseIdFieldSpecified;
-            }
-            set
-            {
-                this.rettsstiftelseIdFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=2)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public MatrikkelenhetId[] matrikkelenhetIds
-        {
-            get
-            {
-                return this.matrikkelenhetIdsField;
-            }
-            set
-            {
-                this.matrikkelenhetIdsField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KursForBruker))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LagForWMS))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DataForWMS))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Forvaltningsomrade))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LandForvaltningsomrade))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommuneForvaltningsomrade))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerRettighet))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerHistorikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(CurveDirection))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Boundary))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsBoundary))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Atkomst))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FredetBygning))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vedtak))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonMedAndelForKonsesjonsforhold))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SammenslaReseksjonering))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SammenslaOmmatrikuleringFestegrunn))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommuneendringOmadressering))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealIForretning))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Fotohenvisning))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Endringsvurdering))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Ajourforing))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Referanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeigReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeiggrenseReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeiggrensepunktReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonspunktReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsgrenseReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsflateReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kommentar))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kontaktperson))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskKontaktperson))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsstatusHistorikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Etasje))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeigForMatrikkelenhet))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrenhForSamlaFastEdm))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RettsstiftelseForStedbundenRettighet))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Eierforhold))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglystEierforhold))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonTinglystEierforhold))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonTinglystEierforhold))]
@@ -8741,849 +6337,91 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonIkkeTinglystEierforhold))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonIkkeTinglystEierforhold))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetIkkeTinglystEierforhold))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsflateForMatrikkelenhet))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MetadataFelt))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class Eierforhold : MatrikkelComponentWithHistory
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
+    public partial class MatrikkelComponentWithHistory : MatrikkelComponent
     {
         
-        private long idField;
+        private Timestamp oppdateringsdatoField;
         
-        private bool idFieldSpecified;
+        private Timestamp sluttdatoField;
         
-        private KommuneId kommuneIdField;
+        private long versjonIdField;
         
-        private EierforholdKodeId eierforholdKodeIdField;
+        private string oppdatertAvField;
         
-        private UUID uuidField;
+        private string avsluttetAvField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
+        public Timestamp oppdateringsdato
         {
             get
             {
-                return this.idField;
+                return this.oppdateringsdatoField;
             }
             set
             {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
+                this.oppdateringsdatoField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public KommuneId kommuneId
+        public Timestamp sluttdato
         {
             get
             {
-                return this.kommuneIdField;
+                return this.sluttdatoField;
             }
             set
             {
-                this.kommuneIdField = value;
+                this.sluttdatoField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public EierforholdKodeId eierforholdKodeId
+        public long versjonId
         {
             get
             {
-                return this.eierforholdKodeIdField;
+                return this.versjonIdField;
             }
             set
             {
-                this.eierforholdKodeIdField = value;
+                this.versjonIdField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public UUID uuid
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
+        public string oppdatertAv
         {
             get
             {
-                return this.uuidField;
+                return this.oppdatertAvField;
             }
             set
             {
-                this.uuidField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonTinglystEierforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonTinglystEierforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetTinglystEierforhold))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class TinglystEierforhold : Eierforhold
-    {
-        
-        private Andel andelField;
-        
-        private LocalDate datoFraField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public Andel andel
-        {
-            get
-            {
-                return this.andelField;
-            }
-            set
-            {
-                this.andelField = value;
+                this.oppdatertAvField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public LocalDate datoFra
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string avsluttetAv
         {
             get
             {
-                return this.datoFraField;
+                return this.avsluttetAvField;
             }
             set
             {
-                this.datoFraField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonTinglystEierforhold))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class PersonTinglystEierforhold : TinglystEierforhold
-    {
-        
-        private PersonId eierIdField;
-        
-        private int andelsnummerField;
-        
-        private bool andelsnummerFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public PersonId eierId
-        {
-            get
-            {
-                return this.eierIdField;
-            }
-            set
-            {
-                this.eierIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int andelsnummer
-        {
-            get
-            {
-                return this.andelsnummerField;
-            }
-            set
-            {
-                this.andelsnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool andelsnummerSpecified
-        {
-            get
-            {
-                return this.andelsnummerFieldSpecified;
-            }
-            set
-            {
-                this.andelsnummerFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class JuridiskPersonTinglystEierforhold : PersonTinglystEierforhold
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class MatrikkelenhetTinglystEierforhold : TinglystEierforhold
-    {
-        
-        private MatrikkelenhetId eiendeMatrikkelenhetIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public MatrikkelenhetId eiendeMatrikkelenhetId
-        {
-            get
-            {
-                return this.eiendeMatrikkelenhetIdField;
-            }
-            set
-            {
-                this.eiendeMatrikkelenhetIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class Kontaktinstans : Eierforhold
-    {
-        
-        private PersonId eierIdField;
-        
-        private LocalDate datoFraField;
-        
-        private LocalDate datoTilField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public PersonId eierId
-        {
-            get
-            {
-                return this.eierIdField;
-            }
-            set
-            {
-                this.eierIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public LocalDate datoFra
-        {
-            get
-            {
-                return this.datoFraField;
-            }
-            set
-            {
-                this.datoFraField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public LocalDate datoTil
-        {
-            get
-            {
-                return this.datoTilField;
-            }
-            set
-            {
-                this.datoTilField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonIkkeTinglystEierforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonIkkeTinglystEierforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetIkkeTinglystEierforhold))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class IkkeTinglystEierforhold : Eierforhold
-    {
-        
-        private Andel andelField;
-        
-        private LocalDate datoFraField;
-        
-        private LocalDate datoTilField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public Andel andel
-        {
-            get
-            {
-                return this.andelField;
-            }
-            set
-            {
-                this.andelField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public LocalDate datoFra
-        {
-            get
-            {
-                return this.datoFraField;
-            }
-            set
-            {
-                this.datoFraField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public LocalDate datoTil
-        {
-            get
-            {
-                return this.datoTilField;
-            }
-            set
-            {
-                this.datoTilField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonIkkeTinglystEierforhold))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class PersonIkkeTinglystEierforhold : IkkeTinglystEierforhold
-    {
-        
-        private PersonId eierIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public PersonId eierId
-        {
-            get
-            {
-                return this.eierIdField;
-            }
-            set
-            {
-                this.eierIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class JuridiskPersonIkkeTinglystEierforhold : PersonIkkeTinglystEierforhold
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class MatrikkelenhetIkkeTinglystEierforhold : IkkeTinglystEierforhold
-    {
-        
-        private MatrikkelenhetId eiendeMatrikkelenhetIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public MatrikkelenhetId eiendeMatrikkelenhetId
-        {
-            get
-            {
-                return this.eiendeMatrikkelenhetIdField;
-            }
-            set
-            {
-                this.eiendeMatrikkelenhetIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-    public partial class AnleggsprojeksjonsflateForMatrikkelenhet : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private bool hovedflateField;
-        
-        private bool hovedflateFieldSpecified;
-        
-        private AnleggsprojeksjonsflateId anleggsprojeksjonsflateIdField;
-        
-        private UUID uuidField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public bool hovedflate
-        {
-            get
-            {
-                return this.hovedflateField;
-            }
-            set
-            {
-                this.hovedflateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool hovedflateSpecified
-        {
-            get
-            {
-                return this.hovedflateFieldSpecified;
-            }
-            set
-            {
-                this.hovedflateFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public AnleggsprojeksjonsflateId anleggsprojeksjonsflateId
-        {
-            get
-            {
-                return this.anleggsprojeksjonsflateIdField;
-            }
-            set
-            {
-                this.anleggsprojeksjonsflateIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public UUID uuid
-        {
-            get
-            {
-                return this.uuidField;
-            }
-            set
-            {
-                this.uuidField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class SefrakReferanse : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private SefrakReferanseKodeId sefrakReferanseKodeIdField;
-        
-        private string referanseField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public SefrakReferanseKodeId sefrakReferanseKodeId
-        {
-            get
-            {
-                return this.sefrakReferanseKodeIdField;
-            }
-            set
-            {
-                this.sefrakReferanseKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string referanse
-        {
-            get
-            {
-                return this.referanseField;
-            }
-            set
-            {
-                this.referanseField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class Fotohenvisning : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private int filmnummerField;
-        
-        private bool filmnummerFieldSpecified;
-        
-        private int bildenummerFraField;
-        
-        private bool bildenummerFraFieldSpecified;
-        
-        private int bildenummerTilField;
-        
-        private bool bildenummerTilFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int filmnummer
-        {
-            get
-            {
-                return this.filmnummerField;
-            }
-            set
-            {
-                this.filmnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool filmnummerSpecified
-        {
-            get
-            {
-                return this.filmnummerFieldSpecified;
-            }
-            set
-            {
-                this.filmnummerFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int bildenummerFra
-        {
-            get
-            {
-                return this.bildenummerFraField;
-            }
-            set
-            {
-                this.bildenummerFraField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool bildenummerFraSpecified
-        {
-            get
-            {
-                return this.bildenummerFraFieldSpecified;
-            }
-            set
-            {
-                this.bildenummerFraFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public int bildenummerTil
-        {
-            get
-            {
-                return this.bildenummerTilField;
-            }
-            set
-            {
-                this.bildenummerTilField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool bildenummerTilSpecified
-        {
-            get
-            {
-                return this.bildenummerTilFieldSpecified;
-            }
-            set
-            {
-                this.bildenummerTilFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class Endringsvurdering : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private EndringsgradKodeId endringsgradKodeIdField;
-        
-        private LocalDate vurdertDatoField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public EndringsgradKodeId endringsgradKodeId
-        {
-            get
-            {
-                return this.endringsgradKodeIdField;
-            }
-            set
-            {
-                this.endringsgradKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public LocalDate vurdertDato
-        {
-            get
-            {
-                return this.vurdertDatoField;
-            }
-            set
-            {
-                this.vurdertDatoField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class Ajourforing : MatrikkelComponentWithHistory
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private LocalDate ajourfortDatoField;
-        
-        private string ajourfortAvField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public LocalDate ajourfortDato
-        {
-            get
-            {
-                return this.ajourfortDatoField;
-            }
-            set
-            {
-                this.ajourfortDatoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string ajourfortAv
-        {
-            get
-            {
-                return this.ajourfortAvField;
-            }
-            set
-            {
-                this.ajourfortAvField = value;
+                this.avsluttetAvField = value;
             }
         }
     }
@@ -10395,6 +7233,79 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class AnleggsprojeksjonsBoundary : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private AnleggsprojeksjonsgrenseId[] grenseIdsField;
+        
+        private UUID uuidField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+        public AnleggsprojeksjonsgrenseId[] grenseIds
+        {
+            get
+            {
+                return this.grenseIdsField;
+            }
+            set
+            {
+                this.grenseIdsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public UUID uuid
+        {
+            get
+            {
+                return this.uuidField;
+            }
+            set
+            {
+                this.uuidField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
     public partial class Atkomst : MatrikkelComponentWithHistory
     {
@@ -10499,103 +7410,4526 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class Position : MatrikkelComponent
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kulturminne")]
+    public partial class FredetBygning : MatrikkelComponentWithHistory
     {
         
-        private double xField;
+        private long idField;
         
-        private bool xFieldSpecified;
+        private bool idFieldSpecified;
         
-        private double yField;
+        private string enkeltminnenummerField;
         
-        private bool yFieldSpecified;
+        private EnkeltminneArtKodeId enkeltminneArtKodeIdField;
         
-        private double zField;
+        private VernetypeKodeId vernetypeKodeIdField;
         
-        private bool zFieldSpecified;
+        private KulturminnekategoriKodeId kategoriKodeIdField;
+        
+        private BygningId bygningIdField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public double x
+        public long id
         {
             get
             {
-                return this.xField;
+                return this.idField;
             }
             set
             {
-                this.xField = value;
+                this.idField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool xSpecified
+        public bool idSpecified
         {
             get
             {
-                return this.xFieldSpecified;
+                return this.idFieldSpecified;
             }
             set
             {
-                this.xFieldSpecified = value;
+                this.idFieldSpecified = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public double y
+        public string enkeltminnenummer
         {
             get
             {
-                return this.yField;
+                return this.enkeltminnenummerField;
             }
             set
             {
-                this.yField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ySpecified
-        {
-            get
-            {
-                return this.yFieldSpecified;
-            }
-            set
-            {
-                this.yFieldSpecified = value;
+                this.enkeltminnenummerField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public double z
+        public EnkeltminneArtKodeId enkeltminneArtKodeId
         {
             get
             {
-                return this.zField;
+                return this.enkeltminneArtKodeIdField;
             }
             set
             {
-                this.zField = value;
+                this.enkeltminneArtKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public VernetypeKodeId vernetypeKodeId
+        {
+            get
+            {
+                return this.vernetypeKodeIdField;
+            }
+            set
+            {
+                this.vernetypeKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public KulturminnekategoriKodeId kategoriKodeId
+        {
+            get
+            {
+                return this.kategoriKodeIdField;
+            }
+            set
+            {
+                this.kategoriKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public BygningId bygningId
+        {
+            get
+            {
+                return this.bygningIdField;
+            }
+            set
+            {
+                this.bygningIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/grunnforurensing")]
+    public partial class Vedtak : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private LocalDate vedtaksdatoField;
+        
+        private VedtakstypeKodeId vedtakstypeKodeIdField;
+        
+        private MatrikkelenhetId[] matrikkelenhetIdsField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool zSpecified
+        public bool idSpecified
         {
             get
             {
-                return this.zFieldSpecified;
+                return this.idFieldSpecified;
             }
             set
             {
-                this.zFieldSpecified = value;
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public LocalDate vedtaksdato
+        {
+            get
+            {
+                return this.vedtaksdatoField;
+            }
+            set
+            {
+                this.vedtaksdatoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public VedtakstypeKodeId vedtakstypeKodeId
+        {
+            get
+            {
+                return this.vedtakstypeKodeIdField;
+            }
+            set
+            {
+                this.vedtakstypeKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=3)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+        public MatrikkelenhetId[] matrikkelenhetIds
+        {
+            get
+            {
+                return this.matrikkelenhetIdsField;
+            }
+            set
+            {
+                this.matrikkelenhetIdsField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
+    public partial class LocalDate
+    {
+        
+        private System.DateTime dateField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType="date", Order=0)]
+        public System.DateTime date
+        {
+            get
+            {
+                return this.dateField;
+            }
+            set
+            {
+                this.dateField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
+    public partial class PersonMedAndelForKonsesjonsforhold : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private PersonId personIdField;
+        
+        private Andel andelField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public PersonId personId
+        {
+            get
+            {
+                return this.personIdField;
+            }
+            set
+            {
+                this.personIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public Andel andel
+        {
+            get
+            {
+                return this.andelField;
+            }
+            set
+            {
+                this.andelField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/util")]
+    public partial class Andel
+    {
+        
+        private long tellerField;
+        
+        private long nevnerField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long teller
+        {
+            get
+            {
+                return this.tellerField;
+            }
+            set
+            {
+                this.tellerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public long nevner
+        {
+            get
+            {
+                return this.nevnerField;
+            }
+            set
+            {
+                this.nevnerField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/forretning")]
+    public partial class SammenslaReseksjonering : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private SeksjonId seksjonIdField;
+        
+        private Matrikkelnummer matrikkelnummerField;
+        
+        private Andel sameiebrokField;
+        
+        private FormalSeksjonKodeId formalSeksjonKodeIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public SeksjonId seksjonId
+        {
+            get
+            {
+                return this.seksjonIdField;
+            }
+            set
+            {
+                this.seksjonIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public Matrikkelnummer matrikkelnummer
+        {
+            get
+            {
+                return this.matrikkelnummerField;
+            }
+            set
+            {
+                this.matrikkelnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public Andel sameiebrok
+        {
+            get
+            {
+                return this.sameiebrokField;
+            }
+            set
+            {
+                this.sameiebrokField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public FormalSeksjonKodeId formalSeksjonKodeId
+        {
+            get
+            {
+                return this.formalSeksjonKodeIdField;
+            }
+            set
+            {
+                this.formalSeksjonKodeIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class Matrikkelnummer : MatrikkelComponent
+    {
+        
+        private KommuneId kommuneIdField;
+        
+        private int gardsnummerField;
+        
+        private bool gardsnummerFieldSpecified;
+        
+        private int bruksnummerField;
+        
+        private bool bruksnummerFieldSpecified;
+        
+        private int festenummerField;
+        
+        private bool festenummerFieldSpecified;
+        
+        private int seksjonsnummerField;
+        
+        private bool seksjonsnummerFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public KommuneId kommuneId
+        {
+            get
+            {
+                return this.kommuneIdField;
+            }
+            set
+            {
+                this.kommuneIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int gardsnummer
+        {
+            get
+            {
+                return this.gardsnummerField;
+            }
+            set
+            {
+                this.gardsnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool gardsnummerSpecified
+        {
+            get
+            {
+                return this.gardsnummerFieldSpecified;
+            }
+            set
+            {
+                this.gardsnummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int bruksnummer
+        {
+            get
+            {
+                return this.bruksnummerField;
+            }
+            set
+            {
+                this.bruksnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool bruksnummerSpecified
+        {
+            get
+            {
+                return this.bruksnummerFieldSpecified;
+            }
+            set
+            {
+                this.bruksnummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public int festenummer
+        {
+            get
+            {
+                return this.festenummerField;
+            }
+            set
+            {
+                this.festenummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool festenummerSpecified
+        {
+            get
+            {
+                return this.festenummerFieldSpecified;
+            }
+            set
+            {
+                this.festenummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public int seksjonsnummer
+        {
+            get
+            {
+                return this.seksjonsnummerField;
+            }
+            set
+            {
+                this.seksjonsnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool seksjonsnummerSpecified
+        {
+            get
+            {
+                return this.seksjonsnummerFieldSpecified;
+            }
+            set
+            {
+                this.seksjonsnummerFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/forretning")]
+    public partial class SammenslaOmmatrikuleringFestegrunn : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private FestegrunnId festegrunnIdField;
+        
+        private Matrikkelnummer matrikkelnummerField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public FestegrunnId festegrunnId
+        {
+            get
+            {
+                return this.festegrunnIdField;
+            }
+            set
+            {
+                this.festegrunnIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public Matrikkelnummer matrikkelnummer
+        {
+            get
+            {
+                return this.matrikkelnummerField;
+            }
+            set
+            {
+                this.matrikkelnummerField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/forretning")]
+    public partial class KommuneendringOmadressering : MatrikkelComponentWithHistory
+    {
+        
+        private VegadresseId vegadresseIdField;
+        
+        private KommuneId kommuneIdField;
+        
+        private VegId vegIdField;
+        
+        private int husnummerField;
+        
+        private bool husnummerFieldSpecified;
+        
+        private string bokstavField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public VegadresseId vegadresseId
+        {
+            get
+            {
+                return this.vegadresseIdField;
+            }
+            set
+            {
+                this.vegadresseIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public KommuneId kommuneId
+        {
+            get
+            {
+                return this.kommuneIdField;
+            }
+            set
+            {
+                this.kommuneIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public VegId vegId
+        {
+            get
+            {
+                return this.vegIdField;
+            }
+            set
+            {
+                this.vegIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public int husnummer
+        {
+            get
+            {
+                return this.husnummerField;
+            }
+            set
+            {
+                this.husnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool husnummerSpecified
+        {
+            get
+            {
+                return this.husnummerFieldSpecified;
+            }
+            set
+            {
+                this.husnummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string bokstav
+        {
+            get
+            {
+                return this.bokstavField;
+            }
+            set
+            {
+                this.bokstavField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/forretning")]
+    public partial class ArealIForretning : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private MatrikkelenhetId matrikkelenhetIdField;
+        
+        private int lopenummerField;
+        
+        private bool lopenummerFieldSpecified;
+        
+        private RolleIForretningKodeId rolleIdField;
+        
+        private double arealendringField;
+        
+        private bool arealendringFieldSpecified;
+        
+        private Matrikkelnummer omnummerertFraField;
+        
+        private Matrikkelnummer omnummerertTilField;
+        
+        private double volumendringField;
+        
+        private bool volumendringFieldSpecified;
+        
+        private UUID uuidField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public MatrikkelenhetId matrikkelenhetId
+        {
+            get
+            {
+                return this.matrikkelenhetIdField;
+            }
+            set
+            {
+                this.matrikkelenhetIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int lopenummer
+        {
+            get
+            {
+                return this.lopenummerField;
+            }
+            set
+            {
+                this.lopenummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool lopenummerSpecified
+        {
+            get
+            {
+                return this.lopenummerFieldSpecified;
+            }
+            set
+            {
+                this.lopenummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public RolleIForretningKodeId rolleId
+        {
+            get
+            {
+                return this.rolleIdField;
+            }
+            set
+            {
+                this.rolleIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public double arealendring
+        {
+            get
+            {
+                return this.arealendringField;
+            }
+            set
+            {
+                this.arealendringField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool arealendringSpecified
+        {
+            get
+            {
+                return this.arealendringFieldSpecified;
+            }
+            set
+            {
+                this.arealendringFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public Matrikkelnummer omnummerertFra
+        {
+            get
+            {
+                return this.omnummerertFraField;
+            }
+            set
+            {
+                this.omnummerertFraField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public Matrikkelnummer omnummerertTil
+        {
+            get
+            {
+                return this.omnummerertTilField;
+            }
+            set
+            {
+                this.omnummerertTilField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public double volumendring
+        {
+            get
+            {
+                return this.volumendringField;
+            }
+            set
+            {
+                this.volumendringField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool volumendringSpecified
+        {
+            get
+            {
+                return this.volumendringFieldSpecified;
+            }
+            set
+            {
+                this.volumendringFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public UUID uuid
+        {
+            get
+            {
+                return this.uuidField;
+            }
+            set
+            {
+                this.uuidField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class SefrakReferanse : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private SefrakReferanseKodeId sefrakReferanseKodeIdField;
+        
+        private string referanseField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public SefrakReferanseKodeId sefrakReferanseKodeId
+        {
+            get
+            {
+                return this.sefrakReferanseKodeIdField;
+            }
+            set
+            {
+                this.sefrakReferanseKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string referanse
+        {
+            get
+            {
+                return this.referanseField;
+            }
+            set
+            {
+                this.referanseField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class Fotohenvisning : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private int filmnummerField;
+        
+        private bool filmnummerFieldSpecified;
+        
+        private int bildenummerFraField;
+        
+        private bool bildenummerFraFieldSpecified;
+        
+        private int bildenummerTilField;
+        
+        private bool bildenummerTilFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int filmnummer
+        {
+            get
+            {
+                return this.filmnummerField;
+            }
+            set
+            {
+                this.filmnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool filmnummerSpecified
+        {
+            get
+            {
+                return this.filmnummerFieldSpecified;
+            }
+            set
+            {
+                this.filmnummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int bildenummerFra
+        {
+            get
+            {
+                return this.bildenummerFraField;
+            }
+            set
+            {
+                this.bildenummerFraField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool bildenummerFraSpecified
+        {
+            get
+            {
+                return this.bildenummerFraFieldSpecified;
+            }
+            set
+            {
+                this.bildenummerFraFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public int bildenummerTil
+        {
+            get
+            {
+                return this.bildenummerTilField;
+            }
+            set
+            {
+                this.bildenummerTilField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool bildenummerTilSpecified
+        {
+            get
+            {
+                return this.bildenummerTilFieldSpecified;
+            }
+            set
+            {
+                this.bildenummerTilFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class Endringsvurdering : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private EndringsgradKodeId endringsgradKodeIdField;
+        
+        private LocalDate vurdertDatoField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public EndringsgradKodeId endringsgradKodeId
+        {
+            get
+            {
+                return this.endringsgradKodeIdField;
+            }
+            set
+            {
+                this.endringsgradKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public LocalDate vurdertDato
+        {
+            get
+            {
+                return this.vurdertDatoField;
+            }
+            set
+            {
+                this.vurdertDatoField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class Ajourforing : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private LocalDate ajourfortDatoField;
+        
+        private string ajourfortAvField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public LocalDate ajourfortDato
+        {
+            get
+            {
+                return this.ajourfortDatoField;
+            }
+            set
+            {
+                this.ajourfortDatoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string ajourfortAv
+        {
+            get
+            {
+                return this.ajourfortAvField;
+            }
+            set
+            {
+                this.ajourfortAvField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
+    public partial class VegReferanse : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private VegReferanseKodeId vegReferanseKodeIdField;
+        
+        private string referanseField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public VegReferanseKodeId vegReferanseKodeId
+        {
+            get
+            {
+                return this.vegReferanseKodeIdField;
+            }
+            set
+            {
+                this.vegReferanseKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string referanse
+        {
+            get
+            {
+                return this.referanseField;
+            }
+            set
+            {
+                this.referanseField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeigReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeiggrenseReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TeiggrensepunktReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonspunktReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsgrenseReferanse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsflateReferanse))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
+    public partial class Referanse : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private MatrikkelenhetReferanseKodeId matrikkelenhetReferanseKodeIdField;
+        
+        private string referanseField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public MatrikkelenhetReferanseKodeId matrikkelenhetReferanseKodeId
+        {
+            get
+            {
+                return this.matrikkelenhetReferanseKodeIdField;
+            }
+            set
+            {
+                this.matrikkelenhetReferanseKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string referanse
+        {
+            get
+            {
+                return this.referanseField;
+            }
+            set
+            {
+                this.referanseField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
+    public partial class TeigReferanse : Referanse
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
+    public partial class TeiggrenseReferanse : Referanse
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
+    public partial class TeiggrensepunktReferanse : Referanse
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
+    public partial class MatrikkelenhetReferanse : Referanse
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
+    public partial class AnleggsprojeksjonspunktReferanse : Referanse
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
+    public partial class AnleggsprojeksjonsgrenseReferanse : Referanse
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
+    public partial class AnleggsprojeksjonsflateReferanse : Referanse
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
+    public partial class KretsReferanse : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private KretsReferanseKodeId kretsReferanseKodeIdField;
+        
+        private string referanseField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public KretsReferanseKodeId kretsReferanseKodeId
+        {
+            get
+            {
+                return this.kretsReferanseKodeIdField;
+            }
+            set
+            {
+                this.kretsReferanseKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string referanse
+        {
+            get
+            {
+                return this.referanseField;
+            }
+            set
+            {
+                this.referanseField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
+    public partial class Kommentar : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private LocalDate datoField;
+        
+        private string tekstField;
+        
+        private string saksnummerField;
+        
+        private KommentartypeKodeId kommentartypeKodeIdField;
+        
+        private EtatsKodeId etatsKodeIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public LocalDate dato
+        {
+            get
+            {
+                return this.datoField;
+            }
+            set
+            {
+                this.datoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string tekst
+        {
+            get
+            {
+                return this.tekstField;
+            }
+            set
+            {
+                this.tekstField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string saksnummer
+        {
+            get
+            {
+                return this.saksnummerField;
+            }
+            set
+            {
+                this.saksnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public KommentartypeKodeId kommentartypeKodeId
+        {
+            get
+            {
+                return this.kommentartypeKodeIdField;
+            }
+            set
+            {
+                this.kommentartypeKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public EtatsKodeId etatsKodeId
+        {
+            get
+            {
+                return this.etatsKodeIdField;
+            }
+            set
+            {
+                this.etatsKodeIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
+    public partial class BygningsReferanse : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private BygningReferanseKodeId bygningsReferanseKodeIdField;
+        
+        private string referanseField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public BygningReferanseKodeId bygningsReferanseKodeId
+        {
+            get
+            {
+                return this.bygningsReferanseKodeIdField;
+            }
+            set
+            {
+                this.bygningsReferanseKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string referanse
+        {
+            get
+            {
+                return this.referanseField;
+            }
+            set
+            {
+                this.referanseField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
+    public partial class AdresseReferanse : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private AdresseReferanseKodeId adresseReferanseKodeIdField;
+        
+        private string referanseField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public AdresseReferanseKodeId adresseReferanseKodeId
+        {
+            get
+            {
+                return this.adresseReferanseKodeIdField;
+            }
+            set
+            {
+                this.adresseReferanseKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string referanse
+        {
+            get
+            {
+                return this.referanseField;
+            }
+            set
+            {
+                this.referanseField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskKontaktperson))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
+    public partial class Kontaktperson : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private PersonId personIdField;
+        
+        private KontaktpersonKodeId kontaktpersonKodeIdField;
+        
+        private LocalDate datoFraField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public PersonId personId
+        {
+            get
+            {
+                return this.personIdField;
+            }
+            set
+            {
+                this.personIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public KontaktpersonKodeId kontaktpersonKodeId
+        {
+            get
+            {
+                return this.kontaktpersonKodeIdField;
+            }
+            set
+            {
+                this.kontaktpersonKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public LocalDate datoFra
+        {
+            get
+            {
+                return this.datoFraField;
+            }
+            set
+            {
+                this.datoFraField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
+    public partial class JuridiskKontaktperson : Kontaktperson
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
+    public partial class BygningsstatusHistorikk : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private BygningsstatusKodeId bygningsstatusKodeIdField;
+        
+        private ArsakTilForingKodeId arsakTilForingKodeIdField;
+        
+        private string signaturField;
+        
+        private string referanseField;
+        
+        private LocalDate datoField;
+        
+        private Timestamp registrertDatoField;
+        
+        private Timestamp slettetDatoField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public BygningsstatusKodeId bygningsstatusKodeId
+        {
+            get
+            {
+                return this.bygningsstatusKodeIdField;
+            }
+            set
+            {
+                this.bygningsstatusKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public ArsakTilForingKodeId arsakTilForingKodeId
+        {
+            get
+            {
+                return this.arsakTilForingKodeIdField;
+            }
+            set
+            {
+                this.arsakTilForingKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string signatur
+        {
+            get
+            {
+                return this.signaturField;
+            }
+            set
+            {
+                this.signaturField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string referanse
+        {
+            get
+            {
+                return this.referanseField;
+            }
+            set
+            {
+                this.referanseField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public LocalDate dato
+        {
+            get
+            {
+                return this.datoField;
+            }
+            set
+            {
+                this.datoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public Timestamp registrertDato
+        {
+            get
+            {
+                return this.registrertDatoField;
+            }
+            set
+            {
+                this.registrertDatoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public Timestamp slettetDato
+        {
+            get
+            {
+                return this.slettetDatoField;
+            }
+            set
+            {
+                this.slettetDatoField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
+    public partial class Etasje : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private EtasjeplanKodeId etasjeplanKodeIdField;
+        
+        private int etasjenummerField;
+        
+        private bool etasjenummerFieldSpecified;
+        
+        private int antallBoenheterField;
+        
+        private bool antallBoenheterFieldSpecified;
+        
+        private double bruksarealTilBoligField;
+        
+        private bool bruksarealTilBoligFieldSpecified;
+        
+        private double bruksarealTilAnnetField;
+        
+        private bool bruksarealTilAnnetFieldSpecified;
+        
+        private double bruksarealTotaltField;
+        
+        private bool bruksarealTotaltFieldSpecified;
+        
+        private double alternativtArealField;
+        
+        private bool alternativtArealFieldSpecified;
+        
+        private double alternativtAreal2Field;
+        
+        private bool alternativtAreal2FieldSpecified;
+        
+        private double bruttoarealTilBoligField;
+        
+        private bool bruttoarealTilBoligFieldSpecified;
+        
+        private double bruttoarealTilAnnetField;
+        
+        private bool bruttoarealTilAnnetFieldSpecified;
+        
+        private double bruttoarealTotaltField;
+        
+        private bool bruttoarealTotaltFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public EtasjeplanKodeId etasjeplanKodeId
+        {
+            get
+            {
+                return this.etasjeplanKodeIdField;
+            }
+            set
+            {
+                this.etasjeplanKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int etasjenummer
+        {
+            get
+            {
+                return this.etasjenummerField;
+            }
+            set
+            {
+                this.etasjenummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool etasjenummerSpecified
+        {
+            get
+            {
+                return this.etasjenummerFieldSpecified;
+            }
+            set
+            {
+                this.etasjenummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public int antallBoenheter
+        {
+            get
+            {
+                return this.antallBoenheterField;
+            }
+            set
+            {
+                this.antallBoenheterField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool antallBoenheterSpecified
+        {
+            get
+            {
+                return this.antallBoenheterFieldSpecified;
+            }
+            set
+            {
+                this.antallBoenheterFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public double bruksarealTilBolig
+        {
+            get
+            {
+                return this.bruksarealTilBoligField;
+            }
+            set
+            {
+                this.bruksarealTilBoligField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool bruksarealTilBoligSpecified
+        {
+            get
+            {
+                return this.bruksarealTilBoligFieldSpecified;
+            }
+            set
+            {
+                this.bruksarealTilBoligFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public double bruksarealTilAnnet
+        {
+            get
+            {
+                return this.bruksarealTilAnnetField;
+            }
+            set
+            {
+                this.bruksarealTilAnnetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool bruksarealTilAnnetSpecified
+        {
+            get
+            {
+                return this.bruksarealTilAnnetFieldSpecified;
+            }
+            set
+            {
+                this.bruksarealTilAnnetFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public double bruksarealTotalt
+        {
+            get
+            {
+                return this.bruksarealTotaltField;
+            }
+            set
+            {
+                this.bruksarealTotaltField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool bruksarealTotaltSpecified
+        {
+            get
+            {
+                return this.bruksarealTotaltFieldSpecified;
+            }
+            set
+            {
+                this.bruksarealTotaltFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public double alternativtAreal
+        {
+            get
+            {
+                return this.alternativtArealField;
+            }
+            set
+            {
+                this.alternativtArealField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool alternativtArealSpecified
+        {
+            get
+            {
+                return this.alternativtArealFieldSpecified;
+            }
+            set
+            {
+                this.alternativtArealFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public double alternativtAreal2
+        {
+            get
+            {
+                return this.alternativtAreal2Field;
+            }
+            set
+            {
+                this.alternativtAreal2Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool alternativtAreal2Specified
+        {
+            get
+            {
+                return this.alternativtAreal2FieldSpecified;
+            }
+            set
+            {
+                this.alternativtAreal2FieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public double bruttoarealTilBolig
+        {
+            get
+            {
+                return this.bruttoarealTilBoligField;
+            }
+            set
+            {
+                this.bruttoarealTilBoligField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool bruttoarealTilBoligSpecified
+        {
+            get
+            {
+                return this.bruttoarealTilBoligFieldSpecified;
+            }
+            set
+            {
+                this.bruttoarealTilBoligFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public double bruttoarealTilAnnet
+        {
+            get
+            {
+                return this.bruttoarealTilAnnetField;
+            }
+            set
+            {
+                this.bruttoarealTilAnnetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool bruttoarealTilAnnetSpecified
+        {
+            get
+            {
+                return this.bruttoarealTilAnnetFieldSpecified;
+            }
+            set
+            {
+                this.bruttoarealTilAnnetFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public double bruttoarealTotalt
+        {
+            get
+            {
+                return this.bruttoarealTotaltField;
+            }
+            set
+            {
+                this.bruttoarealTotaltField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool bruttoarealTotaltSpecified
+        {
+            get
+            {
+                return this.bruttoarealTotaltFieldSpecified;
+            }
+            set
+            {
+                this.bruttoarealTotaltFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class TeigForMatrikkelenhet : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private bool hovedteigField;
+        
+        private bool hovedteigFieldSpecified;
+        
+        private TeigId teigIdField;
+        
+        private UUID uuidField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public bool hovedteig
+        {
+            get
+            {
+                return this.hovedteigField;
+            }
+            set
+            {
+                this.hovedteigField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool hovedteigSpecified
+        {
+            get
+            {
+                return this.hovedteigFieldSpecified;
+            }
+            set
+            {
+                this.hovedteigFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public TeigId teigId
+        {
+            get
+            {
+                return this.teigIdField;
+            }
+            set
+            {
+                this.teigIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public UUID uuid
+        {
+            get
+            {
+                return this.uuidField;
+            }
+            set
+            {
+                this.uuidField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class MatrenhForSamlaFastEdm : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private MatrikkelenhetId matrikkelenhetIdField;
+        
+        private bool hovedmatrikkelenhetField;
+        
+        private bool hovedmatrikkelenhetFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public MatrikkelenhetId matrikkelenhetId
+        {
+            get
+            {
+                return this.matrikkelenhetIdField;
+            }
+            set
+            {
+                this.matrikkelenhetIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public bool hovedmatrikkelenhet
+        {
+            get
+            {
+                return this.hovedmatrikkelenhetField;
+            }
+            set
+            {
+                this.hovedmatrikkelenhetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool hovedmatrikkelenhetSpecified
+        {
+            get
+            {
+                return this.hovedmatrikkelenhetFieldSpecified;
+            }
+            set
+            {
+                this.hovedmatrikkelenhetFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class RettsstiftelseForStedbundenRettighet : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private long rettsstiftelseIdField;
+        
+        private bool rettsstiftelseIdFieldSpecified;
+        
+        private MatrikkelenhetId[] matrikkelenhetIdsField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public long rettsstiftelseId
+        {
+            get
+            {
+                return this.rettsstiftelseIdField;
+            }
+            set
+            {
+                this.rettsstiftelseIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool rettsstiftelseIdSpecified
+        {
+            get
+            {
+                return this.rettsstiftelseIdFieldSpecified;
+            }
+            set
+            {
+                this.rettsstiftelseIdFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=2)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public MatrikkelenhetId[] matrikkelenhetIds
+        {
+            get
+            {
+                return this.matrikkelenhetIdsField;
+            }
+            set
+            {
+                this.matrikkelenhetIdsField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglystEierforhold))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonTinglystEierforhold))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonTinglystEierforhold))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetTinglystEierforhold))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kontaktinstans))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(IkkeTinglystEierforhold))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonIkkeTinglystEierforhold))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonIkkeTinglystEierforhold))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetIkkeTinglystEierforhold))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class Eierforhold : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private KommuneId kommuneIdField;
+        
+        private EierforholdKodeId eierforholdKodeIdField;
+        
+        private UUID uuidField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public KommuneId kommuneId
+        {
+            get
+            {
+                return this.kommuneIdField;
+            }
+            set
+            {
+                this.kommuneIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public EierforholdKodeId eierforholdKodeId
+        {
+            get
+            {
+                return this.eierforholdKodeIdField;
+            }
+            set
+            {
+                this.eierforholdKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public UUID uuid
+        {
+            get
+            {
+                return this.uuidField;
+            }
+            set
+            {
+                this.uuidField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonTinglystEierforhold))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonTinglystEierforhold))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetTinglystEierforhold))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class TinglystEierforhold : Eierforhold
+    {
+        
+        private Andel andelField;
+        
+        private LocalDate datoFraField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public Andel andel
+        {
+            get
+            {
+                return this.andelField;
+            }
+            set
+            {
+                this.andelField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public LocalDate datoFra
+        {
+            get
+            {
+                return this.datoFraField;
+            }
+            set
+            {
+                this.datoFraField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonTinglystEierforhold))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class PersonTinglystEierforhold : TinglystEierforhold
+    {
+        
+        private PersonId eierIdField;
+        
+        private int andelsnummerField;
+        
+        private bool andelsnummerFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public PersonId eierId
+        {
+            get
+            {
+                return this.eierIdField;
+            }
+            set
+            {
+                this.eierIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int andelsnummer
+        {
+            get
+            {
+                return this.andelsnummerField;
+            }
+            set
+            {
+                this.andelsnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool andelsnummerSpecified
+        {
+            get
+            {
+                return this.andelsnummerFieldSpecified;
+            }
+            set
+            {
+                this.andelsnummerFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class JuridiskPersonTinglystEierforhold : PersonTinglystEierforhold
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class MatrikkelenhetTinglystEierforhold : TinglystEierforhold
+    {
+        
+        private MatrikkelenhetId eiendeMatrikkelenhetIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public MatrikkelenhetId eiendeMatrikkelenhetId
+        {
+            get
+            {
+                return this.eiendeMatrikkelenhetIdField;
+            }
+            set
+            {
+                this.eiendeMatrikkelenhetIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class Kontaktinstans : Eierforhold
+    {
+        
+        private PersonId eierIdField;
+        
+        private LocalDate datoFraField;
+        
+        private LocalDate datoTilField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public PersonId eierId
+        {
+            get
+            {
+                return this.eierIdField;
+            }
+            set
+            {
+                this.eierIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public LocalDate datoFra
+        {
+            get
+            {
+                return this.datoFraField;
+            }
+            set
+            {
+                this.datoFraField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public LocalDate datoTil
+        {
+            get
+            {
+                return this.datoTilField;
+            }
+            set
+            {
+                this.datoTilField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonIkkeTinglystEierforhold))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonIkkeTinglystEierforhold))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetIkkeTinglystEierforhold))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class IkkeTinglystEierforhold : Eierforhold
+    {
+        
+        private Andel andelField;
+        
+        private LocalDate datoFraField;
+        
+        private LocalDate datoTilField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public Andel andel
+        {
+            get
+            {
+                return this.andelField;
+            }
+            set
+            {
+                this.andelField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public LocalDate datoFra
+        {
+            get
+            {
+                return this.datoFraField;
+            }
+            set
+            {
+                this.datoFraField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public LocalDate datoTil
+        {
+            get
+            {
+                return this.datoTilField;
+            }
+            set
+            {
+                this.datoTilField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPersonIkkeTinglystEierforhold))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class PersonIkkeTinglystEierforhold : IkkeTinglystEierforhold
+    {
+        
+        private PersonId eierIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public PersonId eierId
+        {
+            get
+            {
+                return this.eierIdField;
+            }
+            set
+            {
+                this.eierIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class JuridiskPersonIkkeTinglystEierforhold : PersonIkkeTinglystEierforhold
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class MatrikkelenhetIkkeTinglystEierforhold : IkkeTinglystEierforhold
+    {
+        
+        private MatrikkelenhetId eiendeMatrikkelenhetIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public MatrikkelenhetId eiendeMatrikkelenhetId
+        {
+            get
+            {
+                return this.eiendeMatrikkelenhetIdField;
+            }
+            set
+            {
+                this.eiendeMatrikkelenhetIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+    public partial class AnleggsprojeksjonsflateForMatrikkelenhet : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private bool hovedflateField;
+        
+        private bool hovedflateFieldSpecified;
+        
+        private AnleggsprojeksjonsflateId anleggsprojeksjonsflateIdField;
+        
+        private UUID uuidField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public bool hovedflate
+        {
+            get
+            {
+                return this.hovedflateField;
+            }
+            set
+            {
+                this.hovedflateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool hovedflateSpecified
+        {
+            get
+            {
+                return this.hovedflateFieldSpecified;
+            }
+            set
+            {
+                this.hovedflateFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public AnleggsprojeksjonsflateId anleggsprojeksjonsflateId
+        {
+            get
+            {
+                return this.anleggsprojeksjonsflateIdField;
+            }
+            set
+            {
+                this.anleggsprojeksjonsflateIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public UUID uuid
+        {
+            get
+            {
+                return this.uuidField;
+            }
+            set
+            {
+                this.uuidField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/metadata")]
+    public partial class MetadataFelt : MatrikkelComponentWithHistory
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private string navnField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string navn
+        {
+            get
+            {
+                return this.navnField;
+            }
+            set
+            {
+                this.navnField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsPolyline))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsArc))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class AnleggsprojeksjonsCurveSegment : MatrikkelComponent
+    {
+        
+        private KoordinatsystemKodeId koordinatsystemKodeIdField;
+        
+        private KoordinatsystemKodeId originalKoordinatsystemKodeIdField;
+        
+        private AnleggsprojeksjonspunktId startpunktIdField;
+        
+        private AnleggsprojeksjonspunktId endpunktIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public KoordinatsystemKodeId koordinatsystemKodeId
+        {
+            get
+            {
+                return this.koordinatsystemKodeIdField;
+            }
+            set
+            {
+                this.koordinatsystemKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public KoordinatsystemKodeId originalKoordinatsystemKodeId
+        {
+            get
+            {
+                return this.originalKoordinatsystemKodeIdField;
+            }
+            set
+            {
+                this.originalKoordinatsystemKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public AnleggsprojeksjonspunktId startpunktId
+        {
+            get
+            {
+                return this.startpunktIdField;
+            }
+            set
+            {
+                this.startpunktIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public AnleggsprojeksjonspunktId endpunktId
+        {
+            get
+            {
+                return this.endpunktIdField;
+            }
+            set
+            {
+                this.endpunktIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class AnleggsprojeksjonsPolyline : AnleggsprojeksjonsCurveSegment
+    {
+        
+        private Position[] kurvepunkterField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public Position[] kurvepunkter
+        {
+            get
+            {
+                return this.kurvepunkterField;
+            }
+            set
+            {
+                this.kurvepunkterField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class AnleggsprojeksjonsArc : AnleggsprojeksjonsCurveSegment
+    {
+        
+        private Position buepunktField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public Position buepunkt
+        {
+            get
+            {
+                return this.buepunktField;
+            }
+            set
+            {
+                this.buepunktField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class AnleggsprojeksjonsComplexSurface : MatrikkelComponent
+    {
+        
+        private AnleggsprojeksjonsBoundary exteriorField;
+        
+        private AnleggsprojeksjonsBoundary[] interiorsField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public AnleggsprojeksjonsBoundary exterior
+        {
+            get
+            {
+                return this.exteriorField;
+            }
+            set
+            {
+                this.exteriorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public AnleggsprojeksjonsBoundary[] interiors
+        {
+            get
+            {
+                return this.interiorsField;
+            }
+            set
+            {
+                this.interiorsField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/person")]
+    public partial class MottakerAdresse : MatrikkelComponent
+    {
+        
+        private string adresselinje1Field;
+        
+        private string adresselinje2Field;
+        
+        private string adresselinje3Field;
+        
+        private PostnummeromradeId postnummeromradeIdField;
+        
+        private LandKodeId landKodeIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string adresselinje1
+        {
+            get
+            {
+                return this.adresselinje1Field;
+            }
+            set
+            {
+                this.adresselinje1Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string adresselinje2
+        {
+            get
+            {
+                return this.adresselinje2Field;
+            }
+            set
+            {
+                this.adresselinje2Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string adresselinje3
+        {
+            get
+            {
+                return this.adresselinje3Field;
+            }
+            set
+            {
+                this.adresselinje3Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public PostnummeromradeId postnummeromradeId
+        {
+            get
+            {
+                return this.postnummeromradeIdField;
+            }
+            set
+            {
+                this.postnummeromradeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public LandKodeId landKodeId
+        {
+            get
+            {
+                return this.landKodeIdField;
+            }
+            set
+            {
+                this.landKodeIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/person")]
+    public partial class Hjemlandsadresse : MatrikkelComponent
+    {
+        
+        private string hjemlandsadresselinje1Field;
+        
+        private string hjemlandsadresselinje2Field;
+        
+        private string hjemlandsadresselinje3Field;
+        
+        private LandKodeId hjemlandsLandKodeIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string hjemlandsadresselinje1
+        {
+            get
+            {
+                return this.hjemlandsadresselinje1Field;
+            }
+            set
+            {
+                this.hjemlandsadresselinje1Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string hjemlandsadresselinje2
+        {
+            get
+            {
+                return this.hjemlandsadresselinje2Field;
+            }
+            set
+            {
+                this.hjemlandsadresselinje2Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string hjemlandsadresselinje3
+        {
+            get
+            {
+                return this.hjemlandsadresselinje3Field;
+            }
+            set
+            {
+                this.hjemlandsadresselinje3Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public LandKodeId hjemlandsLandKodeId
+        {
+            get
+            {
+                return this.hjemlandsLandKodeIdField;
+            }
+            set
+            {
+                this.hjemlandsLandKodeIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/aktivitetsliste")]
+    public partial class RolleMatrikkelenhetMelding : MatrikkelComponent
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private MatrikkelenhetId matrikkelenhetIdField;
+        
+        private RolleIMeldingId rolleIMeldingIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public MatrikkelenhetId matrikkelenhetId
+        {
+            get
+            {
+                return this.matrikkelenhetIdField;
+            }
+            set
+            {
+                this.matrikkelenhetIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public RolleIMeldingId rolleIMeldingId
+        {
+            get
+            {
+                return this.rolleIMeldingIdField;
+            }
+            set
+            {
+                this.rolleIMeldingIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VernevedtakRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakReferanserRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakKodeRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VerdivurderingRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TidRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForholdAndreHusRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakKodelisteRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(YtterveggRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(UnderbygningKonstrRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TiderRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TaktekkingRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TakformRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpprinneligSosialtMiljoRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KjellerRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskMiljoRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FunksjonRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FasadeRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RegistrertRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ObjektnummerRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(NavnRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MiljoOvervakingRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HovedmalRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FredningRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FotohenvisningerRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EtasjetallRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningerRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AntallSkorsteinerRubrikk))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class SefrakRubrikk : MatrikkelComponent
+    {
+        
+        private string merknadField;
+        
+        private bool usikkerField;
+        
+        private bool usikkerFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string merknad
+        {
+            get
+            {
+                return this.merknadField;
+            }
+            set
+            {
+                this.merknadField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public bool usikker
+        {
+            get
+            {
+                return this.usikkerField;
+            }
+            set
+            {
+                this.usikkerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool usikkerSpecified
+        {
+            get
+            {
+                return this.usikkerFieldSpecified;
+            }
+            set
+            {
+                this.usikkerFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class VernevedtakRubrikk : SefrakRubrikk
+    {
+        
+        private VernevedtakKodeId vernevedtakKodeIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public VernevedtakKodeId vernevedtakKodeId
+        {
+            get
+            {
+                return this.vernevedtakKodeIdField;
+            }
+            set
+            {
+                this.vernevedtakKodeIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class SefrakReferanserRubrikk : SefrakRubrikk
+    {
+        
+        private SefrakReferanse[] sefrakReferanserField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public SefrakReferanse[] sefrakReferanser
+        {
+            get
+            {
+                return this.sefrakReferanserField;
+            }
+            set
+            {
+                this.sefrakReferanserField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VerdivurderingRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TidRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForholdAndreHusRubrikk))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class SefrakKodeRubrikk : SefrakRubrikk
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class VerdivurderingRubrikk : SefrakKodeRubrikk
+    {
+        
+        private VerdivurderingKodeId verdivurderingKodeIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public VerdivurderingKodeId verdivurderingKodeId
+        {
+            get
+            {
+                return this.verdivurderingKodeIdField;
+            }
+            set
+            {
+                this.verdivurderingKodeIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class TidRubrikk : SefrakKodeRubrikk
+    {
+        
+        private TidsKodeId tidsKodeIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public TidsKodeId tidsKodeId
+        {
+            get
+            {
+                return this.tidsKodeIdField;
+            }
+            set
+            {
+                this.tidsKodeIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class ForholdAndreHusRubrikk : SefrakKodeRubrikk
+    {
+        
+        private ForholdAndreHusKodeId forholdAndreHusKodeIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public ForholdAndreHusKodeId forholdAndreHusKodeId
+        {
+            get
+            {
+                return this.forholdAndreHusKodeIdField;
+            }
+            set
+            {
+                this.forholdAndreHusKodeIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(YtterveggRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(UnderbygningKonstrRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TiderRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TaktekkingRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TakformRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpprinneligSosialtMiljoRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KjellerRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskMiljoRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FunksjonRubrikk))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FasadeRubrikk))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class SefrakKodelisteRubrikk : SefrakRubrikk
+    {
+        
+        private MatrikkelEnumKodeId[] kodelisteField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kodeliste")]
+        public MatrikkelEnumKodeId[] kodeliste
+        {
+            get
+            {
+                return this.kodelisteField;
+            }
+            set
+            {
+                this.kodelisteField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class YtterveggRubrikk : SefrakKodelisteRubrikk
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class UnderbygningKonstrRubrikk : SefrakKodelisteRubrikk
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class TiderRubrikk : SefrakKodelisteRubrikk
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class TaktekkingRubrikk : SefrakKodelisteRubrikk
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class TakformRubrikk : SefrakKodelisteRubrikk
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class OpprinneligSosialtMiljoRubrikk : SefrakKodelisteRubrikk
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class KjellerRubrikk : SefrakKodelisteRubrikk
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class FysiskMiljoRubrikk : SefrakKodelisteRubrikk
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class FunksjonRubrikk : SefrakKodelisteRubrikk
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class FasadeRubrikk : SefrakKodelisteRubrikk
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class RegistrertRubrikk : SefrakRubrikk
+    {
+        
+        private string feltregistrertAvField;
+        
+        private LocalDate feltregistrertDatoField;
+        
+        private Ajourforing[] ajourforingerField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string feltregistrertAv
+        {
+            get
+            {
+                return this.feltregistrertAvField;
+            }
+            set
+            {
+                this.feltregistrertAvField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public LocalDate feltregistrertDato
+        {
+            get
+            {
+                return this.feltregistrertDatoField;
+            }
+            set
+            {
+                this.feltregistrertDatoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=2)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public Ajourforing[] ajourforinger
+        {
+            get
+            {
+                return this.ajourforingerField;
+            }
+            set
+            {
+                this.ajourforingerField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class ObjektnummerRubrikk : SefrakRubrikk
+    {
+        
+        private KommuneId registreringskommuneIdField;
+        
+        private int registreringskretsnummerField;
+        
+        private bool registreringskretsnummerFieldSpecified;
+        
+        private int huslopenummerField;
+        
+        private bool huslopenummerFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public KommuneId registreringskommuneId
+        {
+            get
+            {
+                return this.registreringskommuneIdField;
+            }
+            set
+            {
+                this.registreringskommuneIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int registreringskretsnummer
+        {
+            get
+            {
+                return this.registreringskretsnummerField;
+            }
+            set
+            {
+                this.registreringskretsnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool registreringskretsnummerSpecified
+        {
+            get
+            {
+                return this.registreringskretsnummerFieldSpecified;
+            }
+            set
+            {
+                this.registreringskretsnummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int huslopenummer
+        {
+            get
+            {
+                return this.huslopenummerField;
+            }
+            set
+            {
+                this.huslopenummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool huslopenummerSpecified
+        {
+            get
+            {
+                return this.huslopenummerFieldSpecified;
+            }
+            set
+            {
+                this.huslopenummerFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class NavnRubrikk : SefrakRubrikk
+    {
+        
+        private string navnField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string navn
+        {
+            get
+            {
+                return this.navnField;
+            }
+            set
+            {
+                this.navnField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class MiljoOvervakingRubrikk : SefrakRubrikk
+    {
+        
+        private Endringsvurdering[] endringsvurderingerField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public Endringsvurdering[] endringsvurderinger
+        {
+            get
+            {
+                return this.endringsvurderingerField;
+            }
+            set
+            {
+                this.endringsvurderingerField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class HovedmalRubrikk : SefrakRubrikk
+    {
+        
+        private int lengdeField;
+        
+        private bool lengdeFieldSpecified;
+        
+        private int breddeField;
+        
+        private bool breddeFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int lengde
+        {
+            get
+            {
+                return this.lengdeField;
+            }
+            set
+            {
+                this.lengdeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool lengdeSpecified
+        {
+            get
+            {
+                return this.lengdeFieldSpecified;
+            }
+            set
+            {
+                this.lengdeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int bredde
+        {
+            get
+            {
+                return this.breddeField;
+            }
+            set
+            {
+                this.breddeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool breddeSpecified
+        {
+            get
+            {
+                return this.breddeFieldSpecified;
+            }
+            set
+            {
+                this.breddeFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class FredningRubrikk : SefrakRubrikk
+    {
+        
+        private FredningKodeId fredningKodeIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public FredningKodeId fredningKodeId
+        {
+            get
+            {
+                return this.fredningKodeIdField;
+            }
+            set
+            {
+                this.fredningKodeIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class FotohenvisningerRubrikk : SefrakRubrikk
+    {
+        
+        private Fotohenvisning[] fotohenvisningerField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public Fotohenvisning[] fotohenvisninger
+        {
+            get
+            {
+                return this.fotohenvisningerField;
+            }
+            set
+            {
+                this.fotohenvisningerField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class EtasjetallRubrikk : SefrakRubrikk
+    {
+        
+        private EtasjetallKodeId etasjetallKodeIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public EtasjetallKodeId etasjetallKodeId
+        {
+            get
+            {
+                return this.etasjetallKodeIdField;
+            }
+            set
+            {
+                this.etasjetallKodeIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class BygningerRubrikk : SefrakRubrikk
+    {
+        
+        private ByggId[] bygningerIdsField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
+        public ByggId[] bygningerIds
+        {
+            get
+            {
+                return this.bygningerIdsField;
+            }
+            set
+            {
+                this.bygningerIdsField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class AntallSkorsteinerRubrikk : SefrakRubrikk
+    {
+        
+        private int antallSkorsteinerField;
+        
+        private bool antallSkorsteinerFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int antallSkorsteiner
+        {
+            get
+            {
+                return this.antallSkorsteinerField;
+            }
+            set
+            {
+                this.antallSkorsteinerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool antallSkorsteinerSpecified
+        {
+            get
+            {
+                return this.antallSkorsteinerFieldSpecified;
+            }
+            set
+            {
+                this.antallSkorsteinerFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommunetillegg")]
+    public partial class VegTillegg : MatrikkelComponent
+    {
+        
+        private VegReferanse[] vegReferanserField;
+        
+        private Kommentar[] kommentarerField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public VegReferanse[] vegReferanser
+        {
+            get
+            {
+                return this.vegReferanserField;
+            }
+            set
+            {
+                this.vegReferanserField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public Kommentar[] kommentarer
+        {
+            get
+            {
+                return this.kommentarerField;
+            }
+            set
+            {
+                this.kommentarerField = value;
             }
         }
     }
@@ -11668,1476 +13002,6 @@ namespace Kartverket.Matrikkel.StoreService
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/aktivitetsliste")]
-    public partial class RolleMatrikkelenhetMelding : MatrikkelComponent
-    {
-        
-        private long idField;
-        
-        private bool idFieldSpecified;
-        
-        private MatrikkelenhetId matrikkelenhetIdField;
-        
-        private RolleIMeldingId rolleIMeldingIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool idSpecified
-        {
-            get
-            {
-                return this.idFieldSpecified;
-            }
-            set
-            {
-                this.idFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public MatrikkelenhetId matrikkelenhetId
-        {
-            get
-            {
-                return this.matrikkelenhetIdField;
-            }
-            set
-            {
-                this.matrikkelenhetIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public RolleIMeldingId rolleIMeldingId
-        {
-            get
-            {
-                return this.rolleIMeldingIdField;
-            }
-            set
-            {
-                this.rolleIMeldingIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class Representasjonspunkt : MatrikkelComponent
-    {
-        
-        private KoordinatsystemKodeId koordinatsystemKodeIdField;
-        
-        private KoordinatsystemKodeId originalKoordinatsystemKodeIdField;
-        
-        private Position positionField;
-        
-        private Posisjonskvalitet kvalitetField;
-        
-        private KoordinatkvalitetKodeId koordinatkvalitetKodeIdField;
-        
-        private bool stedfestingVerifisertField;
-        
-        private bool stedfestingVerifisertFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public KoordinatsystemKodeId koordinatsystemKodeId
-        {
-            get
-            {
-                return this.koordinatsystemKodeIdField;
-            }
-            set
-            {
-                this.koordinatsystemKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public KoordinatsystemKodeId originalKoordinatsystemKodeId
-        {
-            get
-            {
-                return this.originalKoordinatsystemKodeIdField;
-            }
-            set
-            {
-                this.originalKoordinatsystemKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public Position position
-        {
-            get
-            {
-                return this.positionField;
-            }
-            set
-            {
-                this.positionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public Posisjonskvalitet kvalitet
-        {
-            get
-            {
-                return this.kvalitetField;
-            }
-            set
-            {
-                this.kvalitetField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public KoordinatkvalitetKodeId koordinatkvalitetKodeId
-        {
-            get
-            {
-                return this.koordinatkvalitetKodeIdField;
-            }
-            set
-            {
-                this.koordinatkvalitetKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public bool stedfestingVerifisert
-        {
-            get
-            {
-                return this.stedfestingVerifisertField;
-            }
-            set
-            {
-                this.stedfestingVerifisertField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool stedfestingVerifisertSpecified
-        {
-            get
-            {
-                return this.stedfestingVerifisertFieldSpecified;
-            }
-            set
-            {
-                this.stedfestingVerifisertFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class Posisjonskvalitet : MatrikkelComponent
-    {
-        
-        private MalemetodeKodeId malemetodeIdField;
-        
-        private int noyaktighetField;
-        
-        private bool noyaktighetFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public MalemetodeKodeId malemetodeId
-        {
-            get
-            {
-                return this.malemetodeIdField;
-            }
-            set
-            {
-                this.malemetodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int noyaktighet
-        {
-            get
-            {
-                return this.noyaktighetField;
-            }
-            set
-            {
-                this.noyaktighetField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool noyaktighetSpecified
-        {
-            get
-            {
-                return this.noyaktighetFieldSpecified;
-            }
-            set
-            {
-                this.noyaktighetFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Polyline))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Arc))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class CurveSegment : MatrikkelComponent
-    {
-        
-        private TeiggrensepunktId startpunktIdField;
-        
-        private TeiggrensepunktId endpunktIdField;
-        
-        private KoordinatsystemKodeId koordinatsystemKodeIdField;
-        
-        private KoordinatsystemKodeId originalKoordinatsystemKodeIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public TeiggrensepunktId startpunktId
-        {
-            get
-            {
-                return this.startpunktIdField;
-            }
-            set
-            {
-                this.startpunktIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public TeiggrensepunktId endpunktId
-        {
-            get
-            {
-                return this.endpunktIdField;
-            }
-            set
-            {
-                this.endpunktIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public KoordinatsystemKodeId koordinatsystemKodeId
-        {
-            get
-            {
-                return this.koordinatsystemKodeIdField;
-            }
-            set
-            {
-                this.koordinatsystemKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public KoordinatsystemKodeId originalKoordinatsystemKodeId
-        {
-            get
-            {
-                return this.originalKoordinatsystemKodeIdField;
-            }
-            set
-            {
-                this.originalKoordinatsystemKodeIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class Polyline : CurveSegment
-    {
-        
-        private Position[] kurvepunkterField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public Position[] kurvepunkter
-        {
-            get
-            {
-                return this.kurvepunkterField;
-            }
-            set
-            {
-                this.kurvepunkterField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class Arc : CurveSegment
-    {
-        
-        private Position buepunktField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public Position buepunkt
-        {
-            get
-            {
-                return this.buepunktField;
-            }
-            set
-            {
-                this.buepunktField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class ComplexSurface : MatrikkelComponent
-    {
-        
-        private Boundary exteriorField;
-        
-        private Boundary[] interiorField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public Boundary exterior
-        {
-            get
-            {
-                return this.exteriorField;
-            }
-            set
-            {
-                this.exteriorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public Boundary[] interior
-        {
-            get
-            {
-                return this.interiorField;
-            }
-            set
-            {
-                this.interiorField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsPolyline))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggsprojeksjonsArc))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class AnleggsprojeksjonsCurveSegment : MatrikkelComponent
-    {
-        
-        private KoordinatsystemKodeId koordinatsystemKodeIdField;
-        
-        private KoordinatsystemKodeId originalKoordinatsystemKodeIdField;
-        
-        private AnleggsprojeksjonspunktId startpunktIdField;
-        
-        private AnleggsprojeksjonspunktId endpunktIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public KoordinatsystemKodeId koordinatsystemKodeId
-        {
-            get
-            {
-                return this.koordinatsystemKodeIdField;
-            }
-            set
-            {
-                this.koordinatsystemKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public KoordinatsystemKodeId originalKoordinatsystemKodeId
-        {
-            get
-            {
-                return this.originalKoordinatsystemKodeIdField;
-            }
-            set
-            {
-                this.originalKoordinatsystemKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public AnleggsprojeksjonspunktId startpunktId
-        {
-            get
-            {
-                return this.startpunktIdField;
-            }
-            set
-            {
-                this.startpunktIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public AnleggsprojeksjonspunktId endpunktId
-        {
-            get
-            {
-                return this.endpunktIdField;
-            }
-            set
-            {
-                this.endpunktIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class AnleggsprojeksjonsPolyline : AnleggsprojeksjonsCurveSegment
-    {
-        
-        private Position[] kurvepunkterField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public Position[] kurvepunkter
-        {
-            get
-            {
-                return this.kurvepunkterField;
-            }
-            set
-            {
-                this.kurvepunkterField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class AnleggsprojeksjonsArc : AnleggsprojeksjonsCurveSegment
-    {
-        
-        private Position buepunktField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public Position buepunkt
-        {
-            get
-            {
-                return this.buepunktField;
-            }
-            set
-            {
-                this.buepunktField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class AnleggsprojeksjonsComplexSurface : MatrikkelComponent
-    {
-        
-        private AnleggsprojeksjonsBoundary exteriorField;
-        
-        private AnleggsprojeksjonsBoundary[] interiorsField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public AnleggsprojeksjonsBoundary exterior
-        {
-            get
-            {
-                return this.exteriorField;
-            }
-            set
-            {
-                this.exteriorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public AnleggsprojeksjonsBoundary[] interiors
-        {
-            get
-            {
-                return this.interiorsField;
-            }
-            set
-            {
-                this.interiorsField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VernevedtakRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakReferanserRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakKodeRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VerdivurderingRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TidRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForholdAndreHusRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakKodelisteRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(YtterveggRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(UnderbygningKonstrRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TiderRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TaktekkingRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TakformRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpprinneligSosialtMiljoRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KjellerRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskMiljoRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FunksjonRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FasadeRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RegistrertRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ObjektnummerRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(NavnRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MiljoOvervakingRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HovedmalRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FredningRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FotohenvisningerRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EtasjetallRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningerRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AntallSkorsteinerRubrikk))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class SefrakRubrikk : MatrikkelComponent
-    {
-        
-        private string merknadField;
-        
-        private bool usikkerField;
-        
-        private bool usikkerFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string merknad
-        {
-            get
-            {
-                return this.merknadField;
-            }
-            set
-            {
-                this.merknadField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public bool usikker
-        {
-            get
-            {
-                return this.usikkerField;
-            }
-            set
-            {
-                this.usikkerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool usikkerSpecified
-        {
-            get
-            {
-                return this.usikkerFieldSpecified;
-            }
-            set
-            {
-                this.usikkerFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class VernevedtakRubrikk : SefrakRubrikk
-    {
-        
-        private VernevedtakKodeId vernevedtakKodeIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public VernevedtakKodeId vernevedtakKodeId
-        {
-            get
-            {
-                return this.vernevedtakKodeIdField;
-            }
-            set
-            {
-                this.vernevedtakKodeIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class SefrakReferanserRubrikk : SefrakRubrikk
-    {
-        
-        private SefrakReferanse[] sefrakReferanserField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public SefrakReferanse[] sefrakReferanser
-        {
-            get
-            {
-                return this.sefrakReferanserField;
-            }
-            set
-            {
-                this.sefrakReferanserField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VerdivurderingRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TidRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForholdAndreHusRubrikk))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class SefrakKodeRubrikk : SefrakRubrikk
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class VerdivurderingRubrikk : SefrakKodeRubrikk
-    {
-        
-        private VerdivurderingKodeId verdivurderingKodeIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public VerdivurderingKodeId verdivurderingKodeId
-        {
-            get
-            {
-                return this.verdivurderingKodeIdField;
-            }
-            set
-            {
-                this.verdivurderingKodeIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class TidRubrikk : SefrakKodeRubrikk
-    {
-        
-        private TidsKodeId tidsKodeIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public TidsKodeId tidsKodeId
-        {
-            get
-            {
-                return this.tidsKodeIdField;
-            }
-            set
-            {
-                this.tidsKodeIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class ForholdAndreHusRubrikk : SefrakKodeRubrikk
-    {
-        
-        private ForholdAndreHusKodeId forholdAndreHusKodeIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public ForholdAndreHusKodeId forholdAndreHusKodeId
-        {
-            get
-            {
-                return this.forholdAndreHusKodeIdField;
-            }
-            set
-            {
-                this.forholdAndreHusKodeIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(YtterveggRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(UnderbygningKonstrRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TiderRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TaktekkingRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TakformRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpprinneligSosialtMiljoRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KjellerRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskMiljoRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FunksjonRubrikk))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FasadeRubrikk))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class SefrakKodelisteRubrikk : SefrakRubrikk
-    {
-        
-        private MatrikkelEnumKodeId[] kodelisteField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kodeliste")]
-        public MatrikkelEnumKodeId[] kodeliste
-        {
-            get
-            {
-                return this.kodelisteField;
-            }
-            set
-            {
-                this.kodelisteField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class YtterveggRubrikk : SefrakKodelisteRubrikk
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class UnderbygningKonstrRubrikk : SefrakKodelisteRubrikk
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class TiderRubrikk : SefrakKodelisteRubrikk
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class TaktekkingRubrikk : SefrakKodelisteRubrikk
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class TakformRubrikk : SefrakKodelisteRubrikk
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class OpprinneligSosialtMiljoRubrikk : SefrakKodelisteRubrikk
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class KjellerRubrikk : SefrakKodelisteRubrikk
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class FysiskMiljoRubrikk : SefrakKodelisteRubrikk
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class FunksjonRubrikk : SefrakKodelisteRubrikk
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class FasadeRubrikk : SefrakKodelisteRubrikk
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class RegistrertRubrikk : SefrakRubrikk
-    {
-        
-        private string feltregistrertAvField;
-        
-        private LocalDate feltregistrertDatoField;
-        
-        private Ajourforing[] ajourforingerField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string feltregistrertAv
-        {
-            get
-            {
-                return this.feltregistrertAvField;
-            }
-            set
-            {
-                this.feltregistrertAvField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public LocalDate feltregistrertDato
-        {
-            get
-            {
-                return this.feltregistrertDatoField;
-            }
-            set
-            {
-                this.feltregistrertDatoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=2)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public Ajourforing[] ajourforinger
-        {
-            get
-            {
-                return this.ajourforingerField;
-            }
-            set
-            {
-                this.ajourforingerField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class ObjektnummerRubrikk : SefrakRubrikk
-    {
-        
-        private KommuneId registreringskommuneIdField;
-        
-        private int registreringskretsnummerField;
-        
-        private bool registreringskretsnummerFieldSpecified;
-        
-        private int huslopenummerField;
-        
-        private bool huslopenummerFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public KommuneId registreringskommuneId
-        {
-            get
-            {
-                return this.registreringskommuneIdField;
-            }
-            set
-            {
-                this.registreringskommuneIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int registreringskretsnummer
-        {
-            get
-            {
-                return this.registreringskretsnummerField;
-            }
-            set
-            {
-                this.registreringskretsnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool registreringskretsnummerSpecified
-        {
-            get
-            {
-                return this.registreringskretsnummerFieldSpecified;
-            }
-            set
-            {
-                this.registreringskretsnummerFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int huslopenummer
-        {
-            get
-            {
-                return this.huslopenummerField;
-            }
-            set
-            {
-                this.huslopenummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool huslopenummerSpecified
-        {
-            get
-            {
-                return this.huslopenummerFieldSpecified;
-            }
-            set
-            {
-                this.huslopenummerFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class NavnRubrikk : SefrakRubrikk
-    {
-        
-        private string navnField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string navn
-        {
-            get
-            {
-                return this.navnField;
-            }
-            set
-            {
-                this.navnField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class MiljoOvervakingRubrikk : SefrakRubrikk
-    {
-        
-        private Endringsvurdering[] endringsvurderingerField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public Endringsvurdering[] endringsvurderinger
-        {
-            get
-            {
-                return this.endringsvurderingerField;
-            }
-            set
-            {
-                this.endringsvurderingerField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class HovedmalRubrikk : SefrakRubrikk
-    {
-        
-        private int lengdeField;
-        
-        private bool lengdeFieldSpecified;
-        
-        private int breddeField;
-        
-        private bool breddeFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int lengde
-        {
-            get
-            {
-                return this.lengdeField;
-            }
-            set
-            {
-                this.lengdeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool lengdeSpecified
-        {
-            get
-            {
-                return this.lengdeFieldSpecified;
-            }
-            set
-            {
-                this.lengdeFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int bredde
-        {
-            get
-            {
-                return this.breddeField;
-            }
-            set
-            {
-                this.breddeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool breddeSpecified
-        {
-            get
-            {
-                return this.breddeFieldSpecified;
-            }
-            set
-            {
-                this.breddeFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class FredningRubrikk : SefrakRubrikk
-    {
-        
-        private FredningKodeId fredningKodeIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public FredningKodeId fredningKodeId
-        {
-            get
-            {
-                return this.fredningKodeIdField;
-            }
-            set
-            {
-                this.fredningKodeIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class FotohenvisningerRubrikk : SefrakRubrikk
-    {
-        
-        private Fotohenvisning[] fotohenvisningerField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public Fotohenvisning[] fotohenvisninger
-        {
-            get
-            {
-                return this.fotohenvisningerField;
-            }
-            set
-            {
-                this.fotohenvisningerField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class EtasjetallRubrikk : SefrakRubrikk
-    {
-        
-        private EtasjetallKodeId etasjetallKodeIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public EtasjetallKodeId etasjetallKodeId
-        {
-            get
-            {
-                return this.etasjetallKodeIdField;
-            }
-            set
-            {
-                this.etasjetallKodeIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class BygningerRubrikk : SefrakRubrikk
-    {
-        
-        private ByggId[] bygningerIdsField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
-        public ByggId[] bygningerIds
-        {
-            get
-            {
-                return this.bygningerIdsField;
-            }
-            set
-            {
-                this.bygningerIdsField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class AntallSkorsteinerRubrikk : SefrakRubrikk
-    {
-        
-        private int antallSkorsteinerField;
-        
-        private bool antallSkorsteinerFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int antallSkorsteiner
-        {
-            get
-            {
-                return this.antallSkorsteinerField;
-            }
-            set
-            {
-                this.antallSkorsteinerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool antallSkorsteinerSpecified
-        {
-            get
-            {
-                return this.antallSkorsteinerFieldSpecified;
-            }
-            set
-            {
-                this.antallSkorsteinerFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/person")]
-    public partial class MottakerAdresse : MatrikkelComponent
-    {
-        
-        private string adresselinje1Field;
-        
-        private string adresselinje2Field;
-        
-        private string adresselinje3Field;
-        
-        private PostnummeromradeId postnummeromradeIdField;
-        
-        private LandKodeId landKodeIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string adresselinje1
-        {
-            get
-            {
-                return this.adresselinje1Field;
-            }
-            set
-            {
-                this.adresselinje1Field = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string adresselinje2
-        {
-            get
-            {
-                return this.adresselinje2Field;
-            }
-            set
-            {
-                this.adresselinje2Field = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string adresselinje3
-        {
-            get
-            {
-                return this.adresselinje3Field;
-            }
-            set
-            {
-                this.adresselinje3Field = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public PostnummeromradeId postnummeromradeId
-        {
-            get
-            {
-                return this.postnummeromradeIdField;
-            }
-            set
-            {
-                this.postnummeromradeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public LandKodeId landKodeId
-        {
-            get
-            {
-                return this.landKodeIdField;
-            }
-            set
-            {
-                this.landKodeIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/person")]
-    public partial class Hjemlandsadresse : MatrikkelComponent
-    {
-        
-        private string hjemlandsadresselinje1Field;
-        
-        private string hjemlandsadresselinje2Field;
-        
-        private string hjemlandsadresselinje3Field;
-        
-        private LandKodeId hjemlandsLandKodeIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string hjemlandsadresselinje1
-        {
-            get
-            {
-                return this.hjemlandsadresselinje1Field;
-            }
-            set
-            {
-                this.hjemlandsadresselinje1Field = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string hjemlandsadresselinje2
-        {
-            get
-            {
-                return this.hjemlandsadresselinje2Field;
-            }
-            set
-            {
-                this.hjemlandsadresselinje2Field = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string hjemlandsadresselinje3
-        {
-            get
-            {
-                return this.hjemlandsadresselinje3Field;
-            }
-            set
-            {
-                this.hjemlandsadresselinje3Field = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public LandKodeId hjemlandsLandKodeId
-        {
-            get
-            {
-                return this.hjemlandsLandKodeIdField;
-            }
-            set
-            {
-                this.hjemlandsLandKodeIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskPerson))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPerson))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenPerson))]
@@ -13213,11 +13077,34 @@ namespace Kartverket.Matrikkel.StoreService
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bruksenhet))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bygg))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bygningsendring))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bygning))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kurs))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kommuneliste))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerRettighetListe))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerHistorikkListe))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bruker))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Veg))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kretsflate))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Krets))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedFlereKommuner))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Tettsted))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Postnummeromrade))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedEnKommune))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Svalbardomrade))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Valgkrets))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKrets))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kirkesogn))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Grunnkrets))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Adresse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vegadresse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Matrikkeladresse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Fylke))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kommune))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kulturminne))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Grunnforurensing))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsforholdUtskrift))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Konsesjonsforhold))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetFraEgenerklaring))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Konsesjonsvedtak))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Forretning))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetForretning))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndreForretningsdataForretning))]
@@ -13277,11 +13164,15 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(DigitaliseringAvKoordinatForretning))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmalingForretning))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AktiverUtgattMatrikkelenhetForretning))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsforholdUtskrift))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Konsesjonsforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetFraEgenerklaring))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Konsesjonsvedtak))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kulturminne))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Person))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskPerson))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPerson))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenPerson))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakMinne))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bruksenhet))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bygg))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bygningsendring))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bygning))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Teiggrensepunkt))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Teiggrense))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Teig))]
@@ -13301,33 +13192,6 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Anleggsprojeksjonspunkt))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Anleggsprojeksjonsgrense))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Anleggsprojeksjonsflate))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakMinne))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kurs))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kommuneliste))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerRettighetListe))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerHistorikkListe))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bruker))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Person))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskPerson))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPerson))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenPerson))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Veg))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kretsflate))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Krets))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedFlereKommuner))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Tettsted))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Postnummeromrade))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedEnKommune))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Svalbardomrade))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Valgkrets))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKrets))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kirkesogn))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Grunnkrets))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Adresse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vegadresse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Matrikkeladresse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Fylke))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kommune))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
@@ -13432,26 +13296,167 @@ namespace Kartverket.Matrikkel.StoreService
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressemerkeBestilling))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kommunevapen))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetLedetekst))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetBekreftelse))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelEndring))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbOppgave))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Jobb))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AvtaleStedbundenRettighetMelding))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Byggesakmelding))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Melding))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningMelding))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetMelding))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingMelding))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbOppgave))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Jobb))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetLedetekst))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetBekreftelse))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MetadataObjekt))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressemerkeBestilling))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kommunevapen))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelEnumKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AtkomsttypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpphavKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakEndringStedsnavnKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressetilleggsnavnKildeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsKildeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VertikalBarekonstrKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegReferanseKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RenovasjonsKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PrivatKloakkRensingsKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetReferanseKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MaterialeIYtterveggKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsReferanseKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommentartypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KildePrivatVannforsyningKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HorisontalBarekonstrKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FundamenteringsKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EtatsKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningReferanseKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukAvGrunnKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseReferanseKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsstatusKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TerrengdetaljKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIForretningKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Medium))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HjelpelinjetypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensepunkttypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensemerkeNedsattIKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningsklasseKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FormalSeksjonKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EierforholdKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilFeilrettingKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmerknadKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealkildeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenMatrikkelenhetsKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdministrativGrenseKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KontaktpersonKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KjokkentilgangKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BruksenhetstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EtasjeplanKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsendringsKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpprinnelsesKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(NaringsgruppeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VannforsyningsKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AvlopsKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KostraFunksjonKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilForingKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsstatusKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EnergikildeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OppvarmingsKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(YtterveggKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VernevedtakKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VerdivurderingKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(UnderbygningKonstrKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TidsKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TaktekkingKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TakformKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakReferanseKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpprinneligSosialtMiljoKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KjellerKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskMiljoKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FunksjonKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FredningKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForholdAndreHusKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FasadeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EtasjetallKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsgradKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DomeneAvgrensning))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AksessType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Rolle))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Sprakform))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukergruppeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerAktiveringsstatusKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbtypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingFeilKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbStatusKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ByggBrukstilfelleKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIMelding))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Meldingstype))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MeldingStatus))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ExportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonKategoriKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonStatusKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonIdKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SpesifisertRegTypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(NoyaktighetsklasseKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MalemetodeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KoordinatsystemKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KoordinatkvalitetKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelDbKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKretstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GenerellKretstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VernetypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminnekategoriKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminneArtKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EnkeltminneArtKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetEgenerklaringKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LandKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VedtakstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PavirkningsgradKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MyndighetKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kodeliste))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelBubbleObjectWithHistory))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bruksenhet))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bygg))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bygningsendring))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bygning))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kurs))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kommuneliste))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerRettighetListe))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerHistorikkListe))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bruker))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Veg))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kretsflate))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Krets))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedFlereKommuner))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Tettsted))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Postnummeromrade))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedEnKommune))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Svalbardomrade))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Valgkrets))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKrets))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kirkesogn))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Grunnkrets))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Adresse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vegadresse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Matrikkeladresse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Fylke))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kommune))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kulturminne))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Grunnforurensing))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsforholdUtskrift))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Konsesjonsforhold))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetFraEgenerklaring))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Konsesjonsvedtak))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Forretning))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetForretning))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndreForretningsdataForretning))]
@@ -13511,11 +13516,15 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(DigitaliseringAvKoordinatForretning))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmalingForretning))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AktiverUtgattMatrikkelenhetForretning))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsforholdUtskrift))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Konsesjonsforhold))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetFraEgenerklaring))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Konsesjonsvedtak))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kulturminne))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Person))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskPerson))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPerson))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenPerson))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakMinne))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bruksenhet))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bygg))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bygningsendring))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bygning))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Teiggrensepunkt))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Teiggrense))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Teig))]
@@ -13535,151 +13544,6 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Anleggsprojeksjonspunkt))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Anleggsprojeksjonsgrense))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Anleggsprojeksjonsflate))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakMinne))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kurs))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kommuneliste))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerRettighetListe))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerHistorikkListe))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bruker))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Person))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskPerson))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JuridiskPerson))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenPerson))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Veg))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kretsflate))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Krets))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedFlereKommuner))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Tettsted))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Postnummeromrade))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedEnKommune))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Svalbardomrade))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Valgkrets))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKrets))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kirkesogn))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Grunnkrets))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Adresse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vegadresse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Matrikkeladresse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Fylke))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kommune))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelEnumKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ExportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VertikalBarekonstrKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegReferanseKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RenovasjonsKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PrivatKloakkRensingsKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetReferanseKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MaterialeIYtterveggKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsReferanseKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommentartypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KildePrivatVannforsyningKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HorisontalBarekonstrKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FundamenteringsKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EtatsKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningReferanseKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukAvGrunnKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseReferanseKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AtkomsttypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpphavKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakEndringStedsnavnKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressetilleggsnavnKildeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbStatusKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DomeneAvgrensning))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AksessType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Rolle))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Sprakform))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukergruppeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerAktiveringsstatusKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KontaktpersonKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KjokkentilgangKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BruksenhetstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EtasjeplanKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsendringsKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpprinnelsesKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(NaringsgruppeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VannforsyningsKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AvlopsKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KostraFunksjonKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilForingKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningsstatusKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EnergikildeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OppvarmingsKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(YtterveggKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VernevedtakKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VerdivurderingKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(UnderbygningKonstrKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TidsKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TaktekkingKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TakformKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SefrakReferanseKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpprinneligSosialtMiljoKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KjellerKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FysiskMiljoKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FunksjonKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FredningKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForholdAndreHusKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FasadeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EtasjetallKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsgradKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbtypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingFeilKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsKildeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsstatusKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TerrengdetaljKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIForretningKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Medium))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HjelpelinjetypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensepunkttypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensemerkeNedsattIKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningsklasseKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FormalSeksjonKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EierforholdKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilFeilrettingKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmerknadKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealkildeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenMatrikkelenhetsKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdministrativGrenseKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ByggBrukstilfelleKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIMelding))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Meldingstype))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MeldingStatus))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonKategoriKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonStatusKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonIdKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SpesifisertRegTypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(NoyaktighetsklasseKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MalemetodeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KoordinatsystemKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KoordinatkvalitetKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelDbKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKretstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GenerellKretstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VedtakstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PavirkningsgradKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MyndighetKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VernetypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminnekategoriKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminneArtKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EnkeltminneArtKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetEgenerklaringKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LandKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kodeliste))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
@@ -13716,6 +13580,287 @@ namespace Kartverket.Matrikkel.StoreService
             set
             {
                 this.metadataField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class AdressemerkeBestilling : MatrikkelBubbleObject
+    {
+        
+        private BruksenhetId bruksenhetIdField;
+        
+        private string mottakersNavnField;
+        
+        private MottakerAdresse mottakersAdresseField;
+        
+        private Timestamp utsattTilDatoField;
+        
+        private Timestamp bestiltDatoField;
+        
+        private Timestamp sendtTilProduksjonDatoField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public BruksenhetId bruksenhetId
+        {
+            get
+            {
+                return this.bruksenhetIdField;
+            }
+            set
+            {
+                this.bruksenhetIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string mottakersNavn
+        {
+            get
+            {
+                return this.mottakersNavnField;
+            }
+            set
+            {
+                this.mottakersNavnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public MottakerAdresse mottakersAdresse
+        {
+            get
+            {
+                return this.mottakersAdresseField;
+            }
+            set
+            {
+                this.mottakersAdresseField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public Timestamp utsattTilDato
+        {
+            get
+            {
+                return this.utsattTilDatoField;
+            }
+            set
+            {
+                this.utsattTilDatoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public Timestamp bestiltDato
+        {
+            get
+            {
+                return this.bestiltDatoField;
+            }
+            set
+            {
+                this.bestiltDatoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public Timestamp sendtTilProduksjonDato
+        {
+            get
+            {
+                return this.sendtTilProduksjonDatoField;
+            }
+            set
+            {
+                this.sendtTilProduksjonDatoField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
+    public partial class Kommunevapen : MatrikkelBubbleObject
+    {
+        
+        private KommuneId kommuneIdField;
+        
+        private byte[] kommunevapenField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public KommuneId kommuneId
+        {
+            get
+            {
+                return this.kommuneIdField;
+            }
+            set
+            {
+                this.kommuneIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary", Order=1)]
+        public byte[] kommunevapen
+        {
+            get
+            {
+                return this.kommunevapenField;
+            }
+            set
+            {
+                this.kommunevapenField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
+    public partial class KonsesjonsfrihetLedetekst : MatrikkelBubbleObject
+    {
+        
+        private string tekstField;
+        
+        private UUID uuidField;
+        
+        private LocalizedStringEntry[] localizedTekstField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string tekst
+        {
+            get
+            {
+                return this.tekstField;
+            }
+            set
+            {
+                this.tekstField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public UUID uuid
+        {
+            get
+            {
+                return this.uuidField;
+            }
+            set
+            {
+                this.uuidField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=2)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("entry", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
+        public LocalizedStringEntry[] localizedTekst
+        {
+            get
+            {
+                return this.localizedTekstField;
+            }
+            set
+            {
+                this.localizedTekstField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
+    public partial class LocalizedStringEntry
+    {
+        
+        private string keyField;
+        
+        private string valueField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
+        public string key
+        {
+            get
+            {
+                return this.keyField;
+            }
+            set
+            {
+                this.keyField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string value
+        {
+            get
+            {
+                return this.valueField;
+            }
+            set
+            {
+                this.valueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
+    public partial class KonsesjonsfrihetBekreftelse : MatrikkelBubbleObject
+    {
+        
+        private string tekstField;
+        
+        private UUID uuidField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string tekst
+        {
+            get
+            {
+                return this.tekstField;
+            }
+            set
+            {
+                this.tekstField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public UUID uuid
+        {
+            get
+            {
+                return this.uuidField;
+            }
+            set
+            {
+                this.uuidField = value;
             }
         }
     }
@@ -13859,6 +14004,262 @@ namespace Kartverket.Matrikkel.StoreService
         
         /// <remarks/>
         Sletting,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb")]
+    public partial class JobbOppgave : MatrikkelBubbleObject
+    {
+        
+        private string oppgaveField;
+        
+        private string resultatField;
+        
+        private string exceptionField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string oppgave
+        {
+            get
+            {
+                return this.oppgaveField;
+            }
+            set
+            {
+                this.oppgaveField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string resultat
+        {
+            get
+            {
+                return this.resultatField;
+            }
+            set
+            {
+                this.resultatField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string exception
+        {
+            get
+            {
+                return this.exceptionField;
+            }
+            set
+            {
+                this.exceptionField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb")]
+    public partial class Jobb : MatrikkelBubbleObject
+    {
+        
+        private BrukerId brukerIdField;
+        
+        private JobbtypeKodeId typeIdField;
+        
+        private string konavnField;
+        
+        private string beskrivelseField;
+        
+        private string utvalgField;
+        
+        private Timestamp opprettetField;
+        
+        private JobbStatusKodeId statusIdField;
+        
+        private string feilmeldingField;
+        
+        private Timestamp sistEndretField;
+        
+        private string prosessnavnField;
+        
+        private string servernavnField;
+        
+        private JobbOppgaveId oppgaveIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public BrukerId brukerId
+        {
+            get
+            {
+                return this.brukerIdField;
+            }
+            set
+            {
+                this.brukerIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public JobbtypeKodeId typeId
+        {
+            get
+            {
+                return this.typeIdField;
+            }
+            set
+            {
+                this.typeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string konavn
+        {
+            get
+            {
+                return this.konavnField;
+            }
+            set
+            {
+                this.konavnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string beskrivelse
+        {
+            get
+            {
+                return this.beskrivelseField;
+            }
+            set
+            {
+                this.beskrivelseField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string utvalg
+        {
+            get
+            {
+                return this.utvalgField;
+            }
+            set
+            {
+                this.utvalgField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public Timestamp opprettet
+        {
+            get
+            {
+                return this.opprettetField;
+            }
+            set
+            {
+                this.opprettetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public JobbStatusKodeId statusId
+        {
+            get
+            {
+                return this.statusIdField;
+            }
+            set
+            {
+                this.statusIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string feilmelding
+        {
+            get
+            {
+                return this.feilmeldingField;
+            }
+            set
+            {
+                this.feilmeldingField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public Timestamp sistEndret
+        {
+            get
+            {
+                return this.sistEndretField;
+            }
+            set
+            {
+                this.sistEndretField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public string prosessnavn
+        {
+            get
+            {
+                return this.prosessnavnField;
+            }
+            set
+            {
+                this.prosessnavnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public string servernavn
+        {
+            get
+            {
+                return this.servernavnField;
+            }
+            set
+            {
+                this.servernavnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public JobbOppgaveId oppgaveId
+        {
+            get
+            {
+                return this.oppgaveIdField;
+            }
+            set
+            {
+                this.oppgaveIdField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -14416,6 +14817,142 @@ namespace Kartverket.Matrikkel.StoreService
     }
     
     /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/aktivitetsliste")]
+    public partial class TinglysingsUtfallBegrunnelse : IkkeElektroniskTinglysningGrunn
+    {
+        
+        private long idField;
+        
+        private bool idFieldSpecified;
+        
+        private string kontrollkodeField;
+        
+        private string kontrollnavnField;
+        
+        private string kontrollutfallField;
+        
+        private string begrunnelsekodeField;
+        
+        private string begrunnelsetekstField;
+        
+        private string begrunnelseelementnavnField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool idSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string kontrollkode
+        {
+            get
+            {
+                return this.kontrollkodeField;
+            }
+            set
+            {
+                this.kontrollkodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string kontrollnavn
+        {
+            get
+            {
+                return this.kontrollnavnField;
+            }
+            set
+            {
+                this.kontrollnavnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string kontrollutfall
+        {
+            get
+            {
+                return this.kontrollutfallField;
+            }
+            set
+            {
+                this.kontrollutfallField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string begrunnelsekode
+        {
+            get
+            {
+                return this.begrunnelsekodeField;
+            }
+            set
+            {
+                this.begrunnelsekodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string begrunnelsetekst
+        {
+            get
+            {
+                return this.begrunnelsetekstField;
+            }
+            set
+            {
+                this.begrunnelsetekstField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string begrunnelseelementnavn
+        {
+            get
+            {
+                return this.begrunnelseelementnavnField;
+            }
+            set
+            {
+                this.begrunnelseelementnavnField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingMelding))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -14669,399 +15206,6 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb")]
-    public partial class JobbOppgave : MatrikkelBubbleObject
-    {
-        
-        private string oppgaveField;
-        
-        private string resultatField;
-        
-        private string exceptionField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string oppgave
-        {
-            get
-            {
-                return this.oppgaveField;
-            }
-            set
-            {
-                this.oppgaveField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string resultat
-        {
-            get
-            {
-                return this.resultatField;
-            }
-            set
-            {
-                this.resultatField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string exception
-        {
-            get
-            {
-                return this.exceptionField;
-            }
-            set
-            {
-                this.exceptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb")]
-    public partial class Jobb : MatrikkelBubbleObject
-    {
-        
-        private BrukerId brukerIdField;
-        
-        private JobbtypeKodeId typeIdField;
-        
-        private string konavnField;
-        
-        private string beskrivelseField;
-        
-        private string utvalgField;
-        
-        private Timestamp opprettetField;
-        
-        private JobbStatusKodeId statusIdField;
-        
-        private string feilmeldingField;
-        
-        private Timestamp sistEndretField;
-        
-        private string prosessnavnField;
-        
-        private string servernavnField;
-        
-        private JobbOppgaveId oppgaveIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public BrukerId brukerId
-        {
-            get
-            {
-                return this.brukerIdField;
-            }
-            set
-            {
-                this.brukerIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public JobbtypeKodeId typeId
-        {
-            get
-            {
-                return this.typeIdField;
-            }
-            set
-            {
-                this.typeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string konavn
-        {
-            get
-            {
-                return this.konavnField;
-            }
-            set
-            {
-                this.konavnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string beskrivelse
-        {
-            get
-            {
-                return this.beskrivelseField;
-            }
-            set
-            {
-                this.beskrivelseField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string utvalg
-        {
-            get
-            {
-                return this.utvalgField;
-            }
-            set
-            {
-                this.utvalgField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public Timestamp opprettet
-        {
-            get
-            {
-                return this.opprettetField;
-            }
-            set
-            {
-                this.opprettetField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public JobbStatusKodeId statusId
-        {
-            get
-            {
-                return this.statusIdField;
-            }
-            set
-            {
-                this.statusIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public string feilmelding
-        {
-            get
-            {
-                return this.feilmeldingField;
-            }
-            set
-            {
-                this.feilmeldingField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public Timestamp sistEndret
-        {
-            get
-            {
-                return this.sistEndretField;
-            }
-            set
-            {
-                this.sistEndretField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public string prosessnavn
-        {
-            get
-            {
-                return this.prosessnavnField;
-            }
-            set
-            {
-                this.prosessnavnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public string servernavn
-        {
-            get
-            {
-                return this.servernavnField;
-            }
-            set
-            {
-                this.servernavnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
-        public JobbOppgaveId oppgaveId
-        {
-            get
-            {
-                return this.oppgaveIdField;
-            }
-            set
-            {
-                this.oppgaveIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
-    public partial class KonsesjonsfrihetLedetekst : MatrikkelBubbleObject
-    {
-        
-        private string tekstField;
-        
-        private UUID uuidField;
-        
-        private LocalizedStringEntry[] localizedTekstField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string tekst
-        {
-            get
-            {
-                return this.tekstField;
-            }
-            set
-            {
-                this.tekstField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public UUID uuid
-        {
-            get
-            {
-                return this.uuidField;
-            }
-            set
-            {
-                this.uuidField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=2)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("entry", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
-        public LocalizedStringEntry[] localizedTekst
-        {
-            get
-            {
-                return this.localizedTekstField;
-            }
-            set
-            {
-                this.localizedTekstField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
-    public partial class LocalizedStringEntry
-    {
-        
-        private string keyField;
-        
-        private string valueField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
-        public string key
-        {
-            get
-            {
-                return this.keyField;
-            }
-            set
-            {
-                this.keyField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string value
-        {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                this.valueField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
-    public partial class KonsesjonsfrihetBekreftelse : MatrikkelBubbleObject
-    {
-        
-        private string tekstField;
-        
-        private UUID uuidField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string tekst
-        {
-            get
-            {
-                return this.tekstField;
-            }
-            set
-            {
-                this.tekstField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public UUID uuid
-        {
-            get
-            {
-                return this.uuidField;
-            }
-            set
-            {
-                this.uuidField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/metadata")]
     public partial class MetadataObjekt : MatrikkelBubbleObject
     {
@@ -15101,162 +15245,13 @@ namespace Kartverket.Matrikkel.StoreService
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class AdressemerkeBestilling : MatrikkelBubbleObject
-    {
-        
-        private BruksenhetId bruksenhetIdField;
-        
-        private string mottakersNavnField;
-        
-        private MottakerAdresse mottakersAdresseField;
-        
-        private Timestamp utsattTilDatoField;
-        
-        private Timestamp bestiltDatoField;
-        
-        private Timestamp sendtTilProduksjonDatoField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public BruksenhetId bruksenhetId
-        {
-            get
-            {
-                return this.bruksenhetIdField;
-            }
-            set
-            {
-                this.bruksenhetIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string mottakersNavn
-        {
-            get
-            {
-                return this.mottakersNavnField;
-            }
-            set
-            {
-                this.mottakersNavnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public MottakerAdresse mottakersAdresse
-        {
-            get
-            {
-                return this.mottakersAdresseField;
-            }
-            set
-            {
-                this.mottakersAdresseField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public Timestamp utsattTilDato
-        {
-            get
-            {
-                return this.utsattTilDatoField;
-            }
-            set
-            {
-                this.utsattTilDatoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public Timestamp bestiltDato
-        {
-            get
-            {
-                return this.bestiltDatoField;
-            }
-            set
-            {
-                this.bestiltDatoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public Timestamp sendtTilProduksjonDato
-        {
-            get
-            {
-                return this.sendtTilProduksjonDatoField;
-            }
-            set
-            {
-                this.sendtTilProduksjonDatoField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
-    public partial class Kommunevapen : MatrikkelBubbleObject
-    {
-        
-        private KommuneId kommuneIdField;
-        
-        private byte[] kommunevapenField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public KommuneId kommuneId
-        {
-            get
-            {
-                return this.kommuneIdField;
-            }
-            set
-            {
-                this.kommuneIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary", Order=1)]
-        public byte[] kommunevapen
-        {
-            get
-            {
-                return this.kommunevapenField;
-            }
-            set
-            {
-                this.kommunevapenField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelEnumKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ExportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AtkomsttypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpphavKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakEndringStedsnavnKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressetilleggsnavnKildeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsKildeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VertikalBarekonstrKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegReferanseKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RenovasjonsKode))]
@@ -15272,17 +15267,24 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningReferanseKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukAvGrunnKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseReferanseKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AtkomsttypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpphavKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakEndringStedsnavnKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressetilleggsnavnKildeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbStatusKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DomeneAvgrensning))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AksessType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Rolle))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Sprakform))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukergruppeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerAktiveringsstatusKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsstatusKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TerrengdetaljKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIForretningKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Medium))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HjelpelinjetypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensepunkttypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensemerkeNedsattIKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningsklasseKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FormalSeksjonKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EierforholdKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilFeilrettingKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmerknadKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealkildeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenMatrikkelenhetsKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdministrativGrenseKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KontaktpersonKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KjokkentilgangKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BruksenhetstypeKode))]
@@ -15315,31 +15317,29 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(FasadeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EtasjetallKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsgradKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DomeneAvgrensning))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AksessType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Rolle))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Sprakform))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukergruppeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerAktiveringsstatusKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbtypeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingFeilKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsKildeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsstatusKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TerrengdetaljKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIForretningKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Medium))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HjelpelinjetypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensepunkttypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensemerkeNedsattIKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningsklasseKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FormalSeksjonKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EierforholdKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilFeilrettingKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmerknadKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealkildeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenMatrikkelenhetsKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdministrativGrenseKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbStatusKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ByggBrukstilfelleKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIMelding))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Meldingstype))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MeldingStatus))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ExportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonKategoriKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonStatusKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonIdKode))]
@@ -15352,15 +15352,15 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretstypeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKretstypeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GenerellKretstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VedtakstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PavirkningsgradKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MyndighetKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VernetypeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminnekategoriKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminneArtKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EnkeltminneArtKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetEgenerklaringKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LandKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VedtakstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PavirkningsgradKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MyndighetKode))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kodeliste")]
@@ -15403,16 +15403,11 @@ namespace Kartverket.Matrikkel.StoreService
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelEnumKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ExportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AtkomsttypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpphavKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakEndringStedsnavnKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressetilleggsnavnKildeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsKildeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VertikalBarekonstrKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegReferanseKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RenovasjonsKode))]
@@ -15428,17 +15423,24 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningReferanseKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukAvGrunnKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseReferanseKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AtkomsttypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpphavKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakEndringStedsnavnKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressetilleggsnavnKildeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbStatusKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DomeneAvgrensning))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AksessType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Rolle))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Sprakform))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukergruppeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerAktiveringsstatusKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsstatusKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TerrengdetaljKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIForretningKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Medium))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HjelpelinjetypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensepunkttypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensemerkeNedsattIKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningsklasseKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FormalSeksjonKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EierforholdKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilFeilrettingKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmerknadKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealkildeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenMatrikkelenhetsKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdministrativGrenseKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KontaktpersonKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KjokkentilgangKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BruksenhetstypeKode))]
@@ -15471,31 +15473,29 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(FasadeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EtasjetallKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsgradKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DomeneAvgrensning))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AksessType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Rolle))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Sprakform))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukergruppeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerAktiveringsstatusKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbtypeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingFeilKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsKildeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsstatusKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TerrengdetaljKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIForretningKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Medium))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HjelpelinjetypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensepunkttypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensemerkeNedsattIKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningsklasseKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FormalSeksjonKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EierforholdKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilFeilrettingKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmerknadKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealkildeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenMatrikkelenhetsKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdministrativGrenseKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbStatusKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ByggBrukstilfelleKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIMelding))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Meldingstype))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MeldingStatus))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ExportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonKategoriKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonStatusKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonIdKode))]
@@ -15508,15 +15508,15 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretstypeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKretstypeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GenerellKretstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VedtakstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PavirkningsgradKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MyndighetKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VernetypeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminnekategoriKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminneArtKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EnkeltminneArtKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetEgenerklaringKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LandKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VedtakstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PavirkningsgradKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MyndighetKode))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kodeliste")]
@@ -15525,16 +15525,11 @@ namespace Kartverket.Matrikkel.StoreService
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ExportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AtkomsttypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpphavKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakEndringStedsnavnKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressetilleggsnavnKildeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsKildeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VertikalBarekonstrKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegReferanseKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RenovasjonsKode))]
@@ -15550,17 +15545,24 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningReferanseKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukAvGrunnKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseReferanseKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AtkomsttypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(OpphavKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakEndringStedsnavnKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdressetilleggsnavnKildeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbStatusKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DomeneAvgrensning))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AksessType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Rolle))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Sprakform))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukergruppeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerAktiveringsstatusKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsstatusKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TerrengdetaljKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIForretningKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Medium))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HjelpelinjetypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensepunkttypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensemerkeNedsattIKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningsklasseKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FormalSeksjonKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EierforholdKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilFeilrettingKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmerknadKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealkildeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenMatrikkelenhetsKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdministrativGrenseKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KontaktpersonKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KjokkentilgangKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BruksenhetstypeKode))]
@@ -15593,31 +15595,29 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(FasadeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EtasjetallKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsgradKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DomeneAvgrensning))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AksessType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Rolle))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Sprakform))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukergruppeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BrukerAktiveringsstatusKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbtypeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingFeilKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringsKildeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TinglysingsstatusKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TerrengdetaljKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIForretningKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Medium))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(HjelpelinjetypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensepunkttypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GrensemerkeNedsattIKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ForretningsklasseKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FormalSeksjonKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EierforholdKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArsakTilFeilrettingKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealmerknadKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArealkildeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnenMatrikkelenhetsKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnleggstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdministrativGrenseKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobbStatusKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ByggBrukstilfelleKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RolleIMelding))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Meldingstype))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(MeldingStatus))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ExportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonKategoriKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonStatusKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PersonIdKode))]
@@ -15652,218 +15652,40 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class ExportType : MatrikkelEnumKode
-    {
-        
-        private string[] extensionsField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
-        public string[] extensions
-        {
-            get
-            {
-                return this.extensionsField;
-            }
-            set
-            {
-                this.extensionsField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportType))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public abstract partial class RapportType : MatrikkelEnumKode
-    {
-        
-        private System.Nullable<int>[] subinfosField;
-        
-        private string templateFilenameField;
-        
-        private string rapportversjonField;
-        
-        private int maxUtvalgField;
-        
-        private bool maxUtvalgFieldSpecified;
-        
-        private int batchSizeField;
-        
-        private bool batchSizeFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
-        public System.Nullable<int>[] subinfos
-        {
-            get
-            {
-                return this.subinfosField;
-            }
-            set
-            {
-                this.subinfosField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string templateFilename
-        {
-            get
-            {
-                return this.templateFilenameField;
-            }
-            set
-            {
-                this.templateFilenameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string rapportversjon
-        {
-            get
-            {
-                return this.rapportversjonField;
-            }
-            set
-            {
-                this.rapportversjonField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public int maxUtvalg
-        {
-            get
-            {
-                return this.maxUtvalgField;
-            }
-            set
-            {
-                this.maxUtvalgField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool maxUtvalgSpecified
-        {
-            get
-            {
-                return this.maxUtvalgFieldSpecified;
-            }
-            set
-            {
-                this.maxUtvalgFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public int batchSize
-        {
-            get
-            {
-                return this.batchSizeField;
-            }
-            set
-            {
-                this.batchSizeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool batchSizeSpecified
-        {
-            get
-            {
-                return this.batchSizeFieldSpecified;
-            }
-            set
-            {
-                this.batchSizeFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class KonsesjonRapportType : RapportType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
+    public partial class AtkomsttypeKode : MatrikkelEnumKode
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class VegRapportType : RapportType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
+    public partial class OpphavKode : MatrikkelEnumKode
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class MatrikkelenhetRapportType : RapportType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
+    public partial class ArsakEndringStedsnavnKode : MatrikkelEnumKode
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class MassivRapportType : RapportType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
+    public partial class AdressetilleggsnavnKildeKode : MatrikkelEnumKode
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class EndringRapportType : RapportType
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class DriftRapportType : RapportType
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class BygningRapportType : RapportType
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
-    public partial class AdresseRapportType : RapportType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/endringslogg/koder")]
+    public partial class EndringsKildeKode : MatrikkelEnumKode
     {
     }
     
@@ -15990,273 +15812,127 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
-    public partial class AtkomsttypeKode : MatrikkelEnumKode
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class TinglysingsstatusKode : MatrikkelEnumKode
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
-    public partial class OpphavKode : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
-    public partial class ArsakEndringStedsnavnKode : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse/koder")]
-    public partial class AdressetilleggsnavnKildeKode : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb/koder")]
-    public partial class JobbStatusKode : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
-    public partial class DomeneAvgrensning : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
-    public partial class AksessType : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
-    public partial class Rolle : MatrikkelEnumKode
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class TerrengdetaljKode : MatrikkelEnumKode
     {
         
-        private AksessRettighet[] aksessRettigheterField;
+        private string sosi34Field;
         
-        private bool lesFodselsnummerRettighetField;
-        
-        private bool lesFodselsnummerRettighetFieldSpecified;
-        
-        private bool lesEierforholdRettighetField;
-        
-        private bool lesEierforholdRettighetFieldSpecified;
-        
-        private bool lesKommunaleTilleggsdataRettighetField;
-        
-        private bool lesKommunaleTilleggsdataRettighetFieldSpecified;
-        
-        private bool lesBygningsdataRettighetField;
-        
-        private bool lesBygningsdataRettighetFieldSpecified;
-        
-        private bool lesSkjermingsverdigeBygningstyperRettighetField;
-        
-        private bool lesSkjermingsverdigeBygningstyperRettighetFieldSpecified;
-        
-        private string webLogicGruppenavnField;
-        
-        private RolleId[] medlemAvField;
+        private string kodeverdiSosi45Field;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public AksessRettighet[] aksessRettigheter
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string sosi34
         {
             get
             {
-                return this.aksessRettigheterField;
+                return this.sosi34Field;
             }
             set
             {
-                this.aksessRettigheterField = value;
+                this.sosi34Field = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public bool lesFodselsnummerRettighet
+        public string kodeverdiSosi45
         {
             get
             {
-                return this.lesFodselsnummerRettighetField;
+                return this.kodeverdiSosi45Field;
             }
             set
             {
-                this.lesFodselsnummerRettighetField = value;
+                this.kodeverdiSosi45Field = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class RolleIForretningKode : MatrikkelEnumKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class Medium : MatrikkelEnumKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class MatrikkelenhetstypeKode : MatrikkelEnumKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class HjelpelinjetypeKode : MatrikkelEnumKode
+    {
+        
+        private string sosiKodeField;
+        
+        private string objTypeField;
+        
+        private string kodeverdiSosi45Field;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string sosiKode
+        {
+            get
+            {
+                return this.sosiKodeField;
+            }
+            set
+            {
+                this.sosiKodeField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool lesFodselsnummerRettighetSpecified
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string objType
         {
             get
             {
-                return this.lesFodselsnummerRettighetFieldSpecified;
+                return this.objTypeField;
             }
             set
             {
-                this.lesFodselsnummerRettighetFieldSpecified = value;
+                this.objTypeField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public bool lesEierforholdRettighet
+        public string kodeverdiSosi45
         {
             get
             {
-                return this.lesEierforholdRettighetField;
+                return this.kodeverdiSosi45Field;
             }
             set
             {
-                this.lesEierforholdRettighetField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool lesEierforholdRettighetSpecified
-        {
-            get
-            {
-                return this.lesEierforholdRettighetFieldSpecified;
-            }
-            set
-            {
-                this.lesEierforholdRettighetFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public bool lesKommunaleTilleggsdataRettighet
-        {
-            get
-            {
-                return this.lesKommunaleTilleggsdataRettighetField;
-            }
-            set
-            {
-                this.lesKommunaleTilleggsdataRettighetField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool lesKommunaleTilleggsdataRettighetSpecified
-        {
-            get
-            {
-                return this.lesKommunaleTilleggsdataRettighetFieldSpecified;
-            }
-            set
-            {
-                this.lesKommunaleTilleggsdataRettighetFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public bool lesBygningsdataRettighet
-        {
-            get
-            {
-                return this.lesBygningsdataRettighetField;
-            }
-            set
-            {
-                this.lesBygningsdataRettighetField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool lesBygningsdataRettighetSpecified
-        {
-            get
-            {
-                return this.lesBygningsdataRettighetFieldSpecified;
-            }
-            set
-            {
-                this.lesBygningsdataRettighetFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public bool lesSkjermingsverdigeBygningstyperRettighet
-        {
-            get
-            {
-                return this.lesSkjermingsverdigeBygningstyperRettighetField;
-            }
-            set
-            {
-                this.lesSkjermingsverdigeBygningstyperRettighetField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool lesSkjermingsverdigeBygningstyperRettighetSpecified
-        {
-            get
-            {
-                return this.lesSkjermingsverdigeBygningstyperRettighetFieldSpecified;
-            }
-            set
-            {
-                this.lesSkjermingsverdigeBygningstyperRettighetFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public string webLogicGruppenavn
-        {
-            get
-            {
-                return this.webLogicGruppenavnField;
-            }
-            set
-            {
-                this.webLogicGruppenavnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=7)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public RolleId[] medlemAv
-        {
-            get
-            {
-                return this.medlemAvField;
-            }
-            set
-            {
-                this.medlemAvField = value;
+                this.kodeverdiSosi45Field = value;
             }
         }
     }
@@ -16264,39 +15940,55 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
-    public partial class AksessRettighet
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class GrensepunkttypeKode : MatrikkelEnumKode
     {
         
-        private AksessTypeId aksessTypeIdField;
+        private int sosiKodeField;
         
-        private DomeneAvgrensningId domeneAvgrensningIdField;
+        private bool sosiKodeFieldSpecified;
+        
+        private string kodeverdiSosi45Field;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public AksessTypeId aksessTypeId
+        public int sosiKode
         {
             get
             {
-                return this.aksessTypeIdField;
+                return this.sosiKodeField;
             }
             set
             {
-                this.aksessTypeIdField = value;
+                this.sosiKodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool sosiKodeSpecified
+        {
+            get
+            {
+                return this.sosiKodeFieldSpecified;
+            }
+            set
+            {
+                this.sosiKodeFieldSpecified = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public DomeneAvgrensningId domeneAvgrensningId
+        public string kodeverdiSosi45
         {
             get
             {
-                return this.domeneAvgrensningIdField;
+                return this.kodeverdiSosi45Field;
             }
             set
             {
-                this.domeneAvgrensningIdField = value;
+                this.kodeverdiSosi45Field = value;
             }
         }
     }
@@ -16304,25 +15996,189 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
-    public partial class Sprakform : MatrikkelEnumKode
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class GrensemerkeNedsattIKode : MatrikkelEnumKode
+    {
+        
+        private string kodeverdiSosi45Field;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string kodeverdiSosi45
+        {
+            get
+            {
+                return this.kodeverdiSosi45Field;
+            }
+            set
+            {
+                this.kodeverdiSosi45Field = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class ForretningstypeKode : MatrikkelEnumKode
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
-    public partial class BrukergruppeKode : MatrikkelEnumKode
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class ForretningsklasseKode : MatrikkelEnumKode
+    {
+        
+        private ForretningstypeKodeId[] lovligeForretningstypeIdsField;
+        
+        private ForretningstypeKodeId[] utgatteForretningstypeIdsField;
+        
+        private ArsakTilFeilrettingKodeId[] muligeArsakerTilFeilrettingIdsField;
+        
+        private ForretningsklasseKodeId[] muligeForretningsKlasseIdsForGrunnlagField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public ForretningstypeKodeId[] lovligeForretningstypeIds
+        {
+            get
+            {
+                return this.lovligeForretningstypeIdsField;
+            }
+            set
+            {
+                this.lovligeForretningstypeIdsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public ForretningstypeKodeId[] utgatteForretningstypeIds
+        {
+            get
+            {
+                return this.utgatteForretningstypeIdsField;
+            }
+            set
+            {
+                this.utgatteForretningstypeIdsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=2)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public ArsakTilFeilrettingKodeId[] muligeArsakerTilFeilrettingIds
+        {
+            get
+            {
+                return this.muligeArsakerTilFeilrettingIdsField;
+            }
+            set
+            {
+                this.muligeArsakerTilFeilrettingIdsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=3)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public ForretningsklasseKodeId[] muligeForretningsKlasseIdsForGrunnlag
+        {
+            get
+            {
+                return this.muligeForretningsKlasseIdsForGrunnlagField;
+            }
+            set
+            {
+                this.muligeForretningsKlasseIdsForGrunnlagField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class FormalSeksjonKode : MatrikkelEnumKode
     {
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
-    public partial class BrukerAktiveringsstatusKode : MatrikkelEnumKode
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class EierforholdKode : MatrikkelEnumKode
     {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class ArsakTilFeilrettingKode : MatrikkelEnumKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class ArealmerknadKode : MatrikkelEnumKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class ArealkildeKode : MatrikkelEnumKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class AnnenMatrikkelenhetsKode : MatrikkelEnumKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class AnleggstypeKode : MatrikkelEnumKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
+    public partial class AdministrativGrenseKode : MatrikkelEnumKode
+    {
+        
+        private string kodeverdiSosi45Field;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string kodeverdiSosi45
+        {
+            get
+            {
+                return this.kodeverdiSosi45Field;
+            }
+            set
+            {
+                this.kodeverdiSosi45Field = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -16761,6 +16617,304 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
+    public partial class DomeneAvgrensning : MatrikkelEnumKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
+    public partial class AksessType : MatrikkelEnumKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
+    public partial class Rolle : MatrikkelEnumKode
+    {
+        
+        private AksessRettighet[] aksessRettigheterField;
+        
+        private bool lesFodselsnummerRettighetField;
+        
+        private bool lesFodselsnummerRettighetFieldSpecified;
+        
+        private bool lesEierforholdRettighetField;
+        
+        private bool lesEierforholdRettighetFieldSpecified;
+        
+        private bool lesKommunaleTilleggsdataRettighetField;
+        
+        private bool lesKommunaleTilleggsdataRettighetFieldSpecified;
+        
+        private bool lesBygningsdataRettighetField;
+        
+        private bool lesBygningsdataRettighetFieldSpecified;
+        
+        private bool lesSkjermingsverdigeBygningstyperRettighetField;
+        
+        private bool lesSkjermingsverdigeBygningstyperRettighetFieldSpecified;
+        
+        private string webLogicGruppenavnField;
+        
+        private RolleId[] medlemAvField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public AksessRettighet[] aksessRettigheter
+        {
+            get
+            {
+                return this.aksessRettigheterField;
+            }
+            set
+            {
+                this.aksessRettigheterField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public bool lesFodselsnummerRettighet
+        {
+            get
+            {
+                return this.lesFodselsnummerRettighetField;
+            }
+            set
+            {
+                this.lesFodselsnummerRettighetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool lesFodselsnummerRettighetSpecified
+        {
+            get
+            {
+                return this.lesFodselsnummerRettighetFieldSpecified;
+            }
+            set
+            {
+                this.lesFodselsnummerRettighetFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public bool lesEierforholdRettighet
+        {
+            get
+            {
+                return this.lesEierforholdRettighetField;
+            }
+            set
+            {
+                this.lesEierforholdRettighetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool lesEierforholdRettighetSpecified
+        {
+            get
+            {
+                return this.lesEierforholdRettighetFieldSpecified;
+            }
+            set
+            {
+                this.lesEierforholdRettighetFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public bool lesKommunaleTilleggsdataRettighet
+        {
+            get
+            {
+                return this.lesKommunaleTilleggsdataRettighetField;
+            }
+            set
+            {
+                this.lesKommunaleTilleggsdataRettighetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool lesKommunaleTilleggsdataRettighetSpecified
+        {
+            get
+            {
+                return this.lesKommunaleTilleggsdataRettighetFieldSpecified;
+            }
+            set
+            {
+                this.lesKommunaleTilleggsdataRettighetFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public bool lesBygningsdataRettighet
+        {
+            get
+            {
+                return this.lesBygningsdataRettighetField;
+            }
+            set
+            {
+                this.lesBygningsdataRettighetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool lesBygningsdataRettighetSpecified
+        {
+            get
+            {
+                return this.lesBygningsdataRettighetFieldSpecified;
+            }
+            set
+            {
+                this.lesBygningsdataRettighetFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public bool lesSkjermingsverdigeBygningstyperRettighet
+        {
+            get
+            {
+                return this.lesSkjermingsverdigeBygningstyperRettighetField;
+            }
+            set
+            {
+                this.lesSkjermingsverdigeBygningstyperRettighetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool lesSkjermingsverdigeBygningstyperRettighetSpecified
+        {
+            get
+            {
+                return this.lesSkjermingsverdigeBygningstyperRettighetFieldSpecified;
+            }
+            set
+            {
+                this.lesSkjermingsverdigeBygningstyperRettighetFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string webLogicGruppenavn
+        {
+            get
+            {
+                return this.webLogicGruppenavnField;
+            }
+            set
+            {
+                this.webLogicGruppenavnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=7)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public RolleId[] medlemAv
+        {
+            get
+            {
+                return this.medlemAvField;
+            }
+            set
+            {
+                this.medlemAvField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
+    public partial class AksessRettighet
+    {
+        
+        private AksessTypeId aksessTypeIdField;
+        
+        private DomeneAvgrensningId domeneAvgrensningIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public AksessTypeId aksessTypeId
+        {
+            get
+            {
+                return this.aksessTypeIdField;
+            }
+            set
+            {
+                this.aksessTypeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public DomeneAvgrensningId domeneAvgrensningId
+        {
+            get
+            {
+                return this.domeneAvgrensningIdField;
+            }
+            set
+            {
+                this.domeneAvgrensningIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
+    public partial class Sprakform : MatrikkelEnumKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
+    public partial class BrukergruppeKode : MatrikkelEnumKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker/koder")]
+    public partial class BrukerAktiveringsstatusKode : MatrikkelEnumKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb")]
     public partial class JobbtypeKode : MatrikkelEnumKode
     {
@@ -16777,381 +16931,9 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/endringslogg/koder")]
-    public partial class EndringsKildeKode : MatrikkelEnumKode
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/jobb/koder")]
+    public partial class JobbStatusKode : MatrikkelEnumKode
     {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class TinglysingsstatusKode : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class TerrengdetaljKode : MatrikkelEnumKode
-    {
-        
-        private string sosi34Field;
-        
-        private string kodeverdiSosi45Field;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string sosi34
-        {
-            get
-            {
-                return this.sosi34Field;
-            }
-            set
-            {
-                this.sosi34Field = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string kodeverdiSosi45
-        {
-            get
-            {
-                return this.kodeverdiSosi45Field;
-            }
-            set
-            {
-                this.kodeverdiSosi45Field = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class RolleIForretningKode : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class Medium : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class MatrikkelenhetstypeKode : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class HjelpelinjetypeKode : MatrikkelEnumKode
-    {
-        
-        private string sosiKodeField;
-        
-        private string objTypeField;
-        
-        private string kodeverdiSosi45Field;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string sosiKode
-        {
-            get
-            {
-                return this.sosiKodeField;
-            }
-            set
-            {
-                this.sosiKodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string objType
-        {
-            get
-            {
-                return this.objTypeField;
-            }
-            set
-            {
-                this.objTypeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string kodeverdiSosi45
-        {
-            get
-            {
-                return this.kodeverdiSosi45Field;
-            }
-            set
-            {
-                this.kodeverdiSosi45Field = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class GrensepunkttypeKode : MatrikkelEnumKode
-    {
-        
-        private int sosiKodeField;
-        
-        private bool sosiKodeFieldSpecified;
-        
-        private string kodeverdiSosi45Field;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int sosiKode
-        {
-            get
-            {
-                return this.sosiKodeField;
-            }
-            set
-            {
-                this.sosiKodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool sosiKodeSpecified
-        {
-            get
-            {
-                return this.sosiKodeFieldSpecified;
-            }
-            set
-            {
-                this.sosiKodeFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string kodeverdiSosi45
-        {
-            get
-            {
-                return this.kodeverdiSosi45Field;
-            }
-            set
-            {
-                this.kodeverdiSosi45Field = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class GrensemerkeNedsattIKode : MatrikkelEnumKode
-    {
-        
-        private string kodeverdiSosi45Field;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string kodeverdiSosi45
-        {
-            get
-            {
-                return this.kodeverdiSosi45Field;
-            }
-            set
-            {
-                this.kodeverdiSosi45Field = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class ForretningstypeKode : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class ForretningsklasseKode : MatrikkelEnumKode
-    {
-        
-        private ForretningstypeKodeId[] lovligeForretningstypeIdsField;
-        
-        private ForretningstypeKodeId[] utgatteForretningstypeIdsField;
-        
-        private ArsakTilFeilrettingKodeId[] muligeArsakerTilFeilrettingIdsField;
-        
-        private ForretningsklasseKodeId[] muligeForretningsKlasseIdsForGrunnlagField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public ForretningstypeKodeId[] lovligeForretningstypeIds
-        {
-            get
-            {
-                return this.lovligeForretningstypeIdsField;
-            }
-            set
-            {
-                this.lovligeForretningstypeIdsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public ForretningstypeKodeId[] utgatteForretningstypeIds
-        {
-            get
-            {
-                return this.utgatteForretningstypeIdsField;
-            }
-            set
-            {
-                this.utgatteForretningstypeIdsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=2)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public ArsakTilFeilrettingKodeId[] muligeArsakerTilFeilrettingIds
-        {
-            get
-            {
-                return this.muligeArsakerTilFeilrettingIdsField;
-            }
-            set
-            {
-                this.muligeArsakerTilFeilrettingIdsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=3)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public ForretningsklasseKodeId[] muligeForretningsKlasseIdsForGrunnlag
-        {
-            get
-            {
-                return this.muligeForretningsKlasseIdsForGrunnlagField;
-            }
-            set
-            {
-                this.muligeForretningsKlasseIdsForGrunnlagField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class FormalSeksjonKode : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class EierforholdKode : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class ArsakTilFeilrettingKode : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class ArealmerknadKode : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class ArealkildeKode : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class AnnenMatrikkelenhetsKode : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class AnleggstypeKode : MatrikkelEnumKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet/koder")]
-    public partial class AdministrativGrenseKode : MatrikkelEnumKode
-    {
-        
-        private string kodeverdiSosi45Field;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string kodeverdiSosi45
-        {
-            get
-            {
-                return this.kodeverdiSosi45Field;
-            }
-            set
-            {
-                this.kodeverdiSosi45Field = value;
-            }
-        }
     }
     
     /// <remarks/>
@@ -17183,6 +16965,224 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/aktivitetsliste/koder")]
     public partial class MeldingStatus : MatrikkelEnumKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class ExportType : MatrikkelEnumKode
+    {
+        
+        private string[] extensionsField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
+        public string[] extensions
+        {
+            get
+            {
+                return this.extensionsField;
+            }
+            set
+            {
+                this.extensionsField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VegRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MatrikkelenhetRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MassivRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(EndringRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DriftRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BygningRapportType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AdresseRapportType))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public abstract partial class RapportType : MatrikkelEnumKode
+    {
+        
+        private System.Nullable<int>[] subinfosField;
+        
+        private string templateFilenameField;
+        
+        private string rapportversjonField;
+        
+        private int maxUtvalgField;
+        
+        private bool maxUtvalgFieldSpecified;
+        
+        private int batchSizeField;
+        
+        private bool batchSizeFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain")]
+        public System.Nullable<int>[] subinfos
+        {
+            get
+            {
+                return this.subinfosField;
+            }
+            set
+            {
+                this.subinfosField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string templateFilename
+        {
+            get
+            {
+                return this.templateFilenameField;
+            }
+            set
+            {
+                this.templateFilenameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string rapportversjon
+        {
+            get
+            {
+                return this.rapportversjonField;
+            }
+            set
+            {
+                this.rapportversjonField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public int maxUtvalg
+        {
+            get
+            {
+                return this.maxUtvalgField;
+            }
+            set
+            {
+                this.maxUtvalgField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool maxUtvalgSpecified
+        {
+            get
+            {
+                return this.maxUtvalgFieldSpecified;
+            }
+            set
+            {
+                this.maxUtvalgFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public int batchSize
+        {
+            get
+            {
+                return this.batchSizeField;
+            }
+            set
+            {
+                this.batchSizeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool batchSizeSpecified
+        {
+            get
+            {
+                return this.batchSizeFieldSpecified;
+            }
+            set
+            {
+                this.batchSizeFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class KonsesjonRapportType : RapportType
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class VegRapportType : RapportType
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class MatrikkelenhetRapportType : RapportType
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class MassivRapportType : RapportType
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class EndringRapportType : RapportType
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class DriftRapportType : RapportType
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class BygningRapportType : RapportType
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/rapport/koder")]
+    public partial class AdresseRapportType : RapportType
     {
     }
     
@@ -17366,15 +17366,15 @@ namespace Kartverket.Matrikkel.StoreService
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretstypeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKretstypeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GenerellKretstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VedtakstypeKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PavirkningsgradKode))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MyndighetKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(VernetypeKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminnekategoriKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KulturminneArtKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EnkeltminneArtKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetEgenerklaringKode))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LandKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(VedtakstypeKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PavirkningsgradKode))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(MyndighetKode))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kodeliste")]
@@ -17571,30 +17571,6 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/grunnforurensing/koder")]
-    public partial class VedtakstypeKode : MatrikkelDbKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/grunnforurensing/koder")]
-    public partial class PavirkningsgradKode : MatrikkelDbKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/grunnforurensing/koder")]
-    public partial class MyndighetKode : MatrikkelDbKode
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kulturminne/koder")]
     public partial class VernetypeKode : MatrikkelDbKode
     {
@@ -17643,6 +17619,30 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/grunnforurensing/koder")]
+    public partial class VedtakstypeKode : MatrikkelDbKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/grunnforurensing/koder")]
+    public partial class PavirkningsgradKode : MatrikkelDbKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/grunnforurensing/koder")]
+    public partial class MyndighetKode : MatrikkelDbKode
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kodeliste")]
     public partial class Kodeliste : MatrikkelBubbleObject
     {
@@ -17684,576 +17684,841 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
-    public partial class Bruksenhet : MatrikkelBubbleObjectWithHistory
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
+    public partial class Kurs : MatrikkelBubbleObjectWithHistory
     {
         
-        private ByggId byggIdField;
+        private string kursnavnField;
         
-        private EtasjeplanKodeId etasjeplanKodeIdField;
+        private LocalDate kursdatoField;
         
-        private int etasjenummerField;
+        private int kursvarighetField;
         
-        private bool etasjenummerFieldSpecified;
+        private bool kursvarighetFieldSpecified;
         
-        private int lopenummerField;
+        private string kursstedField;
         
-        private bool lopenummerFieldSpecified;
+        private BrukerId kursansvarligIdField;
         
-        private AdresseId adresseIdField;
+        private string kursmerknadField;
         
-        private MatrikkelenhetId matrikkelenhetIdField;
-        
-        private BruksenhetstypeKodeId bruksenhetstypeKodeIdField;
-        
-        private int antallRomField;
-        
-        private bool antallRomFieldSpecified;
-        
-        private int antallBadField;
-        
-        private bool antallBadFieldSpecified;
-        
-        private int antallWCField;
-        
-        private bool antallWCFieldSpecified;
-        
-        private double bruksarealField;
-        
-        private bool bruksarealFieldSpecified;
-        
-        private KjokkentilgangKodeId kjokkentilgangIdField;
-        
-        private bool skalUtgaField;
-        
-        private bool skalUtgaFieldSpecified;
-        
-        private bool byggSkjermingsverdigField;
-        
-        private bool byggSkjermingsverdigFieldSpecified;
-        
-        private UUID uuidField;
-        
-        private KostraFunksjonKodeId kostraFunksjonKodeIdField;
-        
-        private bool kostraLeiearealField;
-        
-        private bool kostraLeiearealFieldSpecified;
-        
-        private JuridiskPersonId kostraVirksomhetIdField;
+        private KursForBruker[] kursdeltakereField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public ByggId byggId
+        public string kursnavn
         {
             get
             {
-                return this.byggIdField;
+                return this.kursnavnField;
             }
             set
             {
-                this.byggIdField = value;
+                this.kursnavnField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public EtasjeplanKodeId etasjeplanKodeId
+        public LocalDate kursdato
         {
             get
             {
-                return this.etasjeplanKodeIdField;
+                return this.kursdatoField;
             }
             set
             {
-                this.etasjeplanKodeIdField = value;
+                this.kursdatoField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int etasjenummer
+        public int kursvarighet
         {
             get
             {
-                return this.etasjenummerField;
+                return this.kursvarighetField;
             }
             set
             {
-                this.etasjenummerField = value;
+                this.kursvarighetField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool etasjenummerSpecified
+        public bool kursvarighetSpecified
         {
             get
             {
-                return this.etasjenummerFieldSpecified;
+                return this.kursvarighetFieldSpecified;
             }
             set
             {
-                this.etasjenummerFieldSpecified = value;
+                this.kursvarighetFieldSpecified = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public int lopenummer
+        public string kurssted
         {
             get
             {
-                return this.lopenummerField;
+                return this.kursstedField;
             }
             set
             {
-                this.lopenummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool lopenummerSpecified
-        {
-            get
-            {
-                return this.lopenummerFieldSpecified;
-            }
-            set
-            {
-                this.lopenummerFieldSpecified = value;
+                this.kursstedField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public AdresseId adresseId
+        public BrukerId kursansvarligId
         {
             get
             {
-                return this.adresseIdField;
+                return this.kursansvarligIdField;
             }
             set
             {
-                this.adresseIdField = value;
+                this.kursansvarligIdField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public MatrikkelenhetId matrikkelenhetId
+        public string kursmerknad
         {
             get
             {
-                return this.matrikkelenhetIdField;
+                return this.kursmerknadField;
             }
             set
             {
-                this.matrikkelenhetIdField = value;
+                this.kursmerknadField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public BruksenhetstypeKodeId bruksenhetstypeKodeId
+        [System.Xml.Serialization.XmlArrayAttribute(Order=6)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public KursForBruker[] kursdeltakere
         {
             get
             {
-                return this.bruksenhetstypeKodeIdField;
+                return this.kursdeltakereField;
             }
             set
             {
-                this.bruksenhetstypeKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public int antallRom
-        {
-            get
-            {
-                return this.antallRomField;
-            }
-            set
-            {
-                this.antallRomField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool antallRomSpecified
-        {
-            get
-            {
-                return this.antallRomFieldSpecified;
-            }
-            set
-            {
-                this.antallRomFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public int antallBad
-        {
-            get
-            {
-                return this.antallBadField;
-            }
-            set
-            {
-                this.antallBadField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool antallBadSpecified
-        {
-            get
-            {
-                return this.antallBadFieldSpecified;
-            }
-            set
-            {
-                this.antallBadFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public int antallWC
-        {
-            get
-            {
-                return this.antallWCField;
-            }
-            set
-            {
-                this.antallWCField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool antallWCSpecified
-        {
-            get
-            {
-                return this.antallWCFieldSpecified;
-            }
-            set
-            {
-                this.antallWCFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public double bruksareal
-        {
-            get
-            {
-                return this.bruksarealField;
-            }
-            set
-            {
-                this.bruksarealField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool bruksarealSpecified
-        {
-            get
-            {
-                return this.bruksarealFieldSpecified;
-            }
-            set
-            {
-                this.bruksarealFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
-        public KjokkentilgangKodeId kjokkentilgangId
-        {
-            get
-            {
-                return this.kjokkentilgangIdField;
-            }
-            set
-            {
-                this.kjokkentilgangIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
-        public bool skalUtga
-        {
-            get
-            {
-                return this.skalUtgaField;
-            }
-            set
-            {
-                this.skalUtgaField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool skalUtgaSpecified
-        {
-            get
-            {
-                return this.skalUtgaFieldSpecified;
-            }
-            set
-            {
-                this.skalUtgaFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
-        public bool byggSkjermingsverdig
-        {
-            get
-            {
-                return this.byggSkjermingsverdigField;
-            }
-            set
-            {
-                this.byggSkjermingsverdigField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool byggSkjermingsverdigSpecified
-        {
-            get
-            {
-                return this.byggSkjermingsverdigFieldSpecified;
-            }
-            set
-            {
-                this.byggSkjermingsverdigFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
-        public UUID uuid
-        {
-            get
-            {
-                return this.uuidField;
-            }
-            set
-            {
-                this.uuidField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
-        public KostraFunksjonKodeId kostraFunksjonKodeId
-        {
-            get
-            {
-                return this.kostraFunksjonKodeIdField;
-            }
-            set
-            {
-                this.kostraFunksjonKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
-        public bool kostraLeieareal
-        {
-            get
-            {
-                return this.kostraLeiearealField;
-            }
-            set
-            {
-                this.kostraLeiearealField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool kostraLeiearealSpecified
-        {
-            get
-            {
-                return this.kostraLeiearealFieldSpecified;
-            }
-            set
-            {
-                this.kostraLeiearealFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
-        public JuridiskPersonId kostraVirksomhetId
-        {
-            get
-            {
-                return this.kostraVirksomhetIdField;
-            }
-            set
-            {
-                this.kostraVirksomhetIdField = value;
+                this.kursdeltakereField = value;
             }
         }
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bygningsendring))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bygning))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
-    public partial class Bygg : MatrikkelBubbleObjectWithHistory
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
+    public partial class Kommuneliste : MatrikkelBubbleObjectWithHistory
     {
         
-        private long bygningsnummerField;
+        private KommuneId[] kommuneIdsField;
         
-        private bool bygningsnummerFieldSpecified;
-        
-        private int lopenummerField;
-        
-        private bool lopenummerFieldSpecified;
-        
-        private KommuneId kommuneIdField;
-        
-        private Representasjonspunkt representasjonspunktField;
-        
-        private bool harSefrakminneField;
-        
-        private bool harSefrakminneFieldSpecified;
-        
-        private bool harKulturminneField;
-        
-        private bool harKulturminneFieldSpecified;
-        
-        private bool harHeisField;
-        
-        private bool harHeisFieldSpecified;
-        
-        private bool skjermingsverdigField;
-        
-        private bool skjermingsverdigFieldSpecified;
-        
-        private double bebygdArealField;
-        
-        private bool bebygdArealFieldSpecified;
-        
-        private bool utenBebygdArealField;
-        
-        private bool utenBebygdArealFieldSpecified;
-        
-        private ByggId tidligereByggIdField;
-        
-        private Etasje[] etasjerField;
-        
-        private BruksenhetId[] bruksenhetIdsField;
-        
-        private BygningsstatusHistorikk[] bygningsstatusHistorikkerField;
-        
-        private Kontaktperson[] kontaktpersonerField;
-        
-        private OppvarmingsKodeId[] oppvarmingsKodeIdsField;
-        
-        private EnergikildeKodeId[] energikildeKodeIdsField;
-        
-        private BygningsstatusKodeId bygningsstatusKodeIdField;
-        
-        private AvlopsKodeId avlopsKodeIdField;
-        
-        private VannforsyningsKodeId vannforsyningsKodeIdField;
-        
-        private NaringsgruppeKodeId naringsgruppeKodeIdField;
-        
-        private OpprinnelsesKodeId opprinnelsesKodeIdField;
-        
-        private Etasjedata etasjedataField;
-        
-        private BygningTillegg kommunalTilleggsdelField;
-        
-        private UUID uuidField;
+        private string navnField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public long bygningsnummer
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
+        public KommuneId[] kommuneIds
         {
             get
             {
-                return this.bygningsnummerField;
+                return this.kommuneIdsField;
             }
             set
             {
-                this.bygningsnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool bygningsnummerSpecified
-        {
-            get
-            {
-                return this.bygningsnummerFieldSpecified;
-            }
-            set
-            {
-                this.bygningsnummerFieldSpecified = value;
+                this.kommuneIdsField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int lopenummer
+        public string navn
         {
             get
             {
-                return this.lopenummerField;
+                return this.navnField;
             }
             set
             {
-                this.lopenummerField = value;
+                this.navnField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
+    public partial class BrukerRettighetListe : MatrikkelBubbleObjectWithHistory
+    {
+        
+        private BrukerRettighet[] rettigheterField;
+        
+        private BrukerId brukerIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public BrukerRettighet[] rettigheter
+        {
+            get
+            {
+                return this.rettigheterField;
+            }
+            set
+            {
+                this.rettigheterField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool lopenummerSpecified
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public BrukerId brukerId
         {
             get
             {
-                return this.lopenummerFieldSpecified;
+                return this.brukerIdField;
             }
             set
             {
-                this.lopenummerFieldSpecified = value;
+                this.brukerIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
+    public partial class BrukerHistorikkListe : MatrikkelBubbleObjectWithHistory
+    {
+        
+        private BrukerHistorikk[] historikkerField;
+        
+        private BrukerId brukerIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public BrukerHistorikk[] historikker
+        {
+            get
+            {
+                return this.historikkerField;
+            }
+            set
+            {
+                this.historikkerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public BrukerId brukerId
+        {
+            get
+            {
+                return this.brukerIdField;
+            }
+            set
+            {
+                this.brukerIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
+    public partial class Bruker : MatrikkelBubbleObjectWithHistory
+    {
+        
+        private string brukernavnField;
+        
+        private string navnField;
+        
+        private string adresseField;
+        
+        private string postadresseField;
+        
+        private string epostField;
+        
+        private string telefonnummerField;
+        
+        private bool endrePassordVedInnloggingField;
+        
+        private bool endrePassordVedInnloggingFieldSpecified;
+        
+        private SprakformId sprakformIdField;
+        
+        private int standardMalestokkField;
+        
+        private bool standardMalestokkFieldSpecified;
+        
+        private double pekeRadiusField;
+        
+        private bool pekeRadiusFieldSpecified;
+        
+        private double snappetoleranseField;
+        
+        private bool snappetoleranseFieldSpecified;
+        
+        private string standardStiForBakgrunnskartField;
+        
+        private KommuneId aktuellKommuneIdField;
+        
+        private bool brukStoreKnapperField;
+        
+        private bool brukStoreKnapperFieldSpecified;
+        
+        private DataForWMS[] dataForWMSerField;
+        
+        private bool ndBrukerField;
+        
+        private bool ndBrukerFieldSpecified;
+        
+        private bool baatBrukerField;
+        
+        private bool baatBrukerFieldSpecified;
+        
+        private BrukerId opprettetAvIdField;
+        
+        private Timestamp opprettetDatoField;
+        
+        private BrukerId adgangSlettetAvIdField;
+        
+        private Timestamp adgangSlettetDatoField;
+        
+        private BrukerId sistOppdatertAvIdField;
+        
+        private Timestamp sistOppdatertDatoField;
+        
+        private string merknadField;
+        
+        private bool programvareBrukerField;
+        
+        private bool programvareBrukerFieldSpecified;
+        
+        private BrukergruppeKodeId brukergruppeIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string brukernavn
+        {
+            get
+            {
+                return this.brukernavnField;
+            }
+            set
+            {
+                this.brukernavnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string navn
+        {
+            get
+            {
+                return this.navnField;
+            }
+            set
+            {
+                this.navnField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string adresse
+        {
+            get
+            {
+                return this.adresseField;
+            }
+            set
+            {
+                this.adresseField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string postadresse
+        {
+            get
+            {
+                return this.postadresseField;
+            }
+            set
+            {
+                this.postadresseField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string epost
+        {
+            get
+            {
+                return this.epostField;
+            }
+            set
+            {
+                this.epostField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string telefonnummer
+        {
+            get
+            {
+                return this.telefonnummerField;
+            }
+            set
+            {
+                this.telefonnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public bool endrePassordVedInnlogging
+        {
+            get
+            {
+                return this.endrePassordVedInnloggingField;
+            }
+            set
+            {
+                this.endrePassordVedInnloggingField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool endrePassordVedInnloggingSpecified
+        {
+            get
+            {
+                return this.endrePassordVedInnloggingFieldSpecified;
+            }
+            set
+            {
+                this.endrePassordVedInnloggingFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public SprakformId sprakformId
+        {
+            get
+            {
+                return this.sprakformIdField;
+            }
+            set
+            {
+                this.sprakformIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public int standardMalestokk
+        {
+            get
+            {
+                return this.standardMalestokkField;
+            }
+            set
+            {
+                this.standardMalestokkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool standardMalestokkSpecified
+        {
+            get
+            {
+                return this.standardMalestokkFieldSpecified;
+            }
+            set
+            {
+                this.standardMalestokkFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public double pekeRadius
+        {
+            get
+            {
+                return this.pekeRadiusField;
+            }
+            set
+            {
+                this.pekeRadiusField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool pekeRadiusSpecified
+        {
+            get
+            {
+                return this.pekeRadiusFieldSpecified;
+            }
+            set
+            {
+                this.pekeRadiusFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public double snappetoleranse
+        {
+            get
+            {
+                return this.snappetoleranseField;
+            }
+            set
+            {
+                this.snappetoleranseField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool snappetoleranseSpecified
+        {
+            get
+            {
+                return this.snappetoleranseFieldSpecified;
+            }
+            set
+            {
+                this.snappetoleranseFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public string standardStiForBakgrunnskart
+        {
+            get
+            {
+                return this.standardStiForBakgrunnskartField;
+            }
+            set
+            {
+                this.standardStiForBakgrunnskartField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public KommuneId aktuellKommuneId
+        {
+            get
+            {
+                return this.aktuellKommuneIdField;
+            }
+            set
+            {
+                this.aktuellKommuneIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public bool brukStoreKnapper
+        {
+            get
+            {
+                return this.brukStoreKnapperField;
+            }
+            set
+            {
+                this.brukStoreKnapperField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool brukStoreKnapperSpecified
+        {
+            get
+            {
+                return this.brukStoreKnapperFieldSpecified;
+            }
+            set
+            {
+                this.brukStoreKnapperFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=14)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public DataForWMS[] dataForWMSer
+        {
+            get
+            {
+                return this.dataForWMSerField;
+            }
+            set
+            {
+                this.dataForWMSerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
+        public bool ndBruker
+        {
+            get
+            {
+                return this.ndBrukerField;
+            }
+            set
+            {
+                this.ndBrukerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ndBrukerSpecified
+        {
+            get
+            {
+                return this.ndBrukerFieldSpecified;
+            }
+            set
+            {
+                this.ndBrukerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
+        public bool baatBruker
+        {
+            get
+            {
+                return this.baatBrukerField;
+            }
+            set
+            {
+                this.baatBrukerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool baatBrukerSpecified
+        {
+            get
+            {
+                return this.baatBrukerFieldSpecified;
+            }
+            set
+            {
+                this.baatBrukerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
+        public BrukerId opprettetAvId
+        {
+            get
+            {
+                return this.opprettetAvIdField;
+            }
+            set
+            {
+                this.opprettetAvIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
+        public Timestamp opprettetDato
+        {
+            get
+            {
+                return this.opprettetDatoField;
+            }
+            set
+            {
+                this.opprettetDatoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
+        public BrukerId adgangSlettetAvId
+        {
+            get
+            {
+                return this.adgangSlettetAvIdField;
+            }
+            set
+            {
+                this.adgangSlettetAvIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
+        public Timestamp adgangSlettetDato
+        {
+            get
+            {
+                return this.adgangSlettetDatoField;
+            }
+            set
+            {
+                this.adgangSlettetDatoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=21)]
+        public BrukerId sistOppdatertAvId
+        {
+            get
+            {
+                return this.sistOppdatertAvIdField;
+            }
+            set
+            {
+                this.sistOppdatertAvIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
+        public Timestamp sistOppdatertDato
+        {
+            get
+            {
+                return this.sistOppdatertDatoField;
+            }
+            set
+            {
+                this.sistOppdatertDatoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
+        public string merknad
+        {
+            get
+            {
+                return this.merknadField;
+            }
+            set
+            {
+                this.merknadField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
+        public bool programvareBruker
+        {
+            get
+            {
+                return this.programvareBrukerField;
+            }
+            set
+            {
+                this.programvareBrukerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool programvareBrukerSpecified
+        {
+            get
+            {
+                return this.programvareBrukerFieldSpecified;
+            }
+            set
+            {
+                this.programvareBrukerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
+        public BrukergruppeKodeId brukergruppeId
+        {
+            get
+            {
+                return this.brukergruppeIdField;
+            }
+            set
+            {
+                this.brukergruppeIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class Veg : MatrikkelBubbleObjectWithHistory
+    {
+        
+        private KommuneId kommuneIdField;
+        
+        private int adressekodeField;
+        
+        private bool adressekodeFieldSpecified;
+        
+        private string adressenavnField;
+        
+        private string kortAdressenavnField;
+        
+        private VegTillegg kommunalTilleggsdelField;
+        
+        private string stedsnummerField;
+        
+        private UUID uuidField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public KommuneId kommuneId
         {
             get
@@ -18267,378 +18532,64 @@ namespace Kartverket.Matrikkel.StoreService
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public Representasjonspunkt representasjonspunkt
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int adressekode
         {
             get
             {
-                return this.representasjonspunktField;
+                return this.adressekodeField;
             }
             set
             {
-                this.representasjonspunktField = value;
+                this.adressekodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool adressekodeSpecified
+        {
+            get
+            {
+                return this.adressekodeFieldSpecified;
+            }
+            set
+            {
+                this.adressekodeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string adressenavn
+        {
+            get
+            {
+                return this.adressenavnField;
+            }
+            set
+            {
+                this.adressenavnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string kortAdressenavn
+        {
+            get
+            {
+                return this.kortAdressenavnField;
+            }
+            set
+            {
+                this.kortAdressenavnField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public bool harSefrakminne
-        {
-            get
-            {
-                return this.harSefrakminneField;
-            }
-            set
-            {
-                this.harSefrakminneField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool harSefrakminneSpecified
-        {
-            get
-            {
-                return this.harSefrakminneFieldSpecified;
-            }
-            set
-            {
-                this.harSefrakminneFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public bool harKulturminne
-        {
-            get
-            {
-                return this.harKulturminneField;
-            }
-            set
-            {
-                this.harKulturminneField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool harKulturminneSpecified
-        {
-            get
-            {
-                return this.harKulturminneFieldSpecified;
-            }
-            set
-            {
-                this.harKulturminneFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public bool harHeis
-        {
-            get
-            {
-                return this.harHeisField;
-            }
-            set
-            {
-                this.harHeisField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool harHeisSpecified
-        {
-            get
-            {
-                return this.harHeisFieldSpecified;
-            }
-            set
-            {
-                this.harHeisFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public bool skjermingsverdig
-        {
-            get
-            {
-                return this.skjermingsverdigField;
-            }
-            set
-            {
-                this.skjermingsverdigField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool skjermingsverdigSpecified
-        {
-            get
-            {
-                return this.skjermingsverdigFieldSpecified;
-            }
-            set
-            {
-                this.skjermingsverdigFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public double bebygdAreal
-        {
-            get
-            {
-                return this.bebygdArealField;
-            }
-            set
-            {
-                this.bebygdArealField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool bebygdArealSpecified
-        {
-            get
-            {
-                return this.bebygdArealFieldSpecified;
-            }
-            set
-            {
-                this.bebygdArealFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public bool utenBebygdAreal
-        {
-            get
-            {
-                return this.utenBebygdArealField;
-            }
-            set
-            {
-                this.utenBebygdArealField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool utenBebygdArealSpecified
-        {
-            get
-            {
-                return this.utenBebygdArealFieldSpecified;
-            }
-            set
-            {
-                this.utenBebygdArealFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public ByggId tidligereByggId
-        {
-            get
-            {
-                return this.tidligereByggIdField;
-            }
-            set
-            {
-                this.tidligereByggIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=11)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public Etasje[] etasjer
-        {
-            get
-            {
-                return this.etasjerField;
-            }
-            set
-            {
-                this.etasjerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=12)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public BruksenhetId[] bruksenhetIds
-        {
-            get
-            {
-                return this.bruksenhetIdsField;
-            }
-            set
-            {
-                this.bruksenhetIdsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=13)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public BygningsstatusHistorikk[] bygningsstatusHistorikker
-        {
-            get
-            {
-                return this.bygningsstatusHistorikkerField;
-            }
-            set
-            {
-                this.bygningsstatusHistorikkerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=14)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public Kontaktperson[] kontaktpersoner
-        {
-            get
-            {
-                return this.kontaktpersonerField;
-            }
-            set
-            {
-                this.kontaktpersonerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=15)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning/koder")]
-        public OppvarmingsKodeId[] oppvarmingsKodeIds
-        {
-            get
-            {
-                return this.oppvarmingsKodeIdsField;
-            }
-            set
-            {
-                this.oppvarmingsKodeIdsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=16)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning/koder")]
-        public EnergikildeKodeId[] energikildeKodeIds
-        {
-            get
-            {
-                return this.energikildeKodeIdsField;
-            }
-            set
-            {
-                this.energikildeKodeIdsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
-        public BygningsstatusKodeId bygningsstatusKodeId
-        {
-            get
-            {
-                return this.bygningsstatusKodeIdField;
-            }
-            set
-            {
-                this.bygningsstatusKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
-        public AvlopsKodeId avlopsKodeId
-        {
-            get
-            {
-                return this.avlopsKodeIdField;
-            }
-            set
-            {
-                this.avlopsKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
-        public VannforsyningsKodeId vannforsyningsKodeId
-        {
-            get
-            {
-                return this.vannforsyningsKodeIdField;
-            }
-            set
-            {
-                this.vannforsyningsKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
-        public NaringsgruppeKodeId naringsgruppeKodeId
-        {
-            get
-            {
-                return this.naringsgruppeKodeIdField;
-            }
-            set
-            {
-                this.naringsgruppeKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=21)]
-        public OpprinnelsesKodeId opprinnelsesKodeId
-        {
-            get
-            {
-                return this.opprinnelsesKodeIdField;
-            }
-            set
-            {
-                this.opprinnelsesKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
-        public Etasjedata etasjedata
-        {
-            get
-            {
-                return this.etasjedataField;
-            }
-            set
-            {
-                this.etasjedataField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
-        public BygningTillegg kommunalTilleggsdel
+        public VegTillegg kommunalTilleggsdel
         {
             get
             {
@@ -18651,7 +18602,21 @@ namespace Kartverket.Matrikkel.StoreService
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string stedsnummer
+        {
+            get
+            {
+                return this.stedsnummerField;
+            }
+            set
+            {
+                this.stedsnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
         public UUID uuid
         {
             get
@@ -18668,39 +18633,39 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
-    public partial class Bygningsendring : Bygg
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class Kretsflate : MatrikkelBubbleObjectWithHistory
     {
         
-        private BygningId bygningIdField;
+        private Multipolygon geometriField;
         
-        private BygningsendringsKodeId bygningsendringsKodeIdField;
+        private UUID uuidField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public BygningId bygningId
+        public Multipolygon geometri
         {
             get
             {
-                return this.bygningIdField;
+                return this.geometriField;
             }
             set
             {
-                this.bygningIdField = value;
+                this.geometriField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public BygningsendringsKodeId bygningsendringsKodeId
+        public UUID uuid
         {
             get
             {
-                return this.bygningsendringsKodeIdField;
+                return this.uuidField;
             }
             set
             {
-                this.bygningsendringsKodeIdField = value;
+                this.uuidField = value;
             }
         }
     }
@@ -18708,55 +18673,1445 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
-    public partial class Bygning : Bygg
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class Multipolygon : Geometri
     {
         
-        private BygningstypeKodeId bygningstypeKodeIdField;
-        
-        private bool ufullstendigArealField;
-        
-        private bool ufullstendigArealFieldSpecified;
+        private Polygon[] polygonerField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public BygningstypeKodeId bygningstypeKodeId
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public Polygon[] polygoner
         {
             get
             {
-                return this.bygningstypeKodeIdField;
+                return this.polygonerField;
             }
             set
             {
-                this.bygningstypeKodeIdField = value;
+                this.polygonerField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class Polygon : Geometri
+    {
+        
+        private Ring[] indreAvgrensningField;
+        
+        private Ring ytreAvgrensningField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public Ring[] indreAvgrensning
+        {
+            get
+            {
+                return this.indreAvgrensningField;
+            }
+            set
+            {
+                this.indreAvgrensningField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public bool ufullstendigAreal
+        public Ring ytreAvgrensning
         {
             get
             {
-                return this.ufullstendigArealField;
+                return this.ytreAvgrensningField;
             }
             set
             {
-                this.ufullstendigArealField = value;
+                this.ytreAvgrensningField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class Ring
+    {
+        
+        private Point[] positionsField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public Point[] positions
+        {
+            get
+            {
+                return this.positionsField;
+            }
+            set
+            {
+                this.positionsField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class Point
+    {
+        
+        private double xField;
+        
+        private bool xFieldSpecified;
+        
+        private double yField;
+        
+        private bool yFieldSpecified;
+        
+        private double zField;
+        
+        private bool zFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public double x
+        {
+            get
+            {
+                return this.xField;
+            }
+            set
+            {
+                this.xField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ufullstendigArealSpecified
+        public bool xSpecified
         {
             get
             {
-                return this.ufullstendigArealFieldSpecified;
+                return this.xFieldSpecified;
             }
             set
             {
-                this.ufullstendigArealFieldSpecified = value;
+                this.xFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public double y
+        {
+            get
+            {
+                return this.yField;
+            }
+            set
+            {
+                this.yField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ySpecified
+        {
+            get
+            {
+                return this.yFieldSpecified;
+            }
+            set
+            {
+                this.yFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public double z
+        {
+            get
+            {
+                return this.zField;
+            }
+            set
+            {
+                this.zField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool zSpecified
+        {
+            get
+            {
+                return this.zFieldSpecified;
+            }
+            set
+            {
+                this.zFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Polygon))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Multipolygon))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
+    public partial class Geometri
+    {
+        
+        private KoordinatsystemKodeId koordinatsystemKodeIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public KoordinatsystemKodeId koordinatsystemKodeId
+        {
+            get
+            {
+                return this.koordinatsystemKodeIdField;
+            }
+            set
+            {
+                this.koordinatsystemKodeIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedFlereKommuner))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Tettsted))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Postnummeromrade))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedEnKommune))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Svalbardomrade))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Valgkrets))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKrets))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kirkesogn))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Grunnkrets))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class Krets : MatrikkelBubbleObjectWithHistory
+    {
+        
+        private Multipolygon geometriField;
+        
+        private KommuneId[] kommuneIdsField;
+        
+        private int kretsnummerField;
+        
+        private bool kretsnummerFieldSpecified;
+        
+        private string kretsnavnField;
+        
+        private KretstypeKodeId kretstypeKodeIdField;
+        
+        private KretsTillegg kommunalTilleggsdelField;
+        
+        private KretsflateId kretsflateIdField;
+        
+        private UUID uuidField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public Multipolygon geometri
+        {
+            get
+            {
+                return this.geometriField;
+            }
+            set
+            {
+                this.geometriField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
+        public KommuneId[] kommuneIds
+        {
+            get
+            {
+                return this.kommuneIdsField;
+            }
+            set
+            {
+                this.kommuneIdsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int kretsnummer
+        {
+            get
+            {
+                return this.kretsnummerField;
+            }
+            set
+            {
+                this.kretsnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool kretsnummerSpecified
+        {
+            get
+            {
+                return this.kretsnummerFieldSpecified;
+            }
+            set
+            {
+                this.kretsnummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string kretsnavn
+        {
+            get
+            {
+                return this.kretsnavnField;
+            }
+            set
+            {
+                this.kretsnavnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public KretstypeKodeId kretstypeKodeId
+        {
+            get
+            {
+                return this.kretstypeKodeIdField;
+            }
+            set
+            {
+                this.kretstypeKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public KretsTillegg kommunalTilleggsdel
+        {
+            get
+            {
+                return this.kommunalTilleggsdelField;
+            }
+            set
+            {
+                this.kommunalTilleggsdelField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public KretsflateId kretsflateId
+        {
+            get
+            {
+                return this.kretsflateIdField;
+            }
+            set
+            {
+                this.kretsflateIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public UUID uuid
+        {
+            get
+            {
+                return this.uuidField;
+            }
+            set
+            {
+                this.uuidField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Tettsted))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Postnummeromrade))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class KretsMedFlereKommuner : Krets
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class Tettsted : KretsMedFlereKommuner
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class Postnummeromrade : KretsMedFlereKommuner
+    {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Svalbardomrade))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Valgkrets))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKrets))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kirkesogn))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Grunnkrets))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class KretsMedEnKommune : Krets
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class Svalbardomrade : KretsMedEnKommune
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class Valgkrets : KretsMedEnKommune
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class KommunalKrets : KretsMedEnKommune
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class Kirkesogn : KretsMedEnKommune
+    {
+        
+        private int bispedommeField;
+        
+        private bool bispedommeFieldSpecified;
+        
+        private int prostiField;
+        
+        private bool prostiFieldSpecified;
+        
+        private int prestegjeldField;
+        
+        private bool prestegjeldFieldSpecified;
+        
+        private int sognField;
+        
+        private bool sognFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int bispedomme
+        {
+            get
+            {
+                return this.bispedommeField;
+            }
+            set
+            {
+                this.bispedommeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool bispedommeSpecified
+        {
+            get
+            {
+                return this.bispedommeFieldSpecified;
+            }
+            set
+            {
+                this.bispedommeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int prosti
+        {
+            get
+            {
+                return this.prostiField;
+            }
+            set
+            {
+                this.prostiField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool prostiSpecified
+        {
+            get
+            {
+                return this.prostiFieldSpecified;
+            }
+            set
+            {
+                this.prostiFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int prestegjeld
+        {
+            get
+            {
+                return this.prestegjeldField;
+            }
+            set
+            {
+                this.prestegjeldField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool prestegjeldSpecified
+        {
+            get
+            {
+                return this.prestegjeldFieldSpecified;
+            }
+            set
+            {
+                this.prestegjeldFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public int sogn
+        {
+            get
+            {
+                return this.sognField;
+            }
+            set
+            {
+                this.sognField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool sognSpecified
+        {
+            get
+            {
+                return this.sognFieldSpecified;
+            }
+            set
+            {
+                this.sognFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class Grunnkrets : KretsMedEnKommune
+    {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vegadresse))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Matrikkeladresse))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class Adresse : MatrikkelBubbleObjectWithHistory
+    {
+        
+        private Representasjonspunkt representasjonspunktField;
+        
+        private string adressetilleggsnavnField;
+        
+        private string kortnavnField;
+        
+        private MatrikkelenhetId matrikkelenhetIdField;
+        
+        private Atkomst[] atkomsterField;
+        
+        private KretsId[] kretsIdsField;
+        
+        private AdresseTillegg kommunalTilleggsdelField;
+        
+        private AdressetilleggsnavnKildeKodeId tilleggsnavnKildeKodeIdField;
+        
+        private UUID uuidField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public Representasjonspunkt representasjonspunkt
+        {
+            get
+            {
+                return this.representasjonspunktField;
+            }
+            set
+            {
+                this.representasjonspunktField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string adressetilleggsnavn
+        {
+            get
+            {
+                return this.adressetilleggsnavnField;
+            }
+            set
+            {
+                this.adressetilleggsnavnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string kortnavn
+        {
+            get
+            {
+                return this.kortnavnField;
+            }
+            set
+            {
+                this.kortnavnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public MatrikkelenhetId matrikkelenhetId
+        {
+            get
+            {
+                return this.matrikkelenhetIdField;
+            }
+            set
+            {
+                this.matrikkelenhetIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=4)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public Atkomst[] atkomster
+        {
+            get
+            {
+                return this.atkomsterField;
+            }
+            set
+            {
+                this.atkomsterField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=5)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public KretsId[] kretsIds
+        {
+            get
+            {
+                return this.kretsIdsField;
+            }
+            set
+            {
+                this.kretsIdsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public AdresseTillegg kommunalTilleggsdel
+        {
+            get
+            {
+                return this.kommunalTilleggsdelField;
+            }
+            set
+            {
+                this.kommunalTilleggsdelField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public AdressetilleggsnavnKildeKodeId tilleggsnavnKildeKodeId
+        {
+            get
+            {
+                return this.tilleggsnavnKildeKodeIdField;
+            }
+            set
+            {
+                this.tilleggsnavnKildeKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public UUID uuid
+        {
+            get
+            {
+                return this.uuidField;
+            }
+            set
+            {
+                this.uuidField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class Vegadresse : Adresse
+    {
+        
+        private VegId vegIdField;
+        
+        private int nummerField;
+        
+        private bool nummerFieldSpecified;
+        
+        private string bokstavField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public VegId vegId
+        {
+            get
+            {
+                return this.vegIdField;
+            }
+            set
+            {
+                this.vegIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int nummer
+        {
+            get
+            {
+                return this.nummerField;
+            }
+            set
+            {
+                this.nummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool nummerSpecified
+        {
+            get
+            {
+                return this.nummerFieldSpecified;
+            }
+            set
+            {
+                this.nummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string bokstav
+        {
+            get
+            {
+                return this.bokstavField;
+            }
+            set
+            {
+                this.bokstavField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
+    public partial class Matrikkeladresse : Adresse
+    {
+        
+        private int undernummerField;
+        
+        private bool undernummerFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int undernummer
+        {
+            get
+            {
+                return this.undernummerField;
+            }
+            set
+            {
+                this.undernummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool undernummerSpecified
+        {
+            get
+            {
+                return this.undernummerFieldSpecified;
+            }
+            set
+            {
+                this.undernummerFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
+    public partial class Fylke : MatrikkelBubbleObjectWithHistory
+    {
+        
+        private string fylkesnummerField;
+        
+        private string fylkesnavnField;
+        
+        private LocalDate gyldigTilDatoField;
+        
+        private FylkeId nyFylkeIdField;
+        
+        private KommuneId[] kommuneIdsField;
+        
+        private UUID uuidField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string fylkesnummer
+        {
+            get
+            {
+                return this.fylkesnummerField;
+            }
+            set
+            {
+                this.fylkesnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string fylkesnavn
+        {
+            get
+            {
+                return this.fylkesnavnField;
+            }
+            set
+            {
+                this.fylkesnavnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public LocalDate gyldigTilDato
+        {
+            get
+            {
+                return this.gyldigTilDatoField;
+            }
+            set
+            {
+                this.gyldigTilDatoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public FylkeId nyFylkeId
+        {
+            get
+            {
+                return this.nyFylkeIdField;
+            }
+            set
+            {
+                this.nyFylkeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=4)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public KommuneId[] kommuneIds
+        {
+            get
+            {
+                return this.kommuneIdsField;
+            }
+            set
+            {
+                this.kommuneIdsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public UUID uuid
+        {
+            get
+            {
+                return this.uuidField;
+            }
+            set
+            {
+                this.uuidField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
+    public partial class Kommune : MatrikkelBubbleObjectWithHistory
+    {
+        
+        private string kommunenummerField;
+        
+        private string kommunenavnField;
+        
+        private FylkeId fylkeIdField;
+        
+        private LocalDate gyldigTilDatoField;
+        
+        private KommuneId nyKommuneIdField;
+        
+        private KoordinatsystemKodeId koordinatsystemKodeIdField;
+        
+        private string konverteringStatusField;
+        
+        private bool lastField;
+        
+        private bool lastFieldSpecified;
+        
+        private Position senterpunktField;
+        
+        private Representasjonspunkt representasjonspunktField;
+        
+        private MottakerAdresse postadresseField;
+        
+        private JuridiskPersonId standardRekvirentTinglysingIdField;
+        
+        private SprakformId sprakformIdField;
+        
+        private KommuneId[] naboKommuneIdsField;
+        
+        private string eksklusivBrukerField;
+        
+        private bool nedsattKonsesjonsgrenseField;
+        
+        private bool nedsattKonsesjonsgrenseFieldSpecified;
+        
+        private string brukteGardsnummerField;
+        
+        private UUID uuidField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string kommunenummer
+        {
+            get
+            {
+                return this.kommunenummerField;
+            }
+            set
+            {
+                this.kommunenummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string kommunenavn
+        {
+            get
+            {
+                return this.kommunenavnField;
+            }
+            set
+            {
+                this.kommunenavnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public FylkeId fylkeId
+        {
+            get
+            {
+                return this.fylkeIdField;
+            }
+            set
+            {
+                this.fylkeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public LocalDate gyldigTilDato
+        {
+            get
+            {
+                return this.gyldigTilDatoField;
+            }
+            set
+            {
+                this.gyldigTilDatoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public KommuneId nyKommuneId
+        {
+            get
+            {
+                return this.nyKommuneIdField;
+            }
+            set
+            {
+                this.nyKommuneIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public KoordinatsystemKodeId koordinatsystemKodeId
+        {
+            get
+            {
+                return this.koordinatsystemKodeIdField;
+            }
+            set
+            {
+                this.koordinatsystemKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string konverteringStatus
+        {
+            get
+            {
+                return this.konverteringStatusField;
+            }
+            set
+            {
+                this.konverteringStatusField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public bool last
+        {
+            get
+            {
+                return this.lastField;
+            }
+            set
+            {
+                this.lastField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool lastSpecified
+        {
+            get
+            {
+                return this.lastFieldSpecified;
+            }
+            set
+            {
+                this.lastFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public Position senterpunkt
+        {
+            get
+            {
+                return this.senterpunktField;
+            }
+            set
+            {
+                this.senterpunktField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public Representasjonspunkt representasjonspunkt
+        {
+            get
+            {
+                return this.representasjonspunktField;
+            }
+            set
+            {
+                this.representasjonspunktField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public MottakerAdresse postadresse
+        {
+            get
+            {
+                return this.postadresseField;
+            }
+            set
+            {
+                this.postadresseField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public JuridiskPersonId standardRekvirentTinglysingId
+        {
+            get
+            {
+                return this.standardRekvirentTinglysingIdField;
+            }
+            set
+            {
+                this.standardRekvirentTinglysingIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public SprakformId sprakformId
+        {
+            get
+            {
+                return this.sprakformIdField;
+            }
+            set
+            {
+                this.sprakformIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=13)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public KommuneId[] naboKommuneIds
+        {
+            get
+            {
+                return this.naboKommuneIdsField;
+            }
+            set
+            {
+                this.naboKommuneIdsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        public string eksklusivBruker
+        {
+            get
+            {
+                return this.eksklusivBrukerField;
+            }
+            set
+            {
+                this.eksklusivBrukerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
+        public bool nedsattKonsesjonsgrense
+        {
+            get
+            {
+                return this.nedsattKonsesjonsgrenseField;
+            }
+            set
+            {
+                this.nedsattKonsesjonsgrenseField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool nedsattKonsesjonsgrenseSpecified
+        {
+            get
+            {
+                return this.nedsattKonsesjonsgrenseFieldSpecified;
+            }
+            set
+            {
+                this.nedsattKonsesjonsgrenseFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
+        public string brukteGardsnummer
+        {
+            get
+            {
+                return this.brukteGardsnummerField;
+            }
+            set
+            {
+                this.brukteGardsnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
+        public UUID uuid
+        {
+            get
+            {
+                return this.uuidField;
+            }
+            set
+            {
+                this.uuidField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kulturminne")]
+    public partial class Kulturminne : MatrikkelBubbleObjectWithHistory
+    {
+        
+        private string lokalitetsnummerField;
+        
+        private KulturminneArtKodeId kulturminneArtKodeIdField;
+        
+        private VernetypeKodeId vernetypeKodeIdField;
+        
+        private KulturminnekategoriKodeId kulturminnekategoriIdField;
+        
+        private LocalDate matrikkelforingsdatoField;
+        
+        private LocalDate sistOppdatertDatoField;
+        
+        private MatrikkelenhetId[] matrikkelenhetIdsField;
+        
+        private FredetBygning[] enkeltminnerField;
+        
+        private UUID uuidField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string lokalitetsnummer
+        {
+            get
+            {
+                return this.lokalitetsnummerField;
+            }
+            set
+            {
+                this.lokalitetsnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public KulturminneArtKodeId kulturminneArtKodeId
+        {
+            get
+            {
+                return this.kulturminneArtKodeIdField;
+            }
+            set
+            {
+                this.kulturminneArtKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public VernetypeKodeId vernetypeKodeId
+        {
+            get
+            {
+                return this.vernetypeKodeIdField;
+            }
+            set
+            {
+                this.vernetypeKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public KulturminnekategoriKodeId kulturminnekategoriId
+        {
+            get
+            {
+                return this.kulturminnekategoriIdField;
+            }
+            set
+            {
+                this.kulturminnekategoriIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public LocalDate matrikkelforingsdato
+        {
+            get
+            {
+                return this.matrikkelforingsdatoField;
+            }
+            set
+            {
+                this.matrikkelforingsdatoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public LocalDate sistOppdatertDato
+        {
+            get
+            {
+                return this.sistOppdatertDatoField;
+            }
+            set
+            {
+                this.sistOppdatertDatoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=6)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+        public MatrikkelenhetId[] matrikkelenhetIds
+        {
+            get
+            {
+                return this.matrikkelenhetIdsField;
+            }
+            set
+            {
+                this.matrikkelenhetIdsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=7)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public FredetBygning[] enkeltminner
+        {
+            get
+            {
+                return this.enkeltminnerField;
+            }
+            set
+            {
+                this.enkeltminnerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public UUID uuid
+        {
+            get
+            {
+                return this.uuidField;
+            }
+            set
+            {
+                this.uuidField = value;
             }
         }
     }
@@ -18943,6 +20298,267 @@ namespace Kartverket.Matrikkel.StoreService
             set
             {
                 this.uuidField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
+    public partial class KonsesjonsforholdUtskrift : MatrikkelBubbleObjectWithHistory
+    {
+        
+        private KonsesjonsforholdId[] konsesjonsforholdIdsField;
+        
+        private Timestamp registreringsdatoField;
+        
+        private string signaturField;
+        
+        private UUID uuidField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public KonsesjonsforholdId[] konsesjonsforholdIds
+        {
+            get
+            {
+                return this.konsesjonsforholdIdsField;
+            }
+            set
+            {
+                this.konsesjonsforholdIdsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public Timestamp registreringsdato
+        {
+            get
+            {
+                return this.registreringsdatoField;
+            }
+            set
+            {
+                this.registreringsdatoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string signatur
+        {
+            get
+            {
+                return this.signaturField;
+            }
+            set
+            {
+                this.signaturField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public UUID uuid
+        {
+            get
+            {
+                return this.uuidField;
+            }
+            set
+            {
+                this.uuidField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetFraEgenerklaring))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Konsesjonsvedtak))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
+    public partial class Konsesjonsforhold : MatrikkelBubbleObjectWithHistory
+    {
+        
+        private LocalDate gyldigTilField;
+        
+        private MatrikkelenhetId[] matrikkelenhetIdsField;
+        
+        private PersonMedAndelForKonsesjonsforhold[] personerMedAndelForKonsesjonsforholdField;
+        
+        private KonsesjonsforholdUtskriftId konsesjonsforholdUtskriftIdField;
+        
+        private UUID uuidField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public LocalDate gyldigTil
+        {
+            get
+            {
+                return this.gyldigTilField;
+            }
+            set
+            {
+                this.gyldigTilField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
+        public MatrikkelenhetId[] matrikkelenhetIds
+        {
+            get
+            {
+                return this.matrikkelenhetIdsField;
+            }
+            set
+            {
+                this.matrikkelenhetIdsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=2)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public PersonMedAndelForKonsesjonsforhold[] personerMedAndelForKonsesjonsforhold
+        {
+            get
+            {
+                return this.personerMedAndelForKonsesjonsforholdField;
+            }
+            set
+            {
+                this.personerMedAndelForKonsesjonsforholdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public KonsesjonsforholdUtskriftId konsesjonsforholdUtskriftId
+        {
+            get
+            {
+                return this.konsesjonsforholdUtskriftIdField;
+            }
+            set
+            {
+                this.konsesjonsforholdUtskriftIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public UUID uuid
+        {
+            get
+            {
+                return this.uuidField;
+            }
+            set
+            {
+                this.uuidField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
+    public partial class KonsesjonsfrihetFraEgenerklaring : Konsesjonsforhold
+    {
+        
+        private KonsesjonsfrihetEgenerklaringKodeId konsesjonsfrihetEgenerklaringKodeIdField;
+        
+        private KonsesjonsfrihetLedetekstId konsesjonsfrihetLedetekstIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public KonsesjonsfrihetEgenerklaringKodeId konsesjonsfrihetEgenerklaringKodeId
+        {
+            get
+            {
+                return this.konsesjonsfrihetEgenerklaringKodeIdField;
+            }
+            set
+            {
+                this.konsesjonsfrihetEgenerklaringKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public KonsesjonsfrihetLedetekstId konsesjonsfrihetLedetekstId
+        {
+            get
+            {
+                return this.konsesjonsfrihetLedetekstIdField;
+            }
+            set
+            {
+                this.konsesjonsfrihetLedetekstIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
+    public partial class Konsesjonsvedtak : Konsesjonsforhold
+    {
+        
+        private decimal kjopesumField;
+        
+        private bool kjopesumFieldSpecified;
+        
+        private string kommunalSaksreferanseField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public decimal kjopesum
+        {
+            get
+            {
+                return this.kjopesumField;
+            }
+            set
+            {
+                this.kjopesumField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool kjopesumSpecified
+        {
+            get
+            {
+                return this.kjopesumFieldSpecified;
+            }
+            set
+            {
+                this.kjopesumFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string kommunalSaksreferanse
+        {
+            get
+            {
+                return this.kommunalSaksreferanseField;
+            }
+            set
+            {
+                this.kommunalSaksreferanseField = value;
             }
         }
     }
@@ -20215,405 +21831,590 @@ namespace Kartverket.Matrikkel.StoreService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
-    public partial class KonsesjonsforholdUtskrift : MatrikkelBubbleObjectWithHistory
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
+    public partial class SefrakMinne : MatrikkelBubbleObjectWithHistory
     {
         
-        private KonsesjonsforholdId[] konsesjonsforholdIdsField;
+        private KommuneId kommuneIdField;
         
-        private Timestamp registreringsdatoField;
+        private ObjektnummerRubrikk objektnummerRubrikkField;
         
-        private string signaturField;
+        private NavnRubrikk objektnavnRubrikkField;
+        
+        private NavnRubrikk lokaltnavnRubrikkField;
+        
+        private VerdivurderingRubrikk verdivurderingRubrikkField;
+        
+        private EtasjetallRubrikk etasjetallRubrikkField;
+        
+        private HovedmalRubrikk hovedmalRubrikkField;
+        
+        private AntallSkorsteinerRubrikk antallSkorsteinerRubrikkField;
+        
+        private FunksjonRubrikk opprinneligFunksjonRubrikkField;
+        
+        private FunksjonRubrikk navarendeFunksjonRubrikkField;
+        
+        private OpprinneligSosialtMiljoRubrikk opprinneligSosialtMiljoRubrikkField;
+        
+        private ForholdAndreHusRubrikk forholdAndreHusRubrikkField;
+        
+        private FysiskMiljoRubrikk fysiskMiljoRubrikkField;
+        
+        private UnderbygningKonstrRubrikk underbygningKonstrRubrikkField;
+        
+        private KjellerRubrikk kjellerRubrikkField;
+        
+        private YtterveggRubrikk ytterveggRubrikkField;
+        
+        private FasadeRubrikk fasadeRubrikkField;
+        
+        private TakformRubrikk takformRubrikkField;
+        
+        private TaktekkingRubrikk taktekkingRubrikkField;
+        
+        private TidRubrikk byggeTidRubrikkField;
+        
+        private TiderRubrikk tilbyggingsTiderRubrikkField;
+        
+        private TiderRubrikk flyttingTiderRubrikkField;
+        
+        private TidRubrikk revetBrentTidRubrikkField;
+        
+        private VernevedtakRubrikk vernevedtakRubrikkField;
+        
+        private FredningRubrikk fredningRubrikkField;
+        
+        private MiljoOvervakingRubrikk miljoOvervakingRubrikkField;
+        
+        private RegistrertRubrikk feltregistrertRubrikkField;
+        
+        private SefrakRubrikk andreKilderRubrikkField;
+        
+        private SefrakRubrikk fotoTegningRubrikkField;
+        
+        private SefrakRubrikk inskripsjonerRubrikkField;
+        
+        private SefrakRubrikk byggherreRubrikkField;
+        
+        private SefrakRubrikk byggmesterArkitektRubrikkField;
+        
+        private SefrakRubrikk andreOpplysningerRubrikkField;
+        
+        private BygningerRubrikk bygningerRubrikkField;
+        
+        private FotohenvisningerRubrikk fotohenvisningerRubrikkField;
+        
+        private SefrakReferanserRubrikk sefrakReferanserRubrikkField;
         
         private UUID uuidField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public KonsesjonsforholdId[] konsesjonsforholdIds
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public KommuneId kommuneId
         {
             get
             {
-                return this.konsesjonsforholdIdsField;
+                return this.kommuneIdField;
             }
             set
             {
-                this.konsesjonsforholdIdsField = value;
+                this.kommuneIdField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public Timestamp registreringsdato
+        public ObjektnummerRubrikk objektnummerRubrikk
         {
             get
             {
-                return this.registreringsdatoField;
+                return this.objektnummerRubrikkField;
             }
             set
             {
-                this.registreringsdatoField = value;
+                this.objektnummerRubrikkField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string signatur
+        public NavnRubrikk objektnavnRubrikk
         {
             get
             {
-                return this.signaturField;
+                return this.objektnavnRubrikkField;
             }
             set
             {
-                this.signaturField = value;
+                this.objektnavnRubrikkField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public UUID uuid
+        public NavnRubrikk lokaltnavnRubrikk
         {
             get
             {
-                return this.uuidField;
+                return this.lokaltnavnRubrikkField;
             }
             set
             {
-                this.uuidField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KonsesjonsfrihetFraEgenerklaring))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Konsesjonsvedtak))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
-    public partial class Konsesjonsforhold : MatrikkelBubbleObjectWithHistory
-    {
-        
-        private LocalDate gyldigTilField;
-        
-        private MatrikkelenhetId[] matrikkelenhetIdsField;
-        
-        private PersonMedAndelForKonsesjonsforhold[] personerMedAndelForKonsesjonsforholdField;
-        
-        private KonsesjonsforholdUtskriftId konsesjonsforholdUtskriftIdField;
-        
-        private UUID uuidField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public LocalDate gyldigTil
-        {
-            get
-            {
-                return this.gyldigTilField;
-            }
-            set
-            {
-                this.gyldigTilField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-        public MatrikkelenhetId[] matrikkelenhetIds
-        {
-            get
-            {
-                return this.matrikkelenhetIdsField;
-            }
-            set
-            {
-                this.matrikkelenhetIdsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=2)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public PersonMedAndelForKonsesjonsforhold[] personerMedAndelForKonsesjonsforhold
-        {
-            get
-            {
-                return this.personerMedAndelForKonsesjonsforholdField;
-            }
-            set
-            {
-                this.personerMedAndelForKonsesjonsforholdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public KonsesjonsforholdUtskriftId konsesjonsforholdUtskriftId
-        {
-            get
-            {
-                return this.konsesjonsforholdUtskriftIdField;
-            }
-            set
-            {
-                this.konsesjonsforholdUtskriftIdField = value;
+                this.lokaltnavnRubrikkField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public UUID uuid
+        public VerdivurderingRubrikk verdivurderingRubrikk
         {
             get
             {
-                return this.uuidField;
+                return this.verdivurderingRubrikkField;
             }
             set
             {
-                this.uuidField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
-    public partial class KonsesjonsfrihetFraEgenerklaring : Konsesjonsforhold
-    {
-        
-        private KonsesjonsfrihetEgenerklaringKodeId konsesjonsfrihetEgenerklaringKodeIdField;
-        
-        private KonsesjonsfrihetLedetekstId konsesjonsfrihetLedetekstIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public KonsesjonsfrihetEgenerklaringKodeId konsesjonsfrihetEgenerklaringKodeId
-        {
-            get
-            {
-                return this.konsesjonsfrihetEgenerklaringKodeIdField;
-            }
-            set
-            {
-                this.konsesjonsfrihetEgenerklaringKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public KonsesjonsfrihetLedetekstId konsesjonsfrihetLedetekstId
-        {
-            get
-            {
-                return this.konsesjonsfrihetLedetekstIdField;
-            }
-            set
-            {
-                this.konsesjonsfrihetLedetekstIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/konsesjon")]
-    public partial class Konsesjonsvedtak : Konsesjonsforhold
-    {
-        
-        private decimal kjopesumField;
-        
-        private bool kjopesumFieldSpecified;
-        
-        private string kommunalSaksreferanseField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public decimal kjopesum
-        {
-            get
-            {
-                return this.kjopesumField;
-            }
-            set
-            {
-                this.kjopesumField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool kjopesumSpecified
-        {
-            get
-            {
-                return this.kjopesumFieldSpecified;
-            }
-            set
-            {
-                this.kjopesumFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string kommunalSaksreferanse
-        {
-            get
-            {
-                return this.kommunalSaksreferanseField;
-            }
-            set
-            {
-                this.kommunalSaksreferanseField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kulturminne")]
-    public partial class Kulturminne : MatrikkelBubbleObjectWithHistory
-    {
-        
-        private string lokalitetsnummerField;
-        
-        private KulturminneArtKodeId kulturminneArtKodeIdField;
-        
-        private VernetypeKodeId vernetypeKodeIdField;
-        
-        private KulturminnekategoriKodeId kulturminnekategoriIdField;
-        
-        private LocalDate matrikkelforingsdatoField;
-        
-        private LocalDate sistOppdatertDatoField;
-        
-        private MatrikkelenhetId[] matrikkelenhetIdsField;
-        
-        private FredetBygning[] enkeltminnerField;
-        
-        private UUID uuidField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string lokalitetsnummer
-        {
-            get
-            {
-                return this.lokalitetsnummerField;
-            }
-            set
-            {
-                this.lokalitetsnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public KulturminneArtKodeId kulturminneArtKodeId
-        {
-            get
-            {
-                return this.kulturminneArtKodeIdField;
-            }
-            set
-            {
-                this.kulturminneArtKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public VernetypeKodeId vernetypeKodeId
-        {
-            get
-            {
-                return this.vernetypeKodeIdField;
-            }
-            set
-            {
-                this.vernetypeKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public KulturminnekategoriKodeId kulturminnekategoriId
-        {
-            get
-            {
-                return this.kulturminnekategoriIdField;
-            }
-            set
-            {
-                this.kulturminnekategoriIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public LocalDate matrikkelforingsdato
-        {
-            get
-            {
-                return this.matrikkelforingsdatoField;
-            }
-            set
-            {
-                this.matrikkelforingsdatoField = value;
+                this.verdivurderingRubrikkField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public LocalDate sistOppdatertDato
+        public EtasjetallRubrikk etasjetallRubrikk
         {
             get
             {
-                return this.sistOppdatertDatoField;
+                return this.etasjetallRubrikkField;
             }
             set
             {
-                this.sistOppdatertDatoField = value;
+                this.etasjetallRubrikkField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=6)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/matrikkelenhet")]
-        public MatrikkelenhetId[] matrikkelenhetIds
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public HovedmalRubrikk hovedmalRubrikk
         {
             get
             {
-                return this.matrikkelenhetIdsField;
+                return this.hovedmalRubrikkField;
             }
             set
             {
-                this.matrikkelenhetIdsField = value;
+                this.hovedmalRubrikkField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=7)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public FredetBygning[] enkeltminner
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public AntallSkorsteinerRubrikk antallSkorsteinerRubrikk
         {
             get
             {
-                return this.enkeltminnerField;
+                return this.antallSkorsteinerRubrikkField;
             }
             set
             {
-                this.enkeltminnerField = value;
+                this.antallSkorsteinerRubrikkField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public FunksjonRubrikk opprinneligFunksjonRubrikk
+        {
+            get
+            {
+                return this.opprinneligFunksjonRubrikkField;
+            }
+            set
+            {
+                this.opprinneligFunksjonRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public FunksjonRubrikk navarendeFunksjonRubrikk
+        {
+            get
+            {
+                return this.navarendeFunksjonRubrikkField;
+            }
+            set
+            {
+                this.navarendeFunksjonRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public OpprinneligSosialtMiljoRubrikk opprinneligSosialtMiljoRubrikk
+        {
+            get
+            {
+                return this.opprinneligSosialtMiljoRubrikkField;
+            }
+            set
+            {
+                this.opprinneligSosialtMiljoRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public ForholdAndreHusRubrikk forholdAndreHusRubrikk
+        {
+            get
+            {
+                return this.forholdAndreHusRubrikkField;
+            }
+            set
+            {
+                this.forholdAndreHusRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public FysiskMiljoRubrikk fysiskMiljoRubrikk
+        {
+            get
+            {
+                return this.fysiskMiljoRubrikkField;
+            }
+            set
+            {
+                this.fysiskMiljoRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public UnderbygningKonstrRubrikk underbygningKonstrRubrikk
+        {
+            get
+            {
+                return this.underbygningKonstrRubrikkField;
+            }
+            set
+            {
+                this.underbygningKonstrRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        public KjellerRubrikk kjellerRubrikk
+        {
+            get
+            {
+                return this.kjellerRubrikkField;
+            }
+            set
+            {
+                this.kjellerRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
+        public YtterveggRubrikk ytterveggRubrikk
+        {
+            get
+            {
+                return this.ytterveggRubrikkField;
+            }
+            set
+            {
+                this.ytterveggRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
+        public FasadeRubrikk fasadeRubrikk
+        {
+            get
+            {
+                return this.fasadeRubrikkField;
+            }
+            set
+            {
+                this.fasadeRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
+        public TakformRubrikk takformRubrikk
+        {
+            get
+            {
+                return this.takformRubrikkField;
+            }
+            set
+            {
+                this.takformRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
+        public TaktekkingRubrikk taktekkingRubrikk
+        {
+            get
+            {
+                return this.taktekkingRubrikkField;
+            }
+            set
+            {
+                this.taktekkingRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
+        public TidRubrikk byggeTidRubrikk
+        {
+            get
+            {
+                return this.byggeTidRubrikkField;
+            }
+            set
+            {
+                this.byggeTidRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
+        public TiderRubrikk tilbyggingsTiderRubrikk
+        {
+            get
+            {
+                return this.tilbyggingsTiderRubrikkField;
+            }
+            set
+            {
+                this.tilbyggingsTiderRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=21)]
+        public TiderRubrikk flyttingTiderRubrikk
+        {
+            get
+            {
+                return this.flyttingTiderRubrikkField;
+            }
+            set
+            {
+                this.flyttingTiderRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
+        public TidRubrikk revetBrentTidRubrikk
+        {
+            get
+            {
+                return this.revetBrentTidRubrikkField;
+            }
+            set
+            {
+                this.revetBrentTidRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
+        public VernevedtakRubrikk vernevedtakRubrikk
+        {
+            get
+            {
+                return this.vernevedtakRubrikkField;
+            }
+            set
+            {
+                this.vernevedtakRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
+        public FredningRubrikk fredningRubrikk
+        {
+            get
+            {
+                return this.fredningRubrikkField;
+            }
+            set
+            {
+                this.fredningRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
+        public MiljoOvervakingRubrikk miljoOvervakingRubrikk
+        {
+            get
+            {
+                return this.miljoOvervakingRubrikkField;
+            }
+            set
+            {
+                this.miljoOvervakingRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
+        public RegistrertRubrikk feltregistrertRubrikk
+        {
+            get
+            {
+                return this.feltregistrertRubrikkField;
+            }
+            set
+            {
+                this.feltregistrertRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=27)]
+        public SefrakRubrikk andreKilderRubrikk
+        {
+            get
+            {
+                return this.andreKilderRubrikkField;
+            }
+            set
+            {
+                this.andreKilderRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=28)]
+        public SefrakRubrikk fotoTegningRubrikk
+        {
+            get
+            {
+                return this.fotoTegningRubrikkField;
+            }
+            set
+            {
+                this.fotoTegningRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=29)]
+        public SefrakRubrikk inskripsjonerRubrikk
+        {
+            get
+            {
+                return this.inskripsjonerRubrikkField;
+            }
+            set
+            {
+                this.inskripsjonerRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=30)]
+        public SefrakRubrikk byggherreRubrikk
+        {
+            get
+            {
+                return this.byggherreRubrikkField;
+            }
+            set
+            {
+                this.byggherreRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=31)]
+        public SefrakRubrikk byggmesterArkitektRubrikk
+        {
+            get
+            {
+                return this.byggmesterArkitektRubrikkField;
+            }
+            set
+            {
+                this.byggmesterArkitektRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=32)]
+        public SefrakRubrikk andreOpplysningerRubrikk
+        {
+            get
+            {
+                return this.andreOpplysningerRubrikkField;
+            }
+            set
+            {
+                this.andreOpplysningerRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=33)]
+        public BygningerRubrikk bygningerRubrikk
+        {
+            get
+            {
+                return this.bygningerRubrikkField;
+            }
+            set
+            {
+                this.bygningerRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=34)]
+        public FotohenvisningerRubrikk fotohenvisningerRubrikk
+        {
+            get
+            {
+                return this.fotohenvisningerRubrikkField;
+            }
+            set
+            {
+                this.fotohenvisningerRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=35)]
+        public SefrakReferanserRubrikk sefrakReferanserRubrikk
+        {
+            get
+            {
+                return this.sefrakReferanserRubrikkField;
+            }
+            set
+            {
+                this.sefrakReferanserRubrikkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=36)]
         public UUID uuid
         {
             get
@@ -20623,6 +22424,1086 @@ namespace Kartverket.Matrikkel.StoreService
             set
             {
                 this.uuidField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
+    public partial class Bruksenhet : MatrikkelBubbleObjectWithHistory
+    {
+        
+        private ByggId byggIdField;
+        
+        private EtasjeplanKodeId etasjeplanKodeIdField;
+        
+        private int etasjenummerField;
+        
+        private bool etasjenummerFieldSpecified;
+        
+        private int lopenummerField;
+        
+        private bool lopenummerFieldSpecified;
+        
+        private AdresseId adresseIdField;
+        
+        private MatrikkelenhetId matrikkelenhetIdField;
+        
+        private BruksenhetstypeKodeId bruksenhetstypeKodeIdField;
+        
+        private int antallRomField;
+        
+        private bool antallRomFieldSpecified;
+        
+        private int antallBadField;
+        
+        private bool antallBadFieldSpecified;
+        
+        private int antallWCField;
+        
+        private bool antallWCFieldSpecified;
+        
+        private double bruksarealField;
+        
+        private bool bruksarealFieldSpecified;
+        
+        private KjokkentilgangKodeId kjokkentilgangIdField;
+        
+        private bool skalUtgaField;
+        
+        private bool skalUtgaFieldSpecified;
+        
+        private bool byggSkjermingsverdigField;
+        
+        private bool byggSkjermingsverdigFieldSpecified;
+        
+        private UUID uuidField;
+        
+        private KostraFunksjonKodeId kostraFunksjonKodeIdField;
+        
+        private bool kostraLeiearealField;
+        
+        private bool kostraLeiearealFieldSpecified;
+        
+        private JuridiskPersonId kostraVirksomhetIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public ByggId byggId
+        {
+            get
+            {
+                return this.byggIdField;
+            }
+            set
+            {
+                this.byggIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public EtasjeplanKodeId etasjeplanKodeId
+        {
+            get
+            {
+                return this.etasjeplanKodeIdField;
+            }
+            set
+            {
+                this.etasjeplanKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int etasjenummer
+        {
+            get
+            {
+                return this.etasjenummerField;
+            }
+            set
+            {
+                this.etasjenummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool etasjenummerSpecified
+        {
+            get
+            {
+                return this.etasjenummerFieldSpecified;
+            }
+            set
+            {
+                this.etasjenummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public int lopenummer
+        {
+            get
+            {
+                return this.lopenummerField;
+            }
+            set
+            {
+                this.lopenummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool lopenummerSpecified
+        {
+            get
+            {
+                return this.lopenummerFieldSpecified;
+            }
+            set
+            {
+                this.lopenummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public AdresseId adresseId
+        {
+            get
+            {
+                return this.adresseIdField;
+            }
+            set
+            {
+                this.adresseIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public MatrikkelenhetId matrikkelenhetId
+        {
+            get
+            {
+                return this.matrikkelenhetIdField;
+            }
+            set
+            {
+                this.matrikkelenhetIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public BruksenhetstypeKodeId bruksenhetstypeKodeId
+        {
+            get
+            {
+                return this.bruksenhetstypeKodeIdField;
+            }
+            set
+            {
+                this.bruksenhetstypeKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public int antallRom
+        {
+            get
+            {
+                return this.antallRomField;
+            }
+            set
+            {
+                this.antallRomField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool antallRomSpecified
+        {
+            get
+            {
+                return this.antallRomFieldSpecified;
+            }
+            set
+            {
+                this.antallRomFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public int antallBad
+        {
+            get
+            {
+                return this.antallBadField;
+            }
+            set
+            {
+                this.antallBadField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool antallBadSpecified
+        {
+            get
+            {
+                return this.antallBadFieldSpecified;
+            }
+            set
+            {
+                this.antallBadFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public int antallWC
+        {
+            get
+            {
+                return this.antallWCField;
+            }
+            set
+            {
+                this.antallWCField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool antallWCSpecified
+        {
+            get
+            {
+                return this.antallWCFieldSpecified;
+            }
+            set
+            {
+                this.antallWCFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public double bruksareal
+        {
+            get
+            {
+                return this.bruksarealField;
+            }
+            set
+            {
+                this.bruksarealField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool bruksarealSpecified
+        {
+            get
+            {
+                return this.bruksarealFieldSpecified;
+            }
+            set
+            {
+                this.bruksarealFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public KjokkentilgangKodeId kjokkentilgangId
+        {
+            get
+            {
+                return this.kjokkentilgangIdField;
+            }
+            set
+            {
+                this.kjokkentilgangIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public bool skalUtga
+        {
+            get
+            {
+                return this.skalUtgaField;
+            }
+            set
+            {
+                this.skalUtgaField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool skalUtgaSpecified
+        {
+            get
+            {
+                return this.skalUtgaFieldSpecified;
+            }
+            set
+            {
+                this.skalUtgaFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public bool byggSkjermingsverdig
+        {
+            get
+            {
+                return this.byggSkjermingsverdigField;
+            }
+            set
+            {
+                this.byggSkjermingsverdigField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool byggSkjermingsverdigSpecified
+        {
+            get
+            {
+                return this.byggSkjermingsverdigFieldSpecified;
+            }
+            set
+            {
+                this.byggSkjermingsverdigFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        public UUID uuid
+        {
+            get
+            {
+                return this.uuidField;
+            }
+            set
+            {
+                this.uuidField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
+        public KostraFunksjonKodeId kostraFunksjonKodeId
+        {
+            get
+            {
+                return this.kostraFunksjonKodeIdField;
+            }
+            set
+            {
+                this.kostraFunksjonKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
+        public bool kostraLeieareal
+        {
+            get
+            {
+                return this.kostraLeiearealField;
+            }
+            set
+            {
+                this.kostraLeiearealField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool kostraLeiearealSpecified
+        {
+            get
+            {
+                return this.kostraLeiearealFieldSpecified;
+            }
+            set
+            {
+                this.kostraLeiearealFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
+        public JuridiskPersonId kostraVirksomhetId
+        {
+            get
+            {
+                return this.kostraVirksomhetIdField;
+            }
+            set
+            {
+                this.kostraVirksomhetIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bygningsendring))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bygning))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
+    public partial class Bygg : MatrikkelBubbleObjectWithHistory
+    {
+        
+        private long bygningsnummerField;
+        
+        private bool bygningsnummerFieldSpecified;
+        
+        private int lopenummerField;
+        
+        private bool lopenummerFieldSpecified;
+        
+        private KommuneId kommuneIdField;
+        
+        private Representasjonspunkt representasjonspunktField;
+        
+        private bool harSefrakminneField;
+        
+        private bool harSefrakminneFieldSpecified;
+        
+        private bool harKulturminneField;
+        
+        private bool harKulturminneFieldSpecified;
+        
+        private bool harHeisField;
+        
+        private bool harHeisFieldSpecified;
+        
+        private bool skjermingsverdigField;
+        
+        private bool skjermingsverdigFieldSpecified;
+        
+        private double bebygdArealField;
+        
+        private bool bebygdArealFieldSpecified;
+        
+        private bool utenBebygdArealField;
+        
+        private bool utenBebygdArealFieldSpecified;
+        
+        private ByggId tidligereByggIdField;
+        
+        private Etasje[] etasjerField;
+        
+        private BruksenhetId[] bruksenhetIdsField;
+        
+        private BygningsstatusHistorikk[] bygningsstatusHistorikkerField;
+        
+        private Kontaktperson[] kontaktpersonerField;
+        
+        private OppvarmingsKodeId[] oppvarmingsKodeIdsField;
+        
+        private EnergikildeKodeId[] energikildeKodeIdsField;
+        
+        private BygningsstatusKodeId bygningsstatusKodeIdField;
+        
+        private AvlopsKodeId avlopsKodeIdField;
+        
+        private VannforsyningsKodeId vannforsyningsKodeIdField;
+        
+        private NaringsgruppeKodeId naringsgruppeKodeIdField;
+        
+        private OpprinnelsesKodeId opprinnelsesKodeIdField;
+        
+        private Etasjedata etasjedataField;
+        
+        private BygningTillegg kommunalTilleggsdelField;
+        
+        private UUID uuidField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public long bygningsnummer
+        {
+            get
+            {
+                return this.bygningsnummerField;
+            }
+            set
+            {
+                this.bygningsnummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool bygningsnummerSpecified
+        {
+            get
+            {
+                return this.bygningsnummerFieldSpecified;
+            }
+            set
+            {
+                this.bygningsnummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int lopenummer
+        {
+            get
+            {
+                return this.lopenummerField;
+            }
+            set
+            {
+                this.lopenummerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool lopenummerSpecified
+        {
+            get
+            {
+                return this.lopenummerFieldSpecified;
+            }
+            set
+            {
+                this.lopenummerFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public KommuneId kommuneId
+        {
+            get
+            {
+                return this.kommuneIdField;
+            }
+            set
+            {
+                this.kommuneIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public Representasjonspunkt representasjonspunkt
+        {
+            get
+            {
+                return this.representasjonspunktField;
+            }
+            set
+            {
+                this.representasjonspunktField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public bool harSefrakminne
+        {
+            get
+            {
+                return this.harSefrakminneField;
+            }
+            set
+            {
+                this.harSefrakminneField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool harSefrakminneSpecified
+        {
+            get
+            {
+                return this.harSefrakminneFieldSpecified;
+            }
+            set
+            {
+                this.harSefrakminneFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public bool harKulturminne
+        {
+            get
+            {
+                return this.harKulturminneField;
+            }
+            set
+            {
+                this.harKulturminneField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool harKulturminneSpecified
+        {
+            get
+            {
+                return this.harKulturminneFieldSpecified;
+            }
+            set
+            {
+                this.harKulturminneFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public bool harHeis
+        {
+            get
+            {
+                return this.harHeisField;
+            }
+            set
+            {
+                this.harHeisField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool harHeisSpecified
+        {
+            get
+            {
+                return this.harHeisFieldSpecified;
+            }
+            set
+            {
+                this.harHeisFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public bool skjermingsverdig
+        {
+            get
+            {
+                return this.skjermingsverdigField;
+            }
+            set
+            {
+                this.skjermingsverdigField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool skjermingsverdigSpecified
+        {
+            get
+            {
+                return this.skjermingsverdigFieldSpecified;
+            }
+            set
+            {
+                this.skjermingsverdigFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public double bebygdAreal
+        {
+            get
+            {
+                return this.bebygdArealField;
+            }
+            set
+            {
+                this.bebygdArealField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool bebygdArealSpecified
+        {
+            get
+            {
+                return this.bebygdArealFieldSpecified;
+            }
+            set
+            {
+                this.bebygdArealFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public bool utenBebygdAreal
+        {
+            get
+            {
+                return this.utenBebygdArealField;
+            }
+            set
+            {
+                this.utenBebygdArealField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool utenBebygdArealSpecified
+        {
+            get
+            {
+                return this.utenBebygdArealFieldSpecified;
+            }
+            set
+            {
+                this.utenBebygdArealFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public ByggId tidligereByggId
+        {
+            get
+            {
+                return this.tidligereByggIdField;
+            }
+            set
+            {
+                this.tidligereByggIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=11)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public Etasje[] etasjer
+        {
+            get
+            {
+                return this.etasjerField;
+            }
+            set
+            {
+                this.etasjerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=12)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public BruksenhetId[] bruksenhetIds
+        {
+            get
+            {
+                return this.bruksenhetIdsField;
+            }
+            set
+            {
+                this.bruksenhetIdsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=13)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public BygningsstatusHistorikk[] bygningsstatusHistorikker
+        {
+            get
+            {
+                return this.bygningsstatusHistorikkerField;
+            }
+            set
+            {
+                this.bygningsstatusHistorikkerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=14)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
+        public Kontaktperson[] kontaktpersoner
+        {
+            get
+            {
+                return this.kontaktpersonerField;
+            }
+            set
+            {
+                this.kontaktpersonerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=15)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning/koder")]
+        public OppvarmingsKodeId[] oppvarmingsKodeIds
+        {
+            get
+            {
+                return this.oppvarmingsKodeIdsField;
+            }
+            set
+            {
+                this.oppvarmingsKodeIdsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=16)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning/koder")]
+        public EnergikildeKodeId[] energikildeKodeIds
+        {
+            get
+            {
+                return this.energikildeKodeIdsField;
+            }
+            set
+            {
+                this.energikildeKodeIdsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
+        public BygningsstatusKodeId bygningsstatusKodeId
+        {
+            get
+            {
+                return this.bygningsstatusKodeIdField;
+            }
+            set
+            {
+                this.bygningsstatusKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
+        public AvlopsKodeId avlopsKodeId
+        {
+            get
+            {
+                return this.avlopsKodeIdField;
+            }
+            set
+            {
+                this.avlopsKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
+        public VannforsyningsKodeId vannforsyningsKodeId
+        {
+            get
+            {
+                return this.vannforsyningsKodeIdField;
+            }
+            set
+            {
+                this.vannforsyningsKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
+        public NaringsgruppeKodeId naringsgruppeKodeId
+        {
+            get
+            {
+                return this.naringsgruppeKodeIdField;
+            }
+            set
+            {
+                this.naringsgruppeKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=21)]
+        public OpprinnelsesKodeId opprinnelsesKodeId
+        {
+            get
+            {
+                return this.opprinnelsesKodeIdField;
+            }
+            set
+            {
+                this.opprinnelsesKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
+        public Etasjedata etasjedata
+        {
+            get
+            {
+                return this.etasjedataField;
+            }
+            set
+            {
+                this.etasjedataField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
+        public BygningTillegg kommunalTilleggsdel
+        {
+            get
+            {
+                return this.kommunalTilleggsdelField;
+            }
+            set
+            {
+                this.kommunalTilleggsdelField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
+        public UUID uuid
+        {
+            get
+            {
+                return this.uuidField;
+            }
+            set
+            {
+                this.uuidField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
+    public partial class Bygningsendring : Bygg
+    {
+        
+        private BygningId bygningIdField;
+        
+        private BygningsendringsKodeId bygningsendringsKodeIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public BygningId bygningId
+        {
+            get
+            {
+                return this.bygningIdField;
+            }
+            set
+            {
+                this.bygningIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public BygningsendringsKodeId bygningsendringsKodeId
+        {
+            get
+            {
+                return this.bygningsendringsKodeIdField;
+            }
+            set
+            {
+                this.bygningsendringsKodeIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bygning")]
+    public partial class Bygning : Bygg
+    {
+        
+        private BygningstypeKodeId bygningstypeKodeIdField;
+        
+        private bool ufullstendigArealField;
+        
+        private bool ufullstendigArealFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public BygningstypeKodeId bygningstypeKodeId
+        {
+            get
+            {
+                return this.bygningstypeKodeIdField;
+            }
+            set
+            {
+                this.bygningstypeKodeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public bool ufullstendigAreal
+        {
+            get
+            {
+                return this.ufullstendigArealField;
+            }
+            set
+            {
+                this.ufullstendigArealField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ufullstendigArealSpecified
+        {
+            get
+            {
+                return this.ufullstendigArealFieldSpecified;
+            }
+            set
+            {
+                this.ufullstendigArealFieldSpecified = value;
             }
         }
     }
@@ -23394,2887 +26275,6 @@ namespace Kartverket.Matrikkel.StoreService
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public UUID uuid
-        {
-            get
-            {
-                return this.uuidField;
-            }
-            set
-            {
-                this.uuidField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/sefrak")]
-    public partial class SefrakMinne : MatrikkelBubbleObjectWithHistory
-    {
-        
-        private KommuneId kommuneIdField;
-        
-        private ObjektnummerRubrikk objektnummerRubrikkField;
-        
-        private NavnRubrikk objektnavnRubrikkField;
-        
-        private NavnRubrikk lokaltnavnRubrikkField;
-        
-        private VerdivurderingRubrikk verdivurderingRubrikkField;
-        
-        private EtasjetallRubrikk etasjetallRubrikkField;
-        
-        private HovedmalRubrikk hovedmalRubrikkField;
-        
-        private AntallSkorsteinerRubrikk antallSkorsteinerRubrikkField;
-        
-        private FunksjonRubrikk opprinneligFunksjonRubrikkField;
-        
-        private FunksjonRubrikk navarendeFunksjonRubrikkField;
-        
-        private OpprinneligSosialtMiljoRubrikk opprinneligSosialtMiljoRubrikkField;
-        
-        private ForholdAndreHusRubrikk forholdAndreHusRubrikkField;
-        
-        private FysiskMiljoRubrikk fysiskMiljoRubrikkField;
-        
-        private UnderbygningKonstrRubrikk underbygningKonstrRubrikkField;
-        
-        private KjellerRubrikk kjellerRubrikkField;
-        
-        private YtterveggRubrikk ytterveggRubrikkField;
-        
-        private FasadeRubrikk fasadeRubrikkField;
-        
-        private TakformRubrikk takformRubrikkField;
-        
-        private TaktekkingRubrikk taktekkingRubrikkField;
-        
-        private TidRubrikk byggeTidRubrikkField;
-        
-        private TiderRubrikk tilbyggingsTiderRubrikkField;
-        
-        private TiderRubrikk flyttingTiderRubrikkField;
-        
-        private TidRubrikk revetBrentTidRubrikkField;
-        
-        private VernevedtakRubrikk vernevedtakRubrikkField;
-        
-        private FredningRubrikk fredningRubrikkField;
-        
-        private MiljoOvervakingRubrikk miljoOvervakingRubrikkField;
-        
-        private RegistrertRubrikk feltregistrertRubrikkField;
-        
-        private SefrakRubrikk andreKilderRubrikkField;
-        
-        private SefrakRubrikk fotoTegningRubrikkField;
-        
-        private SefrakRubrikk inskripsjonerRubrikkField;
-        
-        private SefrakRubrikk byggherreRubrikkField;
-        
-        private SefrakRubrikk byggmesterArkitektRubrikkField;
-        
-        private SefrakRubrikk andreOpplysningerRubrikkField;
-        
-        private BygningerRubrikk bygningerRubrikkField;
-        
-        private FotohenvisningerRubrikk fotohenvisningerRubrikkField;
-        
-        private SefrakReferanserRubrikk sefrakReferanserRubrikkField;
-        
-        private UUID uuidField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public KommuneId kommuneId
-        {
-            get
-            {
-                return this.kommuneIdField;
-            }
-            set
-            {
-                this.kommuneIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public ObjektnummerRubrikk objektnummerRubrikk
-        {
-            get
-            {
-                return this.objektnummerRubrikkField;
-            }
-            set
-            {
-                this.objektnummerRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public NavnRubrikk objektnavnRubrikk
-        {
-            get
-            {
-                return this.objektnavnRubrikkField;
-            }
-            set
-            {
-                this.objektnavnRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public NavnRubrikk lokaltnavnRubrikk
-        {
-            get
-            {
-                return this.lokaltnavnRubrikkField;
-            }
-            set
-            {
-                this.lokaltnavnRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public VerdivurderingRubrikk verdivurderingRubrikk
-        {
-            get
-            {
-                return this.verdivurderingRubrikkField;
-            }
-            set
-            {
-                this.verdivurderingRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public EtasjetallRubrikk etasjetallRubrikk
-        {
-            get
-            {
-                return this.etasjetallRubrikkField;
-            }
-            set
-            {
-                this.etasjetallRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public HovedmalRubrikk hovedmalRubrikk
-        {
-            get
-            {
-                return this.hovedmalRubrikkField;
-            }
-            set
-            {
-                this.hovedmalRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public AntallSkorsteinerRubrikk antallSkorsteinerRubrikk
-        {
-            get
-            {
-                return this.antallSkorsteinerRubrikkField;
-            }
-            set
-            {
-                this.antallSkorsteinerRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public FunksjonRubrikk opprinneligFunksjonRubrikk
-        {
-            get
-            {
-                return this.opprinneligFunksjonRubrikkField;
-            }
-            set
-            {
-                this.opprinneligFunksjonRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public FunksjonRubrikk navarendeFunksjonRubrikk
-        {
-            get
-            {
-                return this.navarendeFunksjonRubrikkField;
-            }
-            set
-            {
-                this.navarendeFunksjonRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public OpprinneligSosialtMiljoRubrikk opprinneligSosialtMiljoRubrikk
-        {
-            get
-            {
-                return this.opprinneligSosialtMiljoRubrikkField;
-            }
-            set
-            {
-                this.opprinneligSosialtMiljoRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
-        public ForholdAndreHusRubrikk forholdAndreHusRubrikk
-        {
-            get
-            {
-                return this.forholdAndreHusRubrikkField;
-            }
-            set
-            {
-                this.forholdAndreHusRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
-        public FysiskMiljoRubrikk fysiskMiljoRubrikk
-        {
-            get
-            {
-                return this.fysiskMiljoRubrikkField;
-            }
-            set
-            {
-                this.fysiskMiljoRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
-        public UnderbygningKonstrRubrikk underbygningKonstrRubrikk
-        {
-            get
-            {
-                return this.underbygningKonstrRubrikkField;
-            }
-            set
-            {
-                this.underbygningKonstrRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
-        public KjellerRubrikk kjellerRubrikk
-        {
-            get
-            {
-                return this.kjellerRubrikkField;
-            }
-            set
-            {
-                this.kjellerRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
-        public YtterveggRubrikk ytterveggRubrikk
-        {
-            get
-            {
-                return this.ytterveggRubrikkField;
-            }
-            set
-            {
-                this.ytterveggRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
-        public FasadeRubrikk fasadeRubrikk
-        {
-            get
-            {
-                return this.fasadeRubrikkField;
-            }
-            set
-            {
-                this.fasadeRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
-        public TakformRubrikk takformRubrikk
-        {
-            get
-            {
-                return this.takformRubrikkField;
-            }
-            set
-            {
-                this.takformRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
-        public TaktekkingRubrikk taktekkingRubrikk
-        {
-            get
-            {
-                return this.taktekkingRubrikkField;
-            }
-            set
-            {
-                this.taktekkingRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
-        public TidRubrikk byggeTidRubrikk
-        {
-            get
-            {
-                return this.byggeTidRubrikkField;
-            }
-            set
-            {
-                this.byggeTidRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
-        public TiderRubrikk tilbyggingsTiderRubrikk
-        {
-            get
-            {
-                return this.tilbyggingsTiderRubrikkField;
-            }
-            set
-            {
-                this.tilbyggingsTiderRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=21)]
-        public TiderRubrikk flyttingTiderRubrikk
-        {
-            get
-            {
-                return this.flyttingTiderRubrikkField;
-            }
-            set
-            {
-                this.flyttingTiderRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
-        public TidRubrikk revetBrentTidRubrikk
-        {
-            get
-            {
-                return this.revetBrentTidRubrikkField;
-            }
-            set
-            {
-                this.revetBrentTidRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
-        public VernevedtakRubrikk vernevedtakRubrikk
-        {
-            get
-            {
-                return this.vernevedtakRubrikkField;
-            }
-            set
-            {
-                this.vernevedtakRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
-        public FredningRubrikk fredningRubrikk
-        {
-            get
-            {
-                return this.fredningRubrikkField;
-            }
-            set
-            {
-                this.fredningRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
-        public MiljoOvervakingRubrikk miljoOvervakingRubrikk
-        {
-            get
-            {
-                return this.miljoOvervakingRubrikkField;
-            }
-            set
-            {
-                this.miljoOvervakingRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
-        public RegistrertRubrikk feltregistrertRubrikk
-        {
-            get
-            {
-                return this.feltregistrertRubrikkField;
-            }
-            set
-            {
-                this.feltregistrertRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=27)]
-        public SefrakRubrikk andreKilderRubrikk
-        {
-            get
-            {
-                return this.andreKilderRubrikkField;
-            }
-            set
-            {
-                this.andreKilderRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=28)]
-        public SefrakRubrikk fotoTegningRubrikk
-        {
-            get
-            {
-                return this.fotoTegningRubrikkField;
-            }
-            set
-            {
-                this.fotoTegningRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=29)]
-        public SefrakRubrikk inskripsjonerRubrikk
-        {
-            get
-            {
-                return this.inskripsjonerRubrikkField;
-            }
-            set
-            {
-                this.inskripsjonerRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=30)]
-        public SefrakRubrikk byggherreRubrikk
-        {
-            get
-            {
-                return this.byggherreRubrikkField;
-            }
-            set
-            {
-                this.byggherreRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=31)]
-        public SefrakRubrikk byggmesterArkitektRubrikk
-        {
-            get
-            {
-                return this.byggmesterArkitektRubrikkField;
-            }
-            set
-            {
-                this.byggmesterArkitektRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=32)]
-        public SefrakRubrikk andreOpplysningerRubrikk
-        {
-            get
-            {
-                return this.andreOpplysningerRubrikkField;
-            }
-            set
-            {
-                this.andreOpplysningerRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=33)]
-        public BygningerRubrikk bygningerRubrikk
-        {
-            get
-            {
-                return this.bygningerRubrikkField;
-            }
-            set
-            {
-                this.bygningerRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=34)]
-        public FotohenvisningerRubrikk fotohenvisningerRubrikk
-        {
-            get
-            {
-                return this.fotohenvisningerRubrikkField;
-            }
-            set
-            {
-                this.fotohenvisningerRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=35)]
-        public SefrakReferanserRubrikk sefrakReferanserRubrikk
-        {
-            get
-            {
-                return this.sefrakReferanserRubrikkField;
-            }
-            set
-            {
-                this.sefrakReferanserRubrikkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=36)]
-        public UUID uuid
-        {
-            get
-            {
-                return this.uuidField;
-            }
-            set
-            {
-                this.uuidField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
-    public partial class Kurs : MatrikkelBubbleObjectWithHistory
-    {
-        
-        private string kursnavnField;
-        
-        private LocalDate kursdatoField;
-        
-        private int kursvarighetField;
-        
-        private bool kursvarighetFieldSpecified;
-        
-        private string kursstedField;
-        
-        private BrukerId kursansvarligIdField;
-        
-        private string kursmerknadField;
-        
-        private KursForBruker[] kursdeltakereField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string kursnavn
-        {
-            get
-            {
-                return this.kursnavnField;
-            }
-            set
-            {
-                this.kursnavnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public LocalDate kursdato
-        {
-            get
-            {
-                return this.kursdatoField;
-            }
-            set
-            {
-                this.kursdatoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int kursvarighet
-        {
-            get
-            {
-                return this.kursvarighetField;
-            }
-            set
-            {
-                this.kursvarighetField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool kursvarighetSpecified
-        {
-            get
-            {
-                return this.kursvarighetFieldSpecified;
-            }
-            set
-            {
-                this.kursvarighetFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string kurssted
-        {
-            get
-            {
-                return this.kursstedField;
-            }
-            set
-            {
-                this.kursstedField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public BrukerId kursansvarligId
-        {
-            get
-            {
-                return this.kursansvarligIdField;
-            }
-            set
-            {
-                this.kursansvarligIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string kursmerknad
-        {
-            get
-            {
-                return this.kursmerknadField;
-            }
-            set
-            {
-                this.kursmerknadField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=6)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public KursForBruker[] kursdeltakere
-        {
-            get
-            {
-                return this.kursdeltakereField;
-            }
-            set
-            {
-                this.kursdeltakereField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
-    public partial class Kommuneliste : MatrikkelBubbleObjectWithHistory
-    {
-        
-        private KommuneId[] kommuneIdsField;
-        
-        private string navnField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
-        public KommuneId[] kommuneIds
-        {
-            get
-            {
-                return this.kommuneIdsField;
-            }
-            set
-            {
-                this.kommuneIdsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string navn
-        {
-            get
-            {
-                return this.navnField;
-            }
-            set
-            {
-                this.navnField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
-    public partial class BrukerRettighetListe : MatrikkelBubbleObjectWithHistory
-    {
-        
-        private BrukerRettighet[] rettigheterField;
-        
-        private BrukerId brukerIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public BrukerRettighet[] rettigheter
-        {
-            get
-            {
-                return this.rettigheterField;
-            }
-            set
-            {
-                this.rettigheterField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public BrukerId brukerId
-        {
-            get
-            {
-                return this.brukerIdField;
-            }
-            set
-            {
-                this.brukerIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
-    public partial class BrukerHistorikkListe : MatrikkelBubbleObjectWithHistory
-    {
-        
-        private BrukerHistorikk[] historikkerField;
-        
-        private BrukerId brukerIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public BrukerHistorikk[] historikker
-        {
-            get
-            {
-                return this.historikkerField;
-            }
-            set
-            {
-                this.historikkerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public BrukerId brukerId
-        {
-            get
-            {
-                return this.brukerIdField;
-            }
-            set
-            {
-                this.brukerIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/bruker")]
-    public partial class Bruker : MatrikkelBubbleObjectWithHistory
-    {
-        
-        private string brukernavnField;
-        
-        private string navnField;
-        
-        private string adresseField;
-        
-        private string postadresseField;
-        
-        private string epostField;
-        
-        private string telefonnummerField;
-        
-        private bool endrePassordVedInnloggingField;
-        
-        private bool endrePassordVedInnloggingFieldSpecified;
-        
-        private SprakformId sprakformIdField;
-        
-        private int standardMalestokkField;
-        
-        private bool standardMalestokkFieldSpecified;
-        
-        private double pekeRadiusField;
-        
-        private bool pekeRadiusFieldSpecified;
-        
-        private double snappetoleranseField;
-        
-        private bool snappetoleranseFieldSpecified;
-        
-        private string standardStiForBakgrunnskartField;
-        
-        private KommuneId aktuellKommuneIdField;
-        
-        private bool brukStoreKnapperField;
-        
-        private bool brukStoreKnapperFieldSpecified;
-        
-        private DataForWMS[] dataForWMSerField;
-        
-        private bool ndBrukerField;
-        
-        private bool ndBrukerFieldSpecified;
-        
-        private bool baatBrukerField;
-        
-        private bool baatBrukerFieldSpecified;
-        
-        private BrukerId opprettetAvIdField;
-        
-        private Timestamp opprettetDatoField;
-        
-        private BrukerId adgangSlettetAvIdField;
-        
-        private Timestamp adgangSlettetDatoField;
-        
-        private BrukerId sistOppdatertAvIdField;
-        
-        private Timestamp sistOppdatertDatoField;
-        
-        private string merknadField;
-        
-        private bool programvareBrukerField;
-        
-        private bool programvareBrukerFieldSpecified;
-        
-        private BrukergruppeKodeId brukergruppeIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string brukernavn
-        {
-            get
-            {
-                return this.brukernavnField;
-            }
-            set
-            {
-                this.brukernavnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string navn
-        {
-            get
-            {
-                return this.navnField;
-            }
-            set
-            {
-                this.navnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string adresse
-        {
-            get
-            {
-                return this.adresseField;
-            }
-            set
-            {
-                this.adresseField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string postadresse
-        {
-            get
-            {
-                return this.postadresseField;
-            }
-            set
-            {
-                this.postadresseField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string epost
-        {
-            get
-            {
-                return this.epostField;
-            }
-            set
-            {
-                this.epostField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string telefonnummer
-        {
-            get
-            {
-                return this.telefonnummerField;
-            }
-            set
-            {
-                this.telefonnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public bool endrePassordVedInnlogging
-        {
-            get
-            {
-                return this.endrePassordVedInnloggingField;
-            }
-            set
-            {
-                this.endrePassordVedInnloggingField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool endrePassordVedInnloggingSpecified
-        {
-            get
-            {
-                return this.endrePassordVedInnloggingFieldSpecified;
-            }
-            set
-            {
-                this.endrePassordVedInnloggingFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public SprakformId sprakformId
-        {
-            get
-            {
-                return this.sprakformIdField;
-            }
-            set
-            {
-                this.sprakformIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public int standardMalestokk
-        {
-            get
-            {
-                return this.standardMalestokkField;
-            }
-            set
-            {
-                this.standardMalestokkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool standardMalestokkSpecified
-        {
-            get
-            {
-                return this.standardMalestokkFieldSpecified;
-            }
-            set
-            {
-                this.standardMalestokkFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public double pekeRadius
-        {
-            get
-            {
-                return this.pekeRadiusField;
-            }
-            set
-            {
-                this.pekeRadiusField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool pekeRadiusSpecified
-        {
-            get
-            {
-                return this.pekeRadiusFieldSpecified;
-            }
-            set
-            {
-                this.pekeRadiusFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public double snappetoleranse
-        {
-            get
-            {
-                return this.snappetoleranseField;
-            }
-            set
-            {
-                this.snappetoleranseField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool snappetoleranseSpecified
-        {
-            get
-            {
-                return this.snappetoleranseFieldSpecified;
-            }
-            set
-            {
-                this.snappetoleranseFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
-        public string standardStiForBakgrunnskart
-        {
-            get
-            {
-                return this.standardStiForBakgrunnskartField;
-            }
-            set
-            {
-                this.standardStiForBakgrunnskartField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
-        public KommuneId aktuellKommuneId
-        {
-            get
-            {
-                return this.aktuellKommuneIdField;
-            }
-            set
-            {
-                this.aktuellKommuneIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
-        public bool brukStoreKnapper
-        {
-            get
-            {
-                return this.brukStoreKnapperField;
-            }
-            set
-            {
-                this.brukStoreKnapperField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool brukStoreKnapperSpecified
-        {
-            get
-            {
-                return this.brukStoreKnapperFieldSpecified;
-            }
-            set
-            {
-                this.brukStoreKnapperFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=14)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public DataForWMS[] dataForWMSer
-        {
-            get
-            {
-                return this.dataForWMSerField;
-            }
-            set
-            {
-                this.dataForWMSerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
-        public bool ndBruker
-        {
-            get
-            {
-                return this.ndBrukerField;
-            }
-            set
-            {
-                this.ndBrukerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ndBrukerSpecified
-        {
-            get
-            {
-                return this.ndBrukerFieldSpecified;
-            }
-            set
-            {
-                this.ndBrukerFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
-        public bool baatBruker
-        {
-            get
-            {
-                return this.baatBrukerField;
-            }
-            set
-            {
-                this.baatBrukerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool baatBrukerSpecified
-        {
-            get
-            {
-                return this.baatBrukerFieldSpecified;
-            }
-            set
-            {
-                this.baatBrukerFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
-        public BrukerId opprettetAvId
-        {
-            get
-            {
-                return this.opprettetAvIdField;
-            }
-            set
-            {
-                this.opprettetAvIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
-        public Timestamp opprettetDato
-        {
-            get
-            {
-                return this.opprettetDatoField;
-            }
-            set
-            {
-                this.opprettetDatoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
-        public BrukerId adgangSlettetAvId
-        {
-            get
-            {
-                return this.adgangSlettetAvIdField;
-            }
-            set
-            {
-                this.adgangSlettetAvIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
-        public Timestamp adgangSlettetDato
-        {
-            get
-            {
-                return this.adgangSlettetDatoField;
-            }
-            set
-            {
-                this.adgangSlettetDatoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=21)]
-        public BrukerId sistOppdatertAvId
-        {
-            get
-            {
-                return this.sistOppdatertAvIdField;
-            }
-            set
-            {
-                this.sistOppdatertAvIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
-        public Timestamp sistOppdatertDato
-        {
-            get
-            {
-                return this.sistOppdatertDatoField;
-            }
-            set
-            {
-                this.sistOppdatertDatoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
-        public string merknad
-        {
-            get
-            {
-                return this.merknadField;
-            }
-            set
-            {
-                this.merknadField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
-        public bool programvareBruker
-        {
-            get
-            {
-                return this.programvareBrukerField;
-            }
-            set
-            {
-                this.programvareBrukerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool programvareBrukerSpecified
-        {
-            get
-            {
-                return this.programvareBrukerFieldSpecified;
-            }
-            set
-            {
-                this.programvareBrukerFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
-        public BrukergruppeKodeId brukergruppeId
-        {
-            get
-            {
-                return this.brukergruppeIdField;
-            }
-            set
-            {
-                this.brukergruppeIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class Veg : MatrikkelBubbleObjectWithHistory
-    {
-        
-        private KommuneId kommuneIdField;
-        
-        private int adressekodeField;
-        
-        private bool adressekodeFieldSpecified;
-        
-        private string adressenavnField;
-        
-        private string kortAdressenavnField;
-        
-        private VegTillegg kommunalTilleggsdelField;
-        
-        private string stedsnummerField;
-        
-        private UUID uuidField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public KommuneId kommuneId
-        {
-            get
-            {
-                return this.kommuneIdField;
-            }
-            set
-            {
-                this.kommuneIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int adressekode
-        {
-            get
-            {
-                return this.adressekodeField;
-            }
-            set
-            {
-                this.adressekodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool adressekodeSpecified
-        {
-            get
-            {
-                return this.adressekodeFieldSpecified;
-            }
-            set
-            {
-                this.adressekodeFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string adressenavn
-        {
-            get
-            {
-                return this.adressenavnField;
-            }
-            set
-            {
-                this.adressenavnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string kortAdressenavn
-        {
-            get
-            {
-                return this.kortAdressenavnField;
-            }
-            set
-            {
-                this.kortAdressenavnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public VegTillegg kommunalTilleggsdel
-        {
-            get
-            {
-                return this.kommunalTilleggsdelField;
-            }
-            set
-            {
-                this.kommunalTilleggsdelField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string stedsnummer
-        {
-            get
-            {
-                return this.stedsnummerField;
-            }
-            set
-            {
-                this.stedsnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public UUID uuid
-        {
-            get
-            {
-                return this.uuidField;
-            }
-            set
-            {
-                this.uuidField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class Kretsflate : MatrikkelBubbleObjectWithHistory
-    {
-        
-        private Multipolygon geometriField;
-        
-        private UUID uuidField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public Multipolygon geometri
-        {
-            get
-            {
-                return this.geometriField;
-            }
-            set
-            {
-                this.geometriField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public UUID uuid
-        {
-            get
-            {
-                return this.uuidField;
-            }
-            set
-            {
-                this.uuidField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class Multipolygon : Geometri
-    {
-        
-        private Polygon[] polygonerField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public Polygon[] polygoner
-        {
-            get
-            {
-                return this.polygonerField;
-            }
-            set
-            {
-                this.polygonerField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class Polygon : Geometri
-    {
-        
-        private Ring[] indreAvgrensningField;
-        
-        private Ring ytreAvgrensningField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public Ring[] indreAvgrensning
-        {
-            get
-            {
-                return this.indreAvgrensningField;
-            }
-            set
-            {
-                this.indreAvgrensningField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public Ring ytreAvgrensning
-        {
-            get
-            {
-                return this.ytreAvgrensningField;
-            }
-            set
-            {
-                this.ytreAvgrensningField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class Ring
-    {
-        
-        private Point[] positionsField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public Point[] positions
-        {
-            get
-            {
-                return this.positionsField;
-            }
-            set
-            {
-                this.positionsField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class Point
-    {
-        
-        private double xField;
-        
-        private bool xFieldSpecified;
-        
-        private double yField;
-        
-        private bool yFieldSpecified;
-        
-        private double zField;
-        
-        private bool zFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public double x
-        {
-            get
-            {
-                return this.xField;
-            }
-            set
-            {
-                this.xField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool xSpecified
-        {
-            get
-            {
-                return this.xFieldSpecified;
-            }
-            set
-            {
-                this.xFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public double y
-        {
-            get
-            {
-                return this.yField;
-            }
-            set
-            {
-                this.yField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ySpecified
-        {
-            get
-            {
-                return this.yFieldSpecified;
-            }
-            set
-            {
-                this.yFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public double z
-        {
-            get
-            {
-                return this.zField;
-            }
-            set
-            {
-                this.zField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool zSpecified
-        {
-            get
-            {
-                return this.zFieldSpecified;
-            }
-            set
-            {
-                this.zFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Polygon))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Multipolygon))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/geometri")]
-    public partial class Geometri
-    {
-        
-        private KoordinatsystemKodeId koordinatsystemKodeIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public KoordinatsystemKodeId koordinatsystemKodeId
-        {
-            get
-            {
-                return this.koordinatsystemKodeIdField;
-            }
-            set
-            {
-                this.koordinatsystemKodeIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedFlereKommuner))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Tettsted))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Postnummeromrade))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KretsMedEnKommune))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Svalbardomrade))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Valgkrets))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKrets))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kirkesogn))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Grunnkrets))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class Krets : MatrikkelBubbleObjectWithHistory
-    {
-        
-        private Multipolygon geometriField;
-        
-        private KommuneId[] kommuneIdsField;
-        
-        private int kretsnummerField;
-        
-        private bool kretsnummerFieldSpecified;
-        
-        private string kretsnavnField;
-        
-        private KretstypeKodeId kretstypeKodeIdField;
-        
-        private KretsTillegg kommunalTilleggsdelField;
-        
-        private KretsflateId kretsflateIdField;
-        
-        private UUID uuidField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public Multipolygon geometri
-        {
-            get
-            {
-                return this.geometriField;
-            }
-            set
-            {
-                this.geometriField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item", Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
-        public KommuneId[] kommuneIds
-        {
-            get
-            {
-                return this.kommuneIdsField;
-            }
-            set
-            {
-                this.kommuneIdsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int kretsnummer
-        {
-            get
-            {
-                return this.kretsnummerField;
-            }
-            set
-            {
-                this.kretsnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool kretsnummerSpecified
-        {
-            get
-            {
-                return this.kretsnummerFieldSpecified;
-            }
-            set
-            {
-                this.kretsnummerFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string kretsnavn
-        {
-            get
-            {
-                return this.kretsnavnField;
-            }
-            set
-            {
-                this.kretsnavnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public KretstypeKodeId kretstypeKodeId
-        {
-            get
-            {
-                return this.kretstypeKodeIdField;
-            }
-            set
-            {
-                this.kretstypeKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public KretsTillegg kommunalTilleggsdel
-        {
-            get
-            {
-                return this.kommunalTilleggsdelField;
-            }
-            set
-            {
-                this.kommunalTilleggsdelField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public KretsflateId kretsflateId
-        {
-            get
-            {
-                return this.kretsflateIdField;
-            }
-            set
-            {
-                this.kretsflateIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public UUID uuid
-        {
-            get
-            {
-                return this.uuidField;
-            }
-            set
-            {
-                this.uuidField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Tettsted))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Postnummeromrade))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class KretsMedFlereKommuner : Krets
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class Tettsted : KretsMedFlereKommuner
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class Postnummeromrade : KretsMedFlereKommuner
-    {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Svalbardomrade))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Valgkrets))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(KommunalKrets))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Kirkesogn))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Grunnkrets))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class KretsMedEnKommune : Krets
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class Svalbardomrade : KretsMedEnKommune
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class Valgkrets : KretsMedEnKommune
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class KommunalKrets : KretsMedEnKommune
-    {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class Kirkesogn : KretsMedEnKommune
-    {
-        
-        private int bispedommeField;
-        
-        private bool bispedommeFieldSpecified;
-        
-        private int prostiField;
-        
-        private bool prostiFieldSpecified;
-        
-        private int prestegjeldField;
-        
-        private bool prestegjeldFieldSpecified;
-        
-        private int sognField;
-        
-        private bool sognFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int bispedomme
-        {
-            get
-            {
-                return this.bispedommeField;
-            }
-            set
-            {
-                this.bispedommeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool bispedommeSpecified
-        {
-            get
-            {
-                return this.bispedommeFieldSpecified;
-            }
-            set
-            {
-                this.bispedommeFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int prosti
-        {
-            get
-            {
-                return this.prostiField;
-            }
-            set
-            {
-                this.prostiField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool prostiSpecified
-        {
-            get
-            {
-                return this.prostiFieldSpecified;
-            }
-            set
-            {
-                this.prostiFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int prestegjeld
-        {
-            get
-            {
-                return this.prestegjeldField;
-            }
-            set
-            {
-                this.prestegjeldField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool prestegjeldSpecified
-        {
-            get
-            {
-                return this.prestegjeldFieldSpecified;
-            }
-            set
-            {
-                this.prestegjeldFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public int sogn
-        {
-            get
-            {
-                return this.sognField;
-            }
-            set
-            {
-                this.sognField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool sognSpecified
-        {
-            get
-            {
-                return this.sognFieldSpecified;
-            }
-            set
-            {
-                this.sognFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class Grunnkrets : KretsMedEnKommune
-    {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vegadresse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Matrikkeladresse))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class Adresse : MatrikkelBubbleObjectWithHistory
-    {
-        
-        private Representasjonspunkt representasjonspunktField;
-        
-        private string adressetilleggsnavnField;
-        
-        private string kortnavnField;
-        
-        private MatrikkelenhetId matrikkelenhetIdField;
-        
-        private Atkomst[] atkomsterField;
-        
-        private KretsId[] kretsIdsField;
-        
-        private AdresseTillegg kommunalTilleggsdelField;
-        
-        private AdressetilleggsnavnKildeKodeId tilleggsnavnKildeKodeIdField;
-        
-        private UUID uuidField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public Representasjonspunkt representasjonspunkt
-        {
-            get
-            {
-                return this.representasjonspunktField;
-            }
-            set
-            {
-                this.representasjonspunktField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string adressetilleggsnavn
-        {
-            get
-            {
-                return this.adressetilleggsnavnField;
-            }
-            set
-            {
-                this.adressetilleggsnavnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string kortnavn
-        {
-            get
-            {
-                return this.kortnavnField;
-            }
-            set
-            {
-                this.kortnavnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public MatrikkelenhetId matrikkelenhetId
-        {
-            get
-            {
-                return this.matrikkelenhetIdField;
-            }
-            set
-            {
-                this.matrikkelenhetIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=4)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public Atkomst[] atkomster
-        {
-            get
-            {
-                return this.atkomsterField;
-            }
-            set
-            {
-                this.atkomsterField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=5)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public KretsId[] kretsIds
-        {
-            get
-            {
-                return this.kretsIdsField;
-            }
-            set
-            {
-                this.kretsIdsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public AdresseTillegg kommunalTilleggsdel
-        {
-            get
-            {
-                return this.kommunalTilleggsdelField;
-            }
-            set
-            {
-                this.kommunalTilleggsdelField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public AdressetilleggsnavnKildeKodeId tilleggsnavnKildeKodeId
-        {
-            get
-            {
-                return this.tilleggsnavnKildeKodeIdField;
-            }
-            set
-            {
-                this.tilleggsnavnKildeKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public UUID uuid
-        {
-            get
-            {
-                return this.uuidField;
-            }
-            set
-            {
-                this.uuidField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class Vegadresse : Adresse
-    {
-        
-        private VegId vegIdField;
-        
-        private int nummerField;
-        
-        private bool nummerFieldSpecified;
-        
-        private string bokstavField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public VegId vegId
-        {
-            get
-            {
-                return this.vegIdField;
-            }
-            set
-            {
-                this.vegIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int nummer
-        {
-            get
-            {
-                return this.nummerField;
-            }
-            set
-            {
-                this.nummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool nummerSpecified
-        {
-            get
-            {
-                return this.nummerFieldSpecified;
-            }
-            set
-            {
-                this.nummerFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string bokstav
-        {
-            get
-            {
-                return this.bokstavField;
-            }
-            set
-            {
-                this.bokstavField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/adresse")]
-    public partial class Matrikkeladresse : Adresse
-    {
-        
-        private int undernummerField;
-        
-        private bool undernummerFieldSpecified;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int undernummer
-        {
-            get
-            {
-                return this.undernummerField;
-            }
-            set
-            {
-                this.undernummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool undernummerSpecified
-        {
-            get
-            {
-                return this.undernummerFieldSpecified;
-            }
-            set
-            {
-                this.undernummerFieldSpecified = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
-    public partial class Fylke : MatrikkelBubbleObjectWithHistory
-    {
-        
-        private string fylkesnummerField;
-        
-        private string fylkesnavnField;
-        
-        private LocalDate gyldigTilDatoField;
-        
-        private FylkeId nyFylkeIdField;
-        
-        private KommuneId[] kommuneIdsField;
-        
-        private UUID uuidField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string fylkesnummer
-        {
-            get
-            {
-                return this.fylkesnummerField;
-            }
-            set
-            {
-                this.fylkesnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string fylkesnavn
-        {
-            get
-            {
-                return this.fylkesnavnField;
-            }
-            set
-            {
-                this.fylkesnavnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public LocalDate gyldigTilDato
-        {
-            get
-            {
-                return this.gyldigTilDatoField;
-            }
-            set
-            {
-                this.gyldigTilDatoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public FylkeId nyFylkeId
-        {
-            get
-            {
-                return this.nyFylkeIdField;
-            }
-            set
-            {
-                this.nyFylkeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=4)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public KommuneId[] kommuneIds
-        {
-            get
-            {
-                return this.kommuneIdsField;
-            }
-            set
-            {
-                this.kommuneIdsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public UUID uuid
-        {
-            get
-            {
-                return this.uuidField;
-            }
-            set
-            {
-                this.uuidField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://matrikkel.statkart.no/matrikkelapi/wsapi/v1/domain/kommune")]
-    public partial class Kommune : MatrikkelBubbleObjectWithHistory
-    {
-        
-        private string kommunenummerField;
-        
-        private string kommunenavnField;
-        
-        private FylkeId fylkeIdField;
-        
-        private LocalDate gyldigTilDatoField;
-        
-        private KommuneId nyKommuneIdField;
-        
-        private KoordinatsystemKodeId koordinatsystemKodeIdField;
-        
-        private string konverteringStatusField;
-        
-        private bool lastField;
-        
-        private bool lastFieldSpecified;
-        
-        private Position senterpunktField;
-        
-        private Representasjonspunkt representasjonspunktField;
-        
-        private MottakerAdresse postadresseField;
-        
-        private JuridiskPersonId standardRekvirentTinglysingIdField;
-        
-        private SprakformId sprakformIdField;
-        
-        private KommuneId[] naboKommuneIdsField;
-        
-        private string eksklusivBrukerField;
-        
-        private bool nedsattKonsesjonsgrenseField;
-        
-        private bool nedsattKonsesjonsgrenseFieldSpecified;
-        
-        private string brukteGardsnummerField;
-        
-        private UUID uuidField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string kommunenummer
-        {
-            get
-            {
-                return this.kommunenummerField;
-            }
-            set
-            {
-                this.kommunenummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string kommunenavn
-        {
-            get
-            {
-                return this.kommunenavnField;
-            }
-            set
-            {
-                this.kommunenavnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public FylkeId fylkeId
-        {
-            get
-            {
-                return this.fylkeIdField;
-            }
-            set
-            {
-                this.fylkeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public LocalDate gyldigTilDato
-        {
-            get
-            {
-                return this.gyldigTilDatoField;
-            }
-            set
-            {
-                this.gyldigTilDatoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public KommuneId nyKommuneId
-        {
-            get
-            {
-                return this.nyKommuneIdField;
-            }
-            set
-            {
-                this.nyKommuneIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public KoordinatsystemKodeId koordinatsystemKodeId
-        {
-            get
-            {
-                return this.koordinatsystemKodeIdField;
-            }
-            set
-            {
-                this.koordinatsystemKodeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public string konverteringStatus
-        {
-            get
-            {
-                return this.konverteringStatusField;
-            }
-            set
-            {
-                this.konverteringStatusField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public bool last
-        {
-            get
-            {
-                return this.lastField;
-            }
-            set
-            {
-                this.lastField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool lastSpecified
-        {
-            get
-            {
-                return this.lastFieldSpecified;
-            }
-            set
-            {
-                this.lastFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public Position senterpunkt
-        {
-            get
-            {
-                return this.senterpunktField;
-            }
-            set
-            {
-                this.senterpunktField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public Representasjonspunkt representasjonspunkt
-        {
-            get
-            {
-                return this.representasjonspunktField;
-            }
-            set
-            {
-                this.representasjonspunktField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public MottakerAdresse postadresse
-        {
-            get
-            {
-                return this.postadresseField;
-            }
-            set
-            {
-                this.postadresseField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
-        public JuridiskPersonId standardRekvirentTinglysingId
-        {
-            get
-            {
-                return this.standardRekvirentTinglysingIdField;
-            }
-            set
-            {
-                this.standardRekvirentTinglysingIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
-        public SprakformId sprakformId
-        {
-            get
-            {
-                return this.sprakformIdField;
-            }
-            set
-            {
-                this.sprakformIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=13)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("item")]
-        public KommuneId[] naboKommuneIds
-        {
-            get
-            {
-                return this.naboKommuneIdsField;
-            }
-            set
-            {
-                this.naboKommuneIdsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
-        public string eksklusivBruker
-        {
-            get
-            {
-                return this.eksklusivBrukerField;
-            }
-            set
-            {
-                this.eksklusivBrukerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
-        public bool nedsattKonsesjonsgrense
-        {
-            get
-            {
-                return this.nedsattKonsesjonsgrenseField;
-            }
-            set
-            {
-                this.nedsattKonsesjonsgrenseField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool nedsattKonsesjonsgrenseSpecified
-        {
-            get
-            {
-                return this.nedsattKonsesjonsgrenseFieldSpecified;
-            }
-            set
-            {
-                this.nedsattKonsesjonsgrenseFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
-        public string brukteGardsnummer
-        {
-            get
-            {
-                return this.brukteGardsnummerField;
-            }
-            set
-            {
-                this.brukteGardsnummerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
         public UUID uuid
         {
             get

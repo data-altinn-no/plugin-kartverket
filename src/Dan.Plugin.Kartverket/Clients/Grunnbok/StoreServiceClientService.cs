@@ -12,6 +12,8 @@ using Dan.Plugin.Kartverket.Models;
 using KommuneId = Kartverket.Grunnbok.StoreService.KommuneId;
 using KommuneDAN = Dan.Plugin.Kartverket.Models.Kommune;
 using Kommune = Kartverket.Grunnbok.StoreService.Kommune;
+using Matrikkelenhet = Kartverket.Grunnbok.StoreService.Matrikkelenhet;
+using PersonId = Kartverket.Grunnbok.StoreService.PersonId;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
@@ -171,6 +173,34 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             return result;
         }
 
+        public async Task<Matrikkelenhet> GetRegisterenhet(string registerenhetid)
+        {
+            Matrikkelenhet result = null;
+
+            var request = GetRequest();
+
+            request.id = new RegisterenhetId()
+            {
+                value = registerenhetid
+            };
+
+            try
+            {
+                var storeServiceResponse = await _client.getObjectAsync(request);
+                result = (Matrikkelenhet) storeServiceResponse.@return;
+            }
+            catch (FaultException fex)
+            {
+                _logger.LogError(fex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+
+            return result;
+        }
+
         public async Task<Dokument> GetDokument(string id)
         {
             Dokument result = null;
@@ -217,6 +247,29 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             return input;
         }
+
+        public async Task<Matrikkelenhet> GetMatrikkelEnhetFromRegisterRettighetsandel(string registerenhetsrettId)
+        {
+            try
+            {
+                //var retter = await GetRettighetsandeler(registerrettighetsandelid);
+                var rrrett = await GetRegisterenhetsrett(registerenhetsrettId);
+                var rregenhet = await GetRegisterenhet(rrrett.registerenhetId.value);
+
+                return rregenhet;
+
+            }
+            catch (FaultException fex)
+            {
+                _logger.LogError(fex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+
+            return new Matrikkelenhet();
+        }
     }
 
     public interface IStoreServiceClientService
@@ -231,5 +284,9 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public Task<Dokument> GetDokument(string id);
 
         public Task<List<PawnDocument>> GetPawnOwnerNames(List<PawnDocument> input);
+
+        public Task<Matrikkelenhet> GetRegisterenhet(string registerenhetid);
+
+        public Task<Matrikkelenhet> GetMatrikkelEnhetFromRegisterRettighetsandel(string registerrettighetsandelid);
     }
 }

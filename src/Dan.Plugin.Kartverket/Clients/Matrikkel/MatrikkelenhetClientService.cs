@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
+using Dan.Plugin.Kartverket.Models;
+using Teig = Kartverket.Matrikkel.MatrikkelenhetService.Teig;
 
 namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 {
@@ -93,6 +95,24 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             return new findMatrikkelenhetMedTeigerResponse().@return;
         }
 
+        public async Task<MatrikkelEnhetMedteig> GetMatrikkelEnhetTeig(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent)
+        {
+            var response = await GetMatrikkelEnhetMedTeiger(gnr, bnr, fnr, seksjonsnummer, kommuneIdent);
+
+            var matrikkelEnhet = response.bubbleObjects.OfType<Grunneiendom>().FirstOrDefault();
+            var teiger = response.bubbleObjects.OfType<Teig>().Where(y=>y.tvist == false).Select(x => x.lagretBeregnetAreal).ToList();
+
+            var result = new MatrikkelEnhetMedteig()
+            {
+                Bruksnummer = bnr.ToString(),
+                Gaardsnummer = gnr.ToString(),
+                HasCulturalHeritageSite = matrikkelEnhet != null ? matrikkelEnhet.harKulturminne : false,
+                Teiger = teiger
+            };
+
+            return result;
+        }
+
         public async Task<MatrikkelenhetId> GetMatrikkelenhet(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent)
         {
             findMatrikkelenhetResponse result = null;
@@ -158,5 +178,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         Task<MatrikkelenhetId> GetMatrikkelenhet(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent);
         Task<List<MatrikkelenhetId>> GetMatrikkelenheterForPerson(long ident);
         Task<MatrikkelenhetMedTeigerTransfer> GetMatrikkelEnhetMedTeiger(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent);
+
+        Task<MatrikkelEnhetMedteig> GetMatrikkelEnhetTeig(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent);
     }
 }
