@@ -39,7 +39,7 @@ namespace Dan.Plugin.Kartverket.Clients
         {
             if (matrikkelnummerList.IsNullOrEmpty())
             {
-                throw new EvidenceSourcePermanentClientException(Metadata.ERROR_CCR_UPSTREAM_ERROR, $"Bad request (argument cannot be empty)");
+                return null;
             }
 
             HttpResponseMessage response = null;
@@ -75,6 +75,11 @@ namespace Dan.Plugin.Kartverket.Clients
 
         private KartverketResponse PopulateIsAgriculture(KartverketResponse kartverket, ICollection<MatrikkelRespons> matrikkels)
         {
+            if (matrikkels.IsNullOrEmpty())
+            {
+                return kartverket;
+            }
+
             List<Property> properties = new List<Property>();
             foreach (Property property in kartverket.PropertyRights.Properties)
             {
