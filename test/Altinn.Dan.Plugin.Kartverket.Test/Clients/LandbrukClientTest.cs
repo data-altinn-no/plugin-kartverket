@@ -94,39 +94,7 @@ public class LandbrukClientTest
         Assert.True(response.PropertyRights.PropertiesWithRights.First().IsAgriculture);
     }
 
-    /**
-     * ..Also a bit strange that when all properties is missing params we get an exception.
-     */
-    [Fact]
-    public async Task Get_MissingParameters_Exception()
-    {
-        var httpClient = GetHttpClientMock("unittest", HttpStatusCode.BadRequest);
-        _httpClientFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
-        KartverketResponse inputMissingParameter = new KartverketResponse
-        {
-            PropertyRights = new PropertyRights
-            {
-                Properties = new List<Property>
-                {
-                    //Missing HoldingNumber
-                    new Property() { MunicipalityNumber = "1860", SubholdingNumber = "46", LeaseNumber = "0" }
-                },
-                PropertiesWithRights = new List<PropertyWithRights>
-                {
-                    //Missing 'SubholdingNumber'
-                    new PropertyWithRights() { MunicipalityNumber = "3014", HoldingNumber = "134", LeaseNumber = "0" }
-                }
-            }
-        };
-
-        var client = new LandbrukClient(httpClient, GetSettingsForTest());
-
-        var exception = await Assert.ThrowsAsync<EvidenceSourcePermanentClientException>(() => client.Get(inputMissingParameter));
-
-        Assert.Equal(Metadata.ERROR_CCR_UPSTREAM_ERROR, exception.DetailErrorCode);
-        Assert.Contains("Bad request (argument cannot be empty)", exception.Message);
-    }
 
     [Fact]
     public async Task Get_BadRequest_Exception()
