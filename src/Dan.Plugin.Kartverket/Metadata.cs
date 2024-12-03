@@ -70,7 +70,7 @@ namespace Dan.Plugin.Kartverket
                     {
                         new MaskinportenScopeRequirement
                         {
-                            RequiredScopes = new List<string> { "altinn:dataaltinnno/eduediligence" }
+                            RequiredScopes = new List<string> { "altinn:dataaltinnno/duediligence" }
                         }
                     }
                 },
