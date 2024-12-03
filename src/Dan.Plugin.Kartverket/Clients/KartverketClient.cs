@@ -46,8 +46,10 @@ namespace Dan.Plugin.Kartverket.Clients
             HttpResponseMessage response = null;
             try
             {
-                var completeUrl = url.Replace("{identifikasjonsnummer}", Uri.EscapeDataString(ssn));
-                response = await _httpClient.GetAsync(completeUrl);
+                var request = new HttpRequestMessage(HttpMethod.Get, url);
+                request.Headers.TryAddWithoutValidation("identifikasjonsnummer", ssn);
+                response = await _httpClient.SendAsync(request);
+
                 var responseData = await response.Content.ReadAsStringAsync();
                 switch (response.StatusCode)
                 {

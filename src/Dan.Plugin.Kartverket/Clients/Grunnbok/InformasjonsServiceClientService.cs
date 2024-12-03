@@ -25,6 +25,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             _logger = factory.CreateLogger<InformasjonsServiceClientService>();
 
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+            myBinding.MaxReceivedMessageSize = int.MaxValue;
             string identity = string.Empty;
 
             _client = new InformasjonServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "InformasjonServiceWS"));
@@ -61,7 +62,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                 {
                     result = new OwnerShipTransferInfo()
                     {
-                        Price = overdragelse.omsetning.vederlag.beloepsverdi,
+                        Price = overdragelse?.omsetning?.vederlag?.beloepsverdi,
                         CurrencyCode = currency.kodeverdi,
                         EstablishedDate = overdragelse.oppdateringsdato.timestamp
                     };
