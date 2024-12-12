@@ -40,14 +40,17 @@
   <ItemGroup>
     <OpenApiReference Include="OpenAPIs\Kartverket.json" CodeGenerator="NSwagCSharp" Namespace="Altinn.Dan.Plugin.Kartverket.Clients" ClassName="Kartverket">
       <SourceUri>https://syntest.grunnbok.no/oed/v2/api-docs</SourceUri>
-      <Options>/GenerateOptionalPropertiesAsNullable:true /GenerateClientClasses:false /GenerateExceptionClasses:false</Options>
+      <Options>/GenerateOptionalPropertiesAsNullable:true /GenerateClientClasses:false</Options>
+      <NSwagGenerateExceptionClasses>false</NSwagGenerateExceptionClasses>
     </OpenApiReference>
     <OpenApiReference Include="OpenAPIs\Landbruk.json" CodeGenerator="NSwagCSharp" Namespace="Altinn.Dan.Plugin.Kartverket.Clients" ClassName="Landbruk">
-      <Options>/GenerateOptionalPropertiesAsNullable:true /GenerateClientClasses:false /GenerateExceptionClasses:false</Options>
+      <Options>/GenerateOptionalPropertiesAsNullable:true /GenerateClientClasses:false</Options>
+      <NSwagGenerateExceptionClasses>false</NSwagGenerateExceptionClasses>
     </OpenApiReference>
     <OpenApiReference Include="OpenAPIs\AddressLookup.json" CodeGenerator="NSwagCSharp" Namespace="Altinn.App.ExternalApi.AddressLookup" ClassName="AddressLookup">
       <SourceUri>https://ws.geonorge.no/adresser/v1/openapi.json</SourceUri>
-      <Options>/GenerateOptionalPropertiesAsNullable:true /GenerateClientClasses:false /GenerateExceptionClasses:false</Options>
+      <Options>/GenerateOptionalPropertiesAsNullable:true /GenerateClientClasses:false</Options>
+      <NSwagGenerateExceptionClasses>false</NSwagGenerateExceptionClasses>
     </OpenApiReference>
   </ItemGroup>
   <ItemGroup>
