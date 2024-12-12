@@ -102,7 +102,7 @@ namespace Dan.Plugin.Kartverket.Clients
             //Get all properties owned by identifier
             var regrettsandelListe = await _regRettsandelsClientService.GetAndelerForRettighetshaver(ident);
 
-           // regrettsandelListe.RemoveRange(10, regrettsandelListe.Count - 10);
+            regrettsandelListe.RemoveRange(10, regrettsandelListe.Count - 10);
 
             foreach (var registerenhetsrettsandelid in regrettsandelListe)
             {

@@ -64,7 +64,7 @@ namespace Dan.Plugin.Kartverket.Models
 
     public class OwnerShipTransferInfo
     {
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
         public string CurrencyCode { get; set; }
 
         public DateTime? EstablishedDate { get; set; }

@@ -99,6 +99,10 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         {
             var response = await GetMatrikkelEnhetMedTeiger(gnr, bnr, fnr, seksjonsnummer, kommuneIdent);
 
+            if (response == null)
+            {
+                return new MatrikkelEnhetMedteig();
+            }
             var matrikkelEnhet = response.bubbleObjects.OfType<Grunneiendom>().FirstOrDefault();
             var teiger = response.bubbleObjects.OfType<Teig>().Where(y=>y.tvist == false).Select(x => x.lagretBeregnetAreal).ToList();
 
