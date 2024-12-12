@@ -1,3 +1,4 @@
+using System;
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Clients.Matrikkel;
 using Dan.Plugin.Kartverket.Config;
@@ -96,13 +97,14 @@ namespace Dan.Plugin.Kartverket.Clients
 
             var result = new List<PropertyModel>();
 
-            //Get grunnbok identifier for 
+            //Get grunnbok identifier for
             var ident = await _identServiceClient.GetPersonIdentity(identifier);
 
             //Get all properties owned by identifier
             var regrettsandelListe = await _regRettsandelsClientService.GetAndelerForRettighetshaver(ident);
 
-            regrettsandelListe.RemoveRange(10, regrettsandelListe.Count - 10);
+            var numbersToRemove = Math.Min(10, regrettsandelListe.Count);
+            regrettsandelListe.RemoveRange(numbersToRemove, regrettsandelListe.Count - numbersToRemove);
 
             foreach (var registerenhetsrettsandelid in regrettsandelListe)
             {
@@ -147,7 +149,7 @@ namespace Dan.Plugin.Kartverket.Clients
                     HasCulturalHeritageSite = matrikkelEnhet.HasCulturalHeritageSite,
                     Owners = new Rettighetshavere()
                     {
-                        EstablishedDate = (ownershipTransfer == null) ? null : ownershipTransfer.EstablishedDate, 
+                        EstablishedDate = (ownershipTransfer == null) ? null : ownershipTransfer.EstablishedDate,
                         Share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}",
                         Price = (ownershipTransfer == null) ? "" : $"{ownershipTransfer.Price} {ownershipTransfer.CurrencyCode}" }
                 });
