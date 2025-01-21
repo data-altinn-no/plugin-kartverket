@@ -1,3 +1,4 @@
+using Namotion.Reflection;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,9 +19,13 @@ namespace Dan.Plugin.Kartverket.Models
         }
 
         public static bool IsNullOrEmpty(this IEnumerable collection)
-        {     
-            return collection.IsNullOrEmpty();
+        {
+            if (collection == null)
+                return true;
+
+            return !collection.Cast<object>().Any();
         }
     }
 }
+
 
