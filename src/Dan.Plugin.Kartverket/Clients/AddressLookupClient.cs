@@ -69,7 +69,7 @@ namespace Dan.Plugin.Kartverket.Clients
                 urlBuilder.Append("kommunenummer=").Append(int.Parse(property.MunicipalityNumber).ToString("d4")).Append('&');
                 urlBuilder.Append("bruksnummer=").Append(property.SubholdingNumber).Append('&');
                 urlBuilder.Append("gardsnummer=").Append(property.HoldingNumber).Append('&');
-                if (!property.LeaseNumber.IsNullOrEmpty())
+                if (!string.IsNullOrEmpty(property.LeaseNumber))
                 {
                     urlBuilder.Append("festenummer=").Append(Uri.EscapeDataString(property.LeaseNumber)).Append('&');
                 }
