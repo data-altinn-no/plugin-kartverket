@@ -8,6 +8,8 @@ namespace Dan.Plugin.Kartverket.Config
         public bool IsTestEnv { get; set; }
         public string KartverketRegisterenhetsrettsandelerForPersonUrl { get; set; }
         public string KartverketRettigheterForPersonUrl { get; set; }
+
+        public string KartverketAdresseForBorettslagsandelUrl { get; set; }
         public string LandbrukUrl { get; set; }
         public string AddressLookupUrl { get; set; }
 

@@ -38,28 +38,30 @@ namespace Dan.Plugin.Kartverket
             {
                 PropertyRights = new PropertyRights
                 {
-                    Properties = MapToInternal(await _kartverketClient.FindRegisterenhetsrettsandelerForPerson(ssn)),
-                    PropertiesWithRights = MapToInternal(await _kartverketClient.FindRettigheterForPerson(ssn))
+                    Properties = await MapToInternal(await _kartverketClient.FindRegisterenhetsrettsandelerForPerson(ssn)),
+                    PropertiesWithRights = await MapToInternal(await _kartverketClient.FindRettigheterForPerson(ssn))
                 }
-            };
+            };  
 
             return await _geonorgeClient.Get(await _landbrukClient.Get(grunnbokResponse));
         }
 
-        private IEnumerable<Property> MapToInternal(RegisterenhetsrettsandelerResponse registerenhetsrettResponse)
+        private async Task<IEnumerable<Property>> MapToInternal(RegisterenhetsrettsandelerResponse registerenhetsrettResponse)
         {
-            return registerenhetsrettResponse
+            var res = registerenhetsrettResponse
                 .Registerenhetsrettsandeler
-                .Select(x =>
+                .Select(async x =>                
                 {
-                    var property = MapToInternal(x.Registerenhetsrett);
+                    var property = await MapToInternal(x.Registerenhetsrett);
                     property.FractionOwnership = x.Teller + "/" + x.Nevner;
 
                     return property;
                 });
+
+            return await Task.WhenAll(res);            
         }
 
-        private IEnumerable<PropertyWithRights> MapToInternal(RettigheterResponse rettigheterResponse)
+        private async Task<IEnumerable<PropertyWithRights>> MapToInternal(RettigheterResponse rettigheterResponse)
         {
             var properties = new Dictionary<string, PropertyWithRights>();
             foreach (var right in rettigheterResponse.Rettigheter)
@@ -82,7 +84,7 @@ namespace Dan.Plugin.Kartverket
                     }
                     else
                     {
-                        var propertyWithRights = ToPropertyWithRights(unitRights);
+                        var propertyWithRights = await ToPropertyWithRights(unitRights);
                         propertyWithRights.Rights.Add(rights);
                         properties.TryAdd(key, propertyWithRights);
                     }
@@ -92,7 +94,7 @@ namespace Dan.Plugin.Kartverket
             return properties.Values.ToList();
         }
 
-        private Property MapToInternal(Registerenhetsrett registerenhetsRett)
+        private async Task<Property> MapToInternal(Registerenhetsrett registerenhetsRett)
         {
             bool isTestEnv = _settings.IsTestEnv;
             var unit = registerenhetsRett?.Registerenhet;
@@ -114,6 +116,10 @@ namespace Dan.Plugin.Kartverket
             }
             else if (unit is Borettslagsandel hoaUnit)
             {
+                var borettslag = await _kartverketClient.FindAdresseForBorettslagsandel(hoaUnit.Borettslag?.Organisasjonsnummer, hoaUnit.Andelsnummer);
+                property.Address = borettslag?.Adresse.Vegadresse.Adressenavn + " " + borettslag?.Adresse.Vegadresse.Husnummer;
+                property.MunicipalityNumber = borettslag?.Adresse.Vegadresse.Kommune.Kommunenummer;
+                property.Municipality = borettslag?.Adresse.Vegadresse.Kommune.Navn;               
             }
 
             return property;
@@ -129,9 +135,9 @@ namespace Dan.Plugin.Kartverket
                 OfficeNumber = rettighet.Rettighet.Embetenummer,
             };
 
-        private PropertyWithRights ToPropertyWithRights(Registerenhetsrett registerenhetsRett)
+        private async Task<PropertyWithRights> ToPropertyWithRights(Registerenhetsrett registerenhetsRett)
         {
-            var property = MapToInternal(registerenhetsRett);
+            var property = await MapToInternal(registerenhetsRett);
 
             return new PropertyWithRights
             {

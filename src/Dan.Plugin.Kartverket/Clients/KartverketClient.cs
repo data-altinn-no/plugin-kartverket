@@ -17,6 +17,8 @@ namespace Dan.Plugin.Kartverket.Clients
         //public Task<KartverketResponse> Get(string ssn);
         public Task<RegisterenhetsrettsandelerResponse> FindRegisterenhetsrettsandelerForPerson(string ssn);
         public Task<RettigheterResponse> FindRettigheterForPerson(string ssn);
+
+        public Task<AdresseResponse> FindAdresseForBorettslagsandel(string orgNo, int? shareNo);
     }
     public class KartverketClient : IKartverketClient
     {
@@ -41,13 +43,27 @@ namespace Dan.Plugin.Kartverket.Clients
             return await MakeRequest<RettigheterResponse>(_settings.KartverketRettigheterForPersonUrl, ssn);
         }
 
-        private async Task<T> MakeRequest<T>(string url, string ssn) where T : new()
+        public async Task<AdresseResponse> FindAdresseForBorettslagsandel(string orgNo, int? shareNo)
+        {
+            return await MakeRequest<AdresseResponse>(_settings.KartverketAdresseForBorettslagsandelUrl, "",orgNo, shareNo);
+        }
+
+        private async Task<T> MakeRequest<T>(string url, string ssn, string orgNo = "", int? shareNo = 0) where T : new()
         {
             HttpResponseMessage response = null;
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Get, url);
-                request.Headers.TryAddWithoutValidation("identifikasjonsnummer", ssn);
+
+                if (!string.IsNullOrEmpty(ssn))
+                {
+                    request.Headers.TryAddWithoutValidation("identifikasjonsnummer", ssn);
+                } else
+                {
+                    request.Headers.TryAddWithoutValidation("organisasjonsnummer", orgNo);
+                    request.Headers.TryAddWithoutValidation("andelsnummer", shareNo.ToString());
+                }
+
                 response = await _httpClient.SendAsync(request);
 
                 var responseData = await response.Content.ReadAsStringAsync();
@@ -55,7 +71,8 @@ namespace Dan.Plugin.Kartverket.Clients
                 {
                     case HttpStatusCode.OK:
                     {
-                        return JsonConvert.DeserializeObject<T>(responseData);
+                        var res = JsonConvert.DeserializeObject<T>(responseData);
+                        return res;
                     }
                     default:
                     {
