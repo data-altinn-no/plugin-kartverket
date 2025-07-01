@@ -117,7 +117,7 @@ namespace Dan.Plugin.Kartverket
             else if (unit is Borettslagsandel hoaUnit)
             {
                 var borettslag = await _kartverketClient.FindAdresseForBorettslagsandel(hoaUnit.Borettslag?.Organisasjonsnummer, hoaUnit.Andelsnummer);
-                property.Address = borettslag?.Adresse.Vegadresse.Adressenavn + " " + borettslag?.Adresse.Vegadresse.Husnummer;
+                property.Address = borettslag?.Adresse.Vegadresse.Adressenavn + " " + borettslag?.Adresse.Vegadresse.Husnummer + borettslag?.Adresse?.Vegadresse?.Bokstav;
                 property.MunicipalityNumber = borettslag?.Adresse.Vegadresse.Kommune.Kommunenummer;
                 property.Municipality = borettslag?.Adresse.Vegadresse.Kommune.Navn;               
             }

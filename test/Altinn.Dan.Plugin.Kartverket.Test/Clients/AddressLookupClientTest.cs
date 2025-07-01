@@ -1,5 +1,6 @@
 using Dan.Common.Exceptions;
 using Dan.Plugin.Kartverket.Clients;
+using Dan.Plugin.Kartverket.Clients.Matrikkel;
 using Dan.Plugin.Kartverket.Models;
 using Dan.Plugin.Kartverket.Test.TestHelpers;
 using Moq;
@@ -17,6 +18,7 @@ namespace Dan.Plugin.Kartverket.Test.Clients;
 public class AddressLookupClientTest
 {
     private readonly Mock<IHttpClientFactory> _httpClientFactory = new Mock<IHttpClientFactory>();
+    private readonly Mock<IKartverketGrunnbokMatrikkelService> _matrikkelEnhetClientService = new Mock<IKartverketGrunnbokMatrikkelService>();
 
     [Fact]
     public async Task Get_ok()
@@ -48,7 +50,7 @@ public class AddressLookupClientTest
             }
         };
 
-        var client = new AddressLookupClient(_httpClientFactory.Object, GetSettingsForTest());
+        var client = new AddressLookupClient(_httpClientFactory.Object, GetSettingsForTest(), _matrikkelEnhetClientService.Object);
         var response = await client.Get(kv);
 
         var actualNormalized = JsonConvert.SerializeObject(response).NormalizeJson();
@@ -87,7 +89,7 @@ public class AddressLookupClientTest
             }
         };
 
-        var client = new AddressLookupClient(_httpClientFactory.Object, GetSettingsForTest());
+        var client = new AddressLookupClient(_httpClientFactory.Object, GetSettingsForTest(), _matrikkelEnhetClientService.Object);
         var response = await client.Get(inputMissingParameter);
 
         Assert.True(response.PropertyRights.Properties.First().Address.Equals("PropsAddress"));
@@ -111,7 +113,7 @@ public class AddressLookupClientTest
             }
         };
 
-        var client = new AddressLookupClient(_httpClientFactory.Object, GetSettingsForTest());
+        var client = new AddressLookupClient(_httpClientFactory.Object, GetSettingsForTest(), _matrikkelEnhetClientService.Object);
         var exception = await Assert.ThrowsAsync<EvidenceSourcePermanentClientException>(() => client.Get(kv));
 
         Assert.Equal(Metadata.ERROR_CCR_UPSTREAM_ERROR, exception.DetailErrorCode);
@@ -136,7 +138,7 @@ public class AddressLookupClientTest
             }
         };
 
-        var client = new AddressLookupClient(_httpClientFactory.Object, GetSettingsForTest());
+        var client = new AddressLookupClient(_httpClientFactory.Object, GetSettingsForTest(), _matrikkelEnhetClientService.Object);
 
         var exception = await Assert.ThrowsAsync<EvidenceSourcePermanentServerException>(() => client.Get(kv));
 

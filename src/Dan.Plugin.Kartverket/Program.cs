@@ -33,6 +33,7 @@ var host = new HostBuilder()
             services.AddScoped<IRegisterenhetsrettClientService, RegisterenhetsrettClientService>();
             services.AddScoped<IInformasjonsServiceClientService, InformasjonsServiceClientService>();
             services.AddScoped<IMatrikkelBygningClientService, MatrikkelBygningClientService>();
+            services.AddScoped<IMatrikkelBruksenhetService, MatrikkelBruksenhetService>();
 
             //KartverketClient
             services.AddMaskinportenHttpClient<KeyVaultMaskinportenClientDefinition, KartverketClient>(configurationRoot.GetSection("MPKartverket"),
