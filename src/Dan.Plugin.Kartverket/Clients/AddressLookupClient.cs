@@ -150,8 +150,7 @@ namespace Dan.Plugin.Kartverket.Clients
                     property.City = address?.Poststed ?? string.Empty;
                     property.MunicipalityNumber = address?.Kommunenummer ?? string.Empty;
                     property.Municipality = address?.Kommunenavn ?? string.Empty;
-                }             
-
+                }            
             }
             else
             {

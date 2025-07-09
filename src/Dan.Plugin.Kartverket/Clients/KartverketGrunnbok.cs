@@ -69,7 +69,7 @@ namespace Dan.Plugin.Kartverket.Clients
                 var test = await _matrikkelStoreClient.GetMatrikkelenhet(matrikkelenhetid.value);
                 var bruksenhetid = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
 
-                /*
+               
                 if (bruksenhetid == null)
                 {
                     var test2 = await _matrikkelStoreClient.GetMatrikkelenhetSeksjon(matrikkelenhetid.value);
@@ -77,8 +77,8 @@ namespace Dan.Plugin.Kartverket.Clients
                     var test4 = await _matrikkelBruksenhetService.GetBruksenheter(test2.seksjonertMatrikkelenhetIds.FirstOrDefault().value);
                     var test5 = await _matrikkelBruksenhetService.GetAddressForBruksenhet(test4.Value);
                     return test5;
-                } */
-                 return await _matrikkelBruksenhetService.GetAddressForBruksenhet(bruksenhetid.Value);             
+                }
+                return await _matrikkelBruksenhetService.GetAddressForBruksenhet(bruksenhetid.Value);             
             }
             catch (Exception ex)
             {
