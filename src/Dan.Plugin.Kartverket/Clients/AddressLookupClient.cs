@@ -151,6 +151,7 @@ namespace Dan.Plugin.Kartverket.Clients
                     property.MunicipalityNumber = address?.Kommunenummer ?? string.Empty;
                     property.Municipality = address?.Kommunenavn ?? string.Empty;
                 }             
+
             }
             else
             {
