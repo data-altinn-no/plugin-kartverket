@@ -41,7 +41,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             };
 
             try
-            {
+            {                
                 response = await _client.getObjectAsync(request);
             }
             catch (Exception ex)
@@ -50,6 +50,30 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             }
 
             return (Matrikkelenhet) response.@return;
+        }
+        public async Task<Seksjon> GetMatrikkelenhetSeksjon(long ident)
+        {
+            getObjectResponse response = null;
+
+            var request = new getObjectRequest()
+            {
+                matrikkelContext = GetContext(),
+                id = new SeksjonId()
+                {
+                    value = ident
+                }
+            };
+
+            try
+            {
+                response = await _client.getObjectAsync(request);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+
+            return (Seksjon)response.@return;
         }
 
         public async Task<Bygning> GetBygning(long bygningId)
@@ -104,5 +128,6 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
     {
         public Task<Matrikkelenhet> GetMatrikkelenhet(long ident);
         public Task<Bygning> GetBygning(long bygningId);
+        public Task<Seksjon> GetMatrikkelenhetSeksjon(long ident);
     }
 }

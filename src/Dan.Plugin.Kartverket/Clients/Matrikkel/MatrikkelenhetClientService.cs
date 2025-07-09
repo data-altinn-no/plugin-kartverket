@@ -112,7 +112,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
                 Gaardsnummer = gnr.ToString(),
                 HasCulturalHeritageSite = matrikkelEnhet != null ? matrikkelEnhet.harKulturminne : false,
                 Teiger = teiger
-            };
+            };          
 
             return result;
         }
