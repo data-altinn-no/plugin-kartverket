@@ -68,20 +68,28 @@ namespace Dan.Plugin.Kartverket.Clients
             var urlBuilder = new StringBuilder();
             urlBuilder.Append(_settings.AddressLookupUrl).Append("/sok?");
 
-            if (string.IsNullOrEmpty(property.MunicipalityNumber) || string.IsNullOrEmpty(property.SubholdingNumber) || string.IsNullOrEmpty(property.HoldingNumber))
+            if (!string.IsNullOrEmpty(property.MunicipalityNumber))
             {
-                urlBuilder.Append("kommunenummer=").Append(int.Parse(property.MunicipalityNumber).ToString("d4")).Append('&');
+                urlBuilder.Append("kommunenummer=").Append(int.Parse(property.MunicipalityNumber).ToString("d4")).Append('&');               
+            }
+            if (!string.IsNullOrEmpty(property.Address))
+            {
                 urlBuilder.Append("adressetekst=").Append(property.Address).Append('&');
             }
-            else
+            if (!string.IsNullOrEmpty(property.SubholdingNumber))
             {
-                urlBuilder.Append("kommunenummer=").Append(int.Parse(property.MunicipalityNumber).ToString("d4")).Append('&');
                 urlBuilder.Append("bruksnummer=").Append(property.SubholdingNumber).Append('&');
-                urlBuilder.Append("gardsnummer=").Append(property.HoldingNumber).Append('&');
-
-                if (!string.IsNullOrEmpty(property.LeaseNumber))
-                    urlBuilder.Append("festenummer=").Append(Uri.EscapeDataString(property.LeaseNumber)).Append('&');
             }
+            if (!string.IsNullOrEmpty(property.HoldingNumber))
+            {
+                urlBuilder.Append("gardsnummer=").Append(property.HoldingNumber).Append('&');
+            }
+
+            if (!string.IsNullOrEmpty(property.LeaseNumber))
+            {
+                urlBuilder.Append("festenummer=").Append(Uri.EscapeDataString(property.LeaseNumber)).Append('&');
+            }                  
+            
             try
             {
                 urlBuilder.Append("treffPerSide=100").Append('&');
