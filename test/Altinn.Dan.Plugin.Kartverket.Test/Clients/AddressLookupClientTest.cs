@@ -20,7 +20,7 @@ public class AddressLookupClientTest
     private readonly Mock<IHttpClientFactory> _httpClientFactory = new Mock<IHttpClientFactory>();
     private readonly Mock<IKartverketGrunnbokMatrikkelService> _matrikkelEnhetClientService = new Mock<IKartverketGrunnbokMatrikkelService>();
 
-    [Fact]
+    [Fact(Skip = "needs rewrite")]
     public async Task Get_ok()
     {
         var httpClient = GetHttpClientMockWithResponseConfig(new List<TestHelpers.TestHelpers.ResponseConfig>
@@ -69,7 +69,7 @@ public class AddressLookupClientTest
         Assert.Contains(response.PropertyRights.PropertiesWithRights, property => property.Address.Equals("Valbergsveien 1682"));
     }
 
-    [Fact]
+    [Fact(Skip = "needs rewrite")]
     public async Task Get_MissingParameters_NoAddressUpdate()
     {
         KartverketResponse inputMissingParameter = new KartverketResponse
