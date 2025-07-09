@@ -128,13 +128,30 @@ namespace Dan.Plugin.Kartverket.Clients
             if (addresses?.Adresser?.Count > 1)
             {
                 var matrikkelAddress = await _kartverketGrunnbokMatrikkelService.GetAddressForSection(int.Parse(property.HoldingNumber), int.Parse(property.SubholdingNumber), int.Parse(property.LeaseNumber), property.MunicipalityNumber, int.Parse(property.SectionNumber));
-                var address = addresses.Adresser?.SingleOrDefault(x => x.Adressetekst == matrikkelAddress);
-                
-                property.Address = address.Adressetekst;
-                property.PostalCode = address.Postnummer;
-                property.City = address.Poststed;
-                property.MunicipalityNumber = address.Kommunenummer;
-                property.Municipality = address.Kommunenavn;                
+                string tmp = string.Empty;
+
+                //Unit address contains H01234 as identifier
+                if (matrikkelAddress.Contains("-H"))
+                {
+                    var addressSplit = matrikkelAddress.Split("-");
+                    //Matrikkel returns address text with flat number as "H01234" - if this is the case we need to remove it to match the address with the geonorge results
+                    tmp = (addressSplit[1].Length == 5 && int.TryParse(addressSplit[1].Substring(1, 4), out _)) ? addressSplit[0] : matrikkelAddress;
+                } else
+                {
+                    tmp = matrikkelAddress;
+                }
+
+                if (tmp != string.Empty)
+                {
+                    var address = addresses.Adresser?.SingleOrDefault(x => x.Adressetekst == tmp);
+
+                    property.Address = address?.Adressetekst ?? string.Empty;
+                    property.PostalCode = address?.Postnummer ?? string.Empty;
+                    property.City = address?.Poststed ?? string.Empty;
+                    property.MunicipalityNumber = address?.Kommunenummer ?? string.Empty;
+                    property.Municipality = address?.Kommunenavn ?? string.Empty;
+                }             
+
             }
             else
             {

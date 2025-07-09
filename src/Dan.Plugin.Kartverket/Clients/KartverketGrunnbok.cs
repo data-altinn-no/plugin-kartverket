@@ -8,6 +8,8 @@ using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Kartverket.Grunnbok.IdentService;
+using Kartverket.Grunnbok.StoreService;
 
 namespace Dan.Plugin.Kartverket.Clients
 {
@@ -60,53 +62,34 @@ namespace Dan.Plugin.Kartverket.Clients
         }
 
         public async Task<string> GetAddressForSection(int gaardsNo, int bruksNo, int festeNo, string municipalityNo, int sectionNo)
-        {
-            var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(gaardsNo, bruksNo, festeNo, sectionNo, municipalityNo);
-            var bruksenhetid = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
-            var address = await _matrikkelBruksenhetService.GetAddressForBruksenhet(bruksenhetid.Value);
+        {            
+            try
+            {
+                var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(gaardsNo, bruksNo, festeNo, sectionNo, municipalityNo);
+                var test = await _matrikkelStoreClient.GetMatrikkelenhet(matrikkelenhetid.value);
+                var bruksenhetid = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
 
-            return address;
+                /*
+                if (bruksenhetid == null)
+                {
+                    var test2 = await _matrikkelStoreClient.GetMatrikkelenhetSeksjon(matrikkelenhetid.value);
+                    var test3 = await _matrikkelStoreClient.GetMatrikkelenhet(test2.seksjonertMatrikkelenhetIds.FirstOrDefault().value);
+                    var test4 = await _matrikkelBruksenhetService.GetBruksenheter(test2.seksjonertMatrikkelenhetIds.FirstOrDefault().value);
+                    var test5 = await _matrikkelBruksenhetService.GetAddressForBruksenhet(test4.Value);
+                    return test5;
+                } */
+                 return await _matrikkelBruksenhetService.GetAddressForBruksenhet(bruksenhetid.Value);             
+            }
+            catch (Exception ex)
+            {
+                //just return empty string - if getaddressforbruksenhet cannot find an address, the matrikkel service also returns an empty string
+                _logger.LogError(ex, "Kartverket::OED::Error getting address for section {gaardsNo}/{bruksNo}/{festeNo}/{municipalityNo}/{sectionNo}", gaardsNo, bruksNo, festeNo, municipalityNo, sectionNo);
+                return "";
+            }
         }
 
         public async Task<List<PropertyModel>> FindProperties(string identifier)
         {
-            #region oldcrap
-            //var heftelser = await _informasjonsServiceClientService.GetPawnStuff(props.id.value);
-            //var heftelser2 = await _informasjonsServiceClientService.GetHeftelser(props.id.value);
-            //var heftelser3 = await _informasjonsServiceClientService.GetRettsstiftelse("23123");
-
-            //var test = await _rettsstiftelseClientService.GetRettighetForRegisterenhet(props.id.value, props.kommuneId.value);
-            //var test = await _registerenhetsrettClientService.GetRetterForEnheter(props.id.value);
-
-            //var test2 = await _storeServiceClient.GetRegisterenhetsrett("3283960");
-
-            //var regrettandel = await _storeServiceClient.GetRettighetsandeler(testprop);
-
-            //var regrett = await _storeServiceClient.GetRegisterenhetsrett(regrettandel.registerenhetsrettId.value);
-
-            //var overfoeringstest = await _overfoeringsClientService.GetOverfoeringerTil(new List<string>() { regrett.id.value });
-
-            //var info = await GetMatrikkelStuffz(props);
-
-            //var testrettsstiftelse = await _storeServiceClient.GetRettsstiftelse("162519726");
-            //var testdokument = await _storeServiceClient.GetDokument("107217834");
-
-            //var resusdas = GetFromStoreService<Matrikkelenhet>()
-            //Get actual properties
-            //var kommuneIdMatrikkel = await _matrikkelKommuneClient.GetKommune(props.kommunenummer);
-
-            //var personidtest = await _matrikkelPersonClient.GetOrganization(identifier);
-            //var personTest = await _matrikkelenhetServiceClient.GetMatrikkelenheterForPerson(personidtest);
-
-            //var matrikkelenhetgrunnbok = await GetGrunnbokProperties(testprop);
-
-            //var matrikkelEnhet = await _matrikkelStoreClient.GetMatrikkelenhet(matrikkelenhetid.value);
-            //var matrikkelenhetmedteiger = await _matrikkelenhetServiceClient.GetMatrikkelEnhetMedTeiger(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer, matrikkelenhetgrunnbok.festenummer, matrikkelenhetgrunnbok.seksjonsnummer, kommune.Number);
-
-            //var matrikkelEnhet = matrikkelenhetmedteiger.bubbleObjects.OfType<Grunneiendom>().FirstOrDefault();
-            //var teiger = matrikkelenhetmedteiger.bubbleObjects.OfType<Teig>().Select(x=>x.lagretBeregnetAreal).ToList();
-            #endregion
-
             var result = new List<PropertyModel>();
 
             //Get grunnbok identifier for
