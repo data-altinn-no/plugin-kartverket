@@ -15,6 +15,7 @@ namespace Dan.Plugin.Kartverket.Clients
     {
         //public Task<KartverketResponse> Get(string ssn);
         public Task<List<PropertyModel>> FindProperties(string identifier);
+        public Task<string> GetAddressForSection(int gaardsNo, int bruksNo, int festeNo, string municipalityNo, int sectionNo);
     }
 
     public class KartverketGrunnbokMatrikkelService : IKartverketGrunnbokMatrikkelService
@@ -34,11 +35,12 @@ namespace Dan.Plugin.Kartverket.Clients
         private IInformasjonsServiceClientService _informasjonsServiceClientService;
         private IRegisterenhetsRettsandelsServiceClientService _regRettsandelsClientService;
         private IMatrikkelBygningClientService _matrikkelbygningClientService;
+        private IMatrikkelBruksenhetService _matrikkelBruksenhetService;
 
         public KartverketGrunnbokMatrikkelService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IIdentServiceClientService identService, IStoreServiceClientService storeService, IMatrikkelenhetClientService matrikkelService,
             IMatrikkelKommuneClientService matrikkelKommuneService, IMatrikkelStoreClientService matrikkelStoreService, IMatrikkelPersonClientService matrikkelPersonClientService, IOverfoeringServiceClientService overfoeringsClientService,
             IRettsstiftelseClientService rettsstiftelseClientService, IRegisterenhetsrettClientService registerenhetsrettClientService, IInformasjonsServiceClientService informasjonsServiceClientService, IRegisterenhetsRettsandelsServiceClientService regRettsandelsClientService,
-            IMatrikkelBygningClientService matrikkelbygningClientService)
+            IMatrikkelBygningClientService matrikkelbygningClientService, IMatrikkelBruksenhetService matrikkelBruksenhetService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger(this.GetType().FullName);
@@ -54,6 +56,16 @@ namespace Dan.Plugin.Kartverket.Clients
             _informasjonsServiceClientService = informasjonsServiceClientService;
             _regRettsandelsClientService = regRettsandelsClientService;
             _matrikkelbygningClientService = matrikkelbygningClientService;
+            _matrikkelBruksenhetService = matrikkelBruksenhetService;
+        }
+
+        public async Task<string> GetAddressForSection(int gaardsNo, int bruksNo, int festeNo, string municipalityNo, int sectionNo)
+        {
+            var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(gaardsNo, bruksNo, festeNo, sectionNo, municipalityNo);
+            var bruksenhetid = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
+            var address = await _matrikkelBruksenhetService.GetAddressForBruksenhet(bruksenhetid.Value);
+
+            return address;
         }
 
         public async Task<List<PropertyModel>> FindProperties(string identifier)

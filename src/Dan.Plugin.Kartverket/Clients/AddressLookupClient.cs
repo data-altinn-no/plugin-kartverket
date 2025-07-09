@@ -2,6 +2,7 @@ using Altinn.App.ExternalApi.AddressLookup;
 using Dan.Common.Exceptions;
 using Dan.Plugin.Kartverket.Config;
 using Dan.Plugin.Kartverket.Models;
+using Kartverket.Matrikkel.MatrikkelenhetService;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -12,6 +13,8 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Dan.Plugin.Kartverket.Clients;
+using Dan.Plugin.Kartverket.Clients.Matrikkel;
 
 namespace Dan.Plugin.Kartverket.Clients
 {
@@ -20,15 +23,19 @@ namespace Dan.Plugin.Kartverket.Clients
         public Task<KartverketResponse> Get(KartverketResponse kartverket);
     }
 
+
     public class AddressLookupClient : IAddressLookupClient
     {
         private readonly HttpClient _httpClient;
         private readonly ApplicationSettings _settings;
+        private IKartverketGrunnbokMatrikkelService _kartverketGrunnbokMatrikkelService;
 
-        public AddressLookupClient(IHttpClientFactory httpClientFactory, IOptions<ApplicationSettings> settings)
+
+        public AddressLookupClient(IHttpClientFactory httpClientFactory, IOptions<ApplicationSettings> settings, IKartverketGrunnbokMatrikkelService matrikkelService)
         {
             _httpClient = httpClientFactory.CreateClient("SafeHttpClient");
             _settings = settings.Value;
+            _kartverketGrunnbokMatrikkelService = matrikkelService;
         }
 
         public async Task<KartverketResponse> Get(KartverketResponse kartverket)
@@ -37,7 +44,7 @@ namespace Dan.Plugin.Kartverket.Clients
             foreach (Property property in kartverket.PropertyRights.Properties)
             {
                 properties.Add(property);
-                UpdateProperty(property, await SokAdresse(property));
+                await UpdateProperty(property, await SokAdresse(property));
             }
 
             kartverket.PropertyRights.Properties = properties;
@@ -46,7 +53,7 @@ namespace Dan.Plugin.Kartverket.Clients
             foreach (PropertyWithRights property in kartverket.PropertyRights.PropertiesWithRights)
             {
                 propertyWithRights.Add(property);
-                UpdateProperty(property, await SokAdresse(property));
+                await UpdateProperty(property, await SokAdresse(property));
             }
 
             kartverket.PropertyRights.PropertiesWithRights = propertyWithRights;
@@ -56,24 +63,36 @@ namespace Dan.Plugin.Kartverket.Clients
 
         private async Task<OutputAdresseList> SokAdresse(Property property)
         {
-            if (string.IsNullOrEmpty(property.MunicipalityNumber) || string.IsNullOrEmpty(property.SubholdingNumber) || string.IsNullOrEmpty(property.HoldingNumber))
+            HttpResponseMessage response = null;
+
+            var urlBuilder = new StringBuilder();
+            urlBuilder.Append(_settings.AddressLookupUrl).Append("/sok?");
+
+            if (!string.IsNullOrEmpty(property.MunicipalityNumber))
             {
-                return null;
+                urlBuilder.Append("kommunenummer=").Append(int.Parse(property.MunicipalityNumber).ToString("d4")).Append('&');               
+            }
+            if (!string.IsNullOrEmpty(property.Address))
+            {
+                urlBuilder.Append("adressetekst=").Append(property.Address).Append('&');
+            }
+            if (!string.IsNullOrEmpty(property.SubholdingNumber))
+            {
+                urlBuilder.Append("bruksnummer=").Append(property.SubholdingNumber).Append('&');
+            }
+            if (!string.IsNullOrEmpty(property.HoldingNumber))
+            {
+                urlBuilder.Append("gardsnummer=").Append(property.HoldingNumber).Append('&');
             }
 
-            HttpResponseMessage response = null;
+            if (!string.IsNullOrEmpty(property.LeaseNumber))
+            {
+                urlBuilder.Append("festenummer=").Append(Uri.EscapeDataString(property.LeaseNumber)).Append('&');
+            }                  
+            
             try
             {
-                var urlBuilder = new StringBuilder();
-                urlBuilder.Append(_settings.AddressLookupUrl).Append("/sok?");
-                urlBuilder.Append("kommunenummer=").Append(int.Parse(property.MunicipalityNumber).ToString("d4")).Append('&');
-                urlBuilder.Append("bruksnummer=").Append(property.SubholdingNumber).Append('&');
-                urlBuilder.Append("gardsnummer=").Append(property.HoldingNumber).Append('&');
-                if (!string.IsNullOrEmpty(property.LeaseNumber))
-                {
-                    urlBuilder.Append("festenummer=").Append(Uri.EscapeDataString(property.LeaseNumber)).Append('&');
-                }
-
+                urlBuilder.Append("treffPerSide=100").Append('&');
                 urlBuilder.Length--;
 
                 response = await _httpClient.GetAsync(urlBuilder.ToString());
@@ -81,16 +100,17 @@ namespace Dan.Plugin.Kartverket.Clients
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                    {
-                        return JsonConvert.DeserializeObject<OutputAdresseList>(responseData);
-                    }
+                        {
+                            return JsonConvert.DeserializeObject<OutputAdresseList>(responseData);
+                        }
                     default:
-                    {
-                        throw new EvidenceSourcePermanentClientException(Metadata.ERROR_CCR_UPSTREAM_ERROR,
-                            $"External API call to Geonorge failed ({(int)response.StatusCode} - {response.StatusCode})" + (string.IsNullOrEmpty(responseData) ? string.Empty : $", details: {responseData}"));
-                    }
+                        {
+                            throw new EvidenceSourcePermanentClientException(Metadata.ERROR_CCR_UPSTREAM_ERROR,
+                                $"External API call to Geonorge failed ({(int)response.StatusCode} - {response.StatusCode})" + (string.IsNullOrEmpty(responseData) ? string.Empty : $", details: {responseData}"));
+                        }
                 }
             }
+
             catch (HttpRequestException e)
             {
                 throw new EvidenceSourcePermanentServerException(Metadata.ERROR_CCR_UPSTREAM_ERROR, null, e);
@@ -98,20 +118,35 @@ namespace Dan.Plugin.Kartverket.Clients
             finally
             {
                 response?.Dispose();
-            }
+            }            
         }
 
-        private void UpdateProperty(Property property, OutputAdresseList addresses)
+        private async Task UpdateProperty(Property property, OutputAdresseList addresses)
         {
             //TODO: Should this use 'FirstOrDefault'? (ex. Myrdalsvegen)
-            OutputAdresse address = addresses?.Adresser?.FirstOrDefault();
-            if (address != null)
+
+            if (addresses?.Adresser?.Count > 1)
             {
+                var matrikkelAddress = await _kartverketGrunnbokMatrikkelService.GetAddressForSection(int.Parse(property.HoldingNumber), int.Parse(property.SubholdingNumber), int.Parse(property.LeaseNumber), property.MunicipalityNumber, int.Parse(property.SectionNumber));
+                var address = addresses.Adresser?.SingleOrDefault(x => x.Adressetekst == matrikkelAddress);
+                
                 property.Address = address.Adressetekst;
                 property.PostalCode = address.Postnummer;
                 property.City = address.Poststed;
                 property.MunicipalityNumber = address.Kommunenummer;
-                property.Municipality = address.Kommunenavn;
+                property.Municipality = address.Kommunenavn;                
+            }
+            else
+            {
+                OutputAdresse address = addresses?.Adresser?.FirstOrDefault();
+                if (address != null)
+                {
+                    property.Address = address.Adressetekst;
+                    property.PostalCode = address.Postnummer;
+                    property.City = address.Poststed;
+                    property.MunicipalityNumber = address.Kommunenummer;
+                    property.Municipality = address.Kommunenavn;
+                }               
             }
         }
     }
