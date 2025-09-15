@@ -1,38 +1,37 @@
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Config;
+using Kartverket.Matrikkel.AdresseService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using Kartverket.Matrikkel.BruksenhetService;
 
 namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 {
-    public class MatrikkelBruksenhetService : IMatrikkelBruksenhetService
+    public class MatrikkelAdresseClientService : IMatrikkelAdresseClientService
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
 
-        private BruksenhetServiceClient _client;
+        private AdresseServiceClient _client;
 
-        public MatrikkelBruksenhetService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public MatrikkelAdresseClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
         {
             _settings = settings.Value;
-            _logger = factory.CreateLogger<MatrikkelBruksenhetService>();
+            _logger = factory.CreateLogger<MatrikkelAdresseClientService>();
 
             //Find ident for identifier
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
 
-            _client = new BruksenhetServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "BruksenhetServiceWS"));
+            _client = new AdresseServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "AdresseServiceWS"));
             GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
         }
 
-        public async Task<BruksenhetId[]> GetBruksenheter(long matrikkelEnhetId)
+        public async Task<AdresseId[]> GetAdresserForMatrikkelenhet(long matrikkelEnhetId)
         {
-            var request = new findBruksenheterForMatrikkelenhetRequest
+            var request = new findAdresserForMatrikkelenhetRequest
             {
                 matrikkelContext = GetContext(),
                 matrikkelenhetId = new MatrikkelenhetId() { value = matrikkelEnhetId }
@@ -40,7 +39,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                var response = await _client.findBruksenheterForMatrikkelenhetAsync(request);
+                var response = await _client.findAdresserForMatrikkelenhetAsync(request);
                 var result = response.@return;
 
                 return result;
@@ -48,30 +47,32 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return Array.Empty<BruksenhetId>();
-            }           
+                return Array.Empty<AdresseId>();
+            }
         }
 
-        public async Task<string> GetAddressForBruksenhet(long bruksenhetId)
+        public async Task<AdresseId[]> FindAdresser(string adresseNavn, string kommuneNo)
         {
-            var request = new findOffisiellAdresseForBruksenhetRequest
+            var request = new findAdresserRequest
             {
                 matrikkelContext = GetContext(),
-                bruksenhetId = new BruksenhetId { value = bruksenhetId }
+                adressesokModel = new AdressesokModel()
+                {
+                    adressenavn = adresseNavn,
+                    kommunenummer = kommuneNo
+                }
             };
-
             try
             {
-                var response = await _client.findOffisiellAdresseForBruksenhetAsync(request);
+                var response = await _client.findAdresserAsync(request);
                 return response.@return;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return string.Empty;
+                return null;
             }
         }
-
         private MatrikkelContext GetContext()
         {
             DateTime SNAPSHOT_VERSJON_DATO = new DateTime(9999, 1, 1, 0, 0, 0);
@@ -94,9 +95,9 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         }
     }
 
-    public interface IMatrikkelBruksenhetService
+    public interface IMatrikkelAdresseClientService
     {
-        Task<BruksenhetId[]> GetBruksenheter(long matrikkelEnhetId);
-        Task<string> GetAddressForBruksenhet(long bruksenhetId);
+        Task<AdresseId[]> GetAdresserForMatrikkelenhet(long matrikkelEnhetId);
+        Task<AdresseId[]> FindAdresser(string adresseNavn, string kommuneNo);
     }
 }

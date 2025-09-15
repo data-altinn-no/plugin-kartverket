@@ -1,4 +1,5 @@
 using Dan.Common;
+using Dan.Common.Extensions;
 using Dan.Common.Models;
 using Dan.Common.Util;
 using Dan.Plugin.Kartverket.Clients;
@@ -40,6 +41,17 @@ namespace Dan.Plugin.Kartverket
             return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesGrunnbok(evidenceHarvesterRequest));
         }
 
+        [Function("Eiendomsadresser")]
+        public async Task<HttpResponseData> Eiendomsadresser(
+    [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequestData req, FunctionContext context)
+        {
+            _logger.LogInformation("Running func 'Eiendomsadresser'");
+            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
+
+            return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesEiendomsadresser(evidenceHarvesterRequest));
+        }
+
         [Function("Eiendommer")]
         public async Task<HttpResponseData> Eiendommer(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequestData req,
@@ -74,6 +86,32 @@ namespace Dan.Plugin.Kartverket
             catch (Exception e)
             {
                 _logger.LogError($"Func 'Grunnbok' failed for input '{(evidenceHarvesterRequest.SubjectParty.GetAsString())}': {e.Message}");
+
+                throw;
+            }
+        }
+
+        private async Task<List<EvidenceValue>> GetEvidenceValuesEiendomsadresser(EvidenceHarvesterRequest evidenceHarvesterRequest)
+        {
+            try
+            {
+                var ecb = new EvidenceBuilder(new Metadata(), "Eiendomsadresser");
+
+                evidenceHarvesterRequest.TryGetParameter("Gnr", out int gnr);
+                evidenceHarvesterRequest.TryGetParameter("Gnr", out int bnr);
+                evidenceHarvesterRequest.TryGetParameter("Gnr", out int fnr);
+                evidenceHarvesterRequest.TryGetParameter("Gnr", out int snr);
+                evidenceHarvesterRequest.TryGetParameter("Gnr", out string knr);
+
+                var result = await _ddWrapper.GetDDAdresser(gnr, bnr, fnr, snr, knr);
+
+                ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
+
+                return ecb.GetEvidenceValues();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Func 'Eiendomsadresser' failed: {e.Message}");
 
                 throw;
             }

@@ -34,6 +34,7 @@ var host = new HostBuilder()
             services.AddScoped<IInformasjonsServiceClientService, InformasjonsServiceClientService>();
             services.AddScoped<IMatrikkelBygningClientService, MatrikkelBygningClientService>();
             services.AddScoped<IMatrikkelBruksenhetService, MatrikkelBruksenhetService>();
+            services.AddScoped<IMatrikkelAdresseClientService, MatrikkelAdresseClientService>();
 
             //KartverketClient
             services.AddMaskinportenHttpClient<KeyVaultMaskinportenClientDefinition, KartverketClient>(configurationRoot.GetSection("MPKartverket"),
