@@ -21,6 +21,7 @@ namespace Dan.Plugin.Kartverket.Clients
     public interface IAddressLookupClient
     {
         public Task<KartverketResponse> Get(KartverketResponse kartverket);
+        public Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo);
     }
 
 
@@ -59,6 +60,59 @@ namespace Dan.Plugin.Kartverket.Clients
             kartverket.PropertyRights.PropertiesWithRights = propertyWithRights;
 
             return kartverket;
+        }
+
+        public async Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo)
+        {
+            HttpResponseMessage response = null;
+
+            var urlBuilder = new StringBuilder();
+            urlBuilder.Append(_settings.AddressLookupUrl).Append("/sok?");
+            urlBuilder.Append("&fuzzy=false").Append("&");
+
+
+            if (!string.IsNullOrEmpty(municipalityNo))
+            {
+                urlBuilder.Append("kommunenummer=").Append(int.Parse(municipalityNo).ToString("d4")).Append('&');
+            }
+            if (!string.IsNullOrEmpty(address))
+            {
+                urlBuilder.Append("adressetekst=").Append(address).Append('&');
+            }
+            if (!string.IsNullOrEmpty(flatNo))
+            {
+                urlBuilder.Append("bruksenhetsnummer=").Append(flatNo).Append('&');
+            }
+
+            try
+            {
+                urlBuilder.Append("treffPerSide=100").Append('&');
+                urlBuilder.Length--;
+
+                response = await _httpClient.GetAsync(urlBuilder.ToString());
+                var responseData = await response.Content.ReadAsStringAsync();
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.OK:
+                        {
+                            return JsonConvert.DeserializeObject<OutputAdresseList>(responseData);
+                        }
+                    default:
+                        {
+                            throw new EvidenceSourcePermanentClientException(Metadata.ERROR_CCR_UPSTREAM_ERROR,
+                                $"External API call to Geonorge failed ({(int)response.StatusCode} - {response.StatusCode})" + (string.IsNullOrEmpty(responseData) ? string.Empty : $", details: {responseData}"));
+                        }
+                }
+            }
+
+            catch (HttpRequestException e)
+            {
+                throw new EvidenceSourcePermanentServerException(Metadata.ERROR_CCR_UPSTREAM_ERROR, null, e);
+            }
+            finally
+            {
+                response?.Dispose();
+            }
         }
 
         private async Task<OutputAdresseList> SokAdresse(Property property)

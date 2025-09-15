@@ -76,6 +76,81 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             return (Seksjon)response.@return;
         }
 
+        public async Task<Adresse> GetAdresse(long ident)
+        {
+            getObjectResponse response = null;
+
+            var request = new getObjectRequest()
+            {
+                matrikkelContext = GetContext(),
+                id = new AdresseId()
+                {
+                    value = ident
+                }
+            };
+
+            try
+            {
+                response = await _client.getObjectAsync(request);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+
+            return (Adresse)response.@return;
+        }
+
+        public async Task<Veg> GetVeg(long ident)
+        {
+            getObjectResponse response = null;
+
+            var request = new getObjectRequest()
+            {
+                matrikkelContext = GetContext(),
+                id = new VegId()
+                {
+                    value = ident
+                }
+            };
+
+            try
+            {
+                response = await _client.getObjectAsync(request);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+
+            return (Veg)response.@return;
+        }
+
+        public async Task<Krets> GetKrets(long ident)
+        {
+            getObjectResponse response = null;
+
+            var request = new getObjectRequest()
+            {
+                matrikkelContext = GetContext(),
+                id = new KretsId()
+                {
+                    value = ident
+                }
+            };
+
+            try
+            {
+                response = await _client.getObjectAsync(request);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+
+            return (Krets)response.@return;
+        }
+
         public async Task<Bygning> GetBygning(long bygningId)
         {
             Bygning result = null;
@@ -100,6 +175,31 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             return result;
 
+        }
+
+        public async Task<Bruksenhet> GetBruksenhet(long ident)
+        {
+            Bruksenhet result = null;
+            var request = new getObjectRequest()
+            {
+                matrikkelContext = GetContext(),
+                id = new BruksenhetId()
+                {
+                    value = ident
+                }
+            };
+
+            try
+            {
+                var response = await _client.getObjectAsync(request);
+                result = (Bruksenhet)response.@return;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+
+            return result;
         }
 
         private MatrikkelContext GetContext()
@@ -129,5 +229,13 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public Task<Matrikkelenhet> GetMatrikkelenhet(long ident);
         public Task<Bygning> GetBygning(long bygningId);
         public Task<Seksjon> GetMatrikkelenhetSeksjon(long ident);
+
+        public Task<Adresse> GetAdresse(long ident);
+
+        public Task<Veg> GetVeg(long ident);
+
+        public Task<Krets> GetKrets(long ident);
+
+        public Task<Bruksenhet> GetBruksenhet(long ident);
     }
 }

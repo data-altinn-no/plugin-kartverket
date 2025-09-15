@@ -1,4 +1,5 @@
 using Altinn.Dan.Plugin.Kartverket.Clients;
+using Dan.Common.Models;
 using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Config;
 using Dan.Plugin.Kartverket.Models;
@@ -13,6 +14,7 @@ namespace Dan.Plugin.Kartverket
     public interface IDDWrapper
     {
         public Task<KartverketResponse> GetDDGrunnbok(string ssn);
+        public Task<KartverketResponse> GetDDAdresser(int gnr, int bnr, int festenr, int seksjonsnr, string kommunenummer);
     }
 
     public class DDWrapper : IDDWrapper
@@ -22,32 +24,64 @@ namespace Dan.Plugin.Kartverket
         private readonly IAddressLookupClient _geonorgeClient;
         private readonly ILogger _logger;
         private readonly ApplicationSettings _settings;
+        private readonly IKartverketGrunnbokMatrikkelService _kartverketGrunnbokMatrikkelService;
 
-        public DDWrapper(LandbrukClient landbrukClient, KartverketClient kartverketClient, IAddressLookupClient geoNorgeClient, ILogger<DDWrapper> logger, IOptions<ApplicationSettings> settings)
+        public DDWrapper(LandbrukClient landbrukClient, KartverketClient kartverketClient, IAddressLookupClient geoNorgeClient, ILogger<DDWrapper> logger, IOptions<ApplicationSettings> settings, IKartverketGrunnbokMatrikkelService kartverketGrunnbokMatrikkelService)
         {
             _landbrukClient = landbrukClient;
             _logger = logger;
             _geonorgeClient = geoNorgeClient;
             _kartverketClient = kartverketClient;
             _settings = settings.Value;
+            _kartverketGrunnbokMatrikkelService = kartverketGrunnbokMatrikkelService;
         }
 
         public async Task<KartverketResponse> GetDDGrunnbok(string ssn)
         {
+
+            var props = await _kartverketClient.FindRegisterenhetsrettsandelerForPerson(ssn);
+            var propsWithRights = await _kartverketClient.FindRettigheterForPerson(ssn);
+
             var grunnbokResponse = new KartverketResponse
             {
                 PropertyRights = new PropertyRights
                 {
-                    Properties = await MapToInternal(await _kartverketClient.FindRegisterenhetsrettsandelerForPerson(ssn)),
-                    PropertiesWithRights = await MapToInternal(await _kartverketClient.FindRettigheterForPerson(ssn))
+                    Properties = await MapToInternal(props),
+                    PropertiesWithRights = await MapToInternal(propsWithRights)
                 }
-            };  
+            };
 
-            return await _geonorgeClient.Get(await _landbrukClient.Get(grunnbokResponse));
+            //return await _geonorgeClient.Get(await _landbrukClient.Get(grunnbokResponse));
+            return await _kartverketGrunnbokMatrikkelService.GetAddresses(await _landbrukClient.Get(grunnbokResponse));
         }
+
+        public async Task<KartverketResponse> GetDDAdresser(int gnr, int bnr, int festenr, int seksjonsnr, string kommunenummer)
+        {
+            var kartverketInput = new KartverketResponse
+            {
+                PropertyRights = new PropertyRights
+                {
+                    Properties = new List<Property>
+                    {
+                        new Property
+                        {
+                            HoldingNumber = gnr.ToString(),
+                            SubholdingNumber = bnr.ToString(),
+                            LeaseNumber = festenr == 0 ? null : festenr.ToString(),
+                            SectionNumber = seksjonsnr == 0 ? null : seksjonsnr.ToString(),
+                            MunicipalityNumber = kommunenummer
+                        }
+                    }
+                }
+            };
+            return await _kartverketGrunnbokMatrikkelService.GetAddresses(kartverketInput);
+        }
+     
 
         private async Task<IEnumerable<Property>> MapToInternal(RegisterenhetsrettsandelerResponse registerenhetsrettResponse)
         {
+
+            string a = "";
             var res = registerenhetsrettResponse
                 .Registerenhetsrettsandeler
                 .Select(async x =>                
@@ -117,9 +151,17 @@ namespace Dan.Plugin.Kartverket
             else if (unit is Borettslagsandel hoaUnit)
             {
                 var borettslag = await _kartverketClient.FindAdresseForBorettslagsandel(hoaUnit.Borettslag?.Organisasjonsnummer, hoaUnit.Andelsnummer);
+
+                var address = borettslag?.Adresse.Vegadresse.Adressenavn + " " + borettslag?.Adresse.Vegadresse.Husnummer + borettslag?.Adresse?.Vegadresse?.Bokstav;
+
                 property.Address = borettslag?.Adresse.Vegadresse.Adressenavn + " " + borettslag?.Adresse.Vegadresse.Husnummer + borettslag?.Adresse?.Vegadresse?.Bokstav;
                 property.MunicipalityNumber = borettslag?.Adresse.Vegadresse.Kommune.Kommunenummer;
-                property.Municipality = borettslag?.Adresse.Vegadresse.Kommune.Navn;               
+                property.Municipality = borettslag?.Adresse.Vegadresse.Kommune.Navn;
+
+                var postalcodes = await _geonorgeClient.Search(address, borettslag?.Adresse.Vegadresse.Kommune.Kommunenummer, borettslag?.Adresse.Vegadresse.Bolignummer);
+
+                property.PostalCode = postalcodes?.Adresser?.FirstOrDefault()?.Postnummer;
+                property.City = postalcodes?.Adresser?.FirstOrDefault()?.Poststed;
             }
 
             return property;
