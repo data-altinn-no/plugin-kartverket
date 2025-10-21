@@ -19,6 +19,8 @@ namespace Dan.Plugin.Kartverket.Models
     {
         public string Address { get; set; }
 
+        public List<string> AddressList { get; set; }
+
         public string City { get; set; }
 
         public string PostalCode { get; set; }

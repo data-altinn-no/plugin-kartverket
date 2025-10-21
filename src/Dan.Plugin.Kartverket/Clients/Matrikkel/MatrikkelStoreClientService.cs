@@ -202,6 +202,31 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             return result;
         }
 
+        public async Task<Kommune> GetKommune(long ident)
+        {
+            Kommune result = null;
+            var request = new getObjectRequest()
+            {
+                matrikkelContext = GetContext(),
+                id = new KommuneId()
+                {
+                    value = ident
+                }
+            };
+
+            try
+            {
+                var response = await _client.getObjectAsync(request);
+                result = (Kommune)response.@return;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+
+            return result;
+        }
+
         private MatrikkelContext GetContext()
         {
             DateTime SNAPSHOT_VERSJON_DATO = new DateTime(9999, 1, 1, 0, 0, 0);
@@ -237,5 +262,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public Task<Krets> GetKrets(long ident);
 
         public Task<Bruksenhet> GetBruksenhet(long ident);
+
+        public Task<Kommune> GetKommune(long ident);
     }
 }

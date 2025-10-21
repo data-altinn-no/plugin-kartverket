@@ -13,8 +13,8 @@ namespace Dan.Plugin.Kartverket
 {
     public interface IDDWrapper
     {
-        public Task<KartverketResponse> GetDDGrunnbok(string ssn);
-        public Task<KartverketResponse> GetDDAdresser(int gnr, int bnr, int festenr, int seksjonsnr, string kommunenummer);
+        public Task<KartverketResponse> GetDDGrunnbok(string ssn, bool addressLookup = true);
+        public Task<KartverketResponse> GetDDAdresser(int gnr, int bnr, int festenr, int seksjonsnr, string kommunenummer, bool single=false);
     }
 
     public class DDWrapper : IDDWrapper
@@ -36,7 +36,7 @@ namespace Dan.Plugin.Kartverket
             _kartverketGrunnbokMatrikkelService = kartverketGrunnbokMatrikkelService;
         }
 
-        public async Task<KartverketResponse> GetDDGrunnbok(string ssn)
+        public async Task<KartverketResponse> GetDDGrunnbok(string ssn, bool addressLookup = true)
         {
 
             var props = await _kartverketClient.FindRegisterenhetsrettsandelerForPerson(ssn);
@@ -51,11 +51,13 @@ namespace Dan.Plugin.Kartverket
                 }
             };
 
-            //return await _geonorgeClient.Get(await _landbrukClient.Get(grunnbokResponse));
-            return await _kartverketGrunnbokMatrikkelService.GetAddresses(await _landbrukClient.Get(grunnbokResponse));
+            if (addressLookup)
+                return await _kartverketGrunnbokMatrikkelService.GetAddresses(await _landbrukClient.Get(grunnbokResponse));
+            else
+                return await _landbrukClient.Get(grunnbokResponse);
         }
 
-        public async Task<KartverketResponse> GetDDAdresser(int gnr, int bnr, int festenr, int seksjonsnr, string kommunenummer)
+        public async Task<KartverketResponse> GetDDAdresser(int gnr, int bnr, int festenr, int seksjonsnr, string kommunenummer, bool single=false)
         {
             var kartverketInput = new KartverketResponse
             {
@@ -71,10 +73,11 @@ namespace Dan.Plugin.Kartverket
                             SectionNumber = seksjonsnr == 0 ? null : seksjonsnr.ToString(),
                             MunicipalityNumber = kommunenummer
                         }
-                    }
-                }
+                    },
+                    PropertiesWithRights = new List<PropertyWithRights>()
+                }                
             };
-            return await _kartverketGrunnbokMatrikkelService.GetAddresses(kartverketInput);
+            return await _kartverketGrunnbokMatrikkelService.GetAddresses(kartverketInput, single);
         }
      
 
@@ -135,9 +138,10 @@ namespace Dan.Plugin.Kartverket
             var property = new Property
             {
                 Type = registerenhetsRett?.Registerenhetsrettstype?.Navn,
-                Address = isTestEnv ? "Testveien 8" : null,
-                City = isTestEnv ? "Testeby" : null,
-                PostalCode = isTestEnv ? "0256" : null,
+                Address =  null,
+                City = null,
+                PostalCode = null,
+                AddressList = new List<string>()
             };
             if (unit is Matrikkelenhet cadastreUnit)
             {
@@ -155,10 +159,13 @@ namespace Dan.Plugin.Kartverket
                 var address = borettslag?.Adresse.Vegadresse.Adressenavn + " " + borettslag?.Adresse.Vegadresse.Husnummer + borettslag?.Adresse?.Vegadresse?.Bokstav;
 
                 property.Address = borettslag?.Adresse.Vegadresse.Adressenavn + " " + borettslag?.Adresse.Vegadresse.Husnummer + borettslag?.Adresse?.Vegadresse?.Bokstav;
+                property.AddressList.Add(property.Address);
                 property.MunicipalityNumber = borettslag?.Adresse.Vegadresse.Kommune.Kommunenummer;
                 property.Municipality = borettslag?.Adresse.Vegadresse.Kommune.Navn;
 
                 var postalcodes = await _geonorgeClient.Search(address, borettslag?.Adresse.Vegadresse.Kommune.Kommunenummer, borettslag?.Adresse.Vegadresse.Bolignummer);
+                if (postalcodes?.Adresser?.Count > 1)
+                    _logger.LogWarning($"Geonorge returned multiple addresses for {0}/{1}/{2}", address, borettslag?.Adresse.Vegadresse.Kommune.Kommunenummer, borettslag?.Adresse.Vegadresse.Bolignummer);
 
                 property.PostalCode = postalcodes?.Adresser?.FirstOrDefault()?.Postnummer;
                 property.City = postalcodes?.Adresser?.FirstOrDefault()?.Poststed;

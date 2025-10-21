@@ -126,10 +126,39 @@ namespace Dan.Plugin.Kartverket
                         {
                             EvidenceParamName = "Knr",
                             ParamType = EvidenceParamType.String,
-                            Required = true
+                            Required = true,
                         },
+                        new EvidenceParameter
+                        {
+                            EvidenceParamName = "Enkeltadresse",
+                            ParamType = EvidenceParamType.Boolean,
+                            Required = false                            
+                        }
                     }
-                }
+                },
+                new EvidenceCode()
+                {
+                    EvidenceCodeName = "GrunnbokRettigheter",
+                    EvidenceSource = SOURCE,
+                    BelongsToServiceContexts = new List<string>() { SERIVCECONTEXT_OED },
+                    RequiredScopes = "",
+                    Values = new List<EvidenceValue>
+                    {
+                        new()
+                        {
+                            EvidenceValueName = "default",
+                            ValueType = EvidenceValueType.JsonSchema,
+                            JsonSchemaDefintion = JsonSchema.FromType<KartverketResponse>().ToJson(Formatting.Indented)
+                        }
+                    },
+                    AuthorizationRequirements = new List<Requirement>
+                    {
+                        new MaskinportenScopeRequirement
+                        {
+                            RequiredScopes = new List<string> { "altinn:dataaltinnno/oed" }
+                        }
+                    }
+                },
             };
         }
     }

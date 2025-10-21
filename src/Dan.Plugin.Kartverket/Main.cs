@@ -41,6 +41,18 @@ namespace Dan.Plugin.Kartverket
             return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesGrunnbok(evidenceHarvesterRequest));
         }
 
+        [Function("GrunnbokRettigheter")]
+        public async Task<HttpResponseData> GrunnbokRettigheter(
+    [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequestData req,
+    FunctionContext context)
+        {
+            _logger.LogInformation("Running func 'Grunnbok'");
+            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
+
+            return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesGrunnbokRettigheter(evidenceHarvesterRequest));
+        }
+
         [Function("Eiendomsadresser")]
         public async Task<HttpResponseData> Eiendomsadresser(
     [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequestData req, FunctionContext context)
@@ -91,6 +103,24 @@ namespace Dan.Plugin.Kartverket
             }
         }
 
+        private async Task<List<EvidenceValue>> GetEvidenceValuesGrunnbokRettigheter(EvidenceHarvesterRequest evidenceHarvesterRequest)
+        {
+            try
+            {
+                var ecb = new EvidenceBuilder(new Metadata(), "Grunnbok");
+                var result = await _ddWrapper.GetDDGrunnbok(evidenceHarvesterRequest.SubjectParty.NorwegianSocialSecurityNumber, false);
+                ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
+
+                return ecb.GetEvidenceValues();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Func 'Grunnbok' failed for input '{(evidenceHarvesterRequest.SubjectParty.GetAsString())}': {e.Message}");
+
+                throw;
+            }
+        }
+
         private async Task<List<EvidenceValue>> GetEvidenceValuesEiendomsadresser(EvidenceHarvesterRequest evidenceHarvesterRequest)
         {
             try
@@ -98,10 +128,11 @@ namespace Dan.Plugin.Kartverket
                 var ecb = new EvidenceBuilder(new Metadata(), "Eiendomsadresser");
 
                 evidenceHarvesterRequest.TryGetParameter("Gnr", out int gnr);
-                evidenceHarvesterRequest.TryGetParameter("Gnr", out int bnr);
-                evidenceHarvesterRequest.TryGetParameter("Gnr", out int fnr);
-                evidenceHarvesterRequest.TryGetParameter("Gnr", out int snr);
-                evidenceHarvesterRequest.TryGetParameter("Gnr", out string knr);
+                evidenceHarvesterRequest.TryGetParameter("Bnr", out int bnr);
+                evidenceHarvesterRequest.TryGetParameter("Fnr", out int fnr);
+                evidenceHarvesterRequest.TryGetParameter("Snr", out int snr);
+                evidenceHarvesterRequest.TryGetParameter("Knr", out string knr);
+                evidenceHarvesterRequest.TryGetParameter("Enkeltadresse", out bool single);
 
                 var result = await _ddWrapper.GetDDAdresser(gnr, bnr, fnr, snr, knr);
 
