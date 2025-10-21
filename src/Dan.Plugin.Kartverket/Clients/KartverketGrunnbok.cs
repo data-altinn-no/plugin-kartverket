@@ -141,7 +141,7 @@ namespace Dan.Plugin.Kartverket.Clients
                 if (adresse is Vegadresse roadAddress)
                 {                   
                     var veg = await _matrikkelStoreClient.GetVeg(roadAddress.vegId.value);
-                    var tmpAddress = veg.adressenavn + " " + roadAddress.nummer;
+                    var tmpAddress = veg.adressenavn + " " + roadAddress.nummer + roadAddress.bokstav;
 
                     if (!string.IsNullOrEmpty(tmpAddress))
                     {
@@ -189,7 +189,7 @@ namespace Dan.Plugin.Kartverket.Clients
                     var vegId = ((Vegadresse)matrikkelAdress).vegId.value;
                     var veg = await _matrikkelStoreClient.GetVeg(vegId);
 
-                    var tmpadress = veg.adressenavn + " " + roadAddress.nummer;
+                    var tmpadress = veg.adressenavn + " " + roadAddress.nummer + roadAddress.bokstav;
                     if (!string.IsNullOrEmpty(tmpadress))
                     {
                         if (!addressList.Contains(tmpadress))
