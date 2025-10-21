@@ -3,6 +3,7 @@
         "Properties": [
             {
                 "Address": null,
+                "AddressList" :  null,
                 "City": null,
                 "PostalCode": null,
                 "Type": null,
@@ -17,6 +18,7 @@
             },
             {
                 "Address": null,
+                "AddressList": null,
                 "City": null,
                 "PostalCode": null,
                 "Type": null,
@@ -34,6 +36,7 @@
             {
                 "Rights": null,
                 "Address": null,
+                "AddressList": null,
                 "City": null,
                 "PostalCode": null,
                 "Type": null,
@@ -49,6 +52,7 @@
             {
                 "Rights": null,
                 "Address": null,
+                "AddressList": null,
                 "City": null,
                 "PostalCode": null,
                 "Type": null,
