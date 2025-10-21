@@ -5,20 +5,16 @@
 
 version: 2
 
-multi-ecosystem-groups:
-  infrastructure:
-    schedule:
-      interval: "weekly"
-      
 updates:
   - package-ecosystem: "nuget" # See documentation for possible values
     directory: "/" # Location of package manifests
     patterns: ["*"]
-    multi-ecosystem-group: "nuget upgrades"
-
+    schedule:
+      interval: "weekly"
 
   - package-ecosystem: "github-actions" # See documentation for possible values
     directory: "/" # Location of package manifests
     patterns: ["*"]
-    multi-ecosystem-group: "github actions"
+    schedule:
+      interval: "daily"
 
