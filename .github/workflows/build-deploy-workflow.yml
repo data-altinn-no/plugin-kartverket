@@ -10,7 +10,12 @@ on:
 
 jobs:
  run:
+  # Pinning to commit d08132e for stability; this commit includes bugfixes for deployment issues as of 2024-06-01
    uses: data-altinn-no/deploy-actions/.github/workflows/dan-deploy-flow.yml@d08132e
+   permissions:
+    actions: read
+    contents: read
+    security-events: write
    with:
      artifact_name: 'dan-plugin-kartverket' # Can be omitted, defaults to 'artifact'
      function_project_path: 'src/Dan.Plugin.Kartverket'
