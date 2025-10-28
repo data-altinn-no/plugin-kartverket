@@ -134,7 +134,7 @@ namespace Dan.Plugin.Kartverket
                 evidenceHarvesterRequest.TryGetParameter("Knr", out string knr);
                 evidenceHarvesterRequest.TryGetParameter("Enkeltadresse", out bool single);
 
-                var result = await _ddWrapper.GetDDAdresser(gnr, bnr, fnr, snr, knr);
+                var result = await _ddWrapper.GetDDAdresser(gnr, bnr, fnr, snr, knr, single);
 
                 ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
 
