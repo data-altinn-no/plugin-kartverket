@@ -98,6 +98,7 @@ namespace Dan.Plugin.Kartverket.Clients
             int gnr, bnr, fnr, snr = 0;
             long knr = 0;
 
+            //parse property numbers as kartverket expects integers
             Int32.TryParse(property.HoldingNumber, out gnr);
             Int32.TryParse(property.SubholdingNumber, out bnr);
             Int32.TryParse(property.LeaseNumber, out fnr);
@@ -127,9 +128,7 @@ namespace Dan.Plugin.Kartverket.Clients
 
                 //Matrikkelenhet does not exist so we can just abort the process
                 if (matrikkelenhetid?.value == null || matrikkelenhetid.value == 0)
-                    return;
-
-                //var matrikkelenhet = await _matrikkelStoreClient.GetMatrikkelenhet(matrikkelenhetid.value);           
+                    return;      
 
                 var bruksenhetider = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
 
@@ -217,17 +216,19 @@ namespace Dan.Plugin.Kartverket.Clients
                     }
                 }
                 _logger.LogInformation($"Found {addressList.Count} addresses for property gnr = {gnr}, bnr = {bnr}, fnr = {fnr}, snr = {snr}, knr = {property.MunicipalityNumber}");
-               
 
-                if (singleAddress && addressList.Count > 1)
+                //if consumer only wants a single address, return the first one found and avoid concatinating multiple addresses
+                if (singleAddress)
                 {
                     property.AddressList.Add(addressList[0]);
                     property.Address = addressList[0];
+                    property.HasMoreAddresses = (addressList.Count > 1);
                 }                        
                 else
                 {
                     property.Address = string.Join(", ", addressList);
                     property.AddressList = addressList;
+                    property.HasMoreAddresses = false;
                 }
             }
             catch (Exception ex)

@@ -43,6 +43,15 @@ namespace Dan.Plugin.Kartverket
                             JsonSchemaDefintion = JsonSchema.FromType<KartverketResponse>().ToJson(Formatting.Indented)
                         }
                     },
+                    Parameters = new List<EvidenceParameter>()
+                    {
+                        new EvidenceParameter
+                        {
+                            EvidenceParamName = "Enkeltadresse",
+                            ParamType = EvidenceParamType.Boolean,
+                            Required = false
+                        }
+                    },
                     AuthorizationRequirements = new List<Requirement>
                     {
                         new MaskinportenScopeRequirement

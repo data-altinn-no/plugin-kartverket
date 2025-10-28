@@ -13,7 +13,7 @@ namespace Dan.Plugin.Kartverket
 {
     public interface IDDWrapper
     {
-        public Task<KartverketResponse> GetDDGrunnbok(string ssn, bool addressLookup = true);
+        public Task<KartverketResponse> GetDDGrunnbok(string ssn, bool addressLookup = true, bool singleAddress = false);
         public Task<KartverketResponse> GetDDAdresser(int gnr, int bnr, int festenr, int seksjonsnr, string kommunenummer, bool single=false);
     }
 
@@ -36,7 +36,7 @@ namespace Dan.Plugin.Kartverket
             _kartverketGrunnbokMatrikkelService = kartverketGrunnbokMatrikkelService;
         }
 
-        public async Task<KartverketResponse> GetDDGrunnbok(string ssn, bool addressLookup = true)
+        public async Task<KartverketResponse> GetDDGrunnbok(string ssn, bool addressLookup = true, bool singleAddress = false)
         {
 
             var props = await _kartverketClient.FindRegisterenhetsrettsandelerForPerson(ssn);
@@ -52,7 +52,7 @@ namespace Dan.Plugin.Kartverket
             };
 
             if (addressLookup)
-                return await _kartverketGrunnbokMatrikkelService.GetAddresses(await _landbrukClient.Get(grunnbokResponse));
+                return await _kartverketGrunnbokMatrikkelService.GetAddresses(await _landbrukClient.Get(grunnbokResponse), singleAddress);
             else
                 return await _landbrukClient.Get(grunnbokResponse);
         }
