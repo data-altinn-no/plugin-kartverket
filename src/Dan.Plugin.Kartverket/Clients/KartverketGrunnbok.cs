@@ -220,9 +220,16 @@ namespace Dan.Plugin.Kartverket.Clients
                 //if consumer only wants a single address, return the first one found and avoid concatinating multiple addresses
                 if (singleAddress)
                 {
-                    property.AddressList.Add(addressList[0]);
-                    property.Address = addressList[0];
-                    property.HasMoreAddresses = (addressList.Count > 1);
+                    if (addressList.Count > 0)
+                    {
+                        property.AddressList.Add(addressList[0]);
+                        property.Address = addressList[0];
+                        property.HasMoreAddresses = (addressList.Count > 1);
+                    }
+                    else
+                    {
+                        _logger.LogWarning($"No addresses found for property gnr = {gnr}, bnr = {bnr}, fnr = {fnr}, snr = {snr}, knr = {property.MunicipalityNumber}");
+                    }
                 }                        
                 else
                 {
