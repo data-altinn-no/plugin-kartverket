@@ -3,7 +3,7 @@
         "Properties": [
             {
                 "Address": null,
-                "AddressList" :  null,
+                "AddressList": [],
                 "City": null,
                 "PostalCode": null,
                 "Type": null,
@@ -14,11 +14,12 @@
                 "LeaseNumber": "0",
                 "SectionNumber": null,
                 "FractionOwnership": null,
-                "IsAgriculture": true
+                "IsAgriculture": true,
+                "HasMoreAddresses": false
             },
             {
                 "Address": null,
-                "AddressList": null,
+                "AddressList": [],
                 "City": null,
                 "PostalCode": null,
                 "Type": null,
@@ -29,14 +30,15 @@
                 "LeaseNumber": null,
                 "SectionNumber": null,
                 "FractionOwnership": null,
-                "IsAgriculture": false
+                "IsAgriculture": false,
+                "HasMoreAddresses": false
             }
         ],
         "PropertiesWithRights": [
             {
                 "Rights": null,
                 "Address": null,
-                "AddressList": null,
+                "AddressList": [],
                 "City": null,
                 "PostalCode": null,
                 "Type": null,
@@ -47,12 +49,13 @@
                 "LeaseNumber": "0",
                 "SectionNumber": null,
                 "FractionOwnership": null,
-                "IsAgriculture": true
+                "IsAgriculture": true,
+                "HasMoreAddresses": false
             },
             {
                 "Rights": null,
                 "Address": null,
-                "AddressList": null,
+                "AddressList": [],
                 "City": null,
                 "PostalCode": null,
                 "Type": null,
@@ -63,7 +66,8 @@
                 "LeaseNumber": "0",
                 "SectionNumber": null,
                 "FractionOwnership": null,
-                "IsAgriculture": false
+                "IsAgriculture": false,
+                "HasMoreAddresses": false
             }
         ]
     }
