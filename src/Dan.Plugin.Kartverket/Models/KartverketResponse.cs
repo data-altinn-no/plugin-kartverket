@@ -19,7 +19,7 @@ namespace Dan.Plugin.Kartverket.Models
     {
         public string Address { get; set; }
 
-        public List<string> AddressList { get; set; }
+        public List<string> AddressList { get; set; } = new();
 
         public string City { get; set; }
 
@@ -52,6 +52,9 @@ namespace Dan.Plugin.Kartverket.Models
         // Is added from the "landbruk" integration
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
         public bool IsAgriculture { get; set; }
+
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
+        public bool HasMoreAddresses { get; set; }
     }
 
     public class PropertyWithRights : Property

@@ -89,8 +89,13 @@ namespace Dan.Plugin.Kartverket
         {
             try
             {
+                if (!evidenceHarvesterRequest.TryGetParameter("Enkeltadresse", out bool single))
+                {
+                    single = false;
+                }
+
                 var ecb = new EvidenceBuilder(new Metadata(), "Grunnbok");
-                var result = await _ddWrapper.GetDDGrunnbok(evidenceHarvesterRequest.SubjectParty.NorwegianSocialSecurityNumber);
+                var result = await _ddWrapper.GetDDGrunnbok(evidenceHarvesterRequest.SubjectParty.NorwegianSocialSecurityNumber, true, single);
                 ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
 
                 return ecb.GetEvidenceValues();
@@ -134,7 +139,7 @@ namespace Dan.Plugin.Kartverket
                 evidenceHarvesterRequest.TryGetParameter("Knr", out string knr);
                 evidenceHarvesterRequest.TryGetParameter("Enkeltadresse", out bool single);
 
-                var result = await _ddWrapper.GetDDAdresser(gnr, bnr, fnr, snr, knr);
+                var result = await _ddWrapper.GetDDAdresser(gnr, bnr, fnr, snr, knr, single);
 
                 ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
 
