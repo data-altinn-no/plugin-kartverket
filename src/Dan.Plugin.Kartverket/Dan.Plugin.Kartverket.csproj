@@ -15,7 +15,7 @@
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.3.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.0.5" />
     <PackageReference Include="NJsonSchema" Version="11.5.1" />
-    <PackageReference Include="NSwag.ApiDescription.Client" Version="14.2.0">
+    <PackageReference Include="NSwag.ApiDescription.Client" Version="14.6.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
