@@ -11,7 +11,7 @@ on:
 jobs:
  run:
   # Pinning to commit d08132e for stability; this commit includes bugfixes for deployment issues as of 2024-06-01
-   uses: data-altinn-no/deploy-actions/.github/workflows/dan-deploy-flow.yml@d08132e
+   uses: data-altinn-no/deploy-actions/.github/workflows/dan-deploy-flow.yml@e9a1d62778d9d2f4e8c2245027fb2750fd230e0a
    permissions:
     actions: read
     contents: read
