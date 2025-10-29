@@ -53,6 +53,7 @@ namespace Dan.Plugin.Kartverket.Models
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
         public bool IsAgriculture { get; set; }
 
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
         public bool HasMoreAddresses { get; set; }
     }
 

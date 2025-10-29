@@ -143,7 +143,7 @@ namespace Dan.Plugin.Kartverket.Clients
                         continue;
 
                     var adresse = await _matrikkelStoreClient.GetAdresse(bruksenhet.adresseId.value);
-                    bool address = false, postalcode = false;
+                    bool addressFound = false, postalCodeFound = false;
 
                     if (adresse is Vegadresse roadAddress)
                     {
@@ -155,22 +155,22 @@ namespace Dan.Plugin.Kartverket.Clients
                             if (!addressList.Contains(tmpAddress))
                             {
                                 addressList.Add(tmpAddress);
-                                address = true;
+                                addressFound = true;
                             }
                         }
 
                         if (string.IsNullOrEmpty(property.PostalCode) || string.IsNullOrEmpty(property.City))
                         {
                             (property.PostalCode, property.City) = await GetPostalInformation(adresse.kretsIds);
-                            postalcode = true;
+                            postalCodeFound = true;
                         }
                         else
                         {
-                            postalcode = true;
+                            postalCodeFound = true;
                         }
                     }
 
-                    if (!postalcode && !address)
+                    if (!postalCodeFound && !addressFound)
                     {
                         var result = await _matrikkelBruksenhetService.GetAddressForBruksenhet(id.value);
 
@@ -182,8 +182,8 @@ namespace Dan.Plugin.Kartverket.Clients
                             }
                         }
                     }
-                    address = false;
-                    postalcode = false;
+                    addressFound = false;
+                    postalCodeFound = false;
                 }
 
                 var matrikkelUnitAddressList = await _matrikkelAdresseClientService.GetAdresserForMatrikkelenhet(matrikkelenhetid.value);
@@ -222,8 +222,8 @@ namespace Dan.Plugin.Kartverket.Clients
                 {
                     if (addressList.Count > 0)
                     {
-                        property.AddressList.Add(addressList[0]);
-                        property.Address = addressList[0];
+                        property.AddressList.Add(addressList.First());
+                        property.Address = addressList.First();
                         property.HasMoreAddresses = (addressList.Count > 1);
                     }
                     else
@@ -237,6 +237,10 @@ namespace Dan.Plugin.Kartverket.Clients
                     property.AddressList = addressList;
                     property.HasMoreAddresses = false;
                 }
+            }
+            catch (EvidenceSourcePermanentClientException ex)
+            {
+                throw;
             }
             catch (Exception ex)
             {
