@@ -165,7 +165,7 @@ namespace Dan.Plugin.Kartverket
 
                 var postalcodes = await _geonorgeClient.Search(address, borettslag?.Adresse.Vegadresse.Kommune.Kommunenummer, borettslag?.Adresse.Vegadresse.Bolignummer);
                 if (postalcodes?.Adresser?.Count > 1)
-                    _logger.LogWarning($"Geonorge returned multiple addresses for {0}/{1}/{2}", address, borettslag?.Adresse.Vegadresse.Kommune.Kommunenummer, borettslag?.Adresse.Vegadresse.Bolignummer);
+                    _logger.LogWarning($"Geonorge returned multiple addresses for {address}/{borettslag?.Adresse.Vegadresse.Kommune.Kommunenummer}/{borettslag?.Adresse.Vegadresse.Bolignummer}");
 
                 property.PostalCode = postalcodes?.Adresser?.FirstOrDefault()?.Postnummer;
                 property.City = postalcodes?.Adresser?.FirstOrDefault()?.Poststed;
