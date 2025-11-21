@@ -13,7 +13,7 @@
     <PackageReference Include="Dan.Common" Version="1.11.0" />
     <PackageReference Include="Microsoft.Azure.Core.NewtonsoftJson" Version="2.0.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.3.0" />
-    <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.0.6" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.0.7" />
     <PackageReference Include="NJsonSchema" Version="11.5.2" />
     <PackageReference Include="NSwag.ApiDescription.Client" Version="14.6.2">
       <PrivateAssets>all</PrivateAssets>
