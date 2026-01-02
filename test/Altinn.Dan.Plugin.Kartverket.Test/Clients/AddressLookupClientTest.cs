@@ -99,7 +99,7 @@ public class AddressLookupClientTest
     public async Task Get_BadRequest_Exception()
     {
         var httpClient = GetHttpClientMock("unittest", HttpStatusCode.BadRequest);
-            A.CallTo(() => _httpClientFactory.CreateClient(A<string>._)).Returns(httpClient);
+        A.CallTo(() => _httpClientFactory.CreateClient(A<string>._)).Returns(httpClient);
 
         KartverketResponse kv = new KartverketResponse
         {

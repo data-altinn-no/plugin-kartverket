@@ -11,17 +11,10 @@ namespace Dan.Plugin.Kartverket.Test.Clients;
 
 public class KartverketClientTest
 {
-    private readonly IHttpClientFactory _httpClientFactory = A.Fake<IHttpClientFactory>();
-    private readonly IAddressLookupClient _addressLookupClient = A.Fake<IAddressLookupClient>();
-    private readonly ILandbrukClient _landbrukClient = A.Fake<ILandbrukClient>();
-    private readonly IDDWrapper _ddWrapper = A.Fake<IDDWrapper>();
-
-
     [Fact]
     public async Task Get_Unauthorized_Exception()
     {
         var httpClient = GetHttpClientMock("unittest", HttpStatusCode.Unauthorized);
-        A.CallTo(() => _httpClientFactory.CreateClient(A<string>._)).Returns(httpClient);
 
         var client = new KartverketClient(httpClient, GetSettingsForTest());
 
@@ -36,7 +29,6 @@ public class KartverketClientTest
     public async Task Get_RequestFail_Exception()
     {
         var httpClient = GetHttpClientExceptionMock();
-        A.CallTo(() => _httpClientFactory.CreateClient(A<string>._)).Returns(httpClient);
 
         var client = new KartverketClient(httpClient, GetSettingsForTest());
 

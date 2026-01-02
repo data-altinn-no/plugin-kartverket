@@ -16,13 +16,11 @@ namespace Dan.Plugin.Kartverket.Test.Clients;
 
 public class LandbrukClientTest
 {
-    private readonly IHttpClientFactory _httpClientFactory = A.Fake<IHttpClientFactory>();
 
     [Fact]
     public async Task Get_ok()
     {
         var httpClient = GetHttpClientMock(LoadJson("MatrikkelResponse.json"));
-        A.CallTo(() => _httpClientFactory.CreateClient(A<string>._)).Returns(httpClient);
 
         KartverketResponse kv = new KartverketResponse
         {
@@ -67,7 +65,6 @@ public class LandbrukClientTest
     public async Task Get_PartiallyMissingParameters_ok()
     {
         var httpClient = GetHttpClientMock(LoadJson("MatrikkelResponse.json"));
-        A.CallTo(() => _httpClientFactory.CreateClient(A<string>._)).Returns(httpClient);
 
         KartverketResponse inputMissingParameter = new KartverketResponse
         {
@@ -100,7 +97,6 @@ public class LandbrukClientTest
     public async Task Get_BadRequest_Exception()
     {
         var httpClient = GetHttpClientMock("unittest", HttpStatusCode.BadRequest);
-        A.CallTo(() => _httpClientFactory.CreateClient(A<string>._)).Returns(httpClient);
 
         KartverketResponse kv = new KartverketResponse
         {
@@ -129,7 +125,6 @@ public class LandbrukClientTest
     public async Task Get_RequestFail_Exception()
     {
         var httpClient = GetHttpClientExceptionMock();
-        A.CallTo(() => _httpClientFactory.CreateClient(A<string>._)).Returns(httpClient);
 
         KartverketResponse kv = new KartverketResponse
         {

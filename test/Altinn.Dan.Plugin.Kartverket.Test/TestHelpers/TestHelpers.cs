@@ -120,6 +120,4 @@ namespace Dan.Plugin.Kartverket.Test.TestHelpers
             return JsonConvert.SerializeObject(JsonConvert.DeserializeObject<object>(input));
         }
     }
-
-
 }
