@@ -1,15 +1,14 @@
-using Dan.Common.Exceptions;
-using Dan.Plugin.Kartverket.Clients;
-using Dan.Plugin.Kartverket.Clients.Matrikkel;
-using Dan.Plugin.Kartverket.Models;
-using Dan.Plugin.Kartverket.Test.TestHelpers;
-using Moq;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Dan.Common.Exceptions;
+using Dan.Plugin.Kartverket.Clients;
+using Dan.Plugin.Kartverket.Models;
+using Dan.Plugin.Kartverket.Test.TestHelpers;
+using FakeItEasy;
+using Newtonsoft.Json;
 using Xunit;
 using static Dan.Plugin.Kartverket.Test.TestHelpers.TestHelpers;
 
@@ -17,22 +16,22 @@ namespace Dan.Plugin.Kartverket.Test.Clients;
 
 public class AddressLookupClientTest
 {
-    private readonly Mock<IHttpClientFactory> _httpClientFactory = new Mock<IHttpClientFactory>();
-    private readonly Mock<IKartverketGrunnbokMatrikkelService> _matrikkelEnhetClientService = new Mock<IKartverketGrunnbokMatrikkelService>();
+    private readonly IHttpClientFactory _httpClientFactory = A.Fake<IHttpClientFactory>();
+    private readonly IKartverketGrunnbokMatrikkelService _matrikkelEnhetClientService = A.Fake<IKartverketGrunnbokMatrikkelService>();
 
     [Fact(Skip = "needs rewrite")]
     public async Task Get_ok()
     {
-        var httpClient = GetHttpClientMockWithResponseConfig(new List<TestHelpers.TestHelpers.ResponseConfig>
+        var httpClient = GetHttpClientMockWithResponseConfig(new List<ResponseConfig>
         {
-            new TestHelpers.TestHelpers.ResponseConfig
+            new ResponseConfig
                 { ResponseContent = LoadJson("OutputAdresseList_Finstadveien.json"), QueryStringContains = "kommunenummer=1860&bruksnummer=46&gardsnummer=43&festenummer=0" },
-            new TestHelpers.TestHelpers.ResponseConfig
+            new ResponseConfig
                 { ResponseContent = LoadJson("OutputAdresseList_Myrdalsvegen.json"), QueryStringContains = "kommunenummer=4601&bruksnummer=435&gardsnummer=189&festenummer=0" },
-            new TestHelpers.TestHelpers.ResponseConfig
+            new ResponseConfig
                 { ResponseContent = LoadJson("OutputAdresseList_Valbergsveien.json"), QueryStringContains = "kommunenummer=1860&bruksnummer=1&gardsnummer=134&festenummer=0" }
         });
-        _httpClientFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(httpClient);
+        A.CallTo(() => _httpClientFactory.CreateClient(A<string>._)).Returns(httpClient);
 
         KartverketResponse kv = new KartverketResponse
         {
@@ -50,7 +49,7 @@ public class AddressLookupClientTest
             }
         };
 
-        var client = new AddressLookupClient(_httpClientFactory.Object, GetSettingsForTest(), _matrikkelEnhetClientService.Object);
+        var client = new AddressLookupClient(_httpClientFactory, GetSettingsForTest(), _matrikkelEnhetClientService);
         var response = await client.Get(kv);
 
         var actualNormalized = JsonConvert.SerializeObject(response).NormalizeJson();
@@ -89,7 +88,7 @@ public class AddressLookupClientTest
             }
         };
 
-        var client = new AddressLookupClient(_httpClientFactory.Object, GetSettingsForTest(), _matrikkelEnhetClientService.Object);
+        var client = new AddressLookupClient(_httpClientFactory, GetSettingsForTest(), _matrikkelEnhetClientService);
         var response = await client.Get(inputMissingParameter);
 
         Assert.True(response.PropertyRights.Properties.First().Address.Equals("PropsAddress"));
@@ -100,7 +99,7 @@ public class AddressLookupClientTest
     public async Task Get_BadRequest_Exception()
     {
         var httpClient = GetHttpClientMock("unittest", HttpStatusCode.BadRequest);
-        _httpClientFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(httpClient);
+        A.CallTo(() => _httpClientFactory.CreateClient(A<string>._)).Returns(httpClient);
 
         KartverketResponse kv = new KartverketResponse
         {
@@ -113,7 +112,7 @@ public class AddressLookupClientTest
             }
         };
 
-        var client = new AddressLookupClient(_httpClientFactory.Object, GetSettingsForTest(), _matrikkelEnhetClientService.Object);
+        var client = new AddressLookupClient(_httpClientFactory, GetSettingsForTest(), _matrikkelEnhetClientService);
         var exception = await Assert.ThrowsAsync<EvidenceSourcePermanentClientException>(() => client.Get(kv));
 
         Assert.Equal(Metadata.ERROR_CCR_UPSTREAM_ERROR, exception.DetailErrorCode);
@@ -125,7 +124,7 @@ public class AddressLookupClientTest
     public async Task Get_RequestFail_Exception()
     {
         var httpClient = GetHttpClientExceptionMock();
-        _httpClientFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(httpClient);
+        A.CallTo(() => _httpClientFactory.CreateClient(A<string>._)).Returns(httpClient);
 
         KartverketResponse kv = new KartverketResponse
         {
@@ -138,7 +137,7 @@ public class AddressLookupClientTest
             }
         };
 
-        var client = new AddressLookupClient(_httpClientFactory.Object, GetSettingsForTest(), _matrikkelEnhetClientService.Object);
+        var client = new AddressLookupClient(_httpClientFactory, GetSettingsForTest(), _matrikkelEnhetClientService);
 
         var exception = await Assert.ThrowsAsync<EvidenceSourcePermanentServerException>(() => client.Get(kv));
 

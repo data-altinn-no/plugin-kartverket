@@ -1,14 +1,14 @@
-using Dan.Common.Exceptions;
-using Dan.Plugin.Kartverket.Clients;
-using Dan.Plugin.Kartverket.Models;
-using Dan.Plugin.Kartverket.Test.TestHelpers;
-using Moq;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Dan.Common.Exceptions;
+using Dan.Plugin.Kartverket.Clients;
+using Dan.Plugin.Kartverket.Models;
+using Dan.Plugin.Kartverket.Test.TestHelpers;
+using FakeItEasy;
+using Newtonsoft.Json;
 using Xunit;
 using static Dan.Plugin.Kartverket.Test.TestHelpers.TestHelpers;
 
@@ -16,13 +16,11 @@ namespace Dan.Plugin.Kartverket.Test.Clients;
 
 public class LandbrukClientTest
 {
-    private readonly Mock<IHttpClientFactory> _httpClientFactory = new Mock<IHttpClientFactory>();
 
     [Fact]
     public async Task Get_ok()
     {
         var httpClient = GetHttpClientMock(LoadJson("MatrikkelResponse.json"));
-        _httpClientFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
         KartverketResponse kv = new KartverketResponse
         {
@@ -67,7 +65,6 @@ public class LandbrukClientTest
     public async Task Get_PartiallyMissingParameters_ok()
     {
         var httpClient = GetHttpClientMock(LoadJson("MatrikkelResponse.json"));
-        _httpClientFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
         KartverketResponse inputMissingParameter = new KartverketResponse
         {
@@ -100,7 +97,6 @@ public class LandbrukClientTest
     public async Task Get_BadRequest_Exception()
     {
         var httpClient = GetHttpClientMock("unittest", HttpStatusCode.BadRequest);
-        _httpClientFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
         KartverketResponse kv = new KartverketResponse
         {
@@ -129,7 +125,6 @@ public class LandbrukClientTest
     public async Task Get_RequestFail_Exception()
     {
         var httpClient = GetHttpClientExceptionMock();
-        _httpClientFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
         KartverketResponse kv = new KartverketResponse
         {
