@@ -22,6 +22,8 @@ namespace Dan.Plugin.Kartverket.Clients
     {
         public Task<KartverketResponse> Get(KartverketResponse kartverket);
         public Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo);
+
+        public Task<List<string>> GetCoordinatesForProperty(string gnr, string bnr, string snr, string fnr, string kommunenr);
     }
 
 
@@ -60,6 +62,14 @@ namespace Dan.Plugin.Kartverket.Clients
             kartverket.PropertyRights.PropertiesWithRights = propertyWithRights;
 
             return kartverket;
+        }
+
+        public async Task<List<string>> GetCoordinatesForProperty(string gnr, string bnr, string snr, string fnr, string kommunenr)
+        {
+            //get geonorge lookup (https://ws.geonorge.no/eiendom/v1/#/default/get_geokoding )
+            
+            return new List<string>();
+
         }
 
         public async Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo)

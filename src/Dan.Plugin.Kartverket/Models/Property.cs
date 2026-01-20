@@ -98,24 +98,5 @@ namespace Dan.Plugin.Kartverket.Models
         public string Bruksnummer { get; set; }
 
         public bool HasCulturalHeritageSite { get; set; }
-    }
-
- 
-
-    /*
-     * Grunnboksinformasjon
-Kommune
-Gnr / Bnr
-Areal: X XXX,XX m²
-Rettighetshavere til eiendomsrett
-Dato – Hjemmel til eiendomsrett
-Vederlag: NOK XX XXX XXX
-Virksomhetens organisasjonsnummer
-Virksomhetens navn
-Pantedokument
-Beløp
-Panthaver
-Kulturminner
-Ja/Nei
-     */
+    } 
 }
