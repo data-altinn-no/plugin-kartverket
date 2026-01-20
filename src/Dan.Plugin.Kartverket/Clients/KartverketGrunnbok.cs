@@ -19,6 +19,8 @@ namespace Dan.Plugin.Kartverket.Clients
     {
         //public Task<KartverketResponse> Get(string ssn);
         public Task<List<PropertyModel>> FindProperties(string identifier);
+
+        public Task<List<PropertyModel>> FindOwnedProperties(string identifier);
         public Task<KartverketResponse> GetAddresses(KartverketResponse kartverketResponse, bool singleAddress = false);
         public Task<string> GetAddressForSection(int gaardsNo, int bruksNo, int festeNo, string municipalityNo, int sectionNo);
     }
@@ -288,6 +290,36 @@ namespace Dan.Plugin.Kartverket.Clients
                 _logger.LogError(ex, "Kartverket::OED::Error getting address for section {gaardsNo}/{bruksNo}/{festeNo}/{municipalityNo}/{sectionNo}", gaardsNo, bruksNo, festeNo, municipalityNo, sectionNo);
                 return "";
             }
+        }
+
+        public async Task<List<PropertyModel>> FindOwnedProperties(string identifier)
+        {
+            var result = new List<PropertyModel>();
+            //Get grunnbok identifier for
+            var ident = await _identServiceClient.GetPersonIdentity(identifier);
+            //Get all properties owned by identifier
+            var regrettsandelListe = await _regRettsandelsClientService.GetAndelerForRettighetshaver(ident);
+            foreach (var registerenhetsrettsandelid in regrettsandelListe)
+            {
+                var regenhetsandelfromstore = await _storeServiceClient.GetRettighetsandeler(registerenhetsrettsandelid);
+                var matrikkelenhetgrunnbok = await _storeServiceClient.GetMatrikkelEnhetFromRegisterRettighetsandel(regenhetsandelfromstore.registerenhetsrettId.value);
+                var kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
+                result.Add(new PropertyModel()
+                {
+                    Grunnbok = new GrunnboksInformasjon()
+                    {
+                        bnr = matrikkelenhetgrunnbok.bruksnummer.ToString(),
+                        gnr = matrikkelenhetgrunnbok.gaardsnummer.ToString(),
+                        CountyMunicipality = kommune.Name
+
+                    },
+                    Owners = new Rettighetshavere()
+                    {
+                        Share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}"
+                    }
+                });
+            }
+            return result;
         }
 
         public async Task<List<PropertyModel>> FindProperties(string identifier)

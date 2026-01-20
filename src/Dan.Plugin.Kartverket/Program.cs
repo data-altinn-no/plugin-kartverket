@@ -18,6 +18,7 @@ var host = new HostBuilder()
             services.Configure<ApplicationSettings>(configurationRoot);
             services.AddScoped<IAddressLookupClient, AddressLookupClient>();
             services.AddTransient<IDDWrapper, DDWrapper>();
+            services.AddTransient<IDiHeWrapper, DiHeWrapper>();
 
             //Matrikkel og grunnbok services
             services.AddScoped<IKartverketGrunnbokMatrikkelService, KartverketGrunnbokMatrikkelService>();

@@ -20,13 +20,15 @@ namespace Dan.Plugin.Kartverket
         private ILogger _logger;
         private IKartverketGrunnbokMatrikkelService _kartverketGrunnbokMatrikkelService;
         private readonly IDDWrapper _ddWrapper;
+        private readonly IDiHeWrapper _diheWrapper;
 
 
-        public Main(ILoggerFactory loggerFactory, IDDWrapper ddWrapper, IKartverketGrunnbokMatrikkelService kartverketGrunnbokMatrikkelService)
+        public Main(ILoggerFactory loggerFactory, IDDWrapper ddWrapper, IKartverketGrunnbokMatrikkelService kartverketGrunnbokMatrikkelService, IDiHeWrapper diheWrapper)
         {
             _logger = loggerFactory.CreateLogger<Main>();
             _ddWrapper = ddWrapper;
             _kartverketGrunnbokMatrikkelService = kartverketGrunnbokMatrikkelService;
+            _diheWrapper = diheWrapper;
         }
 
         [Function("Grunnbok")]
@@ -74,6 +76,25 @@ namespace Dan.Plugin.Kartverket
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
 
             return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesEiendommer(evidenceHarvesterRequest));
+        }
+
+        [Function("MotorisertFerdsel")]
+        public async Task<HttpResponseData> MotorisertFerdsel([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequestData req,FunctionContext context)
+        {
+            _logger.LogInformation("Running func 'MotorisertFerdsel'");
+            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
+
+            return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesMotorisertFerdsel(evidenceHarvesterRequest));
+        }
+
+        private async Task<List<EvidenceValue>> GetEvidenceValuesMotorisertFerdsel(EvidenceHarvesterRequest evidenceHarvesterRequest)
+        {
+            var result = await _diheWrapper.GetMotorizedTrafficInformation(evidenceHarvesterRequest.SubjectParty.GetAsString(false));
+
+            var ecb = new EvidenceBuilder(new Metadata(), "MotorisertFerdsel");
+            ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
+            return ecb.GetEvidenceValues();
         }
 
         private async Task<List<EvidenceValue>> GetEvidenceValuesEiendommer(EvidenceHarvesterRequest request)
