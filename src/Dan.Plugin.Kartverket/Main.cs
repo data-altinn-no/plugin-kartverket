@@ -46,7 +46,6 @@ namespace Dan.Plugin.Kartverket
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
 
             await requestContextService.SetRequestContext(evidenceHarvesterRequest.ServiceContext);
-            await requestContextService.SetRequestContext("oed");
             
             return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesGrunnbok(evidenceHarvesterRequest, ddWrapper));
         }
