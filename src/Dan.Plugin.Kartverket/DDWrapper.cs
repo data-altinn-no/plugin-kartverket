@@ -151,19 +151,32 @@ namespace Dan.Plugin.Kartverket
                 property.SectionNumber = cadastreUnit?.Seksjonsnummer?.ToString();
                 property.MunicipalityNumber = cadastreUnit?.Kommune.Kommunenummer;
                 property.Municipality = cadastreUnit?.Kommune.Navn;
+               
             }
             else if (unit is Borettslagsandel hoaUnit)
             {
                 var borettslag = await _kartverketClient.FindAdresseForBorettslagsandel(hoaUnit.Borettslag?.Organisasjonsnummer, hoaUnit.Andelsnummer);
 
-                var address = borettslag?.Adresse.Vegadresse.Adressenavn + " " + borettslag?.Adresse.Vegadresse.Husnummer + borettslag?.Adresse?.Vegadresse?.Bokstav;
+                if (borettslag.Adresse.Vegadresse == null && borettslag.Adresse.Matrikkeladresse != null)
+                {
+                    property.Address = "";
+                    property.AddressList.Add(property.Address);
+                    property.MunicipalityNumber = borettslag?.Adresse?.Matrikkeladresse?.Kommune?.Kommunenummer;
+                    property.Municipality = borettslag?.Adresse?.Matrikkeladresse?.Kommune?.Navn;                    
+                    property.HoldingNumber = borettslag?.Adresse?.Matrikkeladresse?.Gaardsnummer?.ToString();
+                    property.SubholdingNumber = borettslag?.Adresse?.Matrikkeladresse?.Bruksnummer?.ToString();
+                    property.LeaseNumber = borettslag?.Adresse?.Matrikkeladresse?.Festenummer?.ToString();                    
+                    return property;
+                }
 
-                property.Address = borettslag?.Adresse.Vegadresse.Adressenavn + " " + borettslag?.Adresse.Vegadresse.Husnummer + borettslag?.Adresse?.Vegadresse?.Bokstav;
+                var address = borettslag?.Adresse?.Vegadresse?.Adressenavn + " " + borettslag?.Adresse?.Vegadresse?.Husnummer + borettslag?.Adresse?.Vegadresse?.Bokstav;
+
+                property.Address = address;
                 property.AddressList.Add(property.Address);
-                property.MunicipalityNumber = borettslag?.Adresse.Vegadresse.Kommune.Kommunenummer;
-                property.Municipality = borettslag?.Adresse.Vegadresse.Kommune.Navn;
+                property.MunicipalityNumber = borettslag?.Adresse?.Vegadresse?.Kommune?.Kommunenummer;
+                property.Municipality = borettslag?.Adresse?.Vegadresse?.Kommune?.Navn;   
 
-                var postalcodes = await _geonorgeClient.Search(address, borettslag?.Adresse.Vegadresse.Kommune.Kommunenummer, borettslag?.Adresse.Vegadresse.Bolignummer);
+                var postalcodes = await _geonorgeClient.Search(address, borettslag?.Adresse?.Vegadresse?.Kommune?.Kommunenummer, borettslag?.Adresse?.Vegadresse?.Bolignummer);
                 if (postalcodes?.Adresser?.Count > 1)
                     _logger.LogWarning($"Geonorge returned multiple addresses for {address}/{borettslag?.Adresse.Vegadresse.Kommune.Kommunenummer}/{borettslag?.Adresse.Vegadresse.Bolignummer}");
 
