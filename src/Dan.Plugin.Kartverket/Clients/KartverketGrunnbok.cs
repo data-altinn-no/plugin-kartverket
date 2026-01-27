@@ -20,7 +20,7 @@ namespace Dan.Plugin.Kartverket.Clients
         //public Task<KartverketResponse> Get(string ssn);
         public Task<List<PropertyModel>> FindProperties(string identifier);
 
-        public Task<List<PropertyModel>> FindOwnedProperties(string identifier);
+        public Task<List<PropertyEkstra>> FindOwnedProperties(string identifier);
         public Task<KartverketResponse> GetAddresses(KartverketResponse kartverketResponse, bool singleAddress = false);
         public Task<string> GetAddressForSection(int gaardsNo, int bruksNo, int festeNo, string municipalityNo, int sectionNo);
     }
@@ -91,7 +91,7 @@ namespace Dan.Plugin.Kartverket.Clients
             input.PropertyRights.PropertiesWithRights = propertyWithRights;
 
             await Task.WhenAll(taskList).ConfigureAwait(false);
-            
+
             return input;
         }
 
@@ -133,7 +133,7 @@ namespace Dan.Plugin.Kartverket.Clients
 
                 //Matrikkelenhet does not exist so we can just abort the process
                 if (matrikkelenhetid?.value == null || matrikkelenhetid.value == 0)
-                    return;      
+                    return;
 
                 var bruksenhetider = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
 
@@ -235,7 +235,7 @@ namespace Dan.Plugin.Kartverket.Clients
                     {
                         _logger.LogWarning($"No addresses found for property gnr = {gnr}, bnr = {bnr}, fnr = {fnr}, snr = {snr}, knr = {property.MunicipalityNumber}");
                     }
-                }                        
+                }
                 else
                 {
                     property.Address = string.Join(", ", addressList);
@@ -254,22 +254,21 @@ namespace Dan.Plugin.Kartverket.Clients
         }
 
         private async Task<(string code, string city)> GetPostalInformation(KretsId[] kretsList)
-        {            
+        {
             foreach (var kretsid in kretsList)
             {
                 var krets = await _matrikkelStoreClient.GetKrets(kretsid.value);
 
                 if (krets is Postnummeromrade)
                 {
-                    return (((Postnummeromrade)krets).kretsnummer.ToString(), ((Postnummeromrade)krets).kretsnavn);                    
+                    return (((Postnummeromrade)krets).kretsnummer.ToString(), ((Postnummeromrade)krets).kretsnavn);
                 }
             }
             return ("", "");
         }
-        
 
         public async Task<string> GetAddressForSection(int gaardsNo, int bruksNo, int festeNo, string municipalityNo, int sectionNo)
-        {            
+        {
             try
             {
                 var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(gaardsNo, bruksNo, festeNo, sectionNo, municipalityNo);
@@ -292,32 +291,42 @@ namespace Dan.Plugin.Kartverket.Clients
             }
         }
 
-        public async Task<List<PropertyModel>> FindOwnedProperties(string identifier)
+        public async Task<List<PropertyEkstra>> FindOwnedProperties(string identifier)
         {
-            var result = new List<PropertyModel>();
+            var result = new List<PropertyEkstra>();
+
             //Get grunnbok identifier for
             var ident = await _identServiceClient.GetPersonIdentity(identifier);
+
             //Get all properties owned by identifier
             var regrettsandelListe = await _regRettsandelsClientService.GetAndelerForRettighetshaver(ident);
             foreach (var registerenhetsrettsandelid in regrettsandelListe)
             {
                 var regenhetsandelfromstore = await _storeServiceClient.GetRettighetsandeler(registerenhetsrettsandelid);
                 var matrikkelenhetgrunnbok = await _storeServiceClient.GetMatrikkelEnhetFromRegisterRettighetsandel(regenhetsandelfromstore.registerenhetsrettId.value);
-                var kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
-                result.Add(new PropertyModel()
-                {
-                    Grunnbok = new GrunnboksInformasjon()
-                    {
-                        bnr = matrikkelenhetgrunnbok.bruksnummer.ToString(),
-                        gnr = matrikkelenhetgrunnbok.gaardsnummer.ToString(),
-                        CountyMunicipality = kommune.Name
 
-                    },
-                    Owners = new Rettighetshavere()
+                var kommune = new Dan.Plugin.Kartverket.Models.Kommune();
+                if (matrikkelenhetgrunnbok != null)
+                {
+                    kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
+                    result.Add(new PropertyEkstra()
                     {
-                        Share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}"
-                    }
-                });
+                        Grunnbok = new EkstraGrunnbokdata()
+                        {
+                            Kommunenummer = kommune.Number ?? null,
+                            CountyMunicipality = kommune.Name ?? null,
+                            Bruksnummer = matrikkelenhetgrunnbok.bruksnummer.ToString(),
+                            Gardsnummer = matrikkelenhetgrunnbok.gaardsnummer.ToString(),
+                            Festenummer = matrikkelenhetgrunnbok.festenummer.ToString(),
+                            Seksjonsnummer = matrikkelenhetgrunnbok.seksjonsnummer.ToString()
+                        },
+                        Owners = new Rettighetshavere()
+                        {
+                            Share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}"
+                        }
+                    });
+                }
+                continue;
             }
             return result;
         }
