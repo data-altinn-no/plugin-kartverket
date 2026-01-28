@@ -114,6 +114,9 @@ namespace Dan.Plugin.Kartverket.Clients
                 return;
             }
 
+            if (gnr == 0 || knr == 0)
+                return;
+
             try
             {
                 //get matrikkelenhetid and then the actual matrikkelenhet

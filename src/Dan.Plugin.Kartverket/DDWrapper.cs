@@ -168,6 +168,11 @@ namespace Dan.Plugin.Kartverket
                     property.LeaseNumber = borettslag?.Adresse?.Matrikkeladresse?.Festenummer?.ToString();                    
                     return property;
                 }
+                else if (borettslag.Adresse.Vegadresse == null && borettslag.Adresse.Matrikkeladresse == null && borettslag.Adresse.TekstligAdresse != null)
+                {
+                    property.Address = borettslag.Adresse.TekstligAdresse;
+                    return property;
+                }
 
                 var address = borettslag?.Adresse?.Vegadresse?.Adressenavn + " " + borettslag?.Adresse?.Vegadresse?.Husnummer + borettslag?.Adresse?.Vegadresse?.Bokstav;
 
