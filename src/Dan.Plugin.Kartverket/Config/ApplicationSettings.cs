@@ -24,5 +24,7 @@ namespace Dan.Plugin.Kartverket.Config
         public string GrunnbokRootUrl { get; set; }
 
         public string MatrikkelRootUrl { get; set; }
+
+        public string CoordinatesLookupUrl { get; set; }
     }
 }

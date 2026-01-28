@@ -10,7 +10,8 @@ namespace Dan.Plugin.Kartverket
 {
     public class Metadata : IEvidenceSourceMetadata
     {
-        private const string SERIVCECONTEXT_OED = "OED";
+        private const string SERVICECONTEXT_OED = "OED";
+        private const string SERVICECONTEXT_DIHE = "DigitaleHelgeland";
         private const string SERVICECONTEXT_EDUEDILIGENCE = "eDueDiligence";
         public const string SOURCE = "Kartverket";
 
@@ -32,7 +33,7 @@ namespace Dan.Plugin.Kartverket
                 {
                     EvidenceCodeName = "Grunnbok",
                     EvidenceSource = SOURCE,
-                    BelongsToServiceContexts = new List<string>() { SERIVCECONTEXT_OED },
+                    BelongsToServiceContexts = new List<string>() { SERVICECONTEXT_OED },
                     RequiredScopes = "",
                     Values = new List<EvidenceValue>
                     {
@@ -87,7 +88,7 @@ namespace Dan.Plugin.Kartverket
                 {
                     EvidenceCodeName = "Eiendomsadresser",
                     EvidenceSource = SOURCE,
-                    BelongsToServiceContexts = new List<string>() { SERIVCECONTEXT_OED },
+                    BelongsToServiceContexts = new List<string>() { SERVICECONTEXT_OED },
                     RequiredScopes = "",
                     Values = new List<EvidenceValue>
                     {
@@ -149,7 +150,7 @@ namespace Dan.Plugin.Kartverket
                 {
                     EvidenceCodeName = "GrunnbokRettigheter",
                     EvidenceSource = SOURCE,
-                    BelongsToServiceContexts = new List<string>() { SERIVCECONTEXT_OED },
+                    BelongsToServiceContexts = new List<string>() { SERVICECONTEXT_OED },
                     RequiredScopes = "",
                     Values = new List<EvidenceValue>
                     {
@@ -168,6 +169,29 @@ namespace Dan.Plugin.Kartverket
                         }
                     }
                 },
+                new EvidenceCode()
+                {
+                    EvidenceCodeName = "MotorisertFerdsel",
+                    EvidenceSource = SOURCE,
+                    BelongsToServiceContexts = new List<string>() { SERVICECONTEXT_DIHE },
+                    RequiredScopes = "",
+                    Values = new List<EvidenceValue>
+                    {
+                        new()
+                        {
+                            EvidenceValueName = "default",
+                            ValueType = EvidenceValueType.JsonSchema,
+                            JsonSchemaDefintion = JsonSchema.FromType<MotorizedTrafficResponse>().ToJson(Formatting.Indented)
+                        }
+                    },
+                    AuthorizationRequirements = new List<Requirement>
+                    {
+                        new MaskinportenScopeRequirement
+                        {
+                            RequiredScopes = new List<string> { "altinn:dataaltinnno/dihe" }
+                        }
+                    }
+                }
             };
         }
     }

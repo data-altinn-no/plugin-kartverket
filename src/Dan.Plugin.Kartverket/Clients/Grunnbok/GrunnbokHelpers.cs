@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Grunnbok.StoreService;
+using Dan.Common.Models;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
