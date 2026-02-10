@@ -58,63 +58,6 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             return result;
         }
 
-        public async Task<findAktiveRettsstiftelserMedAktivRettighetshaverEllerSaksoekerResponse> GetAktiveRettsstiftelser(List<string> idents)
-        {
-            findAktiveRettsstiftelserMedAktivRettighetshaverEllerSaksoekerResponse result = null;
-
-            PersonId[] ids = new PersonId[idents.Count - 1];
-
-            int i = 0;
-            foreach (var id in idents)
-            {
-                ids[i].value = id;
-            }
-
-            findAktiveRettsstiftelserMedAktivRettighetshaverEllerSaksoekerRequest request = new()
-            {
-                grunnbokContext = GetContext(),
-                personIds = ids,
-            };
-            
-            try
-            {
-                result = await _client.findAktiveRettsstiftelserMedAktivRettighetshaverEllerSaksoekerAsync(request);
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-
-            return result;
-        }
-
-        public async Task<findRettigheterForRegisterenhetResponse> GetRettighetForRegisterenhet(string registerenhetid, string kommuneid)
-        {
-            findRettigheterForRegisterenhetResponse result = null;
-
-            findRettigheterForRegisterenhetRequest request = new()
-            {
-                grunnbokContext = GetContext(),
-                kommuneIds = new KommuneId[] { new KommuneId() {value = kommuneid } },
-                registerenhetId = new RegisterenhetId() { value = registerenhetid }
-            };
-
-            try
-            {
-                result = await _client.findRettigheterForRegisterenhetAsync(request);
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-
-            return result;
-        }
-
         public async Task<List<PawnDocument>> GetHeftelser(string registerenhetid)
         {
             List<PawnDocument> result = new List<PawnDocument>();
@@ -178,14 +121,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
     public interface IRettsstiftelseClientService
     {
-        public Task<findAktiveRettsstiftelserMedAktivRettighetshaverEllerSaksoekerResponse> GetAktiveRettsstiftelser(List<string> ids);
-
-        public Task<findRettigheterForRegisterenhetResponse> GetRettighetForRegisterenhet(string registerenhetid, string kommuneid);
-
         public Task<List<PawnDocument>> GetHeftelser(string registerenhetid);
 
-        //public Task<List<RettsstiftelseId>> GetRettigheterForPerson(string personId);
-
-        //public Task<List<RettsstiftelseId>> GetRettigheterForRegisterenhet(string registerenhetId, string kommuneId);
     }
 }

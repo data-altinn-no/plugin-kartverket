@@ -48,39 +48,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             return response.Body.@return;
         }
-
-        
-        public async Task<findRetterForEnheterOgTyperResponse> GetRetterForEnheterOgTyper(string registerenhetsid)
-        {
-            try
-            {
-                var request = new findRetterForEnheterOgTyperRequest()
-                {
-                    Body = new findRetterForEnheterOgTyperRequestBody()
-                    {
-                        grunnbokContext = GetContext(),
-                        registerenhetIds = new RegisterenhetIdList()
-                        {
-                            new RegisterenhetId()
-                            {
-                                value = registerenhetsid
-                            }
-                        }
-                    }
-                };
-
-                var response = await _client.findRetterForEnheterOgTyperAsync(request);
-
-                return response;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation($"Exception was thrown: {ex}");
-            }
-
-            return null;
-        }
-        
+       
         private GrunnbokContext GetContext()
         {
             return new GrunnbokContext()
@@ -100,6 +68,5 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
     public interface IRegisterenhetsrettClientService
     {
         public Task<RegisterenhetIdTilRegisterenhetsrettIdsMap> GetRetterForEnheter(string registerenhetsid);
-        public Task<findRetterForEnheterOgTyperResponse> GetRetterForEnheterOgTyper(string registerenhetsid);
     }
 }

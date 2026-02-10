@@ -3,6 +3,7 @@ using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Clients.Matrikkel;
 using Dan.Plugin.Kartverket.Config;
 using Dan.Plugin.Kartverket.Models;
+using Google.Protobuf.WellKnownTypes;
 using Kartverket.Matrikkel.StoreService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -298,22 +299,25 @@ namespace Dan.Plugin.Kartverket.Clients
 
             var ident = await _identServiceClient.GetPersonIdentity(identifier);
 
-            //Get all properties owned by identifier
             var registerRettsAndelList = await _regRettsandelsClientService.GetAndelerForRettighetshaver(ident);
             foreach (var registerenhetsrettsandelid in registerRettsAndelList.Take(50))
             {
                 var regenhetsandelfromstore = await _storeServiceClient.GetRettighetsandeler(registerenhetsrettsandelid);
+
+                //Skip if property is historical, as we only want currently owned properties.
+                if (regenhetsandelfromstore.historisk)
+                    continue;
+                
                 var matrikkelenhetgrunnbok = await _storeServiceClient.GetMatrikkelEnhetFromRegisterRettighetsandel(regenhetsandelfromstore.registerenhetsrettId.value);
 
                 var owner = await _storeServiceClient.GetPerson(regenhetsandelfromstore.rettighetshaverId.value);
+                var listOfCoOwners = new List<CoOwner>();
 
                 var share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}";
                 if (regenhetsandelfromstore.teller != regenhetsandelfromstore.nevner)
                 {
                     var registerenhetId = matrikkelenhetgrunnbok.id.value;
 
-                    //TODO: Hent registerEnhetsrett
-                    //var registerenhet = await _storeServiceClient.GetRegisterenhet(registerenhetId);
                     var registerEnhetTilRegisterenhetsrettId = await _registerenhetsrettClientService.GetRetterForEnheter(registerenhetId);
                     
                     var registerEnhetIdTilRegisterenhetsrettIds = registerEnhetTilRegisterenhetsrettId.Values
@@ -322,14 +326,26 @@ namespace Dan.Plugin.Kartverket.Clients
 
                     foreach (var registerEnhetId in registerEnhetIdTilRegisterenhetsrettIds)
                     {
-                        var registerenhetsrettsId = await _storeServiceClient.GetRegisterenhetsrett(registerEnhetId);
                         var andelerIRetter = await _regRettsandelsClientService.GetAndelerIRetter(regenhetsandelfromstore.registerenhetsrettId.value);
-                        var id = andelerIRetter.Body.@return.Values.First().Last().value;
+                        var andelerIRetterValues = andelerIRetter.Body.@return.Values;
+
+                        foreach(var andel in andelerIRetterValues.First())
+                        {
+                            var andeler = await _storeServiceClient.GetRettighetsandeler(andel.value.ToString());
+                            
+                            if(!andeler.historisk)
+                            {
+                                var coOwner = await _storeServiceClient.GetPerson(andeler.rettighetshaverId.value);
+                                listOfCoOwners.Add(new CoOwner()
+                                {
+                                    Identifier = coOwner.identifikasjonsnummer ?? null,
+                                    Name = coOwner.navn ?? null,
+                                    OwnerShare = $"{andeler.teller}/{andeler.nevner}" ?? null
+                                });
+                            }
+                        }
                     }
-                    //var andelseier = await _storeServiceClient.GetAndelseier(person.identifikasjonsnummer);
-
                 }
-
 
                 var kommune = new Models.Kommune();
                 if (matrikkelenhetgrunnbok != null)
@@ -346,15 +362,7 @@ namespace Dan.Plugin.Kartverket.Clients
                         Festenummer = matrikkelenhetgrunnbok?.festenummer.ToString() ?? null,
                         Seksjonsnummer = matrikkelenhetgrunnbok?.seksjonsnummer.ToString() ?? null
                     },
-                    Owners = new List<CoOwner>()
-                    {
-                        new CoOwner()
-                        {
-                            Identifier = owner.identifikasjonsnummer ?? null,
-                            Name = owner.navn ?? null,
-                            OwnerShare = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}" ?? null
-                        }
-                    }
+                    Owners = listOfCoOwners
                 });
             }
             return result;

@@ -30,38 +30,6 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
         }
 
-        public async Task<findAndelerRealkobletTilRegisterenheterResponse> findAndelerRealkobletTilRegisterenheter(string registerenhetsid)
-        {
-            var result = new findAndelerRealkobletTilRegisterenheterResponse();
-
-            var request = new findAndelerRealkobletTilRegisterenheterRequest()
-            {
-                Body = new findAndelerRealkobletTilRegisterenheterRequestBody()
-                {
-                    registerenhetIds = new RegisterenhetIdList()
-                    {
-                        new()
-                        {
-                            value = registerenhetsid
-                        }
-                    },
-                    grunnbokContext = GetContext()
-                }
-            };
-
-            try
-            {
-                var response = await _client.findAndelerRealkobletTilRegisterenheterAsync(request);
-                return response;
-            }
-            catch(Exception ex)
-            {
-                _logger.LogError(ex.Message);
-            }
-
-            return result;
-        }
-
         public async Task<List<string>> GetAndelerForRettighetshaver(string personident)
         {
             var result = new List<string>();
@@ -152,7 +120,6 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
     public interface IRegisterenhetsRettsandelsServiceClientService
     {
         public Task<List<string>> GetAndelerForRettighetshaver(string personident);
-        public Task<findAndelerRealkobletTilRegisterenheterResponse> findAndelerRealkobletTilRegisterenheter(string registerenhetsid);
         public Task<findAndelerIRetterResponse> GetAndelerIRetter(string registerenehtsid);
     }
 }

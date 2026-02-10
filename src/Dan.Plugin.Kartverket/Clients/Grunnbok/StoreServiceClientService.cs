@@ -296,29 +296,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             return result;
         }
 
-        public async Task<Andelseier> GetAndelseier(string personId)
-        {
-            Andelseier result = null;
-            var request = GetRequest();
 
-            request.id = new AndelseierId
-            {
-                value = personId
-            };
-
-            try
-            {
-                var response = await _client.getObjectAsync(request);
-                var returnedObj = response.@return;
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "error in GetAndelseier");
-            }
-
-            return result;
-        }
         
         public interface IStoreServiceClientService
         {
@@ -337,7 +315,6 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             public Task<Matrikkelenhet> GetMatrikkelEnhetFromRegisterRettighetsandel(string registerrettighetsandelid);
             public Task<Person> GetPerson(string personId);
-            public Task<Andelseier> GetAndelseier(string personId);
         }
     }
 }

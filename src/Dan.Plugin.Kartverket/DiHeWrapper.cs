@@ -30,27 +30,12 @@ namespace Dan.Plugin.Kartverket
 
         public async Task<MotorizedTrafficResponse> GetMotorizedTrafficInformation(string identifier)
         {
-            // Implement the logic to get motorized traffic information
             var result = new MotorizedTrafficResponse();
 
-            // Use identifier to retrieve all properties
             var kartverketResponse = await _kartverketService.FindOwnedProperties(identifier);
 
-            // For each property, retrieve coordinates from
             foreach (var property in kartverketResponse)
             {
-                // Properties with more owners => owner identifiers
-                var hasCoOwners = property.Owners.Any(owner => owner.OwnerShare == "1/1" ? false : true);               
-                if (hasCoOwners)
-                {
-                    //find all co-owners for the property
-                    foreach(var coOwners in property.Owners)
-                    {
-
-                    }
-                    
-                }
-
                 var martikkelNumber = BuildMatrikkelNumber(property.ProperyData.Kommunenummer, property.ProperyData.Gardsnummer, property.ProperyData.Bruksnummer, property.ProperyData.Festenummer, property.ProperyData.Seksjonsnummer);
                 var coordinates = "";
                 if(!string.IsNullOrEmpty(martikkelNumber))
