@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using static Dan.Plugin.Kartverket.Clients.Grunnbok.StoreServiceClientService;
 
 namespace Dan.Plugin.Kartverket.Clients
 {
@@ -20,7 +21,7 @@ namespace Dan.Plugin.Kartverket.Clients
         //public Task<KartverketResponse> Get(string ssn);
         public Task<List<PropertyModel>> FindProperties(string identifier);
 
-        public Task<List<PropertyEkstra>> FindOwnedProperties(string identifier);
+        public Task<List<PropertyWithOwners>> FindOwnedProperties(string identifier);
         public Task<KartverketResponse> GetAddresses(KartverketResponse kartverketResponse, bool singleAddress = false);
         public Task<string> GetAddressForSection(int gaardsNo, int bruksNo, int festeNo, string municipalityNo, int sectionNo);
     }
@@ -291,42 +292,70 @@ namespace Dan.Plugin.Kartverket.Clients
             }
         }
 
-        public async Task<List<PropertyEkstra>> FindOwnedProperties(string identifier)
+        public async Task<List<PropertyWithOwners>> FindOwnedProperties(string identifier)
         {
-            var result = new List<PropertyEkstra>();
+            var result = new List<PropertyWithOwners>();
 
-            //Get grunnbok identifier for
             var ident = await _identServiceClient.GetPersonIdentity(identifier);
 
             //Get all properties owned by identifier
-            var regrettsandelListe = await _regRettsandelsClientService.GetAndelerForRettighetshaver(ident);
-            foreach (var registerenhetsrettsandelid in regrettsandelListe)
+            var registerRettsAndelList = await _regRettsandelsClientService.GetAndelerForRettighetshaver(ident);
+            foreach (var registerenhetsrettsandelid in registerRettsAndelList.Take(50))
             {
                 var regenhetsandelfromstore = await _storeServiceClient.GetRettighetsandeler(registerenhetsrettsandelid);
                 var matrikkelenhetgrunnbok = await _storeServiceClient.GetMatrikkelEnhetFromRegisterRettighetsandel(regenhetsandelfromstore.registerenhetsrettId.value);
 
-                var kommune = new Dan.Plugin.Kartverket.Models.Kommune();
-                if (matrikkelenhetgrunnbok != null)
+                var owner = await _storeServiceClient.GetPerson(regenhetsandelfromstore.rettighetshaverId.value);
+
+                var share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}";
+                if (regenhetsandelfromstore.teller != regenhetsandelfromstore.nevner)
                 {
-                    kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
-                    result.Add(new PropertyEkstra()
+                    var registerenhetId = matrikkelenhetgrunnbok.id.value;
+
+                    //TODO: Hent registerEnhetsrett
+                    //var registerenhet = await _storeServiceClient.GetRegisterenhet(registerenhetId);
+                    var registerEnhetTilRegisterenhetsrettId = await _registerenhetsrettClientService.GetRetterForEnheter(registerenhetId);
+                    
+                    var registerEnhetIdTilRegisterenhetsrettIds = registerEnhetTilRegisterenhetsrettId.Values
+                        .SelectMany(rettid => rettid.Select(ids => ids.value))
+                        .ToList();
+
+                    foreach (var registerEnhetId in registerEnhetIdTilRegisterenhetsrettIds)
                     {
-                        Grunnbok = new EkstraGrunnbokdata()
-                        {
-                            Kommunenummer = kommune.Number ?? null,
-                            CountyMunicipality = kommune.Name ?? null,
-                            Bruksnummer = matrikkelenhetgrunnbok.bruksnummer.ToString(),
-                            Gardsnummer = matrikkelenhetgrunnbok.gaardsnummer.ToString(),
-                            Festenummer = matrikkelenhetgrunnbok.festenummer.ToString(),
-                            Seksjonsnummer = matrikkelenhetgrunnbok.seksjonsnummer.ToString()
-                        },
-                        Owners = new Rettighetshavere()
-                        {
-                            Share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}"
-                        }
-                    });
+                        var registerenhetsrettsId = await _storeServiceClient.GetRegisterenhetsrett(registerEnhetId);
+                        var andelerIRetter = await _regRettsandelsClientService.GetAndelerIRetter(regenhetsandelfromstore.registerenhetsrettId.value);
+                        var id = andelerIRetter.Body.@return.Values.First().Last().value;
+                    }
+                    //var andelseier = await _storeServiceClient.GetAndelseier(person.identifikasjonsnummer);
+
                 }
-                continue;
+
+
+                var kommune = new Models.Kommune();
+                if (matrikkelenhetgrunnbok != null)
+                    kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
+
+                result.Add(new PropertyWithOwners()
+                {
+                    ProperyData = new PropertyData()
+                    {
+                        Kommunenummer = kommune.Number ?? null,
+                        Komunnenavn = kommune.Name ?? null,
+                        Bruksnummer = matrikkelenhetgrunnbok?.bruksnummer.ToString() ?? null,
+                        Gardsnummer = matrikkelenhetgrunnbok?.gaardsnummer.ToString() ?? null,
+                        Festenummer = matrikkelenhetgrunnbok?.festenummer.ToString() ?? null,
+                        Seksjonsnummer = matrikkelenhetgrunnbok?.seksjonsnummer.ToString() ?? null
+                    },
+                    Owners = new List<CoOwner>()
+                    {
+                        new CoOwner()
+                        {
+                            Identifier = owner.identifikasjonsnummer ?? null,
+                            Name = owner.navn ?? null,
+                            OwnerShare = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}" ?? null
+                        }
+                    }
+                });
             }
             return result;
         }

@@ -9,42 +9,53 @@ namespace Dan.Plugin.Kartverket.Models
     }
 
     public class MotorizedTrafficProperty {
+        /// <summary>
+        /// Matrikkel number of the property
+        /// </summary>
 
-        public string MatrikkelNumber { get; set; } //0301-223/60/0/3 - kommune-gnr/bnr/festenr/seksjonsnr
+        public string MatrikkelNumber { get; set; } 
 
+        /// <summary>
+        /// CoOwners of the property
+        /// </summary>
         public List<CoOwner> CoOwners { get; set; } = new();
+        /// <summary>
+        /// Latitude and Longitude Coordinates separated by comma
+        /// </summary>
 
         public string Coordinates { get; set; } // lat,long, TODO: check if there should be
     }
 
     public class CoOwner {
+        /// <summary>
+        /// Organization number or ssn
+        /// </summary>
         public string Identifier { get; set; }
+        /// <summary>
+        /// Name of person or organization
+        /// </summary>
         public string Name { get; set; }
-
-        public string OwnerShare { get; set; } // as fraction
+        /// <summary>
+        /// Share of ownership as f
+        /// </summary>
+        public string OwnerShare { get; set; }
     }
 
-    public class  PropertyEkstra
+    public class  PropertyWithOwners
     {
         [JsonProperty("grunnboksinformasjon")]
-        public EkstraGrunnbokdata Grunnbok { get; set; }
+        public PropertyData ProperyData { get; set; }
 
         [JsonProperty("rettighetshavereTilEiendomsrett")]
-        public Rettighetshavere Owners { get; set; }
+        public List<CoOwner> Owners { get; set; }
 
-        [JsonProperty("pantedokumenter")]
-        public List<PawnDocument> Documents { get; set; }
-
-        [JsonProperty("harKulturminne")]
-        public bool HasCulturalHeritageSite { get; set; }
     }
 
-    public class EkstraGrunnbokdata
+    public class PropertyData
     {
         public string Kommunenummer { get; set; }
-        public string CountyMunicipality { get; set; }
+        public string Komunnenavn { get; set; }
         public string Gardsnummer { get; set; }
-
         public string Bruksnummer { get; set; }
         public string Festenummer { get; set; }
         public string Seksjonsnummer { get; set; }

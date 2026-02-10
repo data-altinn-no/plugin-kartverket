@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -101,7 +102,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
                 },
                 systemVersion = "trunk"
             };
-        }
+        }        
     }
 
     public interface IMatrikkelPersonClientService

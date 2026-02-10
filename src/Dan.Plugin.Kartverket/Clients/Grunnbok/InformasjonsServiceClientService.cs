@@ -28,7 +28,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             myBinding.MaxReceivedMessageSize = int.MaxValue;
             string identity = string.Empty;
 
-            _client = new InformasjonServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "InformasjonServiceWS"));
+            _client = new InformasjonServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokBaseUrl + "InformasjonServiceWS"));
             GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
         }
 

@@ -62,7 +62,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             {
                 var identResponse = await identService.findPersonIdsForIdentsAsync(request);
                 identity = identResponse.Body.@return.Values.FirstOrDefault().value;
-                
+
             }
             catch (FaultException fex)
             {
@@ -75,12 +75,12 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             return identity;
 
-            
+
         }
     }
 
-    public interface IIdentServiceClientService
-    {
-        public Task<string> GetPersonIdentity(string personId);
+        public interface IIdentServiceClientService
+        {
+            public Task<string> GetPersonIdentity(string personId);
+        }
     }
-}

@@ -1,13 +1,10 @@
 using Dan.Plugin.Kartverket.Config;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
-using System.ServiceModel;
 using Kartverket.Grunnbok.RegisterenhetsrettService;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
+using System.ServiceModel;
+using System.Threading.Tasks;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
@@ -24,11 +21,13 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             _settings = settings.Value;
 
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-            _client = new RegisterenhetsrettServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "RegisterenhetsrettServiceWS"));
-            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
+            _client = new RegisterenhetsrettServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokBaseUrl + "/RegisterenhetsrettServiceWS"));
+            _client.ClientCredentials.UserName.UserName = _settings.GrunnbokUser2;
+            _client.ClientCredentials.UserName.Password = _settings.GrunnbokPw2;
+            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);  
         }
 
-        public async Task<string> GetRetterForEnheter(string registerenhetsid)
+        public async Task<RegisterenhetIdTilRegisterenhetsrettIdsMap> GetRetterForEnheter(string registerenhetsid)
         {
             var request = new findRetterForEnheterRequest()
             {
@@ -47,9 +46,41 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             var response = await _client.findRetterForEnheterAsync(request);
 
-            return response.Body.@return.ToString();
+            return response.Body.@return;
         }
 
+        
+        public async Task<findRetterForEnheterOgTyperResponse> GetRetterForEnheterOgTyper(string registerenhetsid)
+        {
+            try
+            {
+                var request = new findRetterForEnheterOgTyperRequest()
+                {
+                    Body = new findRetterForEnheterOgTyperRequestBody()
+                    {
+                        grunnbokContext = GetContext(),
+                        registerenhetIds = new RegisterenhetIdList()
+                        {
+                            new RegisterenhetId()
+                            {
+                                value = registerenhetsid
+                            }
+                        }
+                    }
+                };
+
+                var response = await _client.findRetterForEnheterOgTyperAsync(request);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Exception was thrown: {ex}");
+            }
+
+            return null;
+        }
+        
         private GrunnbokContext GetContext()
         {
             return new GrunnbokContext()
@@ -68,6 +99,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
     public interface IRegisterenhetsrettClientService
     {
-        public Task<string> GetRetterForEnheter(string registerenhetsid);
+        public Task<RegisterenhetIdTilRegisterenhetsrettIdsMap> GetRetterForEnheter(string registerenhetsid);
+        public Task<findRetterForEnheterOgTyperResponse> GetRetterForEnheterOgTyper(string registerenhetsid);
     }
 }

@@ -22,10 +22,29 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             myBinding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic;
             myBinding.MaxReceivedMessageSize = maxMessageSize;
 
-            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls13;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
             return myBinding;
         }
 
+        public static void SetCredentials(ClientCredentials credentials, ApplicationSettings settings, ServiceContext serviceContext)
+        {
+            switch(serviceContext)
+            {
+                case ServiceContext.Grunnbok:
+                    credentials.UserName.UserName = settings.GrunnbokUser;
+                    credentials.UserName.Password = settings.GrunnbokPw;
+                    break;
+                case ServiceContext.Matrikkel:
+                    credentials.UserName.UserName = settings.MatrikkelUser;
+                    credentials.UserName.Password = settings.MatrikkelPw;
+                    break;
+                default:
+                    throw new ArgumentException($"Unsupported service context: {serviceContext}");
+            }
+            credentials.UserName.UserName = settings.GrunnbokUser2;
+            credentials.UserName.Password = settings.GrunnbokPw2;
+        }
+        
         public static void SetGrunnbokWSCredentials(ClientCredentials credentials, ApplicationSettings settings)
         {
             credentials.UserName.UserName = settings.GrunnbokUser;
@@ -37,6 +56,12 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             credentials.UserName.UserName = settings.MatrikkelUser;
             credentials.UserName.Password = settings.MatrikkelPw;
         }
-
+        
     }
+
+    public enum ServiceContext
+    {
+        Grunnbok,       
+        Matrikkel
+    }   
 }
