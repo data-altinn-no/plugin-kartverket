@@ -314,20 +314,29 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
     }
 
-    public interface IStoreServiceClientService
-    {
-        public Task<KommuneDAN> GetKommune(string kommuneIdent);
-        public Task<Registerenhetsrettsandel> GetRettighetsandeler(string id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "error in GetAndelseier");
+            }
 
-        public Task<Registerenhetsrett> GetRegisterenhetsrett(string id);
+            return result;
+        }
+        
+        public interface IStoreServiceClientService
+        {
+            public Task<KommuneDAN> GetKommune(string kommuneIdent);
+            public Task<Registerenhetsrettsandel> GetRettighetsandeler(string id);
 
-        public Task<Rettsstiftelse> GetRettsstiftelse(string id);
+            public Task<Registerenhetsrett> GetRegisterenhetsrett(string id);
 
-        public Task<Dokument> GetDokument(string id);
+            public Task<Rettsstiftelse> GetRettsstiftelse(string id);
 
-        public Task<List<PawnDocument>> GetPawnOwnerNames(List<PawnDocument> input);
+            public Task<Dokument> GetDokument(string id);
 
-        public Task<Matrikkelenhet> GetRegisterenhet(string registerenhetid);
+            public Task<List<PawnDocument>> GetPawnOwnerNames(List<PawnDocument> input);
+
+            public Task<Matrikkelenhet> GetRegisterenhet(string registerenhetid);
 
         public Task<Matrikkelenhet> GetMatrikkelEnhetFromRegisterRettighetsandel(string registerrettighetsandelid);
         public Task<Person> GetPerson(string personId);
