@@ -36,7 +36,7 @@ namespace Dan.Plugin.Kartverket
 
             foreach (var property in kartverketResponse)
             {
-                var martikkelNumber = BuildMatrikkelNumber(property.ProperyData.Kommunenummer, property.ProperyData.Gardsnummer, property.ProperyData.Bruksnummer, property.ProperyData.Festenummer, property.ProperyData.Seksjonsnummer);
+                var martikkelNumber = BuildMatrikkelNumber(property.ProperyData.Kommunenummer, property.ProperyData.Gardsnummer, property.ProperyData.Bruksnummer, property.ProperyData.Festenummer);
                 var coordinates = "";
                 if(!string.IsNullOrEmpty(martikkelNumber))
                     coordinates = string.Join(", ", await _geonorgeClient.GetCoordinatesForProperty(martikkelNumber, property.ProperyData.Gardsnummer, property.ProperyData.Bruksnummer, property.ProperyData.Seksjonsnummer, property.ProperyData.Festenummer, property.ProperyData.Kommunenummer));
@@ -52,7 +52,7 @@ namespace Dan.Plugin.Kartverket
             return result;
         }
 
-        private string BuildMatrikkelNumber(string kommuneNr, string gardsNr, string bruksNr, string festeNr, string seksjonsNr)
+        private string BuildMatrikkelNumber(string kommuneNr, string gardsNr, string bruksNr, string festeNr)
         {
             var stringBuilder = new StringBuilder();
             if (!string.IsNullOrEmpty(kommuneNr))
@@ -63,8 +63,6 @@ namespace Dan.Plugin.Kartverket
                 stringBuilder.Append($"/{bruksNr}");
             if(!string.IsNullOrEmpty(festeNr) && festeNr != "0")
                 stringBuilder.Append($"/{festeNr}");
-            if(!string.IsNullOrEmpty(seksjonsNr) && seksjonsNr != "0")
-                stringBuilder.Append($"/{seksjonsNr}");
 
             return stringBuilder.ToString();
         }

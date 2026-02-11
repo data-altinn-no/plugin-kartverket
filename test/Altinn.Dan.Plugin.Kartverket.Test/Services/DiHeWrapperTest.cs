@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using static Dan.Plugin.Kartverket.Clients.Grunnbok.StoreServiceClientService;
 
 namespace Dan.Plugin.Kartverket.Test.NewFolder
 {
@@ -39,6 +40,24 @@ namespace Dan.Plugin.Kartverket.Test.NewFolder
                     {
                         Kommunenummer = "1860",
                         Gardsnummer = "134",
+                        Bruksnummer = "14",
+                        Festenummer = "0",
+                        Seksjonsnummer = "0"
+                    },
+                    Owners = new List<CoOwner>
+                    {
+                        new CoOwner
+                        {
+                            OwnerShare = "1/2"
+                        }
+                    }
+                },
+                new PropertyWithOwners
+                {
+                    ProperyData = new PropertyData
+                    {
+                        Kommunenummer = "111",
+                        Gardsnummer = "123",
                         Bruksnummer = "14",
                         Festenummer = "0",
                         Seksjonsnummer = "0"

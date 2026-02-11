@@ -29,22 +29,12 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             string identity = string.Empty;
 
             _client = new InformasjonServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokBaseUrl + "InformasjonServiceWS"));
-            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
+            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Grunnbok);
         }
 
         private GrunnbokContext GetContext()
         {
-           return new GrunnbokContext()
-            {
-                locale = "no_578",
-                clientIdentification = "eDueDiligence",
-                clientTraceInfo = "eDueDiligence_1",
-                systemVersion = "1",
-                snapshotVersion = new Timestamp()
-                {
-                    timestamp = new DateTime(9999, 1, 1, 0, 0, 0)
-                }
-            };
+            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>();
         }
 
         public async Task<OwnerShipTransferInfo> GetOwnershipInfo(string registerenhetid)

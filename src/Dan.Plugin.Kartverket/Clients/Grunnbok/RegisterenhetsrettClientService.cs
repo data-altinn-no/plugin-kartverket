@@ -24,7 +24,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             _client = new RegisterenhetsrettServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokBaseUrl + "/RegisterenhetsrettServiceWS"));
             _client.ClientCredentials.UserName.UserName = _settings.GrunnbokUser2;
             _client.ClientCredentials.UserName.Password = _settings.GrunnbokPw2;
-            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);  
+            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Grunnbok);  
         }
 
         public async Task<RegisterenhetIdTilRegisterenhetsrettIdsMap> GetRetterForEnheter(string registerenhetsid)
@@ -51,17 +51,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
        
         private GrunnbokContext GetContext()
         {
-            return new GrunnbokContext()
-            {
-                clientIdentification = "eDueDiligence",
-                clientTraceInfo = "eDueDiligence_1",
-                locale = "no_578",
-                snapshotVersion = new()
-                {
-                    timestamp = new DateTime(9999, 1, 1, 0, 0, 0)
-                },
-                systemVersion = "1"
-            };
+            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>();
         }
     }
 

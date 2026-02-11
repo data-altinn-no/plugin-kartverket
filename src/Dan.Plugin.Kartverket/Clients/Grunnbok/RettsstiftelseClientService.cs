@@ -27,7 +27,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
             _client = new RettsstiftelseServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "RettsstiftelseServiceWS"));
-            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
+            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Grunnbok);
         }
 
         public async Task<findOverdragelserAvRegisterenhetsrettForPersonResponse> GetOverdragelserAvRegisterenhetsrett(string ident)
@@ -105,17 +105,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         private GrunnbokContext GetContext()
         {
-            return new()
-            {
-                clientIdentification = "eDueDiligence",
-                clientTraceInfo = "eDueDiligence_1",
-                locale = "no_578",
-                snapshotVersion = new()
-                {
-                    timestamp = new DateTime(9999, 1, 1, 0, 0, 0)
-                },
-                systemVersion = "1"
-            };
+            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>();
         }
     }
 

@@ -313,8 +313,8 @@ namespace Dan.Plugin.Kartverket.Clients
                 var owner = await _storeServiceClient.GetPerson(regenhetsandelfromstore.rettighetshaverId.value);
                 var listOfCoOwners = new List<CoOwner>();
 
-                var share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}";
-                if (regenhetsandelfromstore.teller != regenhetsandelfromstore.nevner)
+                var share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}";                
+                if (regenhetsandelfromstore.teller != regenhetsandelfromstore.nevner && matrikkelenhetgrunnbok != null)
                 {
                     var registerenhetId = matrikkelenhetgrunnbok.id.value;
 
@@ -349,7 +349,7 @@ namespace Dan.Plugin.Kartverket.Clients
 
                 var kommune = new Models.Kommune();
                 if (matrikkelenhetgrunnbok != null)
-                    kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
+                    kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);                    
 
                 result.Add(new PropertyWithOwners()
                 {

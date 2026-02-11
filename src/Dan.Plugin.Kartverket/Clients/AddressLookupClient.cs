@@ -64,20 +64,19 @@ namespace Dan.Plugin.Kartverket.Clients
         public async Task<List<string>> GetCoordinatesForProperty(string martikkelNumber, string gnr, string bnr, string snr, string fnr,
             string kommunenr)
         {
-            //get geonorge lookup (https://ws.geonorge.no/eiendom/v1/#/default/get_geokoding )
             var urlBuilder = new StringBuilder();
             urlBuilder.Append(_settings.CoordinatesLookupUrl).Append("/geokoding?");
 
             if(string.IsNullOrEmpty(martikkelNumber) == false)
-                urlBuilder.Append("&matrikkelnummer=" + martikkelNumber); //matrikkelnummer
+                urlBuilder.Append("&matrikkelnummer=" + martikkelNumber); 
             if (!string.IsNullOrEmpty(gnr))
-                urlBuilder.Append("&gardsnummer=" + gnr); //gaardsnummer
+                urlBuilder.Append("&gardsnummer=" + gnr); 
             if(!string.IsNullOrEmpty(bnr))
-                urlBuilder.Append("&bruksnummer=" + bnr); //bruksnummer
+                urlBuilder.Append("&bruksnummer=" + bnr);
             if(!string.IsNullOrEmpty(snr))
-                urlBuilder.Append("&seksjonsnummer=" + snr); //seksjonsnummer
+                urlBuilder.Append("&seksjonsnummer=" + snr);
             if(!string.IsNullOrEmpty(fnr))
-                urlBuilder.Append("&festenummer=" + fnr); // festenummer
+                urlBuilder.Append("&festenummer=" + fnr);
             if(!string.IsNullOrEmpty(kommunenr))
                 urlBuilder.Append("&kommunenummer=" + kommunenr);
 

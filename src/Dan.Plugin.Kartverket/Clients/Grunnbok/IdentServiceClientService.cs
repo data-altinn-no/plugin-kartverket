@@ -27,7 +27,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             string identity = string.Empty;
 
             var identService = new IdentServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "IdentServiceWS"));
-            GrunnbokHelpers.SetGrunnbokWSCredentials(identService.ClientCredentials, _settings);
+            GrunnbokHelpers.SetCredentials(identService.ClientCredentials, _settings, ServiceContext.Grunnbok);
 
             var list = new PersonIdentList()
             {
@@ -36,24 +36,13 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                     identifikasjonsnummer = personId
                 }
             };
-
-            var grunnbokContext = new GrunnbokContext()
-            {
-                locale = "no_578",
-                clientIdentification = "eDueDiligence",
-                clientTraceInfo = "eDueDiligence_1",
-                systemVersion = "1",
-                snapshotVersion = new global::Kartverket.Grunnbok.IdentService.Timestamp()
-                {
-                    timestamp = new DateTime(9999, 1, 1, 0, 0, 0)
-                }
-            };
+            
 
             var request = new findPersonIdsForIdentsRequest()
             {
                 Body = new findPersonIdsForIdentsRequestBody()
                 {
-                    grunnbokContext = grunnbokContext,
+                    grunnbokContext = GetGrunnbokContext(),
                     idents = list
                 }
             };
@@ -74,8 +63,11 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             }
 
             return identity;
+        }
 
-
+        private GrunnbokContext GetGrunnbokContext()
+        {
+            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>();
         }
     }
 

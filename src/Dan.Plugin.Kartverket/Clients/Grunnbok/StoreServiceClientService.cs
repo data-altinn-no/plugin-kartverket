@@ -34,25 +34,15 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
 
             _client = new StoreServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "StoreServiceWS"));
-            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
+            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Grunnbok);
         }
 
         private getObjectRequest GetRequest()
         {
+            var SNAPSHOT_VERSJON_DATO = new DateTime(9999, 1, 1, 0, 0, 0);
             return new getObjectRequest()
             {
-                grunnbokContext = new()
-                {
-                    clientIdentification = "eDueDiligence",
-                    clientTraceInfo = "eDueDiligence_1",
-                    locale = "no_578",
-                    snapshotVersion = new()
-                    {
-                        timestamp = new DateTime(9999, 1, 1, 0, 0, 0)
-                    },
-                    systemVersion = "1"
-                },
-                id = null
+                grunnbokContext = GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>()
             };
         }
 
