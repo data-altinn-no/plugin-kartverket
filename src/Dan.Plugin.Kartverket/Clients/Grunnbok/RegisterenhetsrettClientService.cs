@@ -2,7 +2,6 @@ using Dan.Plugin.Kartverket.Config;
 using Kartverket.Grunnbok.RegisterenhetsrettService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
 

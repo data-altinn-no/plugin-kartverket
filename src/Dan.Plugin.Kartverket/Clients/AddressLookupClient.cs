@@ -110,6 +110,10 @@ namespace Dan.Plugin.Kartverket.Clients
             {
                 throw new EvidenceSourcePermanentServerException(Metadata.ERROR_CCR_UPSTREAM_ERROR, null, e);
             }
+            catch (Exception e)
+            {
+                throw new Exception("Exception occurred while fetching coordinates for property", e);
+            }
         }
 
         public async Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo)

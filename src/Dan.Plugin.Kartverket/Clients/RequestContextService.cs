@@ -9,6 +9,8 @@ namespace Dan.Plugin.Kartverket.Clients
 {
     public class RequestContextService : IRequestContextService
     {
+        public const string ServicecontextHeader = "X-NADOBE-SERVICECONTEXT";
+
         public string ServiceContext { get; set; }
 
         public Task SetRequestContext(string serviceContext)
@@ -17,6 +19,13 @@ namespace Dan.Plugin.Kartverket.Clients
             return Task.CompletedTask;
         }
 
+        private string GetServiceContextFromRequest(HttpRequestData data)
+        {
+            if (!data.Headers.TryGetValues(ServicecontextHeader, out var header))
+                throw new Exception("Missing Service Context definition in request.");
+
+            return header.First().ToLowerInvariant();
+        }
     }
 
     public interface IRequestContextService

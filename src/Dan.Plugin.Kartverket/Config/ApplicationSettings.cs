@@ -20,8 +20,6 @@ namespace Dan.Plugin.Kartverket.Config
         public string GrunnbokUser { get; set; }
 
         public string GrunnbokPw { get; set; }
-        public string GrunnbokUser2 { get; set; }
-        public string GrunnbokPw2 { get; set; } 
 
         public string DigitaleHelgeLandGrunnbokUser { get; set; }
         public string DigitaleHelgeLandGrunnbokPw { get; set; }
@@ -31,7 +29,6 @@ namespace Dan.Plugin.Kartverket.Config
         public string OEDGrunnbokPw { get; set; }
 
         public string GrunnbokRootUrl { get; set; }
-        public string GrunnbokBaseUrl { get; set; }
 
         public string MatrikkelRootUrl { get; set; }
         public string DigitaleHelgeLandMatrikkelUser { get; set; }

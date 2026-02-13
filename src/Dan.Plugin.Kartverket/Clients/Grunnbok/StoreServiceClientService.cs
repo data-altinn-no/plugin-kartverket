@@ -328,15 +328,15 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             public Task<KommuneDAN> GetKommune(string kommuneIdent);
             public Task<Registerenhetsrettsandel> GetRettighetsandeler(string id);
 
-            public Task<Registerenhetsrett> GetRegisterenhetsrett(string id);
+        public Task<Registerenhetsrett> GetRegisterenhetsrett(string id);
 
-            public Task<Rettsstiftelse> GetRettsstiftelse(string id);
+        public Task<Rettsstiftelse> GetRettsstiftelse(string id);
 
-            public Task<Dokument> GetDokument(string id);
+        public Task<Dokument> GetDokument(string id);
 
-            public Task<List<PawnDocument>> GetPawnOwnerNames(List<PawnDocument> input);
+        public Task<List<PawnDocument>> GetPawnOwnerNames(List<PawnDocument> input);
 
-            public Task<Matrikkelenhet> GetRegisterenhet(string registerenhetid);
+        public Task<Matrikkelenhet> GetRegisterenhet(string registerenhetid);
 
         public Task<Matrikkelenhet> GetMatrikkelEnhetFromRegisterRettighetsandel(string registerrettighetsandelid);
         public Task<Person> GetPerson(string personId);
