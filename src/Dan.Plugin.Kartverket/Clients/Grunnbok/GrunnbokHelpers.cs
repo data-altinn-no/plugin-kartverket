@@ -1,15 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.ServiceModel.Description;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using Dan.Plugin.Kartverket.Config;
-using Kartverket.Grunnbok.StoreService;
-using Dan.Common.Models;
 using Kartverket.Matrikkel.AdresseService;
+using System;
+using System.Net;
+using System.ServiceModel;
+using System.ServiceModel.Description;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
@@ -28,45 +22,19 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             return myBinding;
         }
 
-        public static void SetCredentials(ClientCredentials credentials, ApplicationSettings settings, ServiceContext serviceContext)
+        public static void SetGrunnbokWSCredentials(ClientCredentials credentials, ApplicationSettings settings)
         {
-            switch(serviceContext)
-            {
-                case ServiceContext.Grunnbok:
-                    credentials.UserName.UserName = settings.GrunnbokUser;
-                    credentials.UserName.Password = settings.GrunnbokPw;
-                    break;
-                case ServiceContext.Matrikkel:
-                    credentials.UserName.UserName = settings.MatrikkelUser;
-                    credentials.UserName.Password = settings.MatrikkelPw;
-                    break;
-                default:
-                    throw new ArgumentException($"Unsupported service context: {serviceContext}");
-            }
+            credentials.UserName.UserName = settings.GrunnbokUser;
+            credentials.UserName.Password = settings.GrunnbokPw;
         }
 
-        
-
-        public static MatrikkelContext GetMatrikkelContext()
+        public static void SetMatrikkelWSCredentials(ClientCredentials credentials, ApplicationSettings settings)
         {
-            return new MatrikkelContext()
-            {
-                locale = "no_NO",
-                brukOriginaleKoordinater = true,
-                koordinatsystemKodeId = new KoordinatsystemKodeId()
-                {
-                    value = 22
-                },
-                klientIdentifikasjon = "eDueDiligence",
-                snapshotVersion = new ()
-                {
-                    timestamp = SNAPSHOT_VERSJON_DATO
-                },
-                systemVersion = "trunk"
-            };
+            credentials.UserName.UserName = settings.MatrikkelUser;
+            credentials.UserName.Password = settings.MatrikkelPw;
         }
 
-        public static TContext CreateGrunnbokContext<TContext, TTimestamp>()
+        public static TContext CreateGrunnbokContext<TContext, TTimestamp>(string serviceContext)
             where TContext : new()
             where TTimestamp : new()
         {
@@ -76,11 +44,11 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             dynamic ctx = context; // use dynamic only internally
             dynamic tstmp = timestamp;
 
-            tstmp.timestamp = new DateTime(9999, 1, 1, 0, 0, 0, DateTimeKind.Local);
+            tstmp.timestamp = SNAPSHOT_VERSJON_DATO;
 
             ctx.locale = "no_578";
-            ctx.clientIdentification = "eDueDiligence";
-            ctx.clientTraceInfo = "eDueDiligence_1";
+            ctx.clientIdentification = serviceContext;
+            ctx.clientTraceInfo = serviceContext+"_1";
             ctx.systemVersion = "1";
             ctx.snapshotVersion = tstmp;
 
@@ -97,7 +65,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             dynamic ctx = context; // use dynamic only internally
             dynamic tstmp = timestamp;
 
-            tstmp.timestamp = new DateTime(9999, 1, 1, 0, 0, 0, DateTimeKind.Local);
+            tstmp.timestamp = SNAPSHOT_VERSJON_DATO;
 
             ctx.locale = "no_NO";
             ctx.brukOriginaleKoordinater = true;
@@ -114,10 +82,11 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
     }
 
 
-
+    
     public enum ServiceContext
     {
         Grunnbok,       
         Matrikkel
-    }   
+    }
+    
 }

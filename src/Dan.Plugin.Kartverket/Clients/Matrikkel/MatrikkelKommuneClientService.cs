@@ -16,14 +16,14 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         private readonly ApplicationSettings _settings;
         private readonly ILogger _logger;
 
-        public MatrikkelKommuneClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public MatrikkelKommuneClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _logger = factory.CreateLogger <MatrikkelKommuneClientService>();
             _settings = settings.Value;
 
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
             _client = new KommuneServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "KommuneServiceWS"));
-            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Matrikkel);
+            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
         }
 
         public async Task<string> GetKommune(string kommunenummer)

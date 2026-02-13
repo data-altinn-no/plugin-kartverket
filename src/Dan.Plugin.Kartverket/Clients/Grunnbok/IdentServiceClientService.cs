@@ -13,11 +13,12 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
-
-        public IdentServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        private IRequestContextService _requestContextService;
+        public IdentServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<IdentServiceClientService>();
+            _requestContextService = requestContextService;
         }
 
         public async Task<string> GetPersonIdentity(string personId)
@@ -27,7 +28,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             string identity = string.Empty;
 
             var identService = new IdentServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "IdentServiceWS"));
-            GrunnbokHelpers.SetCredentials(identService.ClientCredentials, _settings, ServiceContext.Grunnbok);
+            GrunnbokHelpers.SetGrunnbokWSCredentials(identService.ClientCredentials, _settings);
 
             var list = new PersonIdentList()
             {
@@ -37,7 +38,6 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                 }
             };
             
-
             var request = new findPersonIdsForIdentsRequest()
             {
                 Body = new findPersonIdsForIdentsRequestBody()
@@ -67,11 +67,11 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         private GrunnbokContext GetGrunnbokContext()
         {
-            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>();
+            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>(_requestContextService.ServiceContext);
         }
     }
 
-        public interface IIdentServiceClientService
+    public interface IIdentServiceClientService
         {
             public Task<string> GetPersonIdentity(string personId);
         }

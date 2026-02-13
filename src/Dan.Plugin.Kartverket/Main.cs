@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace Dan.Plugin.Kartverket
@@ -21,14 +22,16 @@ namespace Dan.Plugin.Kartverket
         private IKartverketGrunnbokMatrikkelService _kartverketGrunnbokMatrikkelService;
         private readonly IDDWrapper _ddWrapper;
         private readonly IDiHeWrapper _diheWrapper;
+        private readonly IRequestContextService _requestContextService;
 
 
-        public Main(ILoggerFactory loggerFactory, IDDWrapper ddWrapper, IKartverketGrunnbokMatrikkelService kartverketGrunnbokMatrikkelService, IDiHeWrapper diheWrapper)
+        public Main(ILoggerFactory loggerFactory, IDDWrapper ddWrapper, IKartverketGrunnbokMatrikkelService kartverketGrunnbokMatrikkelService, IDiHeWrapper diheWrapper, IRequestContextService requestContextService)
         {
             _logger = loggerFactory.CreateLogger<Main>();
             _ddWrapper = ddWrapper;
             _kartverketGrunnbokMatrikkelService = kartverketGrunnbokMatrikkelService;
             _diheWrapper = diheWrapper;
+            _requestContextService = requestContextService;
         }
 
         [Function("Grunnbok")]
@@ -82,9 +85,10 @@ namespace Dan.Plugin.Kartverket
         public async Task<HttpResponseData> MotorisertFerdsel([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequestData req,FunctionContext context)
         {
             _logger.LogInformation("Running func 'MotorisertFerdsel'");
+            await _requestContextService.SetRequestContext(req);
+
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
-
             return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesMotorisertFerdsel(evidenceHarvesterRequest));
         }
 
@@ -100,7 +104,6 @@ namespace Dan.Plugin.Kartverket
         private async Task<List<EvidenceValue>> GetEvidenceValuesEiendommer(EvidenceHarvesterRequest request)
         {
             var result = await _kartverketGrunnbokMatrikkelService.FindProperties(request.SubjectParty.NorwegianOrganizationNumber);
-
             var ecb = new EvidenceBuilder(new Metadata(), "Eiendommer");
             ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
             return ecb.GetEvidenceValues();

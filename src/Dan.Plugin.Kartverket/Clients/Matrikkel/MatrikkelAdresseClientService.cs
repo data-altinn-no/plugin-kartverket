@@ -1,4 +1,4 @@
-using Dan.Plugin.Kartverket.Clients.Grunnbok;
+    using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Matrikkel.AdresseService;
 using Microsoft.Extensions.Logging;
@@ -16,7 +16,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         private AdresseServiceClient _client;
 
-        public MatrikkelAdresseClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public MatrikkelAdresseClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<MatrikkelAdresseClientService>();
@@ -25,7 +25,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
 
             _client = new AdresseServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "AdresseServiceWS"));
-            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Matrikkel);
+            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
         }
 
         public async Task<AdresseId[]> GetAdresserForMatrikkelenhet(long matrikkelEnhetId)

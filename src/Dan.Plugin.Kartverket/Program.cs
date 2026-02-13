@@ -17,26 +17,28 @@ var host = new HostBuilder()
         {
             var configurationRoot = context.Configuration;
             services.Configure<ApplicationSettings>(configurationRoot);
-            services.AddScoped<IAddressLookupClient, AddressLookupClient>();
+            services.AddTransient<IAddressLookupClient, AddressLookupClient>();
             services.AddTransient<IDDWrapper, DDWrapper>();
             services.AddTransient<IDiHeWrapper, DiHeWrapper>();
 
             //Matrikkel og grunnbok services
-            services.AddScoped<IKartverketGrunnbokMatrikkelService, KartverketGrunnbokMatrikkelService>();
-            services.AddScoped<IIdentServiceClientService, IdentServiceClientService>();
-            services.AddScoped<IStoreServiceClientService, StoreServiceClientService>();
-            services.AddScoped<IMatrikkelenhetClientService, MatrikkelenhetClientService>();
-            services.AddScoped<IMatrikkelKommuneClientService, MatrikkelKommuneClientService>();
-            services.AddScoped<IRegisterenhetsRettsandelsServiceClientService, RegisterenhetsRettsandelsServiceClientService>();
-            services.AddScoped<IMatrikkelStoreClientService, MatrikkelStoreClientService>();
-            services.AddScoped<IMatrikkelPersonClientService, MatrikkelPersonClientService>();
-            services.AddScoped<IOverfoeringServiceClientService, OverfoeringServiceClientService>();
-            services.AddScoped<IRettsstiftelseClientService, RettsstiftelseClientService>();
-            services.AddScoped<IRegisterenhetsrettClientService, RegisterenhetsrettClientService>();
-            services.AddScoped<IInformasjonsServiceClientService, InformasjonsServiceClientService>();
-            services.AddScoped<IMatrikkelBygningClientService, MatrikkelBygningClientService>();
-            services.AddScoped<IMatrikkelBruksenhetService, MatrikkelBruksenhetService>();
-            services.AddScoped<IMatrikkelAdresseClientService, MatrikkelAdresseClientService>();
+            services.AddTransient<IKartverketGrunnbokMatrikkelService, KartverketGrunnbokMatrikkelService>();
+            services.AddTransient<IIdentServiceClientService, IdentServiceClientService>();
+            services.AddTransient<IStoreServiceClientService, StoreServiceClientService>();
+            services.AddTransient<IMatrikkelenhetClientService, MatrikkelenhetClientService>();
+            services.AddTransient<IMatrikkelKommuneClientService, MatrikkelKommuneClientService>();
+            services.AddTransient<IRegisterenhetsRettsandelsServiceClientService, RegisterenhetsRettsandelsServiceClientService>();
+            services.AddTransient<IMatrikkelStoreClientService, MatrikkelStoreClientService>();
+            services.AddTransient<IMatrikkelPersonClientService, MatrikkelPersonClientService>();
+            services.AddTransient<IOverfoeringServiceClientService, OverfoeringServiceClientService>();
+            services.AddTransient<IRettsstiftelseClientService, RettsstiftelseClientService>();
+            services.AddTransient<IRegisterenhetsrettClientService, RegisterenhetsrettClientService>();
+            services.AddTransient<IInformasjonsServiceClientService, InformasjonsServiceClientService>();
+            services.AddTransient<IMatrikkelBygningClientService, MatrikkelBygningClientService>();
+            services.AddTransient<IMatrikkelBruksenhetService, MatrikkelBruksenhetService>();
+            services.AddTransient<IMatrikkelAdresseClientService, MatrikkelAdresseClientService>();
+            services.AddScoped<IRequestContextService, RequestContextService>();
+
 
             //KartverketClient
             services.AddMaskinportenHttpClient<KeyVaultMaskinportenClientDefinition, KartverketClient>(configurationRoot.GetSection("MPKartverket"),
@@ -53,8 +55,6 @@ var host = new HostBuilder()
                     configurationRoot.GetSection("MP3Landbruk").Bind(clientDefinition.KeyVaultMaskinportenSettings);
                 })
                 .AddPolicyHandlerFromRegistry(Constants.SafeHttpClientPolicy);
-
-
         })
         .Build();
 

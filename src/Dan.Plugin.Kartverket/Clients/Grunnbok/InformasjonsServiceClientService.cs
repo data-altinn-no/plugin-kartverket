@@ -1,13 +1,12 @@
 using Dan.Plugin.Kartverket.Config;
+using Dan.Plugin.Kartverket.Models;
 using Kartverket.Grunnbok.InformasjonsService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using Dan.Plugin.Kartverket.Models;
 using GrunnbokContext = Kartverket.Grunnbok.InformasjonsService.GrunnbokContext;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
@@ -16,25 +15,22 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
+        private IRequestContextService _requestContextService;
 
         private InformasjonServiceClient _client;
 
-        public InformasjonsServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public InformasjonsServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<InformasjonsServiceClientService>();
+            _requestContextService = requestContextService;
 
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
             myBinding.MaxReceivedMessageSize = int.MaxValue;
             string identity = string.Empty;
 
-            _client = new InformasjonServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokBaseUrl + "InformasjonServiceWS"));
-            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Grunnbok);
-        }
-
-        private GrunnbokContext GetContext()
-        {
-            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>();
+            _client = new InformasjonServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "InformasjonServiceWS"));
+            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
         }
 
         public async Task<OwnerShipTransferInfo> GetOwnershipInfo(string registerenhetid)
@@ -139,6 +135,11 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             }
 
             return result;
+        }
+
+        private GrunnbokContext GetContext()
+        {
+            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext, Timestamp>(_requestContextService.ServiceContext);
         }
     }
 

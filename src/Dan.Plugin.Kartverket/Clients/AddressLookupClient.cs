@@ -20,7 +20,7 @@ namespace Dan.Plugin.Kartverket.Clients
         public Task<KartverketResponse> Get(KartverketResponse kartverket);
         public Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo);
 
-        public Task<List<string>> GetCoordinatesForProperty(string martikkelNumber, string gnr, string bnr, string snr, string fnr, string kommunenr);
+        public Task<List<string>> GetCoordinatesForProperty(string matrikkelNumber, string gnr, string bnr, string snr, string fnr, string kommunenr);
     }
 
 
@@ -61,14 +61,14 @@ namespace Dan.Plugin.Kartverket.Clients
             return kartverket;
         }
 
-        public async Task<List<string>> GetCoordinatesForProperty(string martikkelNumber, string gnr, string bnr, string snr, string fnr,
+        public async Task<List<string>> GetCoordinatesForProperty(string matrikkelNumber, string gnr, string bnr, string snr, string fnr,
             string kommunenr)
         {
             var urlBuilder = new StringBuilder();
             urlBuilder.Append(_settings.CoordinatesLookupUrl).Append("/geokoding?");
 
-            if(string.IsNullOrEmpty(martikkelNumber) == false)
-                urlBuilder.Append("&matrikkelnummer=" + martikkelNumber); 
+            if(string.IsNullOrEmpty(matrikkelNumber) == false)
+                urlBuilder.Append("matrikkelnummer=" + matrikkelNumber); 
             if (!string.IsNullOrEmpty(gnr))
                 urlBuilder.Append("&gardsnummer=" + gnr); 
             if(!string.IsNullOrEmpty(bnr))
@@ -84,7 +84,6 @@ namespace Dan.Plugin.Kartverket.Clients
             {
                 var response = await _httpClient.GetAsync(urlBuilder.ToString());
                 response.EnsureSuccessStatusCode();
-                var content = await response.Content.ReadAsStringAsync();
 
                 var json = JObject.Parse(await response.Content.ReadAsStringAsync());
                 var coordinates = json["features"]
@@ -101,6 +100,10 @@ namespace Dan.Plugin.Kartverket.Clients
             catch (HttpRequestException e)
             {
                 throw new EvidenceSourcePermanentServerException(Metadata.ERROR_CCR_UPSTREAM_ERROR, null, e);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Exception occurred while fetching coordinates for property", e);
             }
         }
 

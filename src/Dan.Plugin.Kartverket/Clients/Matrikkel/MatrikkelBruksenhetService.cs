@@ -18,7 +18,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         private BruksenhetServiceClient _client;
 
-        public MatrikkelBruksenhetService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public MatrikkelBruksenhetService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<MatrikkelBruksenhetService>();
@@ -27,7 +27,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
 
             _client = new BruksenhetServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "BruksenhetServiceWS"));
-            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Matrikkel);
+            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
         }
 
         public async Task<BruksenhetId[]> GetBruksenheter(long matrikkelEnhetId)

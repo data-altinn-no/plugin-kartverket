@@ -1,14 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Grunnbok.RegisterenhetsrettsandelService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.ServiceModel;
+using System.Threading.Tasks;
+using GrunnbokContext = Kartverket.Grunnbok.RegisterenhetsrettsandelService.GrunnbokContext;
+using RegisterenhetsrettId = Kartverket.Grunnbok.RegisterenhetsrettsandelService.RegisterenhetsrettId;
+using Timestamp = Kartverket.Grunnbok.RegisterenhetsrettsandelService.Timestamp;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
@@ -16,18 +17,19 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
     {
         private readonly ILogger _logger;
         private readonly ApplicationSettings _settings;
+        private readonly IRequestContextService _requestContextService;
 
         private RegisterenhetsrettsandelServiceClient _client;
 
-        public RegisterenhetsRettsandelsServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public RegisterenhetsRettsandelsServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<RegisterenhetsRettsandelsServiceClientService>();
+            _requestContextService = requestContextService;
 
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
             _client = new RegisterenhetsrettsandelServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "RegisterenhetsrettsandelServiceWS"));
-            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Grunnbok);
+            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
         }
 
         public async Task<List<string>> GetAndelerForRettighetshaver(string personident)
@@ -103,13 +105,13 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         private GrunnbokContext GetContext()
         {
-            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>();
+            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext, Timestamp>(_requestContextService.ServiceContext);
         }
     }
 
     public interface IRegisterenhetsRettsandelsServiceClientService
     {
         public Task<List<string>> GetAndelerForRettighetshaver(string personident);
-        public Task<findAndelerIRetterResponse> GetAndelerIRetter(string registerenehtsid);
+        public Task<findAndelerIRetterResponse> GetAndelerIRetter(string registerenhetsid);
     }
 }

@@ -1,20 +1,25 @@
-using Azure.Core;
 using Dan.Plugin.Kartverket.Config;
+using Dan.Plugin.Kartverket.Models;
 using Kartverket.Grunnbok.StoreService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using Dan.Plugin.Kartverket.Models;
-using KommuneId = Kartverket.Grunnbok.StoreService.KommuneId;
-using KommuneDAN = Dan.Plugin.Kartverket.Models.Kommune;
+using static Dan.Plugin.Kartverket.Clients.Grunnbok.StoreServiceClientService;
+using DokumentId = Kartverket.Grunnbok.StoreService.DokumentId;
+using GrunnbokContext = Kartverket.Grunnbok.StoreService.GrunnbokContext;
 using Kommune = Kartverket.Grunnbok.StoreService.Kommune;
+using KommuneDAN = Dan.Plugin.Kartverket.Models.Kommune;
+using KommuneId = Kartverket.Grunnbok.StoreService.KommuneId;
 using Matrikkelenhet = Kartverket.Grunnbok.StoreService.Matrikkelenhet;
 using PersonId = Kartverket.Grunnbok.StoreService.PersonId;
-using static Dan.Plugin.Kartverket.Clients.Grunnbok.StoreServiceClientService;
+using RegisterenhetId = Kartverket.Grunnbok.StoreService.RegisterenhetId;
+using RegisterenhetsrettId = Kartverket.Grunnbok.StoreService.RegisterenhetsrettId;
+using RegisterenhetsrettsandelId = Kartverket.Grunnbok.StoreService.RegisterenhetsrettsandelId;
+using RettsstiftelseId = Kartverket.Grunnbok.StoreService.RettsstiftelseId;
+using Timestamp = Kartverket.Grunnbok.StoreService.Timestamp;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
@@ -22,33 +27,24 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
-
+        private readonly IRequestContextService _requestContextService;
         private StoreServiceClient _client;
 
-        public StoreServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public StoreServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<StoreServiceClientService>();
+            _requestContextService = requestContextService;
 
             //Find ident for identifier
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
 
             _client = new StoreServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "StoreServiceWS"));
-            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Grunnbok);
-        }
-
-        private getObjectRequest GetRequest()
-        {
-            var SNAPSHOT_VERSJON_DATO = new DateTime(9999, 1, 1, 0, 0, 0);
-            return new getObjectRequest()
-            {
-                grunnbokContext = GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>()
-            };
+            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
         }
 
         public async Task<KommuneDAN> GetKommune(string kommuneIdent)
         {
-
             KommuneDAN result = null;
 
             var request = GetRequest();
@@ -222,7 +218,6 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         public async Task<List<PawnDocument>> GetPawnOwnerNames(List<PawnDocument> input)
         {
-
             foreach (var inputItem in input)
             {
                 var request = GetRequest();
@@ -285,26 +280,32 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             }
             return result;
         }
-
-
-        
-        public interface IStoreServiceClientService
+        private getObjectRequest GetRequest()
         {
-            public Task<KommuneDAN> GetKommune(string kommuneIdent);
-            public Task<Registerenhetsrettsandel> GetRettighetsandeler(string id);
-
-            public Task<Registerenhetsrett> GetRegisterenhetsrett(string id);
-
-            public Task<Rettsstiftelse> GetRettsstiftelse(string id);
-
-            public Task<Dokument> GetDokument(string id);
-
-            public Task<List<PawnDocument>> GetPawnOwnerNames(List<PawnDocument> input);
-
-            public Task<Matrikkelenhet> GetRegisterenhet(string registerenhetid);
-
-            public Task<Matrikkelenhet> GetMatrikkelEnhetFromRegisterRettighetsandel(string registerrettighetsandelid);
-            public Task<Person> GetPerson(string personId);
+            var SNAPSHOT_VERSJON_DATO = new DateTime(9999, 1, 1, 0, 0, 0);
+            return new getObjectRequest()
+            {
+                grunnbokContext = GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext, Timestamp>(_requestContextService.ServiceContext)
+            };
         }
+    }
+
+    public interface IStoreServiceClientService
+    {
+        public Task<KommuneDAN> GetKommune(string kommuneIdent);
+        public Task<Registerenhetsrettsandel> GetRettighetsandeler(string id);
+
+        public Task<Registerenhetsrett> GetRegisterenhetsrett(string id);
+
+        public Task<Rettsstiftelse> GetRettsstiftelse(string id);
+
+        public Task<Dokument> GetDokument(string id);
+
+        public Task<List<PawnDocument>> GetPawnOwnerNames(List<PawnDocument> input);
+
+        public Task<Matrikkelenhet> GetRegisterenhet(string registerenhetid);
+
+        public Task<Matrikkelenhet> GetMatrikkelEnhetFromRegisterRettighetsandel(string registerrettighetsandelid);
+        public Task<Person> GetPerson(string personId);
     }
 }

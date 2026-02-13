@@ -356,7 +356,7 @@ namespace Dan.Plugin.Kartverket.Clients
                     ProperyData = new PropertyData()
                     {
                         Kommunenummer = kommune.Number ?? null,
-                        Komunnenavn = kommune.Name ?? null,
+                        Kommunenavn = kommune.Name ?? null,
                         Bruksnummer = matrikkelenhetgrunnbok?.bruksnummer.ToString() ?? null,
                         Gardsnummer = matrikkelenhetgrunnbok?.gaardsnummer.ToString() ?? null,
                         Festenummer = matrikkelenhetgrunnbok?.festenummer.ToString() ?? null,

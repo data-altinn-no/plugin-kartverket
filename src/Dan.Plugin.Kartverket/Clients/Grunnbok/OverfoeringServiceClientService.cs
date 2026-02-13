@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Grunnbok.OverfoeringService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -14,15 +14,17 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         private ApplicationSettings _settings;
         private ILogger _logger;
         private OverfoeringServiceClient _client;
+        private IRequestContextService _requestContextService;
 
-        public OverfoeringServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public OverfoeringServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<IdentServiceClientService>();
+            _requestContextService = requestContextService;
 
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
             _client = new OverfoeringServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "OverfoeringServiceWS"));
-            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Grunnbok);
+            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
         }
 
         public async Task<string> GetOverfoeringerTil(List<string> ids)
@@ -66,7 +68,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         private GrunnbokContext GetContext()
         {
-            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>();
+            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>(_requestContextService.ServiceContext);
         }
     }
 

@@ -16,7 +16,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         private StoreServiceClient _client;
 
 
-        public MatrikkelStoreClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public MatrikkelStoreClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<MatrikkelStoreClientService>();
@@ -24,7 +24,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
 
             _client = new StoreServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "StoreServiceWS"));
-            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Matrikkel);
+            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
         }
 
         public async Task<Matrikkelenhet> GetMatrikkelenhet(long ident)

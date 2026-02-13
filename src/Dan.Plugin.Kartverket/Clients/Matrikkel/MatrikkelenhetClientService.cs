@@ -20,7 +20,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         private MatrikkelenhetServiceClient _client;
 
-        public MatrikkelenhetClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public MatrikkelenhetClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<MatrikkelenhetServiceClient>();
@@ -29,7 +29,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
 
             _client = new MatrikkelenhetServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "MatrikkelenhetServiceWS"));
-            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Matrikkel);
+            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
         }
 
         public async Task<List<MatrikkelenhetId>> GetMatrikkelenheterForPerson(long ident)

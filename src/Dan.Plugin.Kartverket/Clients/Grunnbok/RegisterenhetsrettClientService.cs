@@ -2,7 +2,6 @@ using Dan.Plugin.Kartverket.Config;
 using Kartverket.Grunnbok.RegisterenhetsrettService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -12,19 +11,20 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
+        private IRequestContextService _requestContextService;
 
         private RegisterenhetsrettServiceClient _client;
 
-        public RegisterenhetsrettClientService(ILoggerFactory factory, IOptions<ApplicationSettings> settings)
+        public RegisterenhetsrettClientService(ILoggerFactory factory, IOptions<ApplicationSettings> settings, IRequestContextService requestContextService)
         {
             _logger = factory.CreateLogger<RegisterenhetsrettClientService>();
             _settings = settings.Value;
+            _requestContextService = requestContextService;
 
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-            _client = new RegisterenhetsrettServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokBaseUrl + "/RegisterenhetsrettServiceWS"));
-            _client.ClientCredentials.UserName.UserName = _settings.GrunnbokUser2;
-            _client.ClientCredentials.UserName.Password = _settings.GrunnbokPw2;
-            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Grunnbok);  
+
+            _client = new RegisterenhetsrettServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "/RegisterenhetsrettServiceWS"));
+            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
         }
 
         public async Task<RegisterenhetIdTilRegisterenhetsrettIdsMap> GetRetterForEnheter(string registerenhetsid)
@@ -51,7 +51,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
        
         private GrunnbokContext GetContext()
         {
-            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>();
+            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>(_requestContextService.ServiceContext);
         }
     }
 

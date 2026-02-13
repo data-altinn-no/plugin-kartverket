@@ -18,7 +18,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         private PersonServiceClient _client;
 
-        public MatrikkelPersonClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public MatrikkelPersonClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<MatrikkelPersonClientService>();
@@ -27,10 +27,10 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
 
             _client = new PersonServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "PersonServiceWS"));
-            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Matrikkel);
+            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
         }
 
-       
+
         public async Task<long> GetOrganization(string orgno)
         {
             findPersonIdForIdentResponse result = null;

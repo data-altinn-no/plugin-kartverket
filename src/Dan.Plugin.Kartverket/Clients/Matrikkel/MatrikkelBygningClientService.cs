@@ -18,7 +18,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         private BygningServiceClient _client;
 
-        public MatrikkelBygningClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public MatrikkelBygningClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<MatrikkelBygningClientService>();
@@ -27,7 +27,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
 
             _client = new BygningServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "BygningServiceWS"));
-            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Matrikkel);
+            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
         }
 
         public async Task<List<long>> GetBygningerForMatrikkelenhet(long matrikkelEnhetId)

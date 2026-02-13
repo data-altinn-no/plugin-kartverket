@@ -1,15 +1,14 @@
+using Dan.Plugin.Kartverket.Config;
+using Dan.Plugin.Kartverket.Models;
+using Kartverket.Grunnbok.RettsstiftelseService;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dan.Plugin.Kartverket.Config;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using Dan.Plugin.Kartverket.Models;
-using Kartverket.Grunnbok.RettsstiftelseService;
 using GrunnbokContext = Kartverket.Grunnbok.RettsstiftelseService.GrunnbokContext;
-using RegisterenhetsrettId = Kartverket.Grunnbok.RettsstiftelseService.RegisterenhetsrettId;
 using TransferMode = Kartverket.Grunnbok.RettsstiftelseService.TransferMode;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
@@ -19,15 +18,17 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         private ApplicationSettings _settings;
         private ILogger _logger;
         private RettsstiftelseServiceClient _client;
+        private IRequestContextService _requestContextService;
 
-        public RettsstiftelseClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public RettsstiftelseClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<RettsstiftelseClientService>();
+            _requestContextService = requestContextService;
 
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
             _client = new RettsstiftelseServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "RettsstiftelseServiceWS"));
-            GrunnbokHelpers.SetCredentials(_client.ClientCredentials, _settings, ServiceContext.Grunnbok);
+            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
         }
 
         public async Task<findOverdragelserAvRegisterenhetsrettForPersonResponse> GetOverdragelserAvRegisterenhetsrett(string ident)
@@ -105,7 +106,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         private GrunnbokContext GetContext()
         {
-            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>();
+            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>(_requestContextService.ServiceContext);
         }
     }
 
