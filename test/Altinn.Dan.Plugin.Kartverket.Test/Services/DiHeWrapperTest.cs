@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Xunit;
 using static Dan.Plugin.Kartverket.Clients.Grunnbok.StoreServiceClientService;
 
-namespace Dan.Plugin.Kartverket.Test.NewFolder
+namespace Dan.Plugin.Kartverket.Test.Services
 {
     public class DiHeWrapperTest
     {
@@ -25,7 +25,7 @@ namespace Dan.Plugin.Kartverket.Test.NewFolder
         }
 
         [Fact]
-        public async Task GetMotorizedTraficInformation_Returns_Several_CoOwners()
+        public async Task GetMotorizedTraficInformation_Returns_PropertyInfo()
         {
             var _diHeWrapper = new DiHeWrapper(
                 _addressLookupClient,

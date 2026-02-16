@@ -22,16 +22,52 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             return myBinding;
         }
 
-        public static void SetGrunnbokWSCredentials(ClientCredentials credentials, ApplicationSettings settings)
+        public static void SetGrunnbokWSCredentials(ClientCredentials credentials, ApplicationSettings settings, string serviceContext)
         {
-            credentials.UserName.UserName = settings.GrunnbokUser;
-            credentials.UserName.Password = settings.GrunnbokPw;
+            if(serviceContext.ToUpper() == "DIGITALEHELGELAND")
+            {
+                credentials.UserName.UserName = settings.GrunnbokUser;//settings.DigitaleHelgeLandGrunnbokUser;
+                credentials.UserName.Password = settings.GrunnbokPw;//settings.DigitaleHelgeLandGrunnbokPw;
+            }
+            if(serviceContext.ToUpper() == "EDUEDILIGENCE")
+            {
+                credentials.UserName.UserName = settings.GrunnbokEDueDiligenceUser;
+                credentials.UserName.Password = settings.GrunnbokEDueDiligencePw;
+            }
+            if(serviceContext.ToUpper() == "OED"|| serviceContext.ToUpper() == "DIGITALDODSBO")
+            {
+                credentials.UserName.UserName = settings.OEDGrunnbokUser;
+                credentials.UserName.Password = settings.OEDGrunnbokPw;
+            }
+            else
+            {
+                ArgumentException.ThrowIfNullOrEmpty(serviceContext, nameof(serviceContext));
+            }
+                
         }
 
-        public static void SetMatrikkelWSCredentials(ClientCredentials credentials, ApplicationSettings settings)
+        public static void SetMatrikkelWSCredentials(ClientCredentials credentials, ApplicationSettings settings, string serviceContext)
         {
-            credentials.UserName.UserName = settings.MatrikkelUser;
-            credentials.UserName.Password = settings.MatrikkelPw;
+            if(serviceContext.ToUpper() == "DIGITALEHELGLAND")
+            {
+                credentials.UserName.UserName = settings.DigitaleHelgeLandMatrikkelUser;
+                credentials.UserName.Password = settings.DigitaleHelgeLandMatrikkelPw;
+            }
+            if(serviceContext.ToUpper() == "EDUEDILIGENCE")
+            {
+                credentials.UserName.UserName = settings.MatrikkelEDueDiligenceUser;
+                credentials.UserName.Password = settings.MatrikkelEDueDiligencePw;
+            }
+            if(serviceContext.ToUpper() == "OED"|| serviceContext.ToUpper() == "DIGITALDODSBO")
+            {
+                credentials.UserName.UserName = settings.MatrikkelOEDUser;
+                credentials.UserName.Password = settings.MatrikkelOEDPw;
+            }
+            else
+            {
+                ArgumentException.ThrowIfNullOrEmpty(serviceContext, nameof(serviceContext));
+            }
+            
         }
 
         public static TContext CreateGrunnbokContext<TContext, TTimestamp>(string serviceContext)
@@ -79,14 +115,6 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             return context;
         }
-    }
-
-
-    
-    public enum ServiceContext
-    {
-        Grunnbok,       
-        Matrikkel
     }
     
 }

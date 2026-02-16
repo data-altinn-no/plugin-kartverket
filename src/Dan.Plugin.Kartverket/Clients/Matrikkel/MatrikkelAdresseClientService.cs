@@ -13,23 +13,19 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
-
-        private AdresseServiceClient _client;
+        private IRequestContextService _requestContextService;
 
         public MatrikkelAdresseClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<MatrikkelAdresseClientService>();
+            _requestContextService = requestContextService;
 
-            //Find ident for identifier
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            _client = new AdresseServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "AdresseServiceWS"));
-            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
         }
 
         public async Task<AdresseId[]> GetAdresserForMatrikkelenhet(long matrikkelEnhetId)
         {
+            var _client = CreateClient();
             var request = new findAdresserForMatrikkelenhetRequest
             {
                 matrikkelContext = GetContext(),
@@ -52,6 +48,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         public async Task<AdresseId[]> FindAdresser(string adresseNavn, string kommuneNo)
         {
+            var _client = CreateClient();
             var request = new findAdresserRequest
             {
                 matrikkelContext = GetContext(),
@@ -76,6 +73,25 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         {
            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>();
         }
+
+        private AdresseServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new AdresseServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.MatrikkelRootUrl + "AdresseServiceWS")
+            );
+
+            GrunnbokHelpers.SetMatrikkelWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext
+            );
+
+            return client;
+        }
+
     }
 
     public interface IMatrikkelAdresseClientService

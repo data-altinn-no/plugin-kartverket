@@ -24,19 +24,11 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             _settings = settings.Value;
             _logger = factory.CreateLogger<InformasjonsServiceClientService>();
             _requestContextService = requestContextService;
-
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-            myBinding.MaxReceivedMessageSize = int.MaxValue;
-            string identity = string.Empty;
-
-            _client = new InformasjonServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "InformasjonServiceWS"));
-            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
         }
 
         public async Task<OwnerShipTransferInfo> GetOwnershipInfo(string registerenhetid)
         {
             OwnerShipTransferInfo result = null;
-
             var grunnbokData = await GetOverdragelserAvRegisterenhetsrett(registerenhetid);
 
             if (grunnbokData != null)
@@ -60,6 +52,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         public async Task<HeftelseInformasjonTransfer> GetPawnStuff(string registerenhetid)
         {
+            var _client = CreateClient();
+
             findHeftelserRequest request = new findHeftelserRequest()
             {
                 grunnbokContext = GetContext(),
@@ -76,6 +70,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         public async Task<HeftelseInformasjonTransfer> GetHeftelser(string registerenhetid)
         {
+            var _client = CreateClient();
+
             findRettigheterForRegisterenhetRequest request = new()
             {
                 grunnbokContext = GetContext(),
@@ -93,6 +89,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         public async Task<RettsstiftelseInformasjonTransfer> GetRettsstiftelse(string rettstiftelseid)
         {
+            var _client = CreateClient();
+
             findRettsstiftelseRequest request = new findRettsstiftelseRequest()
             {
                 grunnbokContext = GetContext(),
@@ -109,6 +107,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         private async Task<OverdragelseAvRegisterenhetsrettInformasjonTransfer> GetOverdragelserAvRegisterenhetsrett(string registerenhetid)
         {
             OverdragelseAvRegisterenhetsrettInformasjonTransfer result = null;
+            var _client = CreateClient();
 
             var request = new findOverdragelserAvRegisterenhetsrettRequest()
             {
@@ -141,6 +140,33 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         {
             return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext, Timestamp>(_requestContextService.ServiceContext);
         }
+
+        private InformasjonServiceClient CreateClient()
+        {
+            var serviceContext = _requestContextService.ServiceContext;
+
+            if (string.IsNullOrWhiteSpace(serviceContext))
+            {
+                throw new InvalidOperationException(
+                    "ServiceContext is not set. Ensure SetRequestContext() is called before using InformasjonsServiceClientService.");
+            }
+
+            var binding = GrunnbokHelpers.GetBasicHttpBinding();
+            binding.MaxReceivedMessageSize = int.MaxValue;
+
+            var endpoint = new EndpointAddress(
+                $"{_settings.GrunnbokRootUrl}InformasjonServiceWS");
+
+            var client = new InformasjonServiceClient(binding, endpoint);
+
+            GrunnbokHelpers.SetGrunnbokWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                serviceContext);
+
+            return client;
+        }
+
     }
 
     public interface IInformasjonsServiceClientService

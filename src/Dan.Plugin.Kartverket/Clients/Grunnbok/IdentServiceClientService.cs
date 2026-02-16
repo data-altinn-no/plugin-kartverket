@@ -24,11 +24,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<string> GetPersonIdentity(string personId)
         {
             //Find ident for identifier
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
             string identity = string.Empty;
-
-            var identService = new IdentServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "IdentServiceWS"));
-            GrunnbokHelpers.SetGrunnbokWSCredentials(identService.ClientCredentials, _settings);
+            var identService = await CreateClient();
 
             var list = new PersonIdentList()
             {
@@ -69,6 +66,23 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         {
             return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>(_requestContextService.ServiceContext);
         }
+
+        private async Task<IdentServiceClient> CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new IdentServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.GrunnbokRootUrl + "IdentServiceWS"));
+
+            GrunnbokHelpers.SetGrunnbokWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext);
+
+            return client;
+        }
+
     }
 
     public interface IIdentServiceClientService

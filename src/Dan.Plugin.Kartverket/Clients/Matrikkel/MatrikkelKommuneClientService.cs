@@ -12,22 +12,19 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 {
     public class MatrikkelKommuneClientService : IMatrikkelKommuneClientService
     {
-        private KommuneServiceClient _client;
         private readonly ApplicationSettings _settings;
         private readonly ILogger _logger;
-
+        private readonly IRequestContextService _requestContextService;
         public MatrikkelKommuneClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _logger = factory.CreateLogger <MatrikkelKommuneClientService>();
             _settings = settings.Value;
-
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-            _client = new KommuneServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "KommuneServiceWS"));
-            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
+            _requestContextService = requestContextService;
         }
 
         public async Task<string> GetKommune(string kommunenummer)
         {
+            var _client = CreateClient();
             var request = new findGjeldendeKommuneIdForKommuneNrRequest()
             {
                 matrikkelContext = GetContext(),
@@ -42,6 +39,24 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         private MatrikkelContext GetContext()
         {
             return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>();
+        }
+
+        private KommuneServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new KommuneServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.MatrikkelRootUrl + "KommuneServiceWS")
+            );
+
+            GrunnbokHelpers.SetMatrikkelWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext
+            );
+
+            return client;
         }
     }
 

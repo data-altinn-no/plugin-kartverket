@@ -24,16 +24,13 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<RettsstiftelseClientService>();
-            _requestContextService = requestContextService;
-
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-            _client = new RettsstiftelseServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "RettsstiftelseServiceWS"));
-            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
+            _requestContextService = requestContextService;            
         }
 
         public async Task<findOverdragelserAvRegisterenhetsrettForPersonResponse> GetOverdragelserAvRegisterenhetsrett(string ident)
         {
             findOverdragelserAvRegisterenhetsrettForPersonResponse result = null;
+            var _client = CreateClient();
 
             findOverdragelserAvRegisterenhetsrettForPersonRequest request = new()
             {
@@ -62,6 +59,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<List<PawnDocument>> GetHeftelser(string registerenhetid)
         {
             List<PawnDocument> result = new List<PawnDocument>();
+            var _client = CreateClient();
 
             findHeftelserRequest request = new()
             {
@@ -108,6 +106,29 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         {
             return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>(_requestContextService.ServiceContext);
         }
+
+        private RettsstiftelseServiceClient CreateClient()
+        {
+            var serviceContext = _requestContextService.ServiceContext;
+
+            if (string.IsNullOrWhiteSpace(serviceContext))
+                throw new InvalidOperationException(
+                    "ServiceContext is not set. Ensure SetRequestContext() is called before using RettsstiftelseClientService.");
+
+            var binding = GrunnbokHelpers.GetBasicHttpBinding();
+            var endpoint = new EndpointAddress(
+                $"{_settings.GrunnbokRootUrl}RettsstiftelseServiceWS");
+
+            var client = new RettsstiftelseServiceClient(binding, endpoint);
+
+            GrunnbokHelpers.SetGrunnbokWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                serviceContext);
+
+            return client;
+        }
+
     }
 
     public interface IRettsstiftelseClientService

@@ -15,25 +15,20 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
-
-        private PersonServiceClient _client;
+        private IRequestContextService _requestContextService;
 
         public MatrikkelPersonClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
-            _logger = factory.CreateLogger<MatrikkelPersonClientService>();
-
-            //Find ident for identifier
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            _client = new PersonServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "PersonServiceWS"));
-            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
+            _logger = factory.CreateLogger<MatrikkelPersonClientService>();            
+            _requestContextService = requestContextService;
         }
 
 
         public async Task<long> GetOrganization(string orgno)
         {
             findPersonIdForIdentResponse result = null;
+            var _client = CreateClient();
 
             var request = new findPersonIdForIdentRequest()
             {
@@ -59,6 +54,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<long> GetPerson(string nin)
         {
             findPersonIdForIdentResponse result = null;
+            var _client = CreateClient();
 
             var request = new findPersonIdForIdentRequest()
             {
@@ -81,11 +77,27 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             return result.@return.value;
         }
 
-
-
         private MatrikkelContext GetContext()
         {
             return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>();
+        }
+
+        private PersonServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new PersonServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.MatrikkelRootUrl + "PersonServiceWS")
+            );
+
+            GrunnbokHelpers.SetMatrikkelWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext
+            );
+
+            return client;
         }
     }
 

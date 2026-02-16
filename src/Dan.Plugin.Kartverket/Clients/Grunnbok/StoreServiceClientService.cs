@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using static Dan.Plugin.Kartverket.Clients.Grunnbok.StoreServiceClientService;
 using DokumentId = Kartverket.Grunnbok.StoreService.DokumentId;
 using GrunnbokContext = Kartverket.Grunnbok.StoreService.GrunnbokContext;
 using Kommune = Kartverket.Grunnbok.StoreService.Kommune;
@@ -35,17 +34,12 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             _settings = settings.Value;
             _logger = factory.CreateLogger<StoreServiceClientService>();
             _requestContextService = requestContextService;
-
-            //Find ident for identifier
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            _client = new StoreServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "StoreServiceWS"));
-            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
         }
 
         public async Task<KommuneDAN> GetKommune(string kommuneIdent)
         {
             KommuneDAN result = null;
+            var _client = CreateClient();
 
             var request = GetRequest();
 
@@ -79,6 +73,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<Registerenhetsrettsandel> GetRettighetsandeler(string id)
         {
             Registerenhetsrettsandel result = null;
+            var _client = CreateClient();
 
             var request = GetRequest();
 
@@ -107,6 +102,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<Registerenhetsrett> GetRegisterenhetsrett(string id)
         {
             Registerenhetsrett result = null;
+            var _client = CreateClient();
 
             var request = GetRequest();
 
@@ -135,6 +131,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<Rettsstiftelse> GetRettsstiftelse(string id)
         {
             Rettsstiftelse result = null;
+            var _client = CreateClient();
 
             var request = GetRequest();
 
@@ -163,6 +160,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<Matrikkelenhet> GetRegisterenhet(string registerenhetid)
         {
             Matrikkelenhet result = null;
+            var _client = CreateClient();
 
             var request = GetRequest();
 
@@ -191,7 +189,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<Dokument> GetDokument(string id)
         {
             Dokument result = null;
-
+            var _client = CreateClient();
             var request = GetRequest();
 
             request.id = new DokumentId()
@@ -218,6 +216,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         public async Task<List<PawnDocument>> GetPawnOwnerNames(List<PawnDocument> input)
         {
+            var _client = CreateClient();
+
             foreach (var inputItem in input)
             {
                 var request = GetRequest();
@@ -259,6 +259,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         public async Task<Person> GetPerson(string personId)
         {
+            var _client = CreateClient();
+
             Person result = null;
             var request = GetRequest();
             request.id = new PersonId()
@@ -288,6 +290,32 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                 grunnbokContext = GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext, Timestamp>(_requestContextService.ServiceContext)
             };
         }
+
+        private StoreServiceClient CreateClient()
+        {
+            var serviceContext = _requestContextService.ServiceContext;
+
+            if (string.IsNullOrWhiteSpace(serviceContext))
+            {
+                throw new InvalidOperationException(
+                    "ServiceContext is not set. Ensure SetRequestContext() is called before using StoreServiceClientService.");
+            }
+
+            var binding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var endpoint = new EndpointAddress(
+                $"{_settings.GrunnbokRootUrl}StoreServiceWS");
+
+            var client = new StoreServiceClient(binding, endpoint);
+
+            GrunnbokHelpers.SetGrunnbokWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                serviceContext);
+
+            return client;
+        }
+
     }
 
     public interface IStoreServiceClientService

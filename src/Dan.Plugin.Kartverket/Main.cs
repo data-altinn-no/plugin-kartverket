@@ -32,6 +32,7 @@ namespace Dan.Plugin.Kartverket
             _kartverketGrunnbokMatrikkelService = kartverketGrunnbokMatrikkelService;
             _diheWrapper = diheWrapper;
             _requestContextService = requestContextService;
+            
         }
 
         [Function("Grunnbok")]

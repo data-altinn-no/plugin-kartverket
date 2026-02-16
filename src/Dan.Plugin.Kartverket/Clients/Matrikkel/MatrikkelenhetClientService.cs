@@ -17,24 +17,20 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
-
-        private MatrikkelenhetServiceClient _client;
+        private IRequestContextService _requestContextService;
 
         public MatrikkelenhetClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<MatrikkelenhetServiceClient>();
-
-            //Find ident for identifier
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            _client = new MatrikkelenhetServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "MatrikkelenhetServiceWS"));
-            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
+            _requestContextService = requestContextService;
         }
 
         public async Task<List<MatrikkelenhetId>> GetMatrikkelenheterForPerson(long ident)
         {
             findEideMatrikkelenheterForPersonResponse result = null;
+            var _client = CreateClient();
+
             var request = new findEideMatrikkelenheterForPersonRequest()
             {
                 matrikkelContext = GetContext(),
@@ -60,6 +56,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<MatrikkelenhetMedTeigerTransfer> GetMatrikkelEnhetMedTeiger(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent)
         {
             findMatrikkelenhetMedTeigerResponse result = null;
+            var _client = CreateClient();
 
             var request = new findMatrikkelenhetMedTeigerRequest()
             {
@@ -120,6 +117,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<MatrikkelenhetId> GetMatrikkelenhet(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent)
         {
             findMatrikkelenhetResponse result = null;
+            var _client = CreateClient();
 
             var request = new findMatrikkelenhetRequest()
             {
@@ -158,6 +156,24 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         private MatrikkelContext GetContext()
         {
             return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>();
+        }
+
+        private MatrikkelenhetServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new MatrikkelenhetServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.MatrikkelRootUrl + "MatrikkelenhetServiceWS")
+            );
+
+            GrunnbokHelpers.SetMatrikkelWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext
+            );
+
+            return client;
         }
     }
 

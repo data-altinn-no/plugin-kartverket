@@ -15,23 +15,18 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
-
-        private BruksenhetServiceClient _client;
+        private IRequestContextService _requestContextService;
 
         public MatrikkelBruksenhetService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<MatrikkelBruksenhetService>();
-
-            //Find ident for identifier
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            _client = new BruksenhetServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "BruksenhetServiceWS"));
-            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
+            _requestContextService = requestContextService;
         }
 
         public async Task<BruksenhetId[]> GetBruksenheter(long matrikkelEnhetId)
         {
+            var _client = CreateClient();
             var request = new findBruksenheterForMatrikkelenhetRequest
             {
                 matrikkelContext = GetContext(),
@@ -54,6 +49,8 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         public async Task<string> GetAddressForBruksenhet(long bruksenhetId)
         {
+            var _client = CreateClient();
+
             var request = new findOffisiellAdresseForBruksenhetRequest
             {
                 matrikkelContext = GetContext(),
@@ -75,6 +72,24 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         private MatrikkelContext GetContext()
         {
             return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>();
+        }
+
+        private BruksenhetServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new BruksenhetServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.MatrikkelRootUrl + "BruksenhetServiceWS")
+            );
+
+            GrunnbokHelpers.SetMatrikkelWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext
+            );
+
+            return client;
         }
     }
 

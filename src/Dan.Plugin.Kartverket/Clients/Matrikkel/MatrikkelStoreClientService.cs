@@ -13,23 +13,19 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
     {
         private readonly ApplicationSettings _settings;
         private ILogger _logger;
-        private StoreServiceClient _client;
-
+        private readonly IRequestContextService _requestContextService;
 
         public MatrikkelStoreClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<MatrikkelStoreClientService>();
-
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            _client = new StoreServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "StoreServiceWS"));
-            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
+            _requestContextService = requestContextService;
         }
 
         public async Task<Matrikkelenhet> GetMatrikkelenhet(long ident)
         {
             getObjectResponse response = null;
+            var _client = CreateClient();
 
             var request = new getObjectRequest()
             {
@@ -54,6 +50,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<Seksjon> GetMatrikkelenhetSeksjon(long ident)
         {
             getObjectResponse response = null;
+            var _client = CreateClient();
 
             var request = new getObjectRequest()
             {
@@ -79,6 +76,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<Adresse> GetAdresse(long ident)
         {
             getObjectResponse response = null;
+            var _client = CreateClient();
 
             var request = new getObjectRequest()
             {
@@ -104,6 +102,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<Veg> GetVeg(long ident)
         {
             getObjectResponse response = null;
+            var _client = CreateClient();
 
             var request = new getObjectRequest()
             {
@@ -129,6 +128,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<Krets> GetKrets(long ident)
         {
             getObjectResponse response = null;
+            var _client = CreateClient();
 
             var request = new getObjectRequest()
             {
@@ -154,6 +154,8 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<Bygning> GetBygning(long bygningId)
         {
             Bygning result = null;
+            var _client = CreateClient();
+
             var request = new getObjectRequest()
             {
                 matrikkelContext = GetContext(),
@@ -180,6 +182,8 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<Bruksenhet> GetBruksenhet(long ident)
         {
             Bruksenhet result = null;
+            var _client = CreateClient();
+
             var request = new getObjectRequest()
             {
                 matrikkelContext = GetContext(),
@@ -205,6 +209,8 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<Kommune> GetKommune(long ident)
         {
             Kommune result = null;
+            var _client = CreateClient();
+
             var request = new getObjectRequest()
             {
                 matrikkelContext = GetContext(),
@@ -230,6 +236,24 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         private MatrikkelContext GetContext()
         {
             return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>();
+        }
+
+        private StoreServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new StoreServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.MatrikkelRootUrl + "StoreServiceWS")
+            );
+
+            GrunnbokHelpers.SetMatrikkelWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext
+            );
+
+            return client;
         }
     }
 

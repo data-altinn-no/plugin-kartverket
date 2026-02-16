@@ -15,24 +15,18 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
-
-        private BygningServiceClient _client;
-
+        private IRequestContextService _requestContextService;
         public MatrikkelBygningClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<MatrikkelBygningClientService>();
-
-            //Find ident for identifier
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            _client = new BygningServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "BygningServiceWS"));
-            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
+            _requestContextService = requestContextService; 
         }
 
         public async Task<List<long>> GetBygningerForMatrikkelenhet(long matrikkelEnhetId)
         {
             List<long> result = new List<long>();
+            var _client = CreateClient();
 
             var request = new findByggForMatrikkelenhetRequest()
             {
@@ -59,6 +53,24 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         private MatrikkelContext GetContext()
         {
             return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>();
+        }
+
+        private BygningServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new BygningServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.MatrikkelRootUrl + "BygningServiceWS")
+            );
+
+            GrunnbokHelpers.SetMatrikkelWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext
+            );
+
+            return client;
         }
     }
 
