@@ -190,6 +190,24 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             return client;
         }
+
+        private MatrikkelenhetServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new MatrikkelenhetServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.MatrikkelRootUrl + "MatrikkelenhetServiceWS")
+            );
+
+            GrunnbokHelpers.SetMatrikkelWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext
+            );
+
+            return client;
+        }
     }
 
     public interface IMatrikkelenhetClientService

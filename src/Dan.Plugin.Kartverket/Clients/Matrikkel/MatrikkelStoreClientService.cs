@@ -289,6 +289,24 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             return client;
         }
+
+        private StoreServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new StoreServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.MatrikkelRootUrl + "StoreServiceWS")
+            );
+
+            GrunnbokHelpers.SetMatrikkelWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext
+            );
+
+            return client;
+        }
     }
 
     public interface IMatrikkelStoreClientService

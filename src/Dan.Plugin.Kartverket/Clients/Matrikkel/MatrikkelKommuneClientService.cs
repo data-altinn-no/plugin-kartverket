@@ -70,6 +70,24 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             return client;
         }
+
+        private KommuneServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new KommuneServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.MatrikkelRootUrl + "KommuneServiceWS")
+            );
+
+            GrunnbokHelpers.SetMatrikkelWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext
+            );
+
+            return client;
+        }
     }
 
     public interface IMatrikkelKommuneClientService

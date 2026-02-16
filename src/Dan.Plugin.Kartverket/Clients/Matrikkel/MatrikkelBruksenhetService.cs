@@ -102,6 +102,24 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             return client;
         }
+
+        private BruksenhetServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new BruksenhetServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.MatrikkelRootUrl + "BruksenhetServiceWS")
+            );
+
+            GrunnbokHelpers.SetMatrikkelWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext
+            );
+
+            return client;
+        }
     }
 
     public interface IMatrikkelBruksenhetService

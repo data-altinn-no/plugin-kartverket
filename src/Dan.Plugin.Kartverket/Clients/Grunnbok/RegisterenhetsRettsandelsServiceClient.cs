@@ -71,6 +71,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<findAndelerIRetterResponse> GetAndelerIRetter(string registerenhetsid)
         {
             var result = new findAndelerIRetterResponse();
+            var _client = CreateClient();
+
             try
             {
                 var request = new findAndelerIRetterRequest
