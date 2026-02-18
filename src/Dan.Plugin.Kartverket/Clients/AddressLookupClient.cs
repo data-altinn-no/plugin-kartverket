@@ -67,43 +67,47 @@ namespace Dan.Plugin.Kartverket.Clients
             var urlBuilder = new StringBuilder();
             urlBuilder.Append(_settings.CoordinatesLookupUrl).Append("/geokoding?");
 
-            if(string.IsNullOrEmpty(matrikkelNumber) == false)
-                urlBuilder.Append("matrikkelnummer=" + matrikkelNumber); 
-            if (!string.IsNullOrEmpty(gnr))
-                urlBuilder.Append("&gardsnummer=" + gnr); 
-            if(!string.IsNullOrEmpty(bnr))
-                urlBuilder.Append("&bruksnummer=" + bnr);
-            if(!string.IsNullOrEmpty(snr))
-                urlBuilder.Append("&seksjonsnummer=" + snr);
-            if(!string.IsNullOrEmpty(fnr))
-                urlBuilder.Append("&festenummer=" + fnr);
-            if(!string.IsNullOrEmpty(kommunenr))
-                urlBuilder.Append("&kommunenummer=" + kommunenr);
+            var queryParams = new List<string>();
 
+            if(!string.IsNullOrEmpty(matrikkelNumber))
+                queryParams.Add("matrikkelnummer=" + Uri.EscapeDataString(matrikkelNumber)); if (!string.IsNullOrEmpty(gnr))
+                queryParams.Add("&gardsnummer=" + Uri.EscapeDataString(gnr)); 
+            if(!string.IsNullOrEmpty(bnr))
+                queryParams.Add("&bruksnummer=" + Uri.EscapeDataString(bnr));
+            if(!string.IsNullOrEmpty(snr))
+                queryParams.Add("&seksjonsnummer=" + Uri.EscapeDataString(snr));
+            if(!string.IsNullOrEmpty(fnr))
+                queryParams.Add("&festenummer=" + Uri.EscapeDataString(fnr));
+            if(!string.IsNullOrEmpty(kommunenr))
+                queryParams.Add("&kommunenummer=" + Uri.EscapeDataString(kommunenr));
+
+            if(queryParams.Count > 0)
+                urlBuilder.Append("?").Append(string.Join("&", queryParams));
             try
             {
                 var response = await _httpClient.GetAsync(urlBuilder.ToString());
                 response.EnsureSuccessStatusCode();
 
-                var json = JObject.Parse(await response.Content.ReadAsStringAsync());
-                var coordinates = json["features"]
+                var content = await response.Content.ReadAsStringAsync();
+                var json = JObject.Parse(content);
+                var features = json["features"];
+                if(features == null)
+                    return new List<string>();
+
+                var coordinates = features
+                    .Where(f => f["geometry"]?["coordinates"] != null)
                     .Select(f =>
                     {
                         var coords = f["geometry"]["coordinates"];
                         return $"{coords[0]},{coords[1]}";
-                    })
-                    .ToList();
+                    }).ToList();
 
                 return coordinates;
 
             }
-            catch (HttpRequestException e)
+            catch (Exception e) when (e is HttpRequestException or JsonException)
             {
                 throw new EvidenceSourcePermanentServerException(Metadata.ERROR_CCR_UPSTREAM_ERROR, null, e);
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Exception occurred while fetching coordinates for property", e);
             }
         }
 
