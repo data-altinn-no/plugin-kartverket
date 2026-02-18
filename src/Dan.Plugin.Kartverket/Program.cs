@@ -37,7 +37,7 @@ var host = new HostBuilder()
             services.AddTransient<IMatrikkelBygningClientService, MatrikkelBygningClientService>();
             services.AddTransient<IMatrikkelBruksenhetService, MatrikkelBruksenhetService>();
             services.AddTransient<IMatrikkelAdresseClientService, MatrikkelAdresseClientService>();
-            services.AddScoped<IRequestContextService, RequestContextService>();
+            services.AddScoped<IRequestContextService, RequestContextService>(); //needs to be scoped
 
 
             //KartverketClient

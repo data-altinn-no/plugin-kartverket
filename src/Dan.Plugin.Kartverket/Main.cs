@@ -5,6 +5,7 @@ using Dan.Common.Util;
 using Dan.Plugin.Kartverket.Clients;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -21,18 +22,15 @@ namespace Dan.Plugin.Kartverket
         private ILogger _logger;
         private IKartverketGrunnbokMatrikkelService _kartverketGrunnbokMatrikkelService;
         private readonly IDDWrapper _ddWrapper;
-        private readonly IDiHeWrapper _diheWrapper;
-        private readonly IRequestContextService _requestContextService;
+        private readonly IServiceScopeFactory _scopeFactory;
 
-
-        public Main(ILoggerFactory loggerFactory, IDDWrapper ddWrapper, IKartverketGrunnbokMatrikkelService kartverketGrunnbokMatrikkelService, IDiHeWrapper diheWrapper, IRequestContextService requestContextService)
+        public Main(ILoggerFactory loggerFactory, IDDWrapper ddWrapper, IKartverketGrunnbokMatrikkelService kartverketGrunnbokMatrikkelService, IServiceScopeFactory scopeFactory)
         {
             _logger = loggerFactory.CreateLogger<Main>();
             _ddWrapper = ddWrapper;
             _kartverketGrunnbokMatrikkelService = kartverketGrunnbokMatrikkelService;
-            _diheWrapper = diheWrapper;
-            _requestContextService = requestContextService;
-            
+            _scopeFactory = scopeFactory;
+
         }
 
         [Function("Grunnbok")]
@@ -86,16 +84,27 @@ namespace Dan.Plugin.Kartverket
         public async Task<HttpResponseData> MotorisertFerdsel([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequestData req,FunctionContext context)
         {
             _logger.LogInformation("Running func 'MotorisertFerdsel'");
-            await _requestContextService.SetRequestContext(req);
+            using var scope = _scopeFactory.CreateScope();
+
+            var requestContextService = scope.ServiceProvider.GetRequiredService<IRequestContextService>();
+            var diHeWrapper = scope.ServiceProvider.GetRequiredService<IDiHeWrapper>();
+
+            await requestContextService.SetRequestContext(req);
 
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
-            return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesMotorisertFerdsel(evidenceHarvesterRequest));
+
+            return await EvidenceSourceResponse.CreateResponse(
+                req,
+                () => GetEvidenceValuesMotorisertFerdsel(evidenceHarvesterRequest, diHeWrapper)
+            );
         }
 
-        private async Task<List<EvidenceValue>> GetEvidenceValuesMotorisertFerdsel(EvidenceHarvesterRequest evidenceHarvesterRequest)
+        private async Task<List<EvidenceValue>> GetEvidenceValuesMotorisertFerdsel(
+            EvidenceHarvesterRequest evidenceHarvesterRequest,
+            IDiHeWrapper diheWrapper)
         {
-            var result = await _diheWrapper.GetMotorizedTrafficInformation(evidenceHarvesterRequest.SubjectParty.GetAsString(false));
+            var result = await diheWrapper.GetMotorizedTrafficInformation(evidenceHarvesterRequest.SubjectParty.GetAsString(false));
 
             var ecb = new EvidenceBuilder(new Metadata(), "MotorisertFerdsel");
             ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);

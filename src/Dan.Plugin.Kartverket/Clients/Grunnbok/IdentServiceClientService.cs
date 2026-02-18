@@ -87,10 +87,6 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                 _requestContextService.ServiceContext);
 
             return client;
-
-
-            
-
         }
 
     }

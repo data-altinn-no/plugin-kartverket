@@ -1,11 +1,8 @@
 using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Models;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Dan.Plugin.Kartverket.Clients.Grunnbok.StoreServiceClientService;
 
 namespace Dan.Plugin.Kartverket
 {
@@ -19,13 +16,11 @@ namespace Dan.Plugin.Kartverket
     {
         private readonly IAddressLookupClient _geonorgeClient;
         private readonly IKartverketGrunnbokMatrikkelService _kartverketService;
-        private readonly IStoreServiceClientService _storeServiceClient;
 
         public DiHeWrapper(IAddressLookupClient addressLookupClient, IKartverketGrunnbokMatrikkelService _kartverketGMService, IStoreServiceClientService storeServiceClient)
         {
             _geonorgeClient = addressLookupClient;
             _kartverketService = _kartverketGMService;
-            _storeServiceClient = storeServiceClient;
         }
 
         public async Task<MotorizedTrafficResponse> GetMotorizedTrafficInformation(string identifier)
