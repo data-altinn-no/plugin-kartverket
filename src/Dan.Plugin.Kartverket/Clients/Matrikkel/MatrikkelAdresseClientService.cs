@@ -1,4 +1,4 @@
-    using Dan.Plugin.Kartverket.Clients.Grunnbok;
+using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Matrikkel.AdresseService;
 using Microsoft.Extensions.Logging;

@@ -71,7 +71,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<findAndelerIRetterResponse> GetAndelerIRetter(string registerenhetsid)
         {
             var result = new findAndelerIRetterResponse();
-            var _client = CreateClient();
+            var client = CreateClient();
 
             try
             {
@@ -90,13 +90,17 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                     }
                 };
 
-                var response = await _client.findAndelerIRetterAsync(request);
+                var response = await client.findAndelerIRetterAsync(request);
                 result = response;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception was thrown while calling findAndelerIRetter");
-                throw;
+            }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
             }
 
             return result;
