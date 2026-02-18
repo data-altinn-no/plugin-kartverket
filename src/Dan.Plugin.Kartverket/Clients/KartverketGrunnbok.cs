@@ -3,17 +3,13 @@ using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Clients.Matrikkel;
 using Dan.Plugin.Kartverket.Config;
 using Dan.Plugin.Kartverket.Models;
-using Google.Protobuf.WellKnownTypes;
 using Kartverket.Matrikkel.StoreService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using static Dan.Plugin.Kartverket.Clients.Grunnbok.StoreServiceClientService;
 
 namespace Dan.Plugin.Kartverket.Clients
 {
@@ -300,71 +296,82 @@ namespace Dan.Plugin.Kartverket.Clients
             var ident = await _identServiceClient.GetPersonIdentity(identifier);
 
             var registerRettsAndelList = await _regRettsandelsClientService.GetAndelerForRettighetshaver(ident);
-            foreach (var registerenhetsrettsandelid in registerRettsAndelList.Take(50))
+            foreach (var registerenhetsrettsandelid in registerRettsAndelList)
             {
                 var regenhetsandelfromstore = await _storeServiceClient.GetRettighetsandeler(registerenhetsrettsandelid);
 
                 //Skip if property is historical, as we only want currently owned properties.
                 if (regenhetsandelfromstore.historisk)
                     continue;
-                
-                var matrikkelenhetgrunnbok = await _storeServiceClient.GetMatrikkelEnhetFromRegisterRettighetsandel(regenhetsandelfromstore.registerenhetsrettId.value);
-
-                var owner = await _storeServiceClient.GetPerson(regenhetsandelfromstore.rettighetshaverId.value);
-                var listOfCoOwners = new List<CoOwner>();
-
-                var share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}";                
-                if (regenhetsandelfromstore.teller != regenhetsandelfromstore.nevner && matrikkelenhetgrunnbok != null)
+                try
                 {
-                    var registerenhetId = matrikkelenhetgrunnbok.id.value;
+                    var matrikkelenhetgrunnbok = await _storeServiceClient.GetMatrikkelEnhetFromRegisterRettighetsandel(regenhetsandelfromstore.registerenhetsrettId.value);
 
-                    var registerEnhetTilRegisterenhetsrettId = await _registerenhetsrettClientService.GetRetterForEnheter(registerenhetId);
-                    
-                    var registerEnhetIdTilRegisterenhetsrettIds = registerEnhetTilRegisterenhetsrettId.Values
-                        .SelectMany(rettid => rettid.Select(ids => ids.value))
-                        .ToList();
+                    var owner = await _storeServiceClient.GetPerson(regenhetsandelfromstore.rettighetshaverId.value);
+                    var listOfCoOwners = new List<CoOwner>();
 
-                    foreach (var registerEnhetId in registerEnhetIdTilRegisterenhetsrettIds)
+                    var share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}";
+                    if (regenhetsandelfromstore.teller != regenhetsandelfromstore.nevner && matrikkelenhetgrunnbok != null)
                     {
-                        var andelerIRetter = await _regRettsandelsClientService.GetAndelerIRetter(regenhetsandelfromstore.registerenhetsrettId.value);
-                        var andelerIRetterValues = andelerIRetter.Body.@return.Values;
+                        var registerenhetId = matrikkelenhetgrunnbok.id.value;
 
-                        foreach(var andel in andelerIRetterValues.First())
+                        var registerEnhetTilRegisterenhetsrettId = await _registerenhetsrettClientService.GetRetterForEnheter(registerenhetId);
+
+                        var registerEnhetIdTilRegisterenhetsrettIds = registerEnhetTilRegisterenhetsrettId.Values
+                            .SelectMany(rettid => rettid.Select(ids => ids.value))
+                            .ToList();
+
+                        foreach (var registerEnhetId in registerEnhetIdTilRegisterenhetsrettIds)
                         {
-                            var andeler = await _storeServiceClient.GetRettighetsandeler(andel.value.ToString());
-                            
-                            if(!andeler.historisk)
+                            var andelerIRetter = await _regRettsandelsClientService.GetAndelerIRetter(regenhetsandelfromstore.registerenhetsrettId.value);
+                            var andelerIRetterValues = andelerIRetter.Body.@return.Values;
+
+                            var firstAndel = andelerIRetterValues.FirstOrDefault();
+                            if (firstAndel == null)
+                                continue;
+
+                            foreach (var andel in firstAndel)
                             {
-                                var coOwner = await _storeServiceClient.GetPerson(andeler.rettighetshaverId.value);
-                                listOfCoOwners.Add(new CoOwner()
+                                var andeler = await _storeServiceClient.GetRettighetsandeler(andel.value.ToString());
+
+                                if (!andeler.historisk)
                                 {
-                                    Identifier = coOwner.identifikasjonsnummer ?? null,
-                                    Name = coOwner.navn ?? null,
-                                    OwnerShare = $"{andeler.teller}/{andeler.nevner}" ?? null
-                                });
+                                    var coOwner = await _storeServiceClient.GetPerson(andeler.rettighetshaverId.value);
+                                    listOfCoOwners.Add(new CoOwner()
+                                    {
+                                        Identifier = coOwner.identifikasjonsnummer ?? null,
+                                        Name = coOwner.navn ?? null,
+                                        OwnerShare = $"{andeler.teller}/{andeler.nevner}" ?? null
+                                    });
+                                }
                             }
                         }
                     }
-                }
 
-                var kommune = new Models.Kommune();
-                if (matrikkelenhetgrunnbok != null)
-                    kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);                    
+                    var kommune = new Models.Kommune();
+                    if (matrikkelenhetgrunnbok != null)
+                        kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
 
-                result.Add(new PropertyWithOwners()
-                {
-                    ProperyData = new PropertyData()
+                    result.Add(new PropertyWithOwners()
                     {
-                        Kommunenummer = kommune.Number ?? null,
-                        Kommunenavn = kommune.Name ?? null,
-                        Bruksnummer = matrikkelenhetgrunnbok?.bruksnummer.ToString() ?? null,
-                        Gardsnummer = matrikkelenhetgrunnbok?.gaardsnummer.ToString() ?? null,
-                        Festenummer = matrikkelenhetgrunnbok?.festenummer.ToString() ?? null,
-                        Seksjonsnummer = matrikkelenhetgrunnbok?.seksjonsnummer.ToString() ?? null
-                    },
-                    Owners = listOfCoOwners
-                });
+                        PropertyData = new PropertyData()
+                        {
+                            Kommunenummer = kommune.Number ?? null,
+                            Kommunenavn = kommune.Name ?? null,
+                            Bruksnummer = matrikkelenhetgrunnbok?.bruksnummer.ToString() ?? null,
+                            Gardsnummer = matrikkelenhetgrunnbok?.gaardsnummer.ToString() ?? null,
+                            Festenummer = matrikkelenhetgrunnbok?.festenummer.ToString() ?? null,
+                            Seksjonsnummer = matrikkelenhetgrunnbok?.seksjonsnummer.ToString() ?? null
+                        },
+                        Owners = listOfCoOwners
+                    });
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error when calling FindOwnedProperties");
+                }
             }
+
             return result;
         }
 
