@@ -24,7 +24,7 @@ namespace Dan.Plugin.Kartverket.Models
         /// Latitude and Longitude Coordinates separated by comma
         /// </summary>
         [JsonProperty("Coordinates")]
-        public string Coordinates { get; set; } // lat,long, TODO: check if there should be
+        public string Coordinates { get; set; }
     }
 
     public class CoOwner {
@@ -39,7 +39,7 @@ namespace Dan.Plugin.Kartverket.Models
         [JsonProperty("Name")]
         public string Name { get; set; }
         /// <summary>
-        /// Share of ownership as f
+        /// Share of ownership as fraction
         /// </summary>
         [JsonProperty("OwnerShare")]
         public string OwnerShare { get; set; }
@@ -51,9 +51,9 @@ namespace Dan.Plugin.Kartverket.Models
         /// Data about property. From Grunnboka
         /// </summary>
         [JsonProperty("PropertyData")]
-        public PropertyData ProperyData { get; set; }
+        public PropertyData PropertyData { get; set; }
         /// <summary>
-        /// 
+        /// All current owners of the property. From Grunnboka
         /// </summary>
         [JsonProperty("CoOwners")]
         public List<CoOwner> Owners { get; set; }

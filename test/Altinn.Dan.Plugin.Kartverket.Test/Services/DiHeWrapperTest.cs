@@ -25,7 +25,7 @@ namespace Dan.Plugin.Kartverket.Test.Services
         }
 
         [Fact]
-        public async Task GetMotorizedTraficInformation_Returns_PropertyInfo()
+        public async Task GetMotorizedTrafficInformation_Returns_PropertyInfo()
         {
             var _diHeWrapper = new DiHeWrapper(
                 _addressLookupClient,
@@ -36,7 +36,7 @@ namespace Dan.Plugin.Kartverket.Test.Services
             {
                 new PropertyWithOwners
                 {
-                    ProperyData = new PropertyData
+                    PropertyData = new PropertyData
                     {
                         Kommunenummer = "1860",
                         Gardsnummer = "134",
@@ -54,7 +54,7 @@ namespace Dan.Plugin.Kartverket.Test.Services
                 },
                 new PropertyWithOwners
                 {
-                    ProperyData = new PropertyData
+                    PropertyData = new PropertyData
                     {
                         Kommunenummer = "111",
                         Gardsnummer = "123",

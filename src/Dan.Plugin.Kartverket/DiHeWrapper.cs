@@ -36,10 +36,10 @@ namespace Dan.Plugin.Kartverket
 
             foreach (var property in kartverketResponse)
             {
-                var martikkelNumber = BuildMatrikkelNumber(property.ProperyData.Kommunenummer, property.ProperyData.Gardsnummer, property.ProperyData.Bruksnummer, property.ProperyData.Festenummer);
+                var martikkelNumber = BuildMatrikkelNumber(property.PropertyData.Kommunenummer, property.PropertyData.Gardsnummer, property.PropertyData.Bruksnummer, property.PropertyData.Festenummer);
                 var coordinates = "";
                 if(!string.IsNullOrEmpty(martikkelNumber))
-                    coordinates = string.Join(", ", await _geonorgeClient.GetCoordinatesForProperty(martikkelNumber, property.ProperyData.Gardsnummer, property.ProperyData.Bruksnummer, property.ProperyData.Seksjonsnummer, property.ProperyData.Festenummer, property.ProperyData.Kommunenummer));
+                    coordinates = string.Join(", ", await _geonorgeClient.GetCoordinatesForProperty(martikkelNumber, property.PropertyData.Gardsnummer, property.PropertyData.Bruksnummer, property.PropertyData.Seksjonsnummer, property.PropertyData.Festenummer, property.PropertyData.Kommunenummer));
 
                 result.Properties.Add( new MotorizedTrafficProperty
                 {
