@@ -3,7 +3,6 @@ using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Clients.Matrikkel;
 using Dan.Plugin.Kartverket.Config;
 using Dan.Plugin.Kartverket.Models;
-using Google.Protobuf.WellKnownTypes;
 using Kartverket.Matrikkel.StoreService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -11,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static Dan.Plugin.Kartverket.Clients.Grunnbok.StoreServiceClientService;
 
 namespace Dan.Plugin.Kartverket.Clients
 {
