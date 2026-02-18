@@ -27,7 +27,6 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         private ApplicationSettings _settings;
         private ILogger _logger;
         private readonly IRequestContextService _requestContextService;
-        private StoreServiceClient _client;
 
         public StoreServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
@@ -39,7 +38,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<KommuneDAN> GetKommune(string kommuneIdent)
         {
             KommuneDAN result = null;
-            var _client = CreateClient();
+            var client = CreateClient();
 
             var request = GetRequest();
 
@@ -50,7 +49,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                var storeServiceResponse = await _client.getObjectAsync(request);
+                var storeServiceResponse = await client.getObjectAsync(request);
                 var temp = (Kommune)storeServiceResponse.@return;
                 result = new KommuneDAN()
                 {
@@ -73,7 +72,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<Registerenhetsrettsandel> GetRettighetsandeler(string id)
         {
             Registerenhetsrettsandel result = null;
-            var _client = CreateClient();
+            var client = CreateClient();
 
             var request = GetRequest();
 
@@ -84,7 +83,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                var storeServiceResponse = await _client.getObjectAsync(request);
+                var storeServiceResponse = await client.getObjectAsync(request);
                 result = (Registerenhetsrettsandel)storeServiceResponse.@return;
             }
             catch (FaultException fex)
@@ -102,7 +101,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<Registerenhetsrett> GetRegisterenhetsrett(string id)
         {
             Registerenhetsrett result = null;
-            var _client = CreateClient();
+            var client = CreateClient();
 
             var request = GetRequest();
 
@@ -113,7 +112,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                var rettsendringer = await _client.getObjectAsync(request);
+                var rettsendringer = await client.getObjectAsync(request);
                 result = (Registerenhetsrett)rettsendringer.@return;
             }
             catch (FaultException fex)
@@ -131,7 +130,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<Rettsstiftelse> GetRettsstiftelse(string id)
         {
             Rettsstiftelse result = null;
-            var _client = CreateClient();
+            var client = CreateClient();
 
             var request = GetRequest();
 
@@ -142,7 +141,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                var storeServiceResponse = await _client.getObjectAsync(request);
+                var storeServiceResponse = await client.getObjectAsync(request);
                 result = (Rettsstiftelse)storeServiceResponse.@return;
             }
             catch (FaultException fex)
@@ -160,7 +159,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<Matrikkelenhet> GetRegisterenhet(string registerenhetid)
         {
             Matrikkelenhet result = null;
-            var _client = CreateClient();
+            var client = CreateClient();
 
             var request = GetRequest();
 
@@ -171,7 +170,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                var storeServiceResponse = await _client.getObjectAsync(request);
+                var storeServiceResponse = await client.getObjectAsync(request);
                 result = (Matrikkelenhet)storeServiceResponse.@return;
             }
             catch (FaultException fex)
@@ -189,7 +188,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<Dokument> GetDokument(string id)
         {
             Dokument result = null;
-            var _client = CreateClient();
+            var client = CreateClient();
             var request = GetRequest();
 
             request.id = new DokumentId()
@@ -199,7 +198,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                var storeServiceResponse = await _client.getObjectAsync(request);
+                var storeServiceResponse = await client.getObjectAsync(request);
                 result = (Dokument)storeServiceResponse.@return;
             }
             catch (FaultException fex)
@@ -216,7 +215,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         public async Task<List<PawnDocument>> GetPawnOwnerNames(List<PawnDocument> input)
         {
-            var _client = CreateClient();
+            var client = CreateClient();
 
             foreach (var inputItem in input)
             {
@@ -226,7 +225,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                     value = inputItem.OwnerId.ToString()
                 };
 
-                var response = await _client.getObjectAsync(request);
+                var response = await client.getObjectAsync(request);
 
                 inputItem.Owner = ((Person)response.@return).navn;
             }
@@ -259,7 +258,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         public async Task<Person> GetPerson(string personId)
         {
-            var _client = CreateClient();
+            var client = CreateClient();
 
             Person result = null;
             var request = GetRequest();
@@ -269,7 +268,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             };
             try
             {
-                var storeServiceResponse = await _client.getObjectAsync(request);
+                var storeServiceResponse = await client.getObjectAsync(request);
                 result = (Person)storeServiceResponse.@return;
             }
             catch (FaultException fex)
@@ -284,7 +283,6 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         }
         private getObjectRequest GetRequest()
         {
-            var SNAPSHOT_VERSJON_DATO = new DateTime(9999, 1, 1, 0, 0, 0);
             return new getObjectRequest()
             {
                 grunnbokContext = GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext, Timestamp>(_requestContextService.ServiceContext)

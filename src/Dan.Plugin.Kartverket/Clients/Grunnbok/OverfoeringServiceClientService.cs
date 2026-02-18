@@ -25,7 +25,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<string> GetOverfoeringerTil(List<string> ids)
         {
             findOverfoeringerForOverfoerteTilResponse result = null;
-            var _client = CreateClient();
+            var client = CreateClient();
             var inputList = new RegisterenhetsrettIdList();
 
             foreach (var id in ids)
@@ -49,13 +49,16 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                result = await _client.findOverfoeringerForOverfoerteTilAsync(request);
-               
+                result = await client.findOverfoeringerForOverfoerteTilAsync(request);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                _logger.LogError(e, "Error calling OverfoeringServiceClientService.GetOverfoeringerTil");
+            }
+            finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
             }
 
             return string.Empty;

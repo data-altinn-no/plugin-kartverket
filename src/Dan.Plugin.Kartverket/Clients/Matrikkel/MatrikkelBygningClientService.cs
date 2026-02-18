@@ -26,7 +26,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<List<long>> GetBygningerForMatrikkelenhet(long matrikkelEnhetId)
         {
             List<long> result = new List<long>();
-            var _client = CreateClient();
+            var client = CreateClient();
 
             var request = new findByggForMatrikkelenhetRequest()
             {
@@ -39,12 +39,17 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                var response = await _client.findByggForMatrikkelenhetAsync(request);
+                var response = await client.findByggForMatrikkelenhetAsync(request);
                 result.AddRange(response.@return.Select(x=>x.value).ToList());
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+            }
+            finally
+            {
+                try { client.Close(); }
+                catch{ client.Abort();}
             }
 
             return result;
@@ -52,7 +57,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         private MatrikkelContext GetContext()
         {
-            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>();
+            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>(_requestContextService.ServiceContext);
         }
 
         private BygningServiceClient CreateClient()

@@ -17,7 +17,6 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
-        private RettsstiftelseServiceClient _client;
         private IRequestContextService _requestContextService;
 
         public RettsstiftelseClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
@@ -30,7 +29,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<findOverdragelserAvRegisterenhetsrettForPersonResponse> GetOverdragelserAvRegisterenhetsrett(string ident)
         {
             findOverdragelserAvRegisterenhetsrettForPersonResponse result = null;
-            var _client = CreateClient();
+            var client = CreateClient();
 
             findOverdragelserAvRegisterenhetsrettForPersonRequest request = new()
             {
@@ -44,13 +43,16 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                result = await _client.findOverdragelserAvRegisterenhetsrettForPersonAsync(request);
+                result = await client.findOverdragelserAvRegisterenhetsrettForPersonAsync(request);
 
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                _logger.LogError(e, "Error calling findOverdragelserAvRegisterenhetsrettForPersonAsync with ident {Ident}", ident);
+            }finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
             }
 
             return result;
@@ -59,7 +61,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<List<PawnDocument>> GetHeftelser(string registerenhetid)
         {
             List<PawnDocument> result = new List<PawnDocument>();
-            var _client = CreateClient();
+            var client = CreateClient();
 
             findHeftelserRequest request = new()
             {
@@ -70,37 +72,48 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                 },
                 transferMode = TransferMode.Objects
             };
-
-            var response = await _client.findHeftelserAsync(request);
-            var responseObject = response.@return.bubbleObjects.OfType<Pant>();
-            
-            foreach (var pawn in responseObject)
+            try
             {
-                var amounts = new List<Amount>();
+                var response = await client.findHeftelserAsync(request);
+                var responseObject = response.@return.bubbleObjects.OfType<Pant>();
 
-                for (int i = 0; i < pawn.beloep.Length; i++)
+                foreach (var pawn in responseObject)
                 {
-                    amounts.Add(new Amount()
+                    var amounts = new List<Amount>();
+
+                    for (int i = 0; i < pawn.beloep.Length; i++)
                     {
-                        CurrencyCode = pawn.beloep[i].valutakodeId.value == "5" ? "NOK" : "",
-                        AmountText = pawn.beloep[i].beloepstekst,
-                        Sum = pawn.beloep[i].beloepsverdi
-                    });
+                        amounts.Add(new Amount()
+                        {
+                            CurrencyCode = pawn.beloep[i].valutakodeId.value == "5" ? "NOK" : "",
+                            AmountText = pawn.beloep[i].beloepstekst,
+                            Sum = pawn.beloep[i].beloepsverdi
+                        });
+                    }
+
+                    var temp = new PawnDocument()
+                    {
+                        Amounts = amounts,
+                        OwnerId = long.Parse(pawn.rettighetshavereIds[0].value),
+                        Owner = ""
+                    };
+
+                    result.Add(temp);
                 }
-
-                var temp = new PawnDocument()
-                {
-                    Amounts = amounts,
-                    OwnerId = long.Parse(pawn.rettighetshavereIds[0].value),
-                    Owner = ""
-                };
-
-                result.Add(temp);
+                return result;
             }
-            
-
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error calling findHeftelserAsync with registerenhetid {RegisterenhetId}", registerenhetid);
+            }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
+            }
             return result;
         }
+
 
         private GrunnbokContext GetContext()
         {

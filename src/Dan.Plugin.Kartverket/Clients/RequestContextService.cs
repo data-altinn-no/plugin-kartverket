@@ -13,9 +13,10 @@ namespace Dan.Plugin.Kartverket.Clients
 
         public string ServiceContext { get; set; }
 
-        public async Task SetRequestContext(HttpRequestData data)
+        public Task SetRequestContext(HttpRequestData data)
         {
             ServiceContext = GetServiceContextFromRequest(data);
+            return Task.CompletedTask;
         }
 
         private string GetServiceContextFromRequest(HttpRequestData data)

@@ -25,7 +25,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         {
             //Find ident for identifier
             string identity = string.Empty;
-            var identService = await CreateClient();
+            var identService = CreateClient();
 
             var list = new PersonIdentList()
             {
@@ -39,7 +39,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             {
                 Body = new findPersonIdsForIdentsRequestBody()
                 {
-                    grunnbokContext = GetGrunnbokContext(),
+                    grunnbokContext = GetContext(),
                     idents = list
                 }
             };
@@ -50,27 +50,33 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                 identity = identResponse.Body.@return.Values.FirstOrDefault().value;
 
             }
-            catch (FaultException fex)
-            {
-                _logger.LogError(fex.Message);
-            }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(ex, "Error calling findPersonIdsForIdentsAsync for personId {PersonId}", personId);
+            }
+            finally
+            {
+                try { await identService.CloseAsync(); }
+                catch { identService.Abort(); }
             }
 
             return identity;
         }
 
-        private GrunnbokContext GetGrunnbokContext()
+        private GrunnbokContext GetContext()
         {
-            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>(_requestContextService.ServiceContext);
+            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext, Timestamp>(_requestContextService.ServiceContext);
         }
 
-        private async Task<IdentServiceClient> CreateClient()
+        private IdentServiceClient CreateClient()
         {
             var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
 
+            if (string.IsNullOrWhiteSpace(_requestContextService.ServiceContext))
+            {
+                throw new InvalidOperationException(
+                    "ServiceContext is not set. Ensure SetRequestContext() is called before using OverfoeringServiceClientService.");
+            }
             var client = new IdentServiceClient(
                 myBinding,
                 new EndpointAddress(_settings.GrunnbokRootUrl + "IdentServiceWS"));
@@ -81,6 +87,10 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                 _requestContextService.ServiceContext);
 
             return client;
+
+
+            
+
         }
 
     }

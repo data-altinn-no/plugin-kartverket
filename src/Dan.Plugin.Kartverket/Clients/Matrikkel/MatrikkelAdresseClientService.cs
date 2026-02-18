@@ -1,4 +1,4 @@
-    using Dan.Plugin.Kartverket.Clients.Grunnbok;
+using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Matrikkel.AdresseService;
 using Microsoft.Extensions.Logging;
@@ -20,12 +20,11 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             _settings = settings.Value;
             _logger = factory.CreateLogger<MatrikkelAdresseClientService>();
             _requestContextService = requestContextService;
-
         }
 
         public async Task<AdresseId[]> GetAdresserForMatrikkelenhet(long matrikkelEnhetId)
         {
-            var _client = CreateClient();
+            var client = CreateClient();
             var request = new findAdresserForMatrikkelenhetRequest
             {
                 matrikkelContext = GetContext(),
@@ -34,7 +33,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                var response = await _client.findAdresserForMatrikkelenhetAsync(request);
+                var response = await client.findAdresserForMatrikkelenhetAsync(request);
                 var result = response.@return;
 
                 return result;
@@ -42,13 +41,19 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return Array.Empty<AdresseId>();
             }
+            finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
+            }
+
+            return Array.Empty<AdresseId>();
         }
 
         public async Task<AdresseId[]> FindAdresser(string adresseNavn, string kommuneNo)
         {
-            var _client = CreateClient();
+            var client = CreateClient();
             var request = new findAdresserRequest
             {
                 matrikkelContext = GetContext(),
@@ -60,18 +65,24 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             };
             try
             {
-                var response = await _client.findAdresserAsync(request);
+                var response = await client.findAdresserAsync(request);
                 return response.@return;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return null;
             }
+            finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
+            }
+            return null;
         }
+
         private MatrikkelContext GetContext()
         {
-           return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>();
+           return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>(_requestContextService.ServiceContext);
         }
 
         private AdresseServiceClient CreateClient()

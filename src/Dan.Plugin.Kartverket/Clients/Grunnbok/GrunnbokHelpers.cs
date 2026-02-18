@@ -9,7 +9,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
     public static class GrunnbokHelpers
     {
-        private static DateTime SNAPSHOT_VERSJON_DATO = new DateTime(9999, 1, 1, 0, 0, 0);
+        private static readonly DateTime SNAPSHOT_VERSJON_DATO = new DateTime(9999, 1, 1, 0, 0, 0, DateTimeKind.Local);
         public static BasicHttpBinding GetBasicHttpBinding()
         {
             long maxMessageSize = 2048000;

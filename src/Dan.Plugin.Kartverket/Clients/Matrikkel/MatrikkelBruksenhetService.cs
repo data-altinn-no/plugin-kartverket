@@ -1,13 +1,11 @@
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Config;
+using Kartverket.Matrikkel.BruksenhetService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using Kartverket.Matrikkel.BruksenhetService;
 
 namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 {
@@ -26,7 +24,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         public async Task<BruksenhetId[]> GetBruksenheter(long matrikkelEnhetId)
         {
-            var _client = CreateClient();
+            var client = CreateClient();
             var request = new findBruksenheterForMatrikkelenhetRequest
             {
                 matrikkelContext = GetContext(),
@@ -35,7 +33,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                var response = await _client.findBruksenheterForMatrikkelenhetAsync(request);
+                var response = await client.findBruksenheterForMatrikkelenhetAsync(request);
                 var result = response.@return;
 
                 return result;
@@ -43,13 +41,18 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return Array.Empty<BruksenhetId>();
-            }           
+            }
+            finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
+            }
+            return Array.Empty<BruksenhetId>();
         }
 
         public async Task<string> GetAddressForBruksenhet(long bruksenhetId)
         {
-            var _client = CreateClient();
+            var client = CreateClient();
 
             var request = new findOffisiellAdresseForBruksenhetRequest
             {
@@ -59,7 +62,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                var response = await _client.findOffisiellAdresseForBruksenhetAsync(request);
+                var response = await client.findOffisiellAdresseForBruksenhetAsync(request);
                 return response.@return;
             }
             catch (Exception ex)
@@ -67,11 +70,16 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
                 _logger.LogError(ex.Message);
                 return string.Empty;
             }
+            finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
+            }
         }
 
         private MatrikkelContext GetContext()
         {
-            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>();
+            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>(_requestContextService.ServiceContext);
         }
 
         private BruksenhetServiceClient CreateClient()

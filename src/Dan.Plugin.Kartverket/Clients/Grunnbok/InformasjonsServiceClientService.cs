@@ -52,62 +52,102 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         public async Task<HeftelseInformasjonTransfer> GetPawnStuff(string registerenhetid)
         {
-            var _client = CreateClient();
-
-            findHeftelserRequest request = new findHeftelserRequest()
+            var client = CreateClient();
+            HeftelseInformasjonTransfer result = null;
+            try
             {
-                grunnbokContext = GetContext(),
-                registerenhetId = new RegisterenhetId()
+                findHeftelserRequest request = new findHeftelserRequest()
                 {
-                    value = registerenhetid
-                }
-            };
+                    grunnbokContext = GetContext(),
+                    registerenhetId = new RegisterenhetId()
+                    {
+                        value = registerenhetid
+                    }
+                };
 
-            var result = await _client.findHeftelserAsync(request);
+                var response = await client.findHeftelserAsync(request);
+                result = response.@return;
 
-            return result.@return;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
+            }
+
+            return result;
+
         }
 
         public async Task<HeftelseInformasjonTransfer> GetHeftelser(string registerenhetid)
         {
-            var _client = CreateClient();
-
-            findRettigheterForRegisterenhetRequest request = new()
+            var client = CreateClient();
+            HeftelseInformasjonTransfer result = null;
+            try
             {
-                grunnbokContext = GetContext(),
-                registerenhetId = new RegisterenhetId()
+                findRettigheterForRegisterenhetRequest request = new()
                 {
-                    value = registerenhetid
-                }
-            };
+                    grunnbokContext = GetContext(),
+                    registerenhetId = new RegisterenhetId()
+                    {
+                        value = registerenhetid
+                    }
+                };
 
-            var result = await _client.findRettigheterForRegisterenhetAsync(request);
+                var response = await client.findRettigheterForRegisterenhetAsync(request);
+                result = response.@return;
+            }catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
+            }
+            return result;
 
-            return result.@return;
         }
 
 
         public async Task<RettsstiftelseInformasjonTransfer> GetRettsstiftelse(string rettstiftelseid)
         {
-            var _client = CreateClient();
-
-            findRettsstiftelseRequest request = new findRettsstiftelseRequest()
+            var client = CreateClient();
+            RettsstiftelseInformasjonTransfer result = null;
+            try
             {
-                grunnbokContext = GetContext(),
-                rettsstiftelseId = new RettsstiftelseId()
+                findRettsstiftelseRequest request = new findRettsstiftelseRequest()
                 {
-                    value = rettstiftelseid
-                }
-            };
+                    grunnbokContext = GetContext(),
+                    rettsstiftelseId = new RettsstiftelseId()
+                    {
+                        value = rettstiftelseid
+                    }
+                };
 
-            var result = await _client.findRettsstiftelseAsync(request);
+                var response = await client.findRettsstiftelseAsync(request);
+                result = response.@return;
+            }catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
+            }
 
-            return result.@return;
+            return result;
         }
+
         private async Task<OverdragelseAvRegisterenhetsrettInformasjonTransfer> GetOverdragelserAvRegisterenhetsrett(string registerenhetid)
         {
             OverdragelseAvRegisterenhetsrettInformasjonTransfer result = null;
-            var _client = CreateClient();
+            var client = CreateClient();
 
             var request = new findOverdragelserAvRegisterenhetsrettRequest()
             {
@@ -120,17 +160,17 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                var response = await _client.findOverdragelserAvRegisterenhetsrettAsync(request);
+                var response = await client.findOverdragelserAvRegisterenhetsrettAsync(request);
                 result = response.@return;
-
-            }
-            catch (FaultException fex)
-            {
-                _logger.LogError(fex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+            }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
             }
 
             return result;

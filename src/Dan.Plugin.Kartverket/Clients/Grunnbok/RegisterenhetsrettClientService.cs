@@ -14,8 +14,6 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         private ILogger _logger;
         private IRequestContextService _requestContextService;
 
-        private RegisterenhetsrettServiceClient _client;
-
         public RegisterenhetsrettClientService(ILoggerFactory factory, IOptions<ApplicationSettings> settings, IRequestContextService requestContextService)
         {
             _logger = factory.CreateLogger<RegisterenhetsrettClientService>();
@@ -25,7 +23,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         public async Task<RegisterenhetIdTilRegisterenhetsrettIdsMap> GetRetterForEnheter(string registerenhetsid)
         {
-            var _client = CreateClient();
+            var client = CreateClient();
+            RegisterenhetIdTilRegisterenhetsrettIdsMap result = null;
             var request = new findRetterForEnheterRequest()
             {
                 Body = new findRetterForEnheterRequestBody()
@@ -40,10 +39,22 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                     }
                 }
             };
+            try
+            {
+                var response = await client.findRetterForEnheterAsync(request);
+                result = response.Body.@return;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error calling findRetterForEnheterAsync for registerenhetsid {Registerenhetsid}", registerenhetsid);
+            }
+            finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
+            }
 
-            var response = await _client.findRetterForEnheterAsync(request);
-
-            return response.Body.@return;
+            return result;
         }
        
         private GrunnbokContext GetContext()
@@ -64,7 +75,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             var binding = GrunnbokHelpers.GetBasicHttpBinding();
 
             var endpoint = new EndpointAddress(
-                $"{_settings.GrunnbokRootUrl}/RegisterenhetsrettServiceWS");
+                $"{_settings.GrunnbokRootUrl}RegisterenhetsrettServiceWS");
 
             var client = new RegisterenhetsrettServiceClient(binding, endpoint);
 

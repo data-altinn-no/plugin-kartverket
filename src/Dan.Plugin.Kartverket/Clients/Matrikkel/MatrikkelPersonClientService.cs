@@ -4,8 +4,6 @@ using Kartverket.Matrikkel.PersonService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.Net;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -28,7 +26,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<long> GetOrganization(string orgno)
         {
             findPersonIdForIdentResponse result = null;
-            var _client = CreateClient();
+            var client = CreateClient();
 
             var request = new findPersonIdForIdentRequest()
             {
@@ -41,11 +39,15 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                result = await _client.findPersonIdForIdentAsync(request);
+                result = await client.findPersonIdForIdentAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+            }finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
             }
 
             return result.@return.value;
@@ -54,7 +56,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<long> GetPerson(string nin)
         {
             findPersonIdForIdentResponse result = null;
-            var _client = CreateClient();
+            var client = CreateClient();
 
             var request = new findPersonIdForIdentRequest()
             {
@@ -67,7 +69,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                result = await _client.findPersonIdForIdentAsync(request);
+                result = await client.findPersonIdForIdentAsync(request);
             }
             catch (Exception ex)
             {
@@ -79,7 +81,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         private MatrikkelContext GetContext()
         {
-            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>();
+            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>(_requestContextService.ServiceContext);
         }
 
         private PersonServiceClient CreateClient()

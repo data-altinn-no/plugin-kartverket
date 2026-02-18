@@ -29,7 +29,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<List<MatrikkelenhetId>> GetMatrikkelenheterForPerson(long ident)
         {
             findEideMatrikkelenheterForPersonResponse result = null;
-            var _client = CreateClient();
+            var client = CreateClient();
 
             var request = new findEideMatrikkelenheterForPersonRequest()
             {
@@ -42,11 +42,16 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                result = await _client.findEideMatrikkelenheterForPersonAsync(request);
+                result = await client.findEideMatrikkelenheterForPersonAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+            }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
             }
 
             return result.@return.ToList();
@@ -56,7 +61,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<MatrikkelenhetMedTeigerTransfer> GetMatrikkelEnhetMedTeiger(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent)
         {
             findMatrikkelenhetMedTeigerResponse result = null;
-            var _client = CreateClient();
+            var client = CreateClient();
 
             var request = new findMatrikkelenhetMedTeigerRequest()
             {
@@ -81,12 +86,17 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                result = await _client.findMatrikkelenhetMedTeigerAsync(request);
+                result = await client.findMatrikkelenhetMedTeigerAsync(request);
                 return result.@return;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+            }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
             }
 
             return new findMatrikkelenhetMedTeigerResponse().@return;
@@ -117,7 +127,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<MatrikkelenhetId> GetMatrikkelenhet(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent)
         {
             findMatrikkelenhetResponse result = null;
-            var _client = CreateClient();
+            var client = CreateClient();
 
             var request = new findMatrikkelenhetRequest()
             {
@@ -142,12 +152,17 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                result = await _client.findMatrikkelenhetAsync(request);
+                result = await client.findMatrikkelenhetAsync(request);
                 return result.@return;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+            }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
             }
 
             return new MatrikkelenhetId();
@@ -155,7 +170,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         private MatrikkelContext GetContext()
         {
-            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>();
+            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>(_requestContextService.ServiceContext);
         }
 
         private MatrikkelenhetServiceClient CreateClient()

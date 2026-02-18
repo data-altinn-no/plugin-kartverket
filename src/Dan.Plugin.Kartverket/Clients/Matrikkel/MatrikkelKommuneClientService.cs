@@ -24,21 +24,33 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         public async Task<string> GetKommune(string kommunenummer)
         {
-            var _client = CreateClient();
+            var client = CreateClient();
             var request = new findGjeldendeKommuneIdForKommuneNrRequest()
             {
                 matrikkelContext = GetContext(),
                 kommuneNr = kommunenummer
             };
+            try
+            {
+                var response = await client.findGjeldendeKommuneIdForKommuneNrAsync(request);
 
-            var response = await _client.findGjeldendeKommuneIdForKommuneNrAsync(request);
-
-            return response.@return.value.ToString();
+                return response.@return.value.ToString();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error calling KommuneServiceWS for kommuneNr {KommuneNr}", kommunenummer);
+            }
+            finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
+            }
+            return string.Empty;
         }
 
         private MatrikkelContext GetContext()
         {
-            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>();
+            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>(_requestContextService.ServiceContext);
         }
 
         private KommuneServiceClient CreateClient()

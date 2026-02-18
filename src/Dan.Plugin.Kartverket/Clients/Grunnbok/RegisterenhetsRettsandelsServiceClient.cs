@@ -19,8 +19,6 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         private readonly ApplicationSettings _settings;
         private readonly IRequestContextService _requestContextService;
 
-        private RegisterenhetsrettsandelServiceClient _client;
-
         public RegisterenhetsRettsandelsServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
@@ -31,7 +29,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<List<string>> GetAndelerForRettighetshaver(string personident)
         {
             var result = new List<string>();
-            var _client = CreateClient();
+            var client = CreateClient();
 
             var request = new findAndelerForRettighetshavereRequest()
             {
@@ -50,7 +48,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                var rettighetsresponse = await _client.findAndelerForRettighetshavereAsync(request);
+                var rettighetsresponse = await client.findAndelerForRettighetshavereAsync(request);
                 var retter = rettighetsresponse.Body.@return.Values.ToList();
 
                 result.AddRange(retter[0].Select(x => x.value));
@@ -64,6 +62,11 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             {
                 _logger.LogError(ex.Message);
             }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
+            }
 
             return result;
         }
@@ -71,7 +74,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<findAndelerIRetterResponse> GetAndelerIRetter(string registerenhetsid)
         {
             var result = new findAndelerIRetterResponse();
-            var _client = CreateClient();
+            var client = CreateClient();
 
             try
             {
@@ -90,13 +93,17 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                     }
                 };
 
-                var response = await _client.findAndelerIRetterAsync(request);
+                var response = await client.findAndelerIRetterAsync(request);
                 result = response;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception was thrown while calling findAndelerIRetter");
-                throw;
+            }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
             }
 
             return result;
