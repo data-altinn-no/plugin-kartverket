@@ -13,24 +13,17 @@ namespace Dan.Plugin.Kartverket.Clients
 
         public string ServiceContext { get; set; }
 
-        public Task SetRequestContext(HttpRequestData data)
+        public Task SetRequestContext(string serviceContext)
         {
-            ServiceContext = GetServiceContextFromRequest(data);
+            ServiceContext = serviceContext;
             return Task.CompletedTask;
         }
 
-        private string GetServiceContextFromRequest(HttpRequestData data)
-        {
-            if (!data.Headers.TryGetValues(ServicecontextHeader, out var header))
-                throw new Exception("Missing Service Context definition in request.");
-
-            return header.First().ToLowerInvariant();
-        }
     }
 
     public interface IRequestContextService
     {
         string ServiceContext { get; set; }
-        public Task SetRequestContext(HttpRequestData data);
+        public Task SetRequestContext(string serviceContext);
     }
 }

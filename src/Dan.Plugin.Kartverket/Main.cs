@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace Dan.Plugin.Kartverket
@@ -89,10 +88,10 @@ namespace Dan.Plugin.Kartverket
             var requestContextService = scope.ServiceProvider.GetRequiredService<IRequestContextService>();
             var diHeWrapper = scope.ServiceProvider.GetRequiredService<IDiHeWrapper>();
 
-            await requestContextService.SetRequestContext(req);
-
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
+
+            await requestContextService.SetRequestContext(evidenceHarvesterRequest.ServiceContext);
 
             return await EvidenceSourceResponse.CreateResponse(
                 req,
