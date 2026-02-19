@@ -337,6 +337,9 @@ namespace Dan.Plugin.Kartverket.Clients
                                 if (!andeler.historisk)
                                 {
                                     var coOwner = await _storeServiceClient.GetPerson(andeler.rettighetshaverId.value);
+                                    if (coOwner == null)
+                                        continue;
+
                                     listOfCoOwners.Add(new CoOwner()
                                     {
                                         Identifier = coOwner.identifikasjonsnummer ?? null,

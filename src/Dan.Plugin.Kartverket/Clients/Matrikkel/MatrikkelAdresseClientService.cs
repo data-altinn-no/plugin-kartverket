@@ -6,6 +6,9 @@ using Microsoft.Extensions.Options;
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
+using MatrikkelContext = Kartverket.Matrikkel.AdresseService.MatrikkelContext;
+using KoordinatsystemKodeId = Kartverket.Matrikkel.AdresseService.KoordinatsystemKodeId;
+using Timestamp = Kartverket.Matrikkel.AdresseService.Timestamp;
 
 namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 {
@@ -77,12 +80,16 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
                 try { client.Close(); }
                 catch { client.Abort(); }
             }
-            return null;
+            return Array.Empty<AdresseId>();
         }
 
         private MatrikkelContext GetContext()
         {
-           return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>(_requestContextService.ServiceContext);
+            return GrunnbokHelpers.CreateMatrikkelContext<
+                MatrikkelContext,
+                Timestamp,
+                KoordinatsystemKodeId>
+                (_requestContextService.ServiceContext);
         }
 
         private AdresseServiceClient CreateClient()

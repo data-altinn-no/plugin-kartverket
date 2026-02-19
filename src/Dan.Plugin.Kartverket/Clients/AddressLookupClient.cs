@@ -96,6 +96,7 @@ namespace Dan.Plugin.Kartverket.Clients
 
                 var coordinates = features
                     .Where(f => f["geometry"]?["coordinates"] != null)
+                    .Where(f => f["geometry"]["coordinates"].Count() >= 2)
                     .Select(f =>
                     {
                         var coords = f["geometry"]["coordinates"];

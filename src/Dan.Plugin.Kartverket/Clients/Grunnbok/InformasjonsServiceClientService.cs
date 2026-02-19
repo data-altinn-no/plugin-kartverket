@@ -7,7 +7,6 @@ using System;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using GrunnbokContext = Kartverket.Grunnbok.InformasjonsService.GrunnbokContext;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {

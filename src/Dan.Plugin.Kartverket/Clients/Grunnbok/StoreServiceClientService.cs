@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using DokumentId = Kartverket.Grunnbok.StoreService.DokumentId;
-using GrunnbokContext = Kartverket.Grunnbok.StoreService.GrunnbokContext;
 using Kommune = Kartverket.Grunnbok.StoreService.Kommune;
 using KommuneDAN = Dan.Plugin.Kartverket.Models.Kommune;
 using KommuneId = Kartverket.Grunnbok.StoreService.KommuneId;
@@ -18,7 +17,6 @@ using RegisterenhetId = Kartverket.Grunnbok.StoreService.RegisterenhetId;
 using RegisterenhetsrettId = Kartverket.Grunnbok.StoreService.RegisterenhetsrettId;
 using RegisterenhetsrettsandelId = Kartverket.Grunnbok.StoreService.RegisterenhetsrettsandelId;
 using RettsstiftelseId = Kartverket.Grunnbok.StoreService.RettsstiftelseId;
-using Timestamp = Kartverket.Grunnbok.StoreService.Timestamp;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {

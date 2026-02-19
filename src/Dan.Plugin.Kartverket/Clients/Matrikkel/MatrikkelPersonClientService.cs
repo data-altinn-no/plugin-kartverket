@@ -22,7 +22,6 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             _requestContextService = requestContextService;
         }
 
-
         public async Task<long> GetOrganization(string orgno)
         {
             findPersonIdForIdentResponse result = null;
@@ -81,7 +80,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         private MatrikkelContext GetContext()
         {
-            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>(_requestContextService.ServiceContext);
+            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp, KoordinatsystemKodeId>(_requestContextService.ServiceContext);
         }
 
         private PersonServiceClient CreateClient()

@@ -75,7 +75,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             if (string.IsNullOrWhiteSpace(_requestContextService.ServiceContext))
             {
                 throw new InvalidOperationException(
-                    "ServiceContext is not set. Ensure SetRequestContext() is called before using OverfoeringServiceClientService.");
+                    "ServiceContext is not set. Ensure SetRequestContext() is called before using IdentServiceClientService.");
             }
             var client = new IdentServiceClient(
                 myBinding,

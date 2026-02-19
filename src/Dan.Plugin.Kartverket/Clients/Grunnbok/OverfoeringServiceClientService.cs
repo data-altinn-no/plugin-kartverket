@@ -50,6 +50,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             try
             {
                 result = await client.findOverfoeringerForOverfoerteTilAsync(request);
+                return result.Body?.ToString();
             }
             catch (Exception e)
             {

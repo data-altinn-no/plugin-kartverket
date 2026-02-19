@@ -170,7 +170,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         private MatrikkelContext GetContext()
         {
-            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp>(_requestContextService.ServiceContext);
+            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp, KoordinatsystemKodeId>(_requestContextService.ServiceContext);
         }
 
         private MatrikkelenhetServiceClient CreateClient()

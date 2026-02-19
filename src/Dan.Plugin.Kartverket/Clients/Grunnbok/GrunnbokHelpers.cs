@@ -1,9 +1,14 @@
+using Dan.Plugin.Kartverket.Clients.Grunnbok.GrunnbokContextHelpers;
+using Dan.Plugin.Kartverket.Clients.Matrikkel.MatrikkelContextHelpers;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Matrikkel.AdresseService;
 using System;
+using System.Data;
 using System.Net;
 using System.ServiceModel;
 using System.ServiceModel.Description;
+using IGrunnbokSnapshotTimestamp = Dan.Plugin.Kartverket.Clients.Grunnbok.GrunnbokContextHelpers.ISnapshotTimestamp;
+using IMatrikkelSnapshotTimestamp = Dan.Plugin.Kartverket.Clients.Matrikkel.MatrikkelContextHelpers.ISnapshotTimestamp;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
@@ -75,8 +80,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         }
 
         public static TContext CreateGrunnbokContext<TContext, TTimestamp>(string serviceContext)
-            where TContext : new()
-            where TTimestamp : new()
+            where TContext : IGrunnbokContext<TTimestamp>, new()
+            where TTimestamp : IGrunnbokSnapshotTimestamp, new()
         {
             var context = new TContext();
             var timestamp = new TTimestamp();
@@ -95,30 +100,34 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             return context;
         }
 
-        public static TContext CreateMatrikkelContext<TContext, TTimestamp>(string serviceContext)
-            where TContext : new()
-            where TTimestamp : new()
+        public static TContext CreateMatrikkelContext<TContext, TTimestamp, TKoordinatsystemKodeId>(
+            string serviceContext)
+            where TContext :IMatrikkelContext<TTimestamp, TKoordinatsystemKodeId>, new()
+            where TTimestamp : IMatrikkelSnapshotTimestamp, new()
+            where TKoordinatsystemKodeId : IKoordinatsystemKodeId, new()
         {
             var context = new TContext();
-            var timestamp = new TTimestamp();
+            var snapshot = new TTimestamp();
+            var koordinatsystem = new TKoordinatsystemKodeId();
 
-            dynamic ctx = context; // use dynamic only internally
-            dynamic tstmp = timestamp;
+            snapshot.timestamp = SNAPSHOT_VERSJON_DATO;
 
-            tstmp.timestamp = SNAPSHOT_VERSJON_DATO;
+            koordinatsystem.value = 22;
 
-            ctx.locale = "no_NO";
-            ctx.brukOriginaleKoordinater = true;
-            ctx.koordinatsystemKodeId = new KoordinatsystemKodeId()
-            { 
-                value = 22
-            };
-            ctx.klientIdentifikasjon = serviceContext;
-            ctx.snapshotVersion = tstmp;
-            ctx.systemVersion = "trunk";
+            context.locale = "no_NO";
+            context.brukOriginaleKoordinater = true;
+            context.koordinatsystemKodeId = koordinatsystem;
+            context.klientIdentifikasjon = serviceContext;
+            context.snapshotVersion = snapshot;
+            context.systemVersion = "trunk";
 
             return context;
         }
+
+
     }
-    
+
+
 }
+
+

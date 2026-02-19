@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using GrunnbokContext = Kartverket.Grunnbok.RettsstiftelseService.GrunnbokContext;
 using TransferMode = Kartverket.Grunnbok.RettsstiftelseService.TransferMode;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
@@ -94,7 +93,9 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                     var temp = new PawnDocument()
                     {
                         Amounts = amounts,
-                        OwnerId = long.Parse(pawn.rettighetshavereIds[0].value),
+                        OwnerId = pawn.rettighetshavereIds?.Length > 0
+                            ? long.Parse(pawn.rettighetshavereIds[0].value)
+                            : 0,
                         Owner = ""
                     };
 

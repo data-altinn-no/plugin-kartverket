@@ -7,9 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using GrunnbokContext = Kartverket.Grunnbok.RegisterenhetsrettsandelService.GrunnbokContext;
-using RegisterenhetsrettId = Kartverket.Grunnbok.RegisterenhetsrettsandelService.RegisterenhetsrettId;
-using Timestamp = Kartverket.Grunnbok.RegisterenhetsrettsandelService.Timestamp;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
@@ -51,8 +48,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                 var rettighetsresponse = await client.findAndelerForRettighetshavereAsync(request);
                 var retter = rettighetsresponse.Body.@return.Values.ToList();
 
-                result.AddRange(retter[0].Select(x => x.value));
-
+                if(retter.Count > 0)
+                    result.AddRange(retter[0].Select(x => x.value));
             }
             catch (FaultException fex)
             {

@@ -24,7 +24,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<RegisterenhetIdTilRegisterenhetsrettIdsMap> GetRetterForEnheter(string registerenhetsid)
         {
             var client = CreateClient();
-            RegisterenhetIdTilRegisterenhetsrettIdsMap result = null;
+            RegisterenhetIdTilRegisterenhetsrettIdsMap result = new();
             var request = new findRetterForEnheterRequest()
             {
                 Body = new findRetterForEnheterRequestBody()
