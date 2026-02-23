@@ -9,7 +9,6 @@ using Dan.Plugin.Kartverket.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using static Dan.Plugin.Kartverket.Clients.Grunnbok.StoreServiceClientService;
 
 var host = new HostBuilder()
         .ConfigureDanPluginDefaults()

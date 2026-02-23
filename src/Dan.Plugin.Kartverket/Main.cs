@@ -38,8 +38,14 @@ namespace Dan.Plugin.Kartverket
             FunctionContext context)
         {
             _logger.LogInformation("Running func 'Grunnbok'");
+            using var scope = _scopeFactory.CreateScope();
+            var requestContextService = scope.ServiceProvider.GetRequiredService<IRequestContextService>();
+            var diHeWrapper = scope.ServiceProvider.GetRequiredService<IDiHeWrapper>();
+
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
+
+            await requestContextService.SetRequestContext(evidenceHarvesterRequest.ServiceContext);
 
             return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesGrunnbok(evidenceHarvesterRequest));
         }
@@ -50,8 +56,14 @@ namespace Dan.Plugin.Kartverket
     FunctionContext context)
         {
             _logger.LogInformation("Running func 'Grunnbok'");
+            using var scope = _scopeFactory.CreateScope();
+            var requestContextService = scope.ServiceProvider.GetRequiredService<IRequestContextService>();
+            var diHeWrapper = scope.ServiceProvider.GetRequiredService<IDiHeWrapper>();
+
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
+
+            await requestContextService.SetRequestContext(evidenceHarvesterRequest.ServiceContext);
 
             return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesGrunnbokRettigheter(evidenceHarvesterRequest));
         }
@@ -61,8 +73,14 @@ namespace Dan.Plugin.Kartverket
     [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequestData req, FunctionContext context)
         {
             _logger.LogInformation("Running func 'Eiendomsadresser'");
+            using var scope = _scopeFactory.CreateScope();
+            var requestContextService = scope.ServiceProvider.GetRequiredService<IRequestContextService>();
+            var diHeWrapper = scope.ServiceProvider.GetRequiredService<IDiHeWrapper>();
+
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
+
+            await requestContextService.SetRequestContext(evidenceHarvesterRequest.ServiceContext);
 
             return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesEiendomsadresser(evidenceHarvesterRequest));
         }
@@ -73,8 +91,14 @@ namespace Dan.Plugin.Kartverket
             FunctionContext context)
         {
             _logger.LogInformation("Running func 'Eiendommer'");
+            using var scope = _scopeFactory.CreateScope();
+            var requestContextService = scope.ServiceProvider.GetRequiredService<IRequestContextService>();
+            var diHeWrapper = scope.ServiceProvider.GetRequiredService<IDiHeWrapper>();
+
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
+
+            await requestContextService.SetRequestContext(evidenceHarvesterRequest.ServiceContext);
 
             return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesEiendommer(evidenceHarvesterRequest));
         }
