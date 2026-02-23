@@ -43,8 +43,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             }
             else if(serviceContext.ToUpper() == "OED"|| serviceContext.ToUpper() == "DIGITALDODSBO")
             {
-                credentials.UserName.UserName = settings.OEDGrunnbokUser;
-                credentials.UserName.Password = settings.OEDGrunnbokPw;
+                credentials.UserName.UserName = settings.GrunnbokUser;
+                credentials.UserName.Password = settings.GrunnbokPw;
             }
             else
             {
@@ -69,8 +69,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             }
             else if(serviceContext.ToUpper() == "OED"|| serviceContext.ToUpper() == "DIGITALDODSBO")
             {
-                credentials.UserName.UserName = settings.MatrikkelOEDUser;
-                credentials.UserName.Password = settings.MatrikkelOEDPw;
+                credentials.UserName.UserName = settings.MatrikkelUser;
+                credentials.UserName.Password = settings.MatrikkelPw;
             }
             else
             {
