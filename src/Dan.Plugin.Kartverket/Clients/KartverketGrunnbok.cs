@@ -349,6 +349,17 @@ namespace Dan.Plugin.Kartverket.Clients
                             }
                         }
                     }
+                    else
+                    {
+                        //for single owners
+                        var owner = await _storeServiceClient.GetPerson(regenhetsandelfromstore.rettighetshaverId.value);
+                        listOfCoOwners.Add(new CoOwner
+                        {
+                            Identifier = owner.identifikasjonsnummer ?? null,
+                            Name = owner.navn ?? null,
+                            OwnerShare = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}" ?? null
+                        });
+                    }
 
                     var kommune = new Models.Kommune();
                     if (matrikkelenhetgrunnbok != null)
