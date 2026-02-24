@@ -296,7 +296,7 @@ namespace Dan.Plugin.Kartverket.Clients
             var ident = await _identServiceClient.GetPersonIdentity(identifier);
 
             var registerRettsAndelList = await _regRettsandelsClientService.GetAndelerForRettighetshaver(ident);
-            foreach (var registerenhetsrettsandelid in registerRettsAndelList)
+            foreach (var registerenhetsrettsandelid in registerRettsAndelList.Take(10))
             {
                 var regenhetsandelfromstore = await _storeServiceClient.GetRettighetsandeler(registerenhetsrettsandelid);
 
@@ -348,6 +348,17 @@ namespace Dan.Plugin.Kartverket.Clients
                                 }
                             }
                         }
+                    }
+                    else
+                    {
+                        //for single owners
+                        var owner = await _storeServiceClient.GetPerson(regenhetsandelfromstore.rettighetshaverId.value);
+                        listOfCoOwners.Add(new CoOwner
+                        {
+                            Identifier = owner.identifikasjonsnummer ?? null,
+                            Name = owner.navn ?? null,
+                            OwnerShare = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}" ?? null
+                        });
                     }
 
                     var kommune = new Models.Kommune();
