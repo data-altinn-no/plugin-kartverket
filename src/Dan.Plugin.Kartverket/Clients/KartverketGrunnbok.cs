@@ -307,7 +307,6 @@ namespace Dan.Plugin.Kartverket.Clients
                 {
                     var matrikkelenhetgrunnbok = await _storeServiceClient.GetMatrikkelEnhetFromRegisterRettighetsandel(regenhetsandelfromstore.registerenhetsrettId.value);
 
-                    var owner = await _storeServiceClient.GetPerson(regenhetsandelfromstore.rettighetshaverId.value);
                     var listOfCoOwners = new List<CoOwner>();
 
                     var share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}";
