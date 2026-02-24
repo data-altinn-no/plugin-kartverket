@@ -1,15 +1,13 @@
+using Dan.Plugin.Kartverket.Config;
+using Dan.Plugin.Kartverket.Models;
+using Kartverket.Grunnbok.RettsstiftelseService;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dan.Plugin.Kartverket.Config;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using Dan.Plugin.Kartverket.Models;
-using Kartverket.Grunnbok.RettsstiftelseService;
-using GrunnbokContext = Kartverket.Grunnbok.RettsstiftelseService.GrunnbokContext;
-using RegisterenhetsrettId = Kartverket.Grunnbok.RettsstiftelseService.RegisterenhetsrettId;
 using TransferMode = Kartverket.Grunnbok.RettsstiftelseService.TransferMode;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
@@ -18,21 +16,19 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
-        private RettsstiftelseServiceClient _client;
+        private IRequestContextService _requestContextService;
 
-        public RettsstiftelseClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public RettsstiftelseClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<RettsstiftelseClientService>();
-
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-            _client = new RettsstiftelseServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "RettsstiftelseServiceWS"));
-            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
+            _requestContextService = requestContextService;            
         }
 
         public async Task<findOverdragelserAvRegisterenhetsrettForPersonResponse> GetOverdragelserAvRegisterenhetsrett(string ident)
         {
             findOverdragelserAvRegisterenhetsrettForPersonResponse result = null;
+            var client = CreateClient();
 
             findOverdragelserAvRegisterenhetsrettForPersonRequest request = new()
             {
@@ -46,70 +42,16 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                result = await _client.findOverdragelserAvRegisterenhetsrettForPersonAsync(request);
+                result = await client.findOverdragelserAvRegisterenhetsrettForPersonAsync(request);
 
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
-            }
-
-            return result;
-        }
-
-        public async Task<findAktiveRettsstiftelserMedAktivRettighetshaverEllerSaksoekerResponse> GetAktiveRettsstiftelser(List<string> idents)
-        {
-            findAktiveRettsstiftelserMedAktivRettighetshaverEllerSaksoekerResponse result = null;
-
-            PersonId[] ids = new PersonId[idents.Count - 1];
-
-            int i = 0;
-            foreach (var id in idents)
+                _logger.LogError(e, "Error calling findOverdragelserAvRegisterenhetsrettForPersonAsync with ident {Ident}", ident);
+            }finally
             {
-                ids[i].value = id;
-            }
-
-            findAktiveRettsstiftelserMedAktivRettighetshaverEllerSaksoekerRequest request = new()
-            {
-                grunnbokContext = GetContext(),
-                personIds = ids,
-            };
-            
-            try
-            {
-                result = await _client.findAktiveRettsstiftelserMedAktivRettighetshaverEllerSaksoekerAsync(request);
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-
-            return result;
-        }
-
-        public async Task<findRettigheterForRegisterenhetResponse> GetRettighetForRegisterenhet(string registerenhetid, string kommuneid)
-        {
-            findRettigheterForRegisterenhetResponse result = null;
-
-            findRettigheterForRegisterenhetRequest request = new()
-            {
-                grunnbokContext = GetContext(),
-                kommuneIds = new KommuneId[] { new KommuneId() {value = kommuneid } },
-                registerenhetId = new RegisterenhetId() { value = registerenhetid }
-            };
-
-            try
-            {
-                result = await _client.findRettigheterForRegisterenhetAsync(request);
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
             }
 
             return result;
@@ -118,6 +60,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<List<PawnDocument>> GetHeftelser(string registerenhetid)
         {
             List<PawnDocument> result = new List<PawnDocument>();
+            var client = CreateClient();
 
             findHeftelserRequest request = new()
             {
@@ -128,64 +71,83 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                 },
                 transferMode = TransferMode.Objects
             };
-
-            var response = await _client.findHeftelserAsync(request);
-            var responseObject = response.@return.bubbleObjects.OfType<Pant>();
-            
-            foreach (var pawn in responseObject)
+            try
             {
-                var amounts = new List<Amount>();
+                var response = await client.findHeftelserAsync(request);
+                var responseObject = response.@return.bubbleObjects.OfType<Pant>();
 
-                for (int i = 0; i < pawn.beloep.Length; i++)
+                foreach (var pawn in responseObject)
                 {
-                    amounts.Add(new Amount()
+                    var amounts = new List<Amount>();
+
+                    for (int i = 0; i < pawn.beloep.Length; i++)
                     {
-                        CurrencyCode = pawn.beloep[i].valutakodeId.value == "5" ? "NOK" : "",
-                        AmountText = pawn.beloep[i].beloepstekst,
-                        Sum = pawn.beloep[i].beloepsverdi
-                    });
+                        amounts.Add(new Amount()
+                        {
+                            CurrencyCode = pawn.beloep[i].valutakodeId.value == "5" ? "NOK" : "",
+                            AmountText = pawn.beloep[i].beloepstekst,
+                            Sum = pawn.beloep[i].beloepsverdi
+                        });
+                    }
+
+                    var temp = new PawnDocument()
+                    {
+                        Amounts = amounts,
+                        OwnerId = pawn.rettighetshavereIds?.Length > 0
+                            ? long.Parse(pawn.rettighetshavereIds[0].value)
+                            : 0,
+                        Owner = ""
+                    };
+
+                    result.Add(temp);
                 }
-
-                var temp = new PawnDocument()
-                {
-                    Amounts = amounts,
-                    OwnerId = long.Parse(pawn.rettighetshavereIds[0].value),
-                    Owner = ""
-                };
-
-                result.Add(temp);
+                return result;
             }
-            
-
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error calling findHeftelserAsync with registerenhetid {RegisterenhetId}", registerenhetid);
+            }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
+            }
             return result;
         }
 
+
         private GrunnbokContext GetContext()
         {
-            return new()
-            {
-                clientIdentification = "eDueDiligence",
-                clientTraceInfo = "eDueDiligence_1",
-                locale = "no_578",
-                snapshotVersion = new()
-                {
-                    timestamp = new DateTime(9999, 1, 1, 0, 0, 0)
-                },
-                systemVersion = "1"
-            };
+            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>(_requestContextService.ServiceContext);
         }
+
+        private RettsstiftelseServiceClient CreateClient()
+        {
+            var serviceContext = _requestContextService.ServiceContext;
+
+            if (string.IsNullOrWhiteSpace(serviceContext))
+                throw new InvalidOperationException(
+                    "ServiceContext is not set. Ensure SetRequestContext() is called before using RettsstiftelseClientService.");
+
+            var binding = GrunnbokHelpers.GetBasicHttpBinding();
+            var endpoint = new EndpointAddress(
+                $"{_settings.GrunnbokRootUrl}RettsstiftelseServiceWS");
+
+            var client = new RettsstiftelseServiceClient(binding, endpoint);
+
+            GrunnbokHelpers.SetGrunnbokWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                serviceContext);
+
+            return client;
+        }
+
     }
 
     public interface IRettsstiftelseClientService
     {
-        public Task<findAktiveRettsstiftelserMedAktivRettighetshaverEllerSaksoekerResponse> GetAktiveRettsstiftelser(List<string> ids);
-
-        public Task<findRettigheterForRegisterenhetResponse> GetRettighetForRegisterenhet(string registerenhetid, string kommuneid);
-
         public Task<List<PawnDocument>> GetHeftelser(string registerenhetid);
 
-        //public Task<List<RettsstiftelseId>> GetRettigheterForPerson(string personId);
-
-        //public Task<List<RettsstiftelseId>> GetRettigheterForRegisterenhet(string registerenhetId, string kommuneId);
     }
 }

@@ -1,14 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Grunnbok.RegisterenhetsrettsandelService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.ServiceModel;
+using System.Threading.Tasks;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
@@ -16,23 +14,19 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
     {
         private readonly ILogger _logger;
         private readonly ApplicationSettings _settings;
+        private readonly IRequestContextService _requestContextService;
 
-        private RegisterenhetsrettsandelServiceClient _client;
-
-        public RegisterenhetsRettsandelsServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public RegisterenhetsRettsandelsServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<RegisterenhetsRettsandelsServiceClientService>();
-
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            _client = new RegisterenhetsrettsandelServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "RegisterenhetsrettsandelServiceWS"));
-            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
+            _requestContextService = requestContextService;
         }
 
         public async Task<List<string>> GetAndelerForRettighetshaver(string personident)
         {
             var result = new List<string>();
+            var client = CreateClient();
 
             var request = new findAndelerForRettighetshavereRequest()
             {
@@ -51,11 +45,11 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                var rettighetsresponse = await _client.findAndelerForRettighetshavereAsync(request);
+                var rettighetsresponse = await client.findAndelerForRettighetshavereAsync(request);
                 var retter = rettighetsresponse.Body.@return.Values.ToList();
 
-                result.AddRange(retter[0].Select(x => x.value));
-
+                if(retter.Count > 0)
+                    result.AddRange(retter[0].Select(x => x.value));
             }
             catch (FaultException fex)
             {
@@ -65,28 +59,86 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             {
                 _logger.LogError(ex.Message);
             }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
+            }
+
+            return result;
+        }
+
+        public async Task<findAndelerIRetterResponse> GetAndelerIRetter(string registerenhetsid)
+        {
+            var result = new findAndelerIRetterResponse();
+            var client = CreateClient();
+
+            try
+            {
+                var request = new findAndelerIRetterRequest
+                {
+                    Body = new findAndelerIRetterRequestBody
+                    {
+                        grunnbokContext = GetContext(),
+                        rettIds = new RegisterenhetsrettIdList
+                        {
+                            new RegisterenhetsrettId
+                            {
+                                value = registerenhetsid
+                            }
+                        }
+                    }
+                };
+
+                var response = await client.findAndelerIRetterAsync(request);
+                result = response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception was thrown while calling findAndelerIRetter");
+            }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
+            }
 
             return result;
         }
 
         private GrunnbokContext GetContext()
         {
-            return new()
-            {
-                clientIdentification = "eDueDiligence",
-                clientTraceInfo = "eDueDiligence_1",
-                locale = "no_578",
-                snapshotVersion = new()
-                {
-                    timestamp = new DateTime(9999, 1, 1, 0, 0, 0)
-                },
-                systemVersion = "1"
-            };
+            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext, Timestamp>(_requestContextService.ServiceContext);
         }
+
+        private RegisterenhetsrettsandelServiceClient CreateClient()
+        {
+            var serviceContext = _requestContextService.ServiceContext;
+
+            if (string.IsNullOrWhiteSpace(serviceContext))
+                throw new InvalidOperationException(
+                    "ServiceContext is not set. Ensure SetRequestContext() is called before using RegisterenhetsRettsandelsServiceClientService.");
+
+            var binding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var endpoint = new EndpointAddress(
+                $"{_settings.GrunnbokRootUrl}RegisterenhetsrettsandelServiceWS");
+
+            var client = new RegisterenhetsrettsandelServiceClient(binding, endpoint);
+
+            GrunnbokHelpers.SetGrunnbokWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                serviceContext);
+
+            return client;
+        }
+
     }
 
     public interface IRegisterenhetsRettsandelsServiceClientService
     {
         public Task<List<string>> GetAndelerForRettighetshaver(string personident);
+        public Task<findAndelerIRetterResponse> GetAndelerIRetter(string registerenhetsid);
     }
 }

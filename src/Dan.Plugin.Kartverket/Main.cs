@@ -5,6 +5,7 @@ using Dan.Common.Util;
 using Dan.Plugin.Kartverket.Clients;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -20,13 +21,15 @@ namespace Dan.Plugin.Kartverket
         private ILogger _logger;
         private IKartverketGrunnbokMatrikkelService _kartverketGrunnbokMatrikkelService;
         private readonly IDDWrapper _ddWrapper;
+        private readonly IServiceScopeFactory _scopeFactory;
 
-
-        public Main(ILoggerFactory loggerFactory, IDDWrapper ddWrapper, IKartverketGrunnbokMatrikkelService kartverketGrunnbokMatrikkelService)
+        public Main(ILoggerFactory loggerFactory, IDDWrapper ddWrapper, IKartverketGrunnbokMatrikkelService kartverketGrunnbokMatrikkelService, IServiceScopeFactory scopeFactory)
         {
             _logger = loggerFactory.CreateLogger<Main>();
             _ddWrapper = ddWrapper;
             _kartverketGrunnbokMatrikkelService = kartverketGrunnbokMatrikkelService;
+            _scopeFactory = scopeFactory;
+
         }
 
         [Function("Grunnbok")]
@@ -35,10 +38,17 @@ namespace Dan.Plugin.Kartverket
             FunctionContext context)
         {
             _logger.LogInformation("Running func 'Grunnbok'");
+            using var scope = _scopeFactory.CreateScope();
+            var requestContextService = scope.ServiceProvider.GetRequiredService<IRequestContextService>();
+            var ddWrapper = scope.ServiceProvider.GetRequiredService<IDDWrapper>();
+
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
 
-            return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesGrunnbok(evidenceHarvesterRequest));
+            await requestContextService.SetRequestContext(evidenceHarvesterRequest.ServiceContext);
+            await requestContextService.SetRequestContext("oed");
+            
+            return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesGrunnbok(evidenceHarvesterRequest, ddWrapper));
         }
 
         [Function("GrunnbokRettigheter")]
@@ -47,21 +57,34 @@ namespace Dan.Plugin.Kartverket
     FunctionContext context)
         {
             _logger.LogInformation("Running func 'Grunnbok'");
+            using var scope = _scopeFactory.CreateScope();
+            var requestContextService = scope.ServiceProvider.GetRequiredService<IRequestContextService>();
+            var ddWrapper = scope.ServiceProvider.GetRequiredService<IDDWrapper>();
+
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
 
-            return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesGrunnbokRettigheter(evidenceHarvesterRequest));
+            await requestContextService.SetRequestContext(evidenceHarvesterRequest.ServiceContext);
+
+            return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesGrunnbokRettigheter(evidenceHarvesterRequest, ddWrapper));
         }
 
         [Function("Eiendomsadresser")]
         public async Task<HttpResponseData> Eiendomsadresser(
-    [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequestData req, FunctionContext context)
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequestData req,
+            FunctionContext context)
         {
             _logger.LogInformation("Running func 'Eiendomsadresser'");
+            using var scope = _scopeFactory.CreateScope();
+            var requestContextService = scope.ServiceProvider.GetRequiredService<IRequestContextService>();
+            var ddWrapper = scope.ServiceProvider.GetRequiredService<IDDWrapper>();
+
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
 
-            return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesEiendomsadresser(evidenceHarvesterRequest));
+            await requestContextService.SetRequestContext(evidenceHarvesterRequest.ServiceContext);
+
+            return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesEiendomsadresser(evidenceHarvesterRequest, ddWrapper));
         }
 
         [Function("Eiendommer")]
@@ -70,22 +93,59 @@ namespace Dan.Plugin.Kartverket
             FunctionContext context)
         {
             _logger.LogInformation("Running func 'Eiendommer'");
+
+            using var scope = _scopeFactory.CreateScope();
+            var requestContextService = scope.ServiceProvider.GetRequiredService<IRequestContextService>();
+            var kartverket = scope.ServiceProvider.GetRequiredService<IKartverketGrunnbokMatrikkelService>();
+
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
 
-            return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesEiendommer(evidenceHarvesterRequest));
+            await requestContextService.SetRequestContext(evidenceHarvesterRequest.ServiceContext);
+
+            return await EvidenceSourceResponse.CreateResponse(req, () => GetEvidenceValuesEiendommer(evidenceHarvesterRequest, kartverket));
         }
 
-        private async Task<List<EvidenceValue>> GetEvidenceValuesEiendommer(EvidenceHarvesterRequest request)
+        [Function("MotorisertFerdsel")]
+        public async Task<HttpResponseData> MotorisertFerdsel([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequestData req,FunctionContext context)
         {
-            var result = await _kartverketGrunnbokMatrikkelService.FindProperties(request.SubjectParty.NorwegianOrganizationNumber);
+            _logger.LogInformation("Running func 'MotorisertFerdsel'");
+            using var scope = _scopeFactory.CreateScope();
 
+            var requestContextService = scope.ServiceProvider.GetRequiredService<IRequestContextService>();
+            var diHeWrapper = scope.ServiceProvider.GetRequiredService<IDiHeWrapper>();
+
+            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
+
+            await requestContextService.SetRequestContext(evidenceHarvesterRequest.ServiceContext);
+
+            return await EvidenceSourceResponse.CreateResponse(
+                req,
+                () => GetEvidenceValuesMotorisertFerdsel(evidenceHarvesterRequest, diHeWrapper)
+            );
+        }
+
+        private async Task<List<EvidenceValue>> GetEvidenceValuesMotorisertFerdsel(
+            EvidenceHarvesterRequest evidenceHarvesterRequest,
+            IDiHeWrapper diheWrapper)
+        {
+            var result = await diheWrapper.GetMotorizedTrafficInformation(evidenceHarvesterRequest.SubjectParty.GetAsString(false));
+
+            var ecb = new EvidenceBuilder(new Metadata(), "MotorisertFerdsel");
+            ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
+            return ecb.GetEvidenceValues();
+        }
+
+        private async Task<List<EvidenceValue>> GetEvidenceValuesEiendommer(EvidenceHarvesterRequest request, IKartverketGrunnbokMatrikkelService kartverketGrunnbokMatrikkelService)
+        {
+            var result = await kartverketGrunnbokMatrikkelService.FindProperties(request.SubjectParty.NorwegianOrganizationNumber);
             var ecb = new EvidenceBuilder(new Metadata(), "Eiendommer");
             ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
             return ecb.GetEvidenceValues();
         }
 
-        private async Task<List<EvidenceValue>> GetEvidenceValuesGrunnbok(EvidenceHarvesterRequest evidenceHarvesterRequest)
+        private async Task<List<EvidenceValue>> GetEvidenceValuesGrunnbok(EvidenceHarvesterRequest evidenceHarvesterRequest, IDDWrapper ddWrapper)
         {
             try
             {
@@ -95,7 +155,7 @@ namespace Dan.Plugin.Kartverket
                 }
 
                 var ecb = new EvidenceBuilder(new Metadata(), "Grunnbok");
-                var result = await _ddWrapper.GetDDGrunnbok(evidenceHarvesterRequest.SubjectParty.NorwegianSocialSecurityNumber, true, single);
+                var result = await ddWrapper.GetDDGrunnbok(evidenceHarvesterRequest.SubjectParty.NorwegianSocialSecurityNumber, true, single);
                 ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
 
                 return ecb.GetEvidenceValues();
@@ -108,12 +168,12 @@ namespace Dan.Plugin.Kartverket
             }
         }
 
-        private async Task<List<EvidenceValue>> GetEvidenceValuesGrunnbokRettigheter(EvidenceHarvesterRequest evidenceHarvesterRequest)
+        private async Task<List<EvidenceValue>> GetEvidenceValuesGrunnbokRettigheter(EvidenceHarvesterRequest evidenceHarvesterRequest, IDDWrapper ddWrapper)
         {
             try
             {
                 var ecb = new EvidenceBuilder(new Metadata(), "Grunnbok");
-                var result = await _ddWrapper.GetDDGrunnbok(evidenceHarvesterRequest.SubjectParty.NorwegianSocialSecurityNumber, false);
+                var result = await ddWrapper.GetDDGrunnbok(evidenceHarvesterRequest.SubjectParty.NorwegianSocialSecurityNumber, false);
                 ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
 
                 return ecb.GetEvidenceValues();
@@ -126,7 +186,7 @@ namespace Dan.Plugin.Kartverket
             }
         }
 
-        private async Task<List<EvidenceValue>> GetEvidenceValuesEiendomsadresser(EvidenceHarvesterRequest evidenceHarvesterRequest)
+        private async Task<List<EvidenceValue>> GetEvidenceValuesEiendomsadresser(EvidenceHarvesterRequest evidenceHarvesterRequest, IDDWrapper ddWrapper)
         {
             try
             {
@@ -139,7 +199,7 @@ namespace Dan.Plugin.Kartverket
                 evidenceHarvesterRequest.TryGetParameter("Knr", out string knr);
                 evidenceHarvesterRequest.TryGetParameter("Enkeltadresse", out bool single);
 
-                var result = await _ddWrapper.GetDDAdresser(gnr, bnr, fnr, snr, knr, single);
+                var result = await ddWrapper.GetDDAdresser(gnr, bnr, fnr, snr, knr, single);
 
                 ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
 

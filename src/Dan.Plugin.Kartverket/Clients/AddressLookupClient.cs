@@ -2,10 +2,9 @@ using Altinn.App.ExternalApi.AddressLookup;
 using Dan.Common.Exceptions;
 using Dan.Plugin.Kartverket.Config;
 using Dan.Plugin.Kartverket.Models;
-using Kartverket.Matrikkel.MatrikkelenhetService;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +12,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Dan.Plugin.Kartverket.Clients;
-using Dan.Plugin.Kartverket.Clients.Matrikkel;
 
 namespace Dan.Plugin.Kartverket.Clients
 {
@@ -22,6 +19,8 @@ namespace Dan.Plugin.Kartverket.Clients
     {
         public Task<KartverketResponse> Get(KartverketResponse kartverket);
         public Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo);
+
+        public Task<List<string>> GetCoordinatesForProperty(string matrikkelNumber, string gnr, string bnr, string snr, string fnr, string kommunenr);
     }
 
 
@@ -60,6 +59,57 @@ namespace Dan.Plugin.Kartverket.Clients
             kartverket.PropertyRights.PropertiesWithRights = propertyWithRights;
 
             return kartverket;
+        }
+
+        public async Task<List<string>> GetCoordinatesForProperty(string matrikkelNumber, string gnr, string bnr, string snr, string fnr,
+            string kommunenr)
+        {
+            var urlBuilder = new StringBuilder();
+            urlBuilder.Append(_settings.CoordinatesLookupUrl).Append("/geokoding?");
+
+            var queryParams = new List<string>();
+
+            if(!string.IsNullOrEmpty(matrikkelNumber))
+                queryParams.Add("matrikkelnummer=" + Uri.EscapeDataString(matrikkelNumber)); if (!string.IsNullOrEmpty(gnr))
+                queryParams.Add("&gardsnummer=" + Uri.EscapeDataString(gnr)); 
+            if(!string.IsNullOrEmpty(bnr))
+                queryParams.Add("&bruksnummer=" + Uri.EscapeDataString(bnr));
+            if(!string.IsNullOrEmpty(snr))
+                queryParams.Add("&seksjonsnummer=" + Uri.EscapeDataString(snr));
+            if(!string.IsNullOrEmpty(fnr))
+                queryParams.Add("&festenummer=" + Uri.EscapeDataString(fnr));
+            if(!string.IsNullOrEmpty(kommunenr))
+                queryParams.Add("&kommunenummer=" + Uri.EscapeDataString(kommunenr));
+
+            if(queryParams.Count > 0)
+                urlBuilder.Append("?").Append(string.Join("&", queryParams));
+            try
+            {
+                var response = await _httpClient.GetAsync(urlBuilder.ToString());
+                response.EnsureSuccessStatusCode();
+
+                var content = await response.Content.ReadAsStringAsync();
+                var json = JObject.Parse(content);
+                var features = json["features"];
+                if(features == null)
+                    return new List<string>();
+
+                var coordinates = features
+                    .Where(f => f["geometry"]?["coordinates"] != null)
+                    .Where(f => f["geometry"]["coordinates"].Count() >= 2)
+                    .Select(f =>
+                    {
+                        var coords = f["geometry"]["coordinates"];
+                        return $"{coords[0]},{coords[1]}";
+                    }).ToList();
+
+                return coordinates;
+
+            }
+            catch (Exception e) when (e is HttpRequestException or JsonException)
+            {
+                throw new EvidenceSourcePermanentServerException(Metadata.ERROR_CCR_UPSTREAM_ERROR, null, e);
+            }
         }
 
         public async Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo)
@@ -124,7 +174,7 @@ namespace Dan.Plugin.Kartverket.Clients
 
             if (!string.IsNullOrEmpty(property.MunicipalityNumber))
             {
-                urlBuilder.Append("kommunenummer=").Append(int.Parse(property.MunicipalityNumber).ToString("d4")).Append('&');               
+                urlBuilder.Append("kommunenummer=").Append(int.Parse(property.MunicipalityNumber).ToString("d4")).Append('&');
             }
             if (!string.IsNullOrEmpty(property.Address))
             {
@@ -142,8 +192,8 @@ namespace Dan.Plugin.Kartverket.Clients
             if (!string.IsNullOrEmpty(property.LeaseNumber))
             {
                 urlBuilder.Append("festenummer=").Append(Uri.EscapeDataString(property.LeaseNumber)).Append('&');
-            }                  
-            
+            }
+
             try
             {
                 urlBuilder.Append("treffPerSide=100").Append('&');
@@ -172,7 +222,7 @@ namespace Dan.Plugin.Kartverket.Clients
             finally
             {
                 response?.Dispose();
-            }            
+            }
         }
 
         private async Task UpdateProperty(Property property, OutputAdresseList addresses)
@@ -204,7 +254,7 @@ namespace Dan.Plugin.Kartverket.Clients
                     property.City = address?.Poststed ?? string.Empty;
                     property.MunicipalityNumber = address?.Kommunenummer ?? string.Empty;
                     property.Municipality = address?.Kommunenavn ?? string.Empty;
-                }            
+                }
             }
             else
             {
@@ -216,7 +266,7 @@ namespace Dan.Plugin.Kartverket.Clients
                     property.City = address.Poststed;
                     property.MunicipalityNumber = address.Kommunenummer;
                     property.Municipality = address.Kommunenavn;
-                }               
+                }
             }
         }
     }

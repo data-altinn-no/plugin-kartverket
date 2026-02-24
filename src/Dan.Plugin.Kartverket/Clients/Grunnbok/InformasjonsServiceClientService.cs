@@ -1,14 +1,12 @@
 using Dan.Plugin.Kartverket.Config;
+using Dan.Plugin.Kartverket.Models;
 using Kartverket.Grunnbok.InformasjonsService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using Dan.Plugin.Kartverket.Models;
-using GrunnbokContext = Kartverket.Grunnbok.InformasjonsService.GrunnbokContext;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
@@ -16,41 +14,20 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
+        private IRequestContextService _requestContextService;
 
         private InformasjonServiceClient _client;
 
-        public InformasjonsServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public InformasjonsServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<InformasjonsServiceClientService>();
-
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-            myBinding.MaxReceivedMessageSize = int.MaxValue;
-            string identity = string.Empty;
-
-            _client = new InformasjonServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "InformasjonServiceWS"));
-            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
-        }
-
-        private GrunnbokContext GetContext()
-        {
-           return new GrunnbokContext()
-            {
-                locale = "no_578",
-                clientIdentification = "eDueDiligence",
-                clientTraceInfo = "eDueDiligence_1",
-                systemVersion = "1",
-                snapshotVersion = new Timestamp()
-                {
-                    timestamp = new DateTime(9999, 1, 1, 0, 0, 0)
-                }
-            };
+            _requestContextService = requestContextService;
         }
 
         public async Task<OwnerShipTransferInfo> GetOwnershipInfo(string registerenhetid)
         {
             OwnerShipTransferInfo result = null;
-
             var grunnbokData = await GetOverdragelserAvRegisterenhetsrett(registerenhetid);
 
             if (grunnbokData != null)
@@ -74,55 +51,102 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         public async Task<HeftelseInformasjonTransfer> GetPawnStuff(string registerenhetid)
         {
-            findHeftelserRequest request = new findHeftelserRequest()
+            var client = CreateClient();
+            HeftelseInformasjonTransfer result = null;
+            try
             {
-                grunnbokContext = GetContext(),
-                registerenhetId = new RegisterenhetId()
+                findHeftelserRequest request = new findHeftelserRequest()
                 {
-                    value = registerenhetid
-                }
-            };
+                    grunnbokContext = GetContext(),
+                    registerenhetId = new RegisterenhetId()
+                    {
+                        value = registerenhetid
+                    }
+                };
 
-            var result = await _client.findHeftelserAsync(request);
+                var response = await client.findHeftelserAsync(request);
+                result = response.@return;
 
-            return result.@return;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
+            }
+
+            return result;
+
         }
 
         public async Task<HeftelseInformasjonTransfer> GetHeftelser(string registerenhetid)
         {
-            findRettigheterForRegisterenhetRequest request = new()
+            var client = CreateClient();
+            HeftelseInformasjonTransfer result = null;
+            try
             {
-                grunnbokContext = GetContext(),
-                registerenhetId = new RegisterenhetId()
+                findRettigheterForRegisterenhetRequest request = new()
                 {
-                    value = registerenhetid
-                }
-            };
+                    grunnbokContext = GetContext(),
+                    registerenhetId = new RegisterenhetId()
+                    {
+                        value = registerenhetid
+                    }
+                };
 
-            var result = await _client.findRettigheterForRegisterenhetAsync(request);
+                var response = await client.findRettigheterForRegisterenhetAsync(request);
+                result = response.@return;
+            }catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
+            }
+            return result;
 
-            return result.@return;
         }
 
 
         public async Task<RettsstiftelseInformasjonTransfer> GetRettsstiftelse(string rettstiftelseid)
         {
-            findRettsstiftelseRequest request = new findRettsstiftelseRequest()
+            var client = CreateClient();
+            RettsstiftelseInformasjonTransfer result = null;
+            try
             {
-                grunnbokContext = GetContext(),
-                rettsstiftelseId = new RettsstiftelseId()
+                findRettsstiftelseRequest request = new findRettsstiftelseRequest()
                 {
-                    value = rettstiftelseid
-                }
-            };
+                    grunnbokContext = GetContext(),
+                    rettsstiftelseId = new RettsstiftelseId()
+                    {
+                        value = rettstiftelseid
+                    }
+                };
 
-            var result = await _client.findRettsstiftelseAsync(request);
+                var response = await client.findRettsstiftelseAsync(request);
+                result = response.@return;
+            }catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
+            }
 
-            return result.@return;
+            return result;
         }
+
         private async Task<OverdragelseAvRegisterenhetsrettInformasjonTransfer> GetOverdragelserAvRegisterenhetsrett(string registerenhetid)
         {
             OverdragelseAvRegisterenhetsrettInformasjonTransfer result = null;
+            var client = CreateClient();
 
             var request = new findOverdragelserAvRegisterenhetsrettRequest()
             {
@@ -135,21 +159,53 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                var response = await _client.findOverdragelserAvRegisterenhetsrettAsync(request);
+                var response = await client.findOverdragelserAvRegisterenhetsrettAsync(request);
                 result = response.@return;
-
-            }
-            catch (FaultException fex)
-            {
-                _logger.LogError(fex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
             }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
+            }
 
             return result;
         }
+
+        private GrunnbokContext GetContext()
+        {
+            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext, Timestamp>(_requestContextService.ServiceContext);
+        }
+
+        private InformasjonServiceClient CreateClient()
+        {
+            var serviceContext = _requestContextService.ServiceContext;
+
+            if (string.IsNullOrWhiteSpace(serviceContext))
+            {
+                throw new InvalidOperationException(
+                    "ServiceContext is not set. Ensure SetRequestContext() is called before using InformasjonsServiceClientService.");
+            }
+
+            var binding = GrunnbokHelpers.GetBasicHttpBinding();
+            binding.MaxReceivedMessageSize = int.MaxValue;
+
+            var endpoint = new EndpointAddress(
+                $"{_settings.GrunnbokRootUrl}InformasjonServiceWS");
+
+            var client = new InformasjonServiceClient(binding, endpoint);
+
+            GrunnbokHelpers.SetGrunnbokWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                serviceContext);
+
+            return client;
+        }
+
     }
 
     public interface IInformasjonsServiceClientService

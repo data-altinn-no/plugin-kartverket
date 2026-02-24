@@ -13,23 +13,19 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
     {
         private readonly ApplicationSettings _settings;
         private ILogger _logger;
-        private StoreServiceClient _client;
+        private readonly IRequestContextService _requestContextService;
 
-
-        public MatrikkelStoreClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public MatrikkelStoreClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<MatrikkelStoreClientService>();
-
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            _client = new StoreServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "StoreServiceWS"));
-            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
+            _requestContextService = requestContextService;
         }
 
         public async Task<Matrikkelenhet> GetMatrikkelenhet(long ident)
         {
             getObjectResponse response = null;
+            var client = CreateClient();
 
             var request = new getObjectRequest()
             {
@@ -42,18 +38,25 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {                
-                response = await _client.getObjectAsync(request);
+                response = await client.getObjectAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
             }
+            finally
+            {
+                try { client.Close(); }
+                catch{ client.Abort();}
+            }
 
             return (Matrikkelenhet) response.@return;
         }
+
         public async Task<Seksjon> GetMatrikkelenhetSeksjon(long ident)
         {
             getObjectResponse response = null;
+            var client = CreateClient();
 
             var request = new getObjectRequest()
             {
@@ -66,11 +69,15 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                response = await _client.getObjectAsync(request);
+                response = await client.getObjectAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+            }finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
             }
 
             return (Seksjon)response.@return;
@@ -79,6 +86,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<Adresse> GetAdresse(long ident)
         {
             getObjectResponse response = null;
+            var client = CreateClient();
 
             var request = new getObjectRequest()
             {
@@ -91,11 +99,15 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                response = await _client.getObjectAsync(request);
+                response = await client.getObjectAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+            }finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
             }
 
             return (Adresse)response.@return;
@@ -104,6 +116,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<Veg> GetVeg(long ident)
         {
             getObjectResponse response = null;
+            var client = CreateClient();
 
             var request = new getObjectRequest()
             {
@@ -116,11 +129,15 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                response = await _client.getObjectAsync(request);
+                response = await client.getObjectAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+            }finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
             }
 
             return (Veg)response.@return;
@@ -129,6 +146,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<Krets> GetKrets(long ident)
         {
             getObjectResponse response = null;
+            var client = CreateClient();
 
             var request = new getObjectRequest()
             {
@@ -141,11 +159,15 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                response = await _client.getObjectAsync(request);
+                response = await client.getObjectAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+            }finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
             }
 
             return (Krets)response.@return;
@@ -154,6 +176,8 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<Bygning> GetBygning(long bygningId)
         {
             Bygning result = null;
+            var client = CreateClient();
+
             var request = new getObjectRequest()
             {
                 matrikkelContext = GetContext(),
@@ -165,12 +189,16 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                var response = await _client.getObjectAsync(request);
+                var response = await client.getObjectAsync(request);
                 result = (Bygning)response.@return;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+            }finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
             }
 
             return result;
@@ -180,6 +208,8 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<Bruksenhet> GetBruksenhet(long ident)
         {
             Bruksenhet result = null;
+            var client = CreateClient();
+
             var request = new getObjectRequest()
             {
                 matrikkelContext = GetContext(),
@@ -191,12 +221,16 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                var response = await _client.getObjectAsync(request);
+                var response = await client.getObjectAsync(request);
                 result = (Bruksenhet)response.@return;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+            }finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
             }
 
             return result;
@@ -205,6 +239,8 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<Kommune> GetKommune(long ident)
         {
             Kommune result = null;
+            var client = CreateClient();
+
             var request = new getObjectRequest()
             {
                 matrikkelContext = GetContext(),
@@ -216,12 +252,16 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                var response = await _client.getObjectAsync(request);
+                var response = await client.getObjectAsync(request);
                 result = (Kommune)response.@return;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+            }finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
             }
 
             return result;
@@ -229,23 +269,25 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         private MatrikkelContext GetContext()
         {
-            DateTime SNAPSHOT_VERSJON_DATO = new DateTime(9999, 1, 1, 0, 0, 0);
+            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp, KoordinatsystemKodeId>(_requestContextService.ServiceContext);
+        }
 
-            return new MatrikkelContext()
-            {
-                locale = "no_NO",
-                brukOriginaleKoordinater = true,
-                koordinatsystemKodeId = new KoordinatsystemKodeId()
-                {
-                    value = 22
-                },
-                klientIdentifikasjon = "eDueDiligence",
-                snapshotVersion = new Timestamp()
-                {
-                    timestamp = SNAPSHOT_VERSJON_DATO
-                },
-                systemVersion = "eDueDiligence_1"
-            };
+        private StoreServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new StoreServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.MatrikkelRootUrl + "StoreServiceWS")
+            );
+
+            GrunnbokHelpers.SetMatrikkelWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext
+            );
+
+            return client;
         }
     }
 

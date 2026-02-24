@@ -15,24 +15,18 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
-
-        private BygningServiceClient _client;
-
-        public MatrikkelBygningClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        private IRequestContextService _requestContextService;
+        public MatrikkelBygningClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<MatrikkelBygningClientService>();
-
-            //Find ident for identifier
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            _client = new BygningServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "BygningServiceWS"));
-            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
+            _requestContextService = requestContextService; 
         }
 
         public async Task<List<long>> GetBygningerForMatrikkelenhet(long matrikkelEnhetId)
         {
             List<long> result = new List<long>();
+            var client = CreateClient();
 
             var request = new findByggForMatrikkelenhetRequest()
             {
@@ -45,12 +39,17 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                var response = await _client.findByggForMatrikkelenhetAsync(request);
+                var response = await client.findByggForMatrikkelenhetAsync(request);
                 result.AddRange(response.@return.Select(x=>x.value).ToList());
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+            }
+            finally
+            {
+                try { client.Close(); }
+                catch{ client.Abort();}
             }
 
             return result;
@@ -58,23 +57,25 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         private MatrikkelContext GetContext()
         {
-            DateTime SNAPSHOT_VERSJON_DATO = new DateTime(9999, 1, 1, 0, 0, 0);
+            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp, KoordinatsystemKodeId>(_requestContextService.ServiceContext);
+        }
 
-            return new MatrikkelContext()
-            {
-                locale = "no_NO",
-                brukOriginaleKoordinater = true,
-                koordinatsystemKodeId = new KoordinatsystemKodeId()
-                {
-                    value = 22
-                },
-                klientIdentifikasjon = "eDueDiligence",
-                snapshotVersion = new Timestamp()
-                {
-                    timestamp = SNAPSHOT_VERSJON_DATO
-                },
-                systemVersion = "trunk"
-            };
+        private BygningServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new BygningServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.MatrikkelRootUrl + "BygningServiceWS")
+            );
+
+            GrunnbokHelpers.SetMatrikkelWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext
+            );
+
+            return client;
         }
     }
 

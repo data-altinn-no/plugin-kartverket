@@ -12,52 +12,63 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 {
     public class MatrikkelKommuneClientService : IMatrikkelKommuneClientService
     {
-        private KommuneServiceClient _client;
         private readonly ApplicationSettings _settings;
         private readonly ILogger _logger;
-
-        public MatrikkelKommuneClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        private readonly IRequestContextService _requestContextService;
+        public MatrikkelKommuneClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _logger = factory.CreateLogger <MatrikkelKommuneClientService>();
             _settings = settings.Value;
-
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-            _client = new KommuneServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "KommuneServiceWS"));
-            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
+            _requestContextService = requestContextService;
         }
 
         public async Task<string> GetKommune(string kommunenummer)
         {
+            var client = CreateClient();
             var request = new findGjeldendeKommuneIdForKommuneNrRequest()
             {
                 matrikkelContext = GetContext(),
                 kommuneNr = kommunenummer
             };
+            try
+            {
+                var response = await client.findGjeldendeKommuneIdForKommuneNrAsync(request);
 
-            var response = await _client.findGjeldendeKommuneIdForKommuneNrAsync(request);
-
-            return response.@return.value.ToString();
+                return response.@return.value.ToString();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error calling KommuneServiceWS for kommuneNr {KommuneNr}", kommunenummer);
+            }
+            finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
+            }
+            return string.Empty;
         }
 
         private MatrikkelContext GetContext()
         {
-            DateTime SNAPSHOT_VERSJON_DATO = new DateTime(9999, 1, 1, 0, 0, 0);
+            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp, KoordinatsystemKodeId>(_requestContextService.ServiceContext);
+        }
 
-            return new MatrikkelContext()
-            {
-                locale = "no_NO",
-                brukOriginaleKoordinater = true,
-                koordinatsystemKodeId = new KoordinatsystemKodeId()
-                {
-                    value = 22
-                },
-                klientIdentifikasjon = "eDueDiligence",
-                snapshotVersion = new Timestamp()
-                {
-                    timestamp = SNAPSHOT_VERSJON_DATO
-                },
-                systemVersion = "eDueDiligence_1"
-            };
+        private KommuneServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new KommuneServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.MatrikkelRootUrl + "KommuneServiceWS")
+            );
+
+            GrunnbokHelpers.SetMatrikkelWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext
+            );
+
+            return client;
         }
     }
 

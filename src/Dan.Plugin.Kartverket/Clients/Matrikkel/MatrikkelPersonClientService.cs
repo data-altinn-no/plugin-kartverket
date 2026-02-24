@@ -4,7 +4,6 @@ using Kartverket.Matrikkel.PersonService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -14,25 +13,19 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
+        private IRequestContextService _requestContextService;
 
-        private PersonServiceClient _client;
-
-        public MatrikkelPersonClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public MatrikkelPersonClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
-            _logger = factory.CreateLogger<MatrikkelPersonClientService>();
-
-            //Find ident for identifier
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            _client = new PersonServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "PersonServiceWS"));
-            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
+            _logger = factory.CreateLogger<MatrikkelPersonClientService>();            
+            _requestContextService = requestContextService;
         }
 
-       
         public async Task<long> GetOrganization(string orgno)
         {
             findPersonIdForIdentResponse result = null;
+            var client = CreateClient();
 
             var request = new findPersonIdForIdentRequest()
             {
@@ -45,11 +38,15 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                result = await _client.findPersonIdForIdentAsync(request);
+                result = await client.findPersonIdForIdentAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+            }finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
             }
 
             return result.@return.value;
@@ -58,6 +55,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public async Task<long> GetPerson(string nin)
         {
             findPersonIdForIdentResponse result = null;
+            var client = CreateClient();
 
             var request = new findPersonIdForIdentRequest()
             {
@@ -70,7 +68,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                result = await _client.findPersonIdForIdentAsync(request);
+                result = await client.findPersonIdForIdentAsync(request);
             }
             catch (Exception ex)
             {
@@ -80,27 +78,27 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             return result.@return.value;
         }
 
-
-
         private MatrikkelContext GetContext()
         {
-            DateTime SNAPSHOT_VERSJON_DATO = new DateTime(9999, 1, 1, 0, 0, 0);
+            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp, KoordinatsystemKodeId>(_requestContextService.ServiceContext);
+        }
 
-            return new MatrikkelContext()
-            {
-                locale = "no_NO",
-                brukOriginaleKoordinater = true,
-                koordinatsystemKodeId = new KoordinatsystemKodeId()
-                {
-                    value = 22
-                },
-                klientIdentifikasjon = "eDueDiligence",
-                snapshotVersion = new Timestamp()
-                {
-                    timestamp = SNAPSHOT_VERSJON_DATO
-                },
-                systemVersion = "trunk"
-            };
+        private PersonServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new PersonServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.MatrikkelRootUrl + "PersonServiceWS")
+            );
+
+            GrunnbokHelpers.SetMatrikkelWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext
+            );
+
+            return client;
         }
     }
 

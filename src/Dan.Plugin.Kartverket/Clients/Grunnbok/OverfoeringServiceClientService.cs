@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Grunnbok.OverfoeringService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -13,22 +13,19 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
-        private OverfoeringServiceClient _client;
+        private IRequestContextService _requestContextService;
 
-        public OverfoeringServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public OverfoeringServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
-            _logger = factory.CreateLogger<IdentServiceClientService>();
-
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-            _client = new OverfoeringServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "OverfoeringServiceWS"));
-            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
+            _logger = factory.CreateLogger<OverfoeringServiceClientService>();
+            _requestContextService = requestContextService;
         }
 
         public async Task<string> GetOverfoeringerTil(List<string> ids)
         {
             findOverfoeringerForOverfoerteTilResponse result = null;
-
+            var client = CreateClient();
             var inputList = new RegisterenhetsrettIdList();
 
             foreach (var id in ids)
@@ -52,13 +49,17 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                result = await _client.findOverfoeringerForOverfoerteTilAsync(request);
-               
+                result = await client.findOverfoeringerForOverfoerteTilAsync(request);
+                return result.Body?.ToString();
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                _logger.LogError(e, "Error calling OverfoeringServiceClientService.GetOverfoeringerTil");
+            }
+            finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
             }
 
             return string.Empty;
@@ -66,18 +67,34 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         private GrunnbokContext GetContext()
         {
-            return new()
-            {
-                clientIdentification = "eDueDiligence",
-                clientTraceInfo = "eDueDiligence_1",
-                locale = "no_578",
-                snapshotVersion = new()
-                {
-                    timestamp = new DateTime(9999, 1, 1, 0, 0, 0)
-                },
-                systemVersion = "1"
-            };
+            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>(_requestContextService.ServiceContext);
         }
+
+        private OverfoeringServiceClient CreateClient()
+        {
+            var serviceContext = _requestContextService.ServiceContext;
+
+            if (string.IsNullOrWhiteSpace(serviceContext))
+            {
+                throw new InvalidOperationException(
+                    "ServiceContext is not set. Ensure SetRequestContext() is called before using OverfoeringServiceClientService.");
+            }
+
+            var binding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var endpoint = new EndpointAddress(
+                $"{_settings.GrunnbokRootUrl}OverfoeringServiceWS");
+
+            var client = new OverfoeringServiceClient(binding, endpoint);
+
+            GrunnbokHelpers.SetGrunnbokWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                serviceContext);
+
+            return client;
+        }
+
     }
 
     public interface IOverfoeringServiceClientService

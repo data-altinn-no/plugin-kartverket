@@ -13,21 +13,19 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
-
-        public IdentServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        private IRequestContextService _requestContextService;
+        public IdentServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<IdentServiceClientService>();
+            _requestContextService = requestContextService;
         }
 
         public async Task<string> GetPersonIdentity(string personId)
         {
             //Find ident for identifier
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
             string identity = string.Empty;
-
-            var identService = new IdentServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "IdentServiceWS"));
-            GrunnbokHelpers.SetGrunnbokWSCredentials(identService.ClientCredentials, _settings);
+            var identService = CreateClient();
 
             var list = new PersonIdentList()
             {
@@ -36,24 +34,12 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                     identifikasjonsnummer = personId
                 }
             };
-
-            var grunnbokContext = new GrunnbokContext()
-            {
-                locale = "no_578",
-                clientIdentification = "eDueDiligence",
-                clientTraceInfo = "eDueDiligence_1",
-                systemVersion = "1",
-                snapshotVersion = new global::Kartverket.Grunnbok.IdentService.Timestamp()
-                {
-                    timestamp = new DateTime(9999, 1, 1, 0, 0, 0)
-                }
-            };
-
+            
             var request = new findPersonIdsForIdentsRequest()
             {
                 Body = new findPersonIdsForIdentsRequestBody()
                 {
-                    grunnbokContext = grunnbokContext,
+                    grunnbokContext = GetContext(),
                     idents = list
                 }
             };
@@ -62,25 +48,51 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             {
                 var identResponse = await identService.findPersonIdsForIdentsAsync(request);
                 identity = identResponse.Body.@return.Values.FirstOrDefault().value;
-                
-            }
-            catch (FaultException fex)
-            {
-                _logger.LogError(fex.Message);
+
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(ex, "Error calling findPersonIdsForIdentsAsync for personId {PersonId}", personId);
+            }
+            finally
+            {
+                try { await identService.CloseAsync(); }
+                catch { identService.Abort(); }
             }
 
             return identity;
-
-            
         }
+
+        private GrunnbokContext GetContext()
+        {
+            return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext, Timestamp>(_requestContextService.ServiceContext);
+        }
+
+        private IdentServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            if (string.IsNullOrWhiteSpace(_requestContextService.ServiceContext))
+            {
+                throw new InvalidOperationException(
+                    "ServiceContext is not set. Ensure SetRequestContext() is called before using IdentServiceClientService.");
+            }
+            var client = new IdentServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.GrunnbokRootUrl + "IdentServiceWS"));
+
+            GrunnbokHelpers.SetGrunnbokWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext);
+
+            return client;
+        }
+
     }
 
     public interface IIdentServiceClientService
-    {
-        public Task<string> GetPersonIdentity(string personId);
+        {
+            public Task<string> GetPersonIdentity(string personId);
+        }
     }
-}

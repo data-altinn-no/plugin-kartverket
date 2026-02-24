@@ -1,13 +1,14 @@
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Config;
+using Kartverket.Matrikkel.BruksenhetService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using Kartverket.Matrikkel.BruksenhetService;
+using MatrikkelContext = Kartverket.Matrikkel.BruksenhetService.MatrikkelContext;
+using KoordinatsystemKodeId = Kartverket.Matrikkel.BruksenhetService.KoordinatsystemKodeId;
+using Timestamp = Kartverket.Matrikkel.BruksenhetService.Timestamp;
 
 namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 {
@@ -15,23 +16,18 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
+        private IRequestContextService _requestContextService;
 
-        private BruksenhetServiceClient _client;
-
-        public MatrikkelBruksenhetService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public MatrikkelBruksenhetService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<MatrikkelBruksenhetService>();
-
-            //Find ident for identifier
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            _client = new BruksenhetServiceClient(myBinding, new EndpointAddress(_settings.MatrikkelRootUrl + "BruksenhetServiceWS"));
-            GrunnbokHelpers.SetMatrikkelWSCredentials(_client.ClientCredentials, _settings);
+            _requestContextService = requestContextService;
         }
 
         public async Task<BruksenhetId[]> GetBruksenheter(long matrikkelEnhetId)
         {
+            var client = CreateClient();
             var request = new findBruksenheterForMatrikkelenhetRequest
             {
                 matrikkelContext = GetContext(),
@@ -40,7 +36,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                var response = await _client.findBruksenheterForMatrikkelenhetAsync(request);
+                var response = await client.findBruksenheterForMatrikkelenhetAsync(request);
                 var result = response.@return;
 
                 return result;
@@ -48,12 +44,19 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return Array.Empty<BruksenhetId>();
-            }           
+            }
+            finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
+            }
+            return Array.Empty<BruksenhetId>();
         }
 
         public async Task<string> GetAddressForBruksenhet(long bruksenhetId)
         {
+            var client = CreateClient();
+
             var request = new findOffisiellAdresseForBruksenhetRequest
             {
                 matrikkelContext = GetContext(),
@@ -62,7 +65,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                var response = await _client.findOffisiellAdresseForBruksenhetAsync(request);
+                var response = await client.findOffisiellAdresseForBruksenhetAsync(request);
                 return response.@return;
             }
             catch (Exception ex)
@@ -70,27 +73,34 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
                 _logger.LogError(ex.Message);
                 return string.Empty;
             }
+            finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
+            }
         }
 
         private MatrikkelContext GetContext()
         {
-            DateTime SNAPSHOT_VERSJON_DATO = new DateTime(9999, 1, 1, 0, 0, 0);
+            return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp, KoordinatsystemKodeId>(_requestContextService.ServiceContext);
+        }
 
-            return new MatrikkelContext()
-            {
-                locale = "no_NO",
-                brukOriginaleKoordinater = true,
-                koordinatsystemKodeId = new KoordinatsystemKodeId()
-                {
-                    value = 22
-                },
-                klientIdentifikasjon = "eDueDiligence",
-                snapshotVersion = new Timestamp()
-                {
-                    timestamp = SNAPSHOT_VERSJON_DATO
-                },
-                systemVersion = "trunk"
-            };
+        private BruksenhetServiceClient CreateClient()
+        {
+            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var client = new BruksenhetServiceClient(
+                myBinding,
+                new EndpointAddress(_settings.MatrikkelRootUrl + "BruksenhetServiceWS")
+            );
+
+            GrunnbokHelpers.SetMatrikkelWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                _requestContextService.ServiceContext
+            );
+
+            return client;
         }
     }
 

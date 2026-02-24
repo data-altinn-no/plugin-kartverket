@@ -1,64 +1,42 @@
-using Azure.Core;
 using Dan.Plugin.Kartverket.Config;
+using Dan.Plugin.Kartverket.Models;
 using Kartverket.Grunnbok.StoreService;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using Dan.Plugin.Kartverket.Models;
-using KommuneId = Kartverket.Grunnbok.StoreService.KommuneId;
-using KommuneDAN = Dan.Plugin.Kartverket.Models.Kommune;
+using DokumentId = Kartverket.Grunnbok.StoreService.DokumentId;
 using Kommune = Kartverket.Grunnbok.StoreService.Kommune;
+using KommuneDAN = Dan.Plugin.Kartverket.Models.Kommune;
+using KommuneId = Kartverket.Grunnbok.StoreService.KommuneId;
 using Matrikkelenhet = Kartverket.Grunnbok.StoreService.Matrikkelenhet;
 using PersonId = Kartverket.Grunnbok.StoreService.PersonId;
+using RegisterenhetId = Kartverket.Grunnbok.StoreService.RegisterenhetId;
+using RegisterenhetsrettId = Kartverket.Grunnbok.StoreService.RegisterenhetsrettId;
+using RegisterenhetsrettsandelId = Kartverket.Grunnbok.StoreService.RegisterenhetsrettsandelId;
+using RettsstiftelseId = Kartverket.Grunnbok.StoreService.RettsstiftelseId;
 
 namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
-    public class StoreServiceClientService: IStoreServiceClientService
+    public class StoreServiceClientService : IStoreServiceClientService
     {
         private ApplicationSettings _settings;
         private ILogger _logger;
+        private readonly IRequestContextService _requestContextService;
 
-        private StoreServiceClient _client;
-
-        public StoreServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory)
+        public StoreServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
             _logger = factory.CreateLogger<StoreServiceClientService>();
-
-            //Find ident for identifier
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            _client = new StoreServiceClient(myBinding, new EndpointAddress(_settings.GrunnbokRootUrl + "StoreServiceWS"));
-            GrunnbokHelpers.SetGrunnbokWSCredentials(_client.ClientCredentials, _settings);
-        }
-
-        private getObjectRequest GetRequest()
-        {
-            return new getObjectRequest()
-            {
-                grunnbokContext = new()
-                {
-                    clientIdentification = "eDueDiligence",
-                    clientTraceInfo = "eDueDiligence_1",
-                    locale = "no_578",
-                    snapshotVersion = new()
-                    {
-                        timestamp = new DateTime(9999, 1, 1, 0, 0, 0)
-                    },
-                    systemVersion = "1"
-                },
-                id = null
-            };
+            _requestContextService = requestContextService;
         }
 
         public async Task<KommuneDAN> GetKommune(string kommuneIdent)
         {
-
             KommuneDAN result = null;
+            var client = CreateClient();
 
             var request = GetRequest();
 
@@ -69,8 +47,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                var storeServiceResponse = await _client.getObjectAsync(request);
-                var temp = (Kommune) storeServiceResponse.@return;
+                var storeServiceResponse = await client.getObjectAsync(request);
+                var temp = (Kommune)storeServiceResponse.@return;
                 result = new KommuneDAN()
                 {
                     Name = temp.navn,
@@ -92,6 +70,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<Registerenhetsrettsandel> GetRettighetsandeler(string id)
         {
             Registerenhetsrettsandel result = null;
+            var client = CreateClient();
 
             var request = GetRequest();
 
@@ -102,7 +81,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                var storeServiceResponse = await _client.getObjectAsync(request);
+                var storeServiceResponse = await client.getObjectAsync(request);
                 result = (Registerenhetsrettsandel)storeServiceResponse.@return;
             }
             catch (FaultException fex)
@@ -120,6 +99,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<Registerenhetsrett> GetRegisterenhetsrett(string id)
         {
             Registerenhetsrett result = null;
+            var client = CreateClient();
 
             var request = GetRequest();
 
@@ -130,8 +110,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                var storeServiceResponse = await _client.getObjectAsync(request);
-                result = (Registerenhetsrett)storeServiceResponse.@return;
+                var rettsendringer = await client.getObjectAsync(request);
+                result = (Registerenhetsrett)rettsendringer.@return;
             }
             catch (FaultException fex)
             {
@@ -148,6 +128,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<Rettsstiftelse> GetRettsstiftelse(string id)
         {
             Rettsstiftelse result = null;
+            var client = CreateClient();
 
             var request = GetRequest();
 
@@ -158,7 +139,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                var storeServiceResponse = await _client.getObjectAsync(request);
+                var storeServiceResponse = await client.getObjectAsync(request);
                 result = (Rettsstiftelse)storeServiceResponse.@return;
             }
             catch (FaultException fex)
@@ -176,6 +157,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<Matrikkelenhet> GetRegisterenhet(string registerenhetid)
         {
             Matrikkelenhet result = null;
+            var client = CreateClient();
 
             var request = GetRequest();
 
@@ -186,8 +168,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                var storeServiceResponse = await _client.getObjectAsync(request);
-                result = (Matrikkelenhet) storeServiceResponse.@return;
+                var storeServiceResponse = await client.getObjectAsync(request);
+                result = (Matrikkelenhet)storeServiceResponse.@return;
             }
             catch (FaultException fex)
             {
@@ -204,7 +186,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public async Task<Dokument> GetDokument(string id)
         {
             Dokument result = null;
-
+            var client = CreateClient();
             var request = GetRequest();
 
             request.id = new DokumentId()
@@ -214,7 +196,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             try
             {
-                var storeServiceResponse = await _client.getObjectAsync(request);
+                var storeServiceResponse = await client.getObjectAsync(request);
                 result = (Dokument)storeServiceResponse.@return;
             }
             catch (FaultException fex)
@@ -231,6 +213,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         public async Task<List<PawnDocument>> GetPawnOwnerNames(List<PawnDocument> input)
         {
+            var client = CreateClient();
 
             foreach (var inputItem in input)
             {
@@ -240,7 +223,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                     value = inputItem.OwnerId.ToString()
                 };
 
-                var response = await _client.getObjectAsync(request);
+                var response = await client.getObjectAsync(request);
 
                 inputItem.Owner = ((Person)response.@return).navn;
             }
@@ -270,6 +253,65 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             return new Matrikkelenhet();
         }
+
+        public async Task<Person> GetPerson(string personId)
+        {
+            var client = CreateClient();
+
+            Person result = null;
+            var request = GetRequest();
+            request.id = new PersonId()
+            {
+                value = personId
+            };
+            try
+            {
+                var storeServiceResponse = await client.getObjectAsync(request);
+                result = (Person)storeServiceResponse.@return;
+            }
+            catch (FaultException fex)
+            {
+                _logger.LogError(fex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            return result;
+        }
+        private getObjectRequest GetRequest()
+        {
+            return new getObjectRequest()
+            {
+                grunnbokContext = GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext, Timestamp>(_requestContextService.ServiceContext)
+            };
+        }
+
+        private StoreServiceClient CreateClient()
+        {
+            var serviceContext = _requestContextService.ServiceContext;
+
+            if (string.IsNullOrWhiteSpace(serviceContext))
+            {
+                throw new InvalidOperationException(
+                    "ServiceContext is not set. Ensure SetRequestContext() is called before using StoreServiceClientService.");
+            }
+
+            var binding = GrunnbokHelpers.GetBasicHttpBinding();
+
+            var endpoint = new EndpointAddress(
+                $"{_settings.GrunnbokRootUrl}StoreServiceWS");
+
+            var client = new StoreServiceClient(binding, endpoint);
+
+            GrunnbokHelpers.SetGrunnbokWSCredentials(
+                client.ClientCredentials,
+                _settings,
+                serviceContext);
+
+            return client;
+        }
+
     }
 
     public interface IStoreServiceClientService
@@ -288,5 +330,6 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         public Task<Matrikkelenhet> GetRegisterenhet(string registerenhetid);
 
         public Task<Matrikkelenhet> GetMatrikkelEnhetFromRegisterRettighetsandel(string registerrettighetsandelid);
+        public Task<Person> GetPerson(string personId);
     }
 }
