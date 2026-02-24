@@ -9,8 +9,6 @@ namespace Dan.Plugin.Kartverket.Clients
 {
     public class RequestContextService : IRequestContextService
     {
-        public const string ServicecontextHeader = "X-NADOBE-SERVICECONTEXT";
-
         public string ServiceContext { get; set; }
 
         public Task SetRequestContext(string serviceContext)
