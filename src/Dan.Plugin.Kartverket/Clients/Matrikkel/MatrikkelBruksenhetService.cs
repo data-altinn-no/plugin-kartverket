@@ -102,6 +102,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             return client;
         }
+
     }
 
     public interface IMatrikkelBruksenhetService

@@ -312,12 +312,12 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             return client;
         }
 
-    }
-
-    public interface IStoreServiceClientService
-    {
-        public Task<KommuneDAN> GetKommune(string kommuneIdent);
-        public Task<Registerenhetsrettsandel> GetRettighetsandeler(string id);
+    }            
+        
+        public interface IStoreServiceClientService
+        {
+            public Task<KommuneDAN> GetKommune(string kommuneIdent);
+            public Task<Registerenhetsrettsandel> GetRettighetsandeler(string id);
 
         public Task<Registerenhetsrett> GetRegisterenhetsrett(string id);
 

@@ -1,6 +1,8 @@
 using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Models;
+using Microsoft.Extensions.FileProviders;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,7 +30,6 @@ namespace Dan.Plugin.Kartverket
             var result = new MotorizedTrafficResponse();
 
             var kartverketResponse = await _kartverketService.FindOwnedProperties(identifier);
-
             foreach (var property in kartverketResponse)
             {
                 var martikkelNumber = BuildMatrikkelNumber(property.PropertyData.Kommunenummer, property.PropertyData.Gardsnummer, property.PropertyData.Bruksnummer, property.PropertyData.Festenummer);

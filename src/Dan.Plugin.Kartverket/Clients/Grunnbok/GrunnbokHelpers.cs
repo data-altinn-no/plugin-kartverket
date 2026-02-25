@@ -33,18 +33,18 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             if (serviceContext.ToUpper() == "DIGITALEHELGELAND")
             {
-                credentials.UserName.UserName = settings.DigitaleHelgeLandGrunnbokUser;
-                credentials.UserName.Password = settings.DigitaleHelgeLandGrunnbokPw;
+                credentials.UserName.UserName = settings.GrunnbokUser;
+                credentials.UserName.Password = settings.GrunnbokEDueDiligencePw;
             }
             else if(serviceContext.ToUpper() == "EDUEDILIGENCE")
             {
-                credentials.UserName.UserName = settings.GrunnbokEDueDiligenceUser;
+                credentials.UserName.UserName = settings.GrunnbokUser;
                 credentials.UserName.Password = settings.GrunnbokEDueDiligencePw;
             }
             else if(serviceContext.ToUpper() == "OED"|| serviceContext.ToUpper() == "DIGITALDODSBO")
             {
                 credentials.UserName.UserName = settings.GrunnbokUser;
-                credentials.UserName.Password = settings.GrunnbokPw;
+                credentials.UserName.Password = settings.GrunnbokEDueDiligencePw;
             }
             else
             {
@@ -59,13 +59,13 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             if (serviceContext.ToUpper() == "DIGITALEHELGELAND")
             {
-                credentials.UserName.UserName = settings.DigitaleHelgeLandMatrikkelUser;
-                credentials.UserName.Password = settings.DigitaleHelgeLandMatrikkelPw;
+                credentials.UserName.UserName = settings.MatrikkelUser;
+                credentials.UserName.Password = settings.MatrikkelPw;
             }
             else if(serviceContext.ToUpper() == "EDUEDILIGENCE")
             {
-                credentials.UserName.UserName = settings.MatrikkelEDueDiligenceUser;
-                credentials.UserName.Password = settings.MatrikkelEDueDiligencePw;
+                credentials.UserName.UserName = settings.MatrikkelUser;
+                credentials.UserName.Password = settings.MatrikkelPw;
             }
             else if(serviceContext.ToUpper() == "OED"|| serviceContext.ToUpper() == "DIGITALDODSBO")
             {
@@ -86,16 +86,13 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             var context = new TContext();
             var timestamp = new TTimestamp();
 
-            dynamic ctx = context; // use dynamic only internally
-            dynamic tstmp = timestamp;
+            timestamp.timestamp = SNAPSHOT_VERSJON_DATO;
 
-            tstmp.timestamp = SNAPSHOT_VERSJON_DATO;
-
-            ctx.locale = "no_578";
-            ctx.clientIdentification = serviceContext;
-            ctx.clientTraceInfo = serviceContext+"_1";
-            ctx.systemVersion = "1";
-            ctx.snapshotVersion = tstmp;
+            context.locale = "no_578";
+            context.clientIdentification = serviceContext;
+            context.clientTraceInfo = serviceContext+"_1";
+            context.systemVersion = "1";
+            context.snapshotVersion = timestamp;
 
             return context;
         }
