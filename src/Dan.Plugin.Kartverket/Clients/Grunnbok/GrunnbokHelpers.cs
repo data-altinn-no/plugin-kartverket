@@ -33,18 +33,18 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             if (serviceContext.ToUpper() == "DIGITALEHELGELAND")
             {
-                credentials.UserName.UserName = settings.DigitaleHelgeLandGrunnbokUser;
-                credentials.UserName.Password = settings.DigitaleHelgeLandGrunnbokPw;
+                credentials.UserName.UserName = settings.GrunnbokUser;
+                credentials.UserName.Password = settings.GrunnbokEDueDiligencePw;
             }
             else if(serviceContext.ToUpper() == "EDUEDILIGENCE")
             {
-                credentials.UserName.UserName = settings.GrunnbokEDueDiligenceUser;
+                credentials.UserName.UserName = settings.GrunnbokUser;
                 credentials.UserName.Password = settings.GrunnbokEDueDiligencePw;
             }
             else if(serviceContext.ToUpper() == "OED"|| serviceContext.ToUpper() == "DIGITALDODSBO")
             {
                 credentials.UserName.UserName = settings.GrunnbokUser;
-                credentials.UserName.Password = settings.GrunnbokPw;
+                credentials.UserName.Password = settings.GrunnbokEDueDiligencePw;
             }
             else
             {
@@ -59,13 +59,13 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             if (serviceContext.ToUpper() == "DIGITALEHELGELAND")
             {
-                credentials.UserName.UserName = settings.DigitaleHelgeLandMatrikkelUser;
-                credentials.UserName.Password = settings.DigitaleHelgeLandMatrikkelPw;
+                credentials.UserName.UserName = settings.MatrikkelUser;
+                credentials.UserName.Password = settings.MatrikkelPw;
             }
             else if(serviceContext.ToUpper() == "EDUEDILIGENCE")
             {
-                credentials.UserName.UserName = settings.MatrikkelEDueDiligenceUser;
-                credentials.UserName.Password = settings.MatrikkelEDueDiligencePw;
+                credentials.UserName.UserName = settings.MatrikkelUser;
+                credentials.UserName.Password = settings.MatrikkelPw;
             }
             else if(serviceContext.ToUpper() == "OED"|| serviceContext.ToUpper() == "DIGITALDODSBO")
             {

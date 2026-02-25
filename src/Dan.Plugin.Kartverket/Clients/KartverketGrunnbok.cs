@@ -296,7 +296,7 @@ namespace Dan.Plugin.Kartverket.Clients
             var ident = await _identServiceClient.GetPersonIdentity(identifier);
 
             var registerRettsAndelList = await _regRettsandelsClientService.GetAndelerForRettighetshaver(ident);
-            foreach (var registerenhetsrettsandelid in registerRettsAndelList.Take(10))
+            foreach (var registerenhetsrettsandelid in registerRettsAndelList)
             {
                 var regenhetsandelfromstore = await _storeServiceClient.GetRettighetsandeler(registerenhetsrettsandelid);
 
