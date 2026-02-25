@@ -312,16 +312,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             return client;
         }
 
-    }
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "error in GetAndelseier");
-            }
-
-            return result;
-        }
+    }            
         
         public interface IStoreServiceClientService
         {

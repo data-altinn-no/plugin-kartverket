@@ -77,24 +77,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             return client;
         }
-
-        private BygningServiceClient CreateClient()
-        {
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            var client = new BygningServiceClient(
-                myBinding,
-                new EndpointAddress(_settings.MatrikkelRootUrl + "BygningServiceWS")
-            );
-
-            GrunnbokHelpers.SetMatrikkelWSCredentials(
-                client.ClientCredentials,
-                _settings,
-                _requestContextService.ServiceContext
-            );
-
-            return client;
-        }
+        
     }
 
     public interface IMatrikkelBygningClientService

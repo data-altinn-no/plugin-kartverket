@@ -100,24 +100,6 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             return client;
         }
-
-        private PersonServiceClient CreateClient()
-        {
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            var client = new PersonServiceClient(
-                myBinding,
-                new EndpointAddress(_settings.MatrikkelRootUrl + "PersonServiceWS")
-            );
-
-            GrunnbokHelpers.SetMatrikkelWSCredentials(
-                client.ClientCredentials,
-                _settings,
-                _requestContextService.ServiceContext
-            );
-
-            return client;
-        }
     }
 
     public interface IMatrikkelPersonClientService

@@ -86,16 +86,13 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             var context = new TContext();
             var timestamp = new TTimestamp();
 
-            dynamic ctx = context; // use dynamic only internally
-            dynamic tstmp = timestamp;
+            timestamp.timestamp = SNAPSHOT_VERSJON_DATO;
 
-            tstmp.timestamp = SNAPSHOT_VERSJON_DATO;
-
-            ctx.locale = "no_578";
-            ctx.clientIdentification = serviceContext;
-            ctx.clientTraceInfo = serviceContext+"_1";
-            ctx.systemVersion = "1";
-            ctx.snapshotVersion = tstmp;
+            context.locale = "no_578";
+            context.clientIdentification = serviceContext;
+            context.clientTraceInfo = serviceContext+"_1";
+            context.systemVersion = "1";
+            context.snapshotVersion = timestamp;
 
             return context;
         }

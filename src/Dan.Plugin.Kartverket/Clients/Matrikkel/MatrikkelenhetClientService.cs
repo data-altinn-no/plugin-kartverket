@@ -171,25 +171,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         private MatrikkelContext GetContext()
         {
             return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp, KoordinatsystemKodeId>(_requestContextService.ServiceContext);
-        }
-
-        private MatrikkelenhetServiceClient CreateClient()
-        {
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
-
-            var client = new MatrikkelenhetServiceClient(
-                myBinding,
-                new EndpointAddress(_settings.MatrikkelRootUrl + "MatrikkelenhetServiceWS")
-            );
-
-            GrunnbokHelpers.SetMatrikkelWSCredentials(
-                client.ClientCredentials,
-                _settings,
-                _requestContextService.ServiceContext
-            );
-
-            return client;
-        }
+        }        
 
         private MatrikkelenhetServiceClient CreateClient()
         {
