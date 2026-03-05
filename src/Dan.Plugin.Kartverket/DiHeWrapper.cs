@@ -1,10 +1,14 @@
 using Dan.Plugin.Kartverket.Clients;
+using Dan.Plugin.Kartverket.Clients.ar50;
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Models;
 using Microsoft.Extensions.FileProviders;
+using NetTopologySuite.Geometries;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using static Dan.Plugin.Kartverket.Clients.ar50.ar50repo;
 
 namespace Dan.Plugin.Kartverket
 {
@@ -12,17 +16,46 @@ namespace Dan.Plugin.Kartverket
     {
         // Define methods for DiHeWrapper here
         Task<MotorizedTrafficResponse> GetMotorizedTrafficInformation(string identifier);
+        Task<LandRentalResponse> GetLandRentalInformation(string matrikkelnummer);
 
     }
     public class DiHeWrapper : IDiHeWrapper
     {
         private readonly IAddressLookupClient _geonorgeClient;
         private readonly IKartverketGrunnbokMatrikkelService _kartverketService;
-
-        public DiHeWrapper(IAddressLookupClient addressLookupClient, IKartverketGrunnbokMatrikkelService _kartverketGMService, IStoreServiceClientService storeServiceClient)
+        private readonly Iar50Repo _ar50Repo;
+        public DiHeWrapper(IAddressLookupClient addressLookupClient, IKartverketGrunnbokMatrikkelService _kartverketGMService, Iar50Repo ar50Repo)
         {
             _geonorgeClient = addressLookupClient;
             _kartverketService = _kartverketGMService;
+            _ar50Repo = ar50Repo;
+        }
+
+        public async Task<LandRentalResponse> GetLandRentalInformation(string matrikkelNumber)
+        {
+            var result = new LandRentalResponse();
+            
+            var coordinates = await _geonorgeClient.GetCoordinatesForProperty(matrikkelNumber);
+            if (coordinates != null)
+            {
+                foreach (var coordinateset in coordinates)
+                {
+                    var ar5Response = await _ar50Repo.GetOmrade(coordinateset);
+                    result = new LandRentalResponse
+                    {
+                        Matrikkelnumber = matrikkelNumber,
+                        JordType = new JordType
+                        {
+                            FeatureId = ar5Response.Objectid,
+                            ArealType = ar5Mapper.MapArealType(ar5Response.ArealType),
+                            Areal = ar5Response.ShapeArea,
+                            GeoJson = ar5Response.Shape
+                        }
+                    };
+                }                
+            }          
+
+            return result;
         }
 
         public async Task<MotorizedTrafficResponse> GetMotorizedTrafficInformation(string identifier)

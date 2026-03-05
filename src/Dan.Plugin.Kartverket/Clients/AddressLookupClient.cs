@@ -20,254 +20,263 @@ namespace Dan.Plugin.Kartverket.Clients
         public Task<KartverketResponse> Get(KartverketResponse kartverket);
         public Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo);
 
-        public Task<List<string>> GetCoordinatesForProperty(string matrikkelNumber, string gnr, string bnr, string snr, string fnr, string kommunenr);
-    }
+        public Task<List<string>> GetCoordinatesForProperty(
+            string? matrikkelNumber = null,
+            string? gnr = null,
+            string? bnr = null,
+            string? snr = null,
+            string? fnr = null,
+            string? kommunenr = null);
 
 
-    public class AddressLookupClient : IAddressLookupClient
-    {
-        private readonly HttpClient _httpClient;
-        private readonly ApplicationSettings _settings;
-        private IKartverketGrunnbokMatrikkelService _kartverketGrunnbokMatrikkelService;
-
-
-        public AddressLookupClient(IHttpClientFactory httpClientFactory, IOptions<ApplicationSettings> settings, IKartverketGrunnbokMatrikkelService matrikkelService)
+        public class AddressLookupClient : IAddressLookupClient
         {
-            _httpClient = httpClientFactory.CreateClient("SafeHttpClient");
-            _settings = settings.Value;
-            _kartverketGrunnbokMatrikkelService = matrikkelService;
-        }
+            private readonly HttpClient _httpClient;
+            private readonly ApplicationSettings _settings;
+            private IKartverketGrunnbokMatrikkelService _kartverketGrunnbokMatrikkelService;
 
-        public async Task<KartverketResponse> Get(KartverketResponse kartverket)
-        {
-            List<Property> properties = new List<Property>();
-            foreach (Property property in kartverket.PropertyRights.Properties)
+
+            public AddressLookupClient(IHttpClientFactory httpClientFactory, IOptions<ApplicationSettings> settings, IKartverketGrunnbokMatrikkelService matrikkelService)
             {
-                properties.Add(property);
-                await UpdateProperty(property, await SokAdresse(property));
+                _httpClient = httpClientFactory.CreateClient("SafeHttpClient");
+                _settings = settings.Value;
+                _kartverketGrunnbokMatrikkelService = matrikkelService;
             }
 
-            kartverket.PropertyRights.Properties = properties;
-
-            List<PropertyWithRights> propertyWithRights = new List<PropertyWithRights>();
-            foreach (PropertyWithRights property in kartverket.PropertyRights.PropertiesWithRights)
+            public async Task<KartverketResponse> Get(KartverketResponse kartverket)
             {
-                propertyWithRights.Add(property);
-                await UpdateProperty(property, await SokAdresse(property));
+                List<Property> properties = new List<Property>();
+                foreach (Property property in kartverket.PropertyRights.Properties)
+                {
+                    properties.Add(property);
+                    await UpdateProperty(property, await SokAdresse(property));
+                }
+
+                kartverket.PropertyRights.Properties = properties;
+
+                List<PropertyWithRights> propertyWithRights = new List<PropertyWithRights>();
+                foreach (PropertyWithRights property in kartverket.PropertyRights.PropertiesWithRights)
+                {
+                    propertyWithRights.Add(property);
+                    await UpdateProperty(property, await SokAdresse(property));
+                }
+
+                kartverket.PropertyRights.PropertiesWithRights = propertyWithRights;
+
+                return kartverket;
             }
 
-            kartverket.PropertyRights.PropertiesWithRights = propertyWithRights;
-
-            return kartverket;
-        }
-
-        public async Task<List<string>> GetCoordinatesForProperty(string matrikkelNumber, string gnr, string bnr, string snr, string fnr,
-            string kommunenr)
-        {
-            var urlBuilder = new StringBuilder();
-            urlBuilder.Append(_settings.CoordinatesLookupUrl).Append("/geokoding?");
-
-            var queryParams = new List<string>();
-
-            if(!string.IsNullOrEmpty(matrikkelNumber))
-                queryParams.Add("matrikkelnummer=" + Uri.EscapeDataString(matrikkelNumber)); if (!string.IsNullOrEmpty(gnr))
-                queryParams.Add("&gardsnummer=" + Uri.EscapeDataString(gnr)); 
-            if(!string.IsNullOrEmpty(bnr))
-                queryParams.Add("&bruksnummer=" + Uri.EscapeDataString(bnr));
-            if(!string.IsNullOrEmpty(snr))
-                queryParams.Add("&seksjonsnummer=" + Uri.EscapeDataString(snr));
-            if(!string.IsNullOrEmpty(fnr))
-                queryParams.Add("&festenummer=" + Uri.EscapeDataString(fnr));
-            if(!string.IsNullOrEmpty(kommunenr))
-                queryParams.Add("&kommunenummer=" + Uri.EscapeDataString(kommunenr));
-
-            if(queryParams.Count > 0)
-                urlBuilder.Append("?").Append(string.Join("&", queryParams));
-            try
+            public async Task<List<string>> GetCoordinatesForProperty(string matrikkelNumber = null, string gnr = null, string bnr = null, string snr = null, string fnr = null,
+                string kommunenr = null)
             {
-                var response = await _httpClient.GetAsync(urlBuilder.ToString());
-                response.EnsureSuccessStatusCode();
+                var urlBuilder = new StringBuilder();
+                urlBuilder.Append(_settings.CoordinatesLookupUrl).Append("/geokoding");
 
-                var content = await response.Content.ReadAsStringAsync();
-                var json = JObject.Parse(content);
-                var features = json["features"];
-                if(features == null)
-                    return new List<string>();
+                var queryParams = new List<string>();
 
-                var coordinates = features
-                    .Where(f => f["geometry"]?["coordinates"] != null)
-                    .Where(f => f["geometry"]["coordinates"].Count() >= 2)
-                    .Select(f =>
+                if (!string.IsNullOrEmpty(matrikkelNumber))
+                    queryParams.Add("matrikkelnummer=" + Uri.EscapeDataString(matrikkelNumber));
+                if (!string.IsNullOrEmpty(gnr))
+                    queryParams.Add("&gardsnummer=" + Uri.EscapeDataString(gnr));
+                if (!string.IsNullOrEmpty(bnr))
+                    queryParams.Add("&bruksnummer=" + Uri.EscapeDataString(bnr));
+                if (!string.IsNullOrEmpty(snr))
+                    queryParams.Add("&seksjonsnummer=" + Uri.EscapeDataString(snr));
+                if (!string.IsNullOrEmpty(fnr))
+                    queryParams.Add("&festenummer=" + Uri.EscapeDataString(fnr));
+                if (!string.IsNullOrEmpty(kommunenr))
+                    queryParams.Add("&kommunenummer=" + Uri.EscapeDataString(kommunenr));
+
+                if (queryParams.Count > 0)
+                    urlBuilder.Append("?").Append(string.Join("&", queryParams));
+                try
+                {
+                    var response = await _httpClient.GetAsync(urlBuilder.ToString());
+                    response.EnsureSuccessStatusCode();
+
+                    var content = await response.Content.ReadAsStringAsync();
+                    var json = JObject.Parse(content);
+                    var features = json["features"];
+                    if (features == null)
+                        return new List<string>();
+
+                    var coordinates = features
+                        .Where(f => f["geometry"]?["coordinates"] != null)
+                        .Where(f => f["geometry"]["coordinates"].Count() >= 2)
+                        .Select(f =>
+                        {
+                            var coords = f["geometry"]["coordinates"];
+                            return $"{coords[0]},{coords[1]}";
+                        }).ToList();
+
+                    return coordinates;
+
+                }
+                catch (Exception e) when (e is HttpRequestException or JsonException)
+                {
+                    throw new EvidenceSourcePermanentServerException(Metadata.ERROR_CCR_UPSTREAM_ERROR, null, e);
+                }
+            }
+
+            public async Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo)
+            {
+                HttpResponseMessage response = null;
+
+                var urlBuilder = new StringBuilder();
+                urlBuilder.Append(_settings.AddressLookupUrl).Append("/sok?");
+                urlBuilder.Append("&fuzzy=false").Append("&");
+
+
+                if (!string.IsNullOrEmpty(municipalityNo))
+                {
+                    urlBuilder.Append("kommunenummer=").Append(int.Parse(municipalityNo).ToString("d4")).Append('&');
+                }
+                if (!string.IsNullOrEmpty(address))
+                {
+                    urlBuilder.Append("adressetekst=").Append(address).Append('&');
+                }
+                if (!string.IsNullOrEmpty(flatNo))
+                {
+                    urlBuilder.Append("bruksenhetsnummer=").Append(flatNo).Append('&');
+                }
+
+                try
+                {
+                    urlBuilder.Append("treffPerSide=100").Append('&');
+                    urlBuilder.Length--;
+
+                    response = await _httpClient.GetAsync(urlBuilder.ToString());
+                    var responseData = await response.Content.ReadAsStringAsync();
+                    switch (response.StatusCode)
                     {
-                        var coords = f["geometry"]["coordinates"];
-                        return $"{coords[0]},{coords[1]}";
-                    }).ToList();
+                        case HttpStatusCode.OK:
+                            {
+                                return JsonConvert.DeserializeObject<OutputAdresseList>(responseData);
+                            }
+                        default:
+                            {
+                                throw new EvidenceSourcePermanentClientException(Metadata.ERROR_CCR_UPSTREAM_ERROR,
+                                    $"External API call to Geonorge failed ({(int)response.StatusCode} - {response.StatusCode})" + (string.IsNullOrEmpty(responseData) ? string.Empty : $", details: {responseData}"));
+                            }
+                    }
+                }
 
-                return coordinates;
-
-            }
-            catch (Exception e) when (e is HttpRequestException or JsonException)
-            {
-                throw new EvidenceSourcePermanentServerException(Metadata.ERROR_CCR_UPSTREAM_ERROR, null, e);
-            }
-        }
-
-        public async Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo)
-        {
-            HttpResponseMessage response = null;
-
-            var urlBuilder = new StringBuilder();
-            urlBuilder.Append(_settings.AddressLookupUrl).Append("/sok?");
-            urlBuilder.Append("&fuzzy=false").Append("&");
-
-
-            if (!string.IsNullOrEmpty(municipalityNo))
-            {
-                urlBuilder.Append("kommunenummer=").Append(int.Parse(municipalityNo).ToString("d4")).Append('&');
-            }
-            if (!string.IsNullOrEmpty(address))
-            {
-                urlBuilder.Append("adressetekst=").Append(address).Append('&');
-            }
-            if (!string.IsNullOrEmpty(flatNo))
-            {
-                urlBuilder.Append("bruksenhetsnummer=").Append(flatNo).Append('&');
-            }
-
-            try
-            {
-                urlBuilder.Append("treffPerSide=100").Append('&');
-                urlBuilder.Length--;
-
-                response = await _httpClient.GetAsync(urlBuilder.ToString());
-                var responseData = await response.Content.ReadAsStringAsync();
-                switch (response.StatusCode)
+                catch (HttpRequestException e)
                 {
-                    case HttpStatusCode.OK:
-                        {
-                            return JsonConvert.DeserializeObject<OutputAdresseList>(responseData);
-                        }
-                    default:
-                        {
-                            throw new EvidenceSourcePermanentClientException(Metadata.ERROR_CCR_UPSTREAM_ERROR,
-                                $"External API call to Geonorge failed ({(int)response.StatusCode} - {response.StatusCode})" + (string.IsNullOrEmpty(responseData) ? string.Empty : $", details: {responseData}"));
-                        }
+                    throw new EvidenceSourcePermanentServerException(Metadata.ERROR_CCR_UPSTREAM_ERROR, null, e);
+                }
+                finally
+                {
+                    response?.Dispose();
                 }
             }
 
-            catch (HttpRequestException e)
+            private async Task<OutputAdresseList> SokAdresse(Property property)
             {
-                throw new EvidenceSourcePermanentServerException(Metadata.ERROR_CCR_UPSTREAM_ERROR, null, e);
-            }
-            finally
-            {
-                response?.Dispose();
-            }
-        }
+                HttpResponseMessage response = null;
 
-        private async Task<OutputAdresseList> SokAdresse(Property property)
-        {
-            HttpResponseMessage response = null;
+                var urlBuilder = new StringBuilder();
+                urlBuilder.Append(_settings.AddressLookupUrl).Append("/sok?");
 
-            var urlBuilder = new StringBuilder();
-            urlBuilder.Append(_settings.AddressLookupUrl).Append("/sok?");
-
-            if (!string.IsNullOrEmpty(property.MunicipalityNumber))
-            {
-                urlBuilder.Append("kommunenummer=").Append(int.Parse(property.MunicipalityNumber).ToString("d4")).Append('&');
-            }
-            if (!string.IsNullOrEmpty(property.Address))
-            {
-                urlBuilder.Append("adressetekst=").Append(property.Address).Append('&');
-            }
-            if (!string.IsNullOrEmpty(property.SubholdingNumber))
-            {
-                urlBuilder.Append("bruksnummer=").Append(property.SubholdingNumber).Append('&');
-            }
-            if (!string.IsNullOrEmpty(property.HoldingNumber))
-            {
-                urlBuilder.Append("gardsnummer=").Append(property.HoldingNumber).Append('&');
-            }
-
-            if (!string.IsNullOrEmpty(property.LeaseNumber))
-            {
-                urlBuilder.Append("festenummer=").Append(Uri.EscapeDataString(property.LeaseNumber)).Append('&');
-            }
-
-            try
-            {
-                urlBuilder.Append("treffPerSide=100").Append('&');
-                urlBuilder.Length--;
-
-                response = await _httpClient.GetAsync(urlBuilder.ToString());
-                var responseData = await response.Content.ReadAsStringAsync();
-                switch (response.StatusCode)
+                if (!string.IsNullOrEmpty(property.MunicipalityNumber))
                 {
-                    case HttpStatusCode.OK:
-                        {
-                            return JsonConvert.DeserializeObject<OutputAdresseList>(responseData);
-                        }
-                    default:
-                        {
-                            throw new EvidenceSourcePermanentClientException(Metadata.ERROR_CCR_UPSTREAM_ERROR,
-                                $"External API call to Geonorge failed ({(int)response.StatusCode} - {response.StatusCode})" + (string.IsNullOrEmpty(responseData) ? string.Empty : $", details: {responseData}"));
-                        }
+                    urlBuilder.Append("kommunenummer=").Append(int.Parse(property.MunicipalityNumber).ToString("d4")).Append('&');
+                }
+                if (!string.IsNullOrEmpty(property.Address))
+                {
+                    urlBuilder.Append("adressetekst=").Append(property.Address).Append('&');
+                }
+                if (!string.IsNullOrEmpty(property.SubholdingNumber))
+                {
+                    urlBuilder.Append("bruksnummer=").Append(property.SubholdingNumber).Append('&');
+                }
+                if (!string.IsNullOrEmpty(property.HoldingNumber))
+                {
+                    urlBuilder.Append("gardsnummer=").Append(property.HoldingNumber).Append('&');
+                }
+
+                if (!string.IsNullOrEmpty(property.LeaseNumber))
+                {
+                    urlBuilder.Append("festenummer=").Append(Uri.EscapeDataString(property.LeaseNumber)).Append('&');
+                }
+
+                try
+                {
+                    urlBuilder.Append("treffPerSide=100").Append('&');
+                    urlBuilder.Length--;
+
+                    response = await _httpClient.GetAsync(urlBuilder.ToString());
+                    var responseData = await response.Content.ReadAsStringAsync();
+                    switch (response.StatusCode)
+                    {
+                        case HttpStatusCode.OK:
+                            {
+                                return JsonConvert.DeserializeObject<OutputAdresseList>(responseData);
+                            }
+                        default:
+                            {
+                                throw new EvidenceSourcePermanentClientException(Metadata.ERROR_CCR_UPSTREAM_ERROR,
+                                    $"External API call to Geonorge failed ({(int)response.StatusCode} - {response.StatusCode})" + (string.IsNullOrEmpty(responseData) ? string.Empty : $", details: {responseData}"));
+                            }
+                    }
+                }
+
+                catch (HttpRequestException e)
+                {
+                    throw new EvidenceSourcePermanentServerException(Metadata.ERROR_CCR_UPSTREAM_ERROR, null, e);
+                }
+                finally
+                {
+                    response?.Dispose();
                 }
             }
 
-            catch (HttpRequestException e)
+            private async Task UpdateProperty(Property property, OutputAdresseList addresses)
             {
-                throw new EvidenceSourcePermanentServerException(Metadata.ERROR_CCR_UPSTREAM_ERROR, null, e);
-            }
-            finally
-            {
-                response?.Dispose();
-            }
-        }
+                //TODO: Should this use 'FirstOrDefault'? (ex. Myrdalsvegen)
 
-        private async Task UpdateProperty(Property property, OutputAdresseList addresses)
-        {
-            //TODO: Should this use 'FirstOrDefault'? (ex. Myrdalsvegen)
-
-            if (addresses?.Adresser?.Count > 1)
-            {
-                var matrikkelAddress = await _kartverketGrunnbokMatrikkelService.GetAddressForSection(int.Parse(property.HoldingNumber), int.Parse(property.SubholdingNumber), int.Parse(property.LeaseNumber), property.MunicipalityNumber, int.Parse(property.SectionNumber));
-                string tmp = string.Empty;
-
-                //Unit address contains H01234 as identifier
-                if (matrikkelAddress.Contains("-H"))
+                if (addresses?.Adresser?.Count > 1)
                 {
-                    var addressSplit = matrikkelAddress.Split("-");
-                    //Matrikkel returns address text with flat number as "H01234" - if this is the case we need to remove it to match the address with the geonorge results
-                    tmp = (addressSplit[1].Length == 5 && int.TryParse(addressSplit[1].Substring(1, 4), out _)) ? addressSplit[0] : matrikkelAddress;
-                } else
-                {
-                    tmp = matrikkelAddress;
+                    var matrikkelAddress = await _kartverketGrunnbokMatrikkelService.GetAddressForSection(int.Parse(property.HoldingNumber), int.Parse(property.SubholdingNumber), int.Parse(property.LeaseNumber), property.MunicipalityNumber, int.Parse(property.SectionNumber));
+                    string tmp = string.Empty;
+
+                    //Unit address contains H01234 as identifier
+                    if (matrikkelAddress.Contains("-H"))
+                    {
+                        var addressSplit = matrikkelAddress.Split("-");
+                        //Matrikkel returns address text with flat number as "H01234" - if this is the case we need to remove it to match the address with the geonorge results
+                        tmp = (addressSplit[1].Length == 5 && int.TryParse(addressSplit[1].Substring(1, 4), out _)) ? addressSplit[0] : matrikkelAddress;
+                    }
+                    else
+                    {
+                        tmp = matrikkelAddress;
+                    }
+
+                    if (tmp != string.Empty)
+                    {
+                        var address = addresses.Adresser?.SingleOrDefault(x => x.Adressetekst == tmp);
+
+                        property.Address = address?.Adressetekst ?? string.Empty;
+                        property.PostalCode = address?.Postnummer ?? string.Empty;
+                        property.City = address?.Poststed ?? string.Empty;
+                        property.MunicipalityNumber = address?.Kommunenummer ?? string.Empty;
+                        property.Municipality = address?.Kommunenavn ?? string.Empty;
+                    }
                 }
-
-                if (tmp != string.Empty)
+                else
                 {
-                    var address = addresses.Adresser?.SingleOrDefault(x => x.Adressetekst == tmp);
-
-                    property.Address = address?.Adressetekst ?? string.Empty;
-                    property.PostalCode = address?.Postnummer ?? string.Empty;
-                    property.City = address?.Poststed ?? string.Empty;
-                    property.MunicipalityNumber = address?.Kommunenummer ?? string.Empty;
-                    property.Municipality = address?.Kommunenavn ?? string.Empty;
-                }
-            }
-            else
-            {
-                OutputAdresse address = addresses?.Adresser?.FirstOrDefault();
-                if (address != null)
-                {
-                    property.Address = address.Adressetekst;
-                    property.PostalCode = address.Postnummer;
-                    property.City = address.Poststed;
-                    property.MunicipalityNumber = address.Kommunenummer;
-                    property.Municipality = address.Kommunenavn;
+                    OutputAdresse address = addresses?.Adresser?.FirstOrDefault();
+                    if (address != null)
+                    {
+                        property.Address = address.Adressetekst;
+                        property.PostalCode = address.Postnummer;
+                        property.City = address.Poststed;
+                        property.MunicipalityNumber = address.Kommunenummer;
+                        property.Municipality = address.Kommunenavn;
+                    }
                 }
             }
         }
     }
+
 }

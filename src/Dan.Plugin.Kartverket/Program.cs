@@ -3,12 +3,15 @@ using Dan.Common;
 using Dan.Common.Extensions;
 using Dan.Plugin.Kartverket;
 using Dan.Plugin.Kartverket.Clients;
+using Dan.Plugin.Kartverket.Clients.ar50;
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Clients.Matrikkel;
 using Dan.Plugin.Kartverket.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using static Dan.Plugin.Kartverket.Clients.ar50.ar50repo;
+using static Dan.Plugin.Kartverket.Clients.IAddressLookupClient;
 
 var host = new HostBuilder()
         .ConfigureDanPluginDefaults()
@@ -16,6 +19,7 @@ var host = new HostBuilder()
         {
             var configurationRoot = context.Configuration;
             services.Configure<ApplicationSettings>(configurationRoot);
+            services.Configure<DatabaseSettings>(configurationRoot);
             services.AddTransient<IAddressLookupClient, AddressLookupClient>();
             services.AddTransient<IDDWrapper, DDWrapper>();
             services.AddTransient<IDiHeWrapper, DiHeWrapper>();
@@ -36,6 +40,7 @@ var host = new HostBuilder()
             services.AddTransient<IMatrikkelBygningClientService, MatrikkelBygningClientService>();
             services.AddTransient<IMatrikkelBruksenhetService, MatrikkelBruksenhetService>();
             services.AddTransient<IMatrikkelAdresseClientService, MatrikkelAdresseClientService>();
+            services.AddTransient<Iar50Repo, ar50repo>();
             services.AddScoped<IRequestContextService, RequestContextService>(); //needs to be scoped
 
 

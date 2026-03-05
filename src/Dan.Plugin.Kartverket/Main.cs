@@ -19,15 +19,11 @@ namespace Dan.Plugin.Kartverket
     public class Main
     {
         private ILogger _logger;
-        private IKartverketGrunnbokMatrikkelService _kartverketGrunnbokMatrikkelService;
-        private readonly IDDWrapper _ddWrapper;
         private readonly IServiceScopeFactory _scopeFactory;
 
-        public Main(ILoggerFactory loggerFactory, IDDWrapper ddWrapper, IKartverketGrunnbokMatrikkelService kartverketGrunnbokMatrikkelService, IServiceScopeFactory scopeFactory)
+        public Main(ILoggerFactory loggerFactory, IServiceScopeFactory scopeFactory)
         {
             _logger = loggerFactory.CreateLogger<Main>();
-            _ddWrapper = ddWrapper;
-            _kartverketGrunnbokMatrikkelService = kartverketGrunnbokMatrikkelService;
             _scopeFactory = scopeFactory;
 
         }
@@ -123,6 +119,34 @@ namespace Dan.Plugin.Kartverket
                 req,
                 () => GetEvidenceValuesMotorisertFerdsel(evidenceHarvesterRequest, diHeWrapper)
             );
+        }
+
+        [Function("LandRental")]
+        public async Task<HttpResponseData> LandRental([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequestData req, FunctionContext context)
+        {
+            _logger.LogInformation("Running func 'LandRental'");
+            using var scope = _scopeFactory.CreateScope();
+            var requestContextService = scope.ServiceProvider.GetRequiredService<IRequestContextService>();
+            var diHeWrapper = scope.ServiceProvider.GetRequiredService<IDiHeWrapper>();
+
+            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
+
+            await requestContextService.SetRequestContext(evidenceHarvesterRequest.ServiceContext);
+
+            return await EvidenceSourceResponse.CreateResponse(
+                req,
+                () => GetEvidenceValuesLandRental(evidenceHarvesterRequest, diHeWrapper)
+            );
+        }
+
+        private async Task<List<EvidenceValue>> GetEvidenceValuesLandRental(EvidenceHarvesterRequest evidenceHarvesterRequest, IDiHeWrapper diheWrapper)
+        {
+            var result = await diheWrapper.GetLandRentalInformation(evidenceHarvesterRequest.SubjectParty.GetAsString(false));
+
+            var ecb = new EvidenceBuilder(new Metadata(), "LandRental");
+            ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
+            return ecb.GetEvidenceValues();
         }
 
         private async Task<List<EvidenceValue>> GetEvidenceValuesMotorisertFerdsel(

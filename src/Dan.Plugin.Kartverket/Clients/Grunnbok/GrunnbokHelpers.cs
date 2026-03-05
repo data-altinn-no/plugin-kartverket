@@ -33,8 +33,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             if (serviceContext.ToUpper() == "DIGITALEHELGELAND")
             {
-                credentials.UserName.UserName = settings.GrunnbokUser;
-                credentials.UserName.Password = settings.GrunnbokEDueDiligencePw;
+                credentials.UserName.UserName = settings.GrunnbokUserDigitaleHelgeland;
+                credentials.UserName.Password = settings.GrunnbokPwDigitaleHelgeland;
             }
             else if(serviceContext.ToUpper() == "EDUEDILIGENCE")
             {
@@ -59,8 +59,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             if (serviceContext.ToUpper() == "DIGITALEHELGELAND")
             {
-                credentials.UserName.UserName = settings.MatrikkelUser;
-                credentials.UserName.Password = settings.MatrikkelPw;
+                credentials.UserName.UserName = settings.MatrikkelUserDigitaleHelgeland;
+                credentials.UserName.Password = settings.MatrikkelPwDigitaleHelgeland;
             }
             else if(serviceContext.ToUpper() == "EDUEDILIGENCE")
             {
