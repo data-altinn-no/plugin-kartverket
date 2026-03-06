@@ -17,7 +17,7 @@ namespace Dan.Plugin.Kartverket.Models
         /// <summary>
         /// Jordtype - Type of dirt/land
         /// </summary>
-        public JordType JordType { get; set; }
+        public List<JordType> JordType { get; set; }
 
     }
 

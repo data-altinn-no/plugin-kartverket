@@ -19,7 +19,6 @@ var host = new HostBuilder()
         {
             var configurationRoot = context.Configuration;
             services.Configure<ApplicationSettings>(configurationRoot);
-            services.Configure<DatabaseSettings>(configurationRoot);
             services.AddTransient<IAddressLookupClient, AddressLookupClient>();
             services.AddTransient<IDDWrapper, DDWrapper>();
             services.AddTransient<IDiHeWrapper, DiHeWrapper>();

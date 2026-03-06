@@ -194,7 +194,7 @@ namespace Dan.Plugin.Kartverket
                 },
                 new EvidenceCode()
                 {
-                    EvidenceCodeName = "LandRental",
+                    EvidenceCodeName = "Jordleie",
                     EvidenceSource = SOURCE,
                     BelongsToServiceContexts = new List<string>() { SERVICECONTEXT_DIHE },
                     RequiredScopes = "",

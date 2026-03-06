@@ -4,6 +4,7 @@ using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Models;
 using Microsoft.Extensions.FileProviders;
 using NetTopologySuite.Geometries;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
@@ -41,17 +42,26 @@ namespace Dan.Plugin.Kartverket
                 foreach (var coordinateset in coordinates)
                 {
                     var ar5Response = await _ar50Repo.GetOmrade(coordinateset);
+                    if (ar5Response is null)
+                        continue;
+
+                    var jordtypeList = new List<JordType>();
+                    foreach (var jordtype in ar5Response)
+                    {
+                        jordtypeList.Add(new JordType
+                        {
+                            FeatureId = jordtype.Objectid,
+                            ArealType = ar5Mapper.MapArealType(jordtype.ArealType),
+                            Areal = jordtype.ShapeArea,
+                            GeoJson = jordtype.Shape
+                        });
+                    }
                     result = new LandRentalResponse
                     {
                         Matrikkelnumber = matrikkelNumber,
-                        JordType = new JordType
-                        {
-                            FeatureId = ar5Response.Objectid,
-                            ArealType = ar5Mapper.MapArealType(ar5Response.ArealType),
-                            Areal = ar5Response.ShapeArea,
-                            GeoJson = ar5Response.Shape
-                        }
+                        JordType = jordtypeList
                     };
+                    break; //keep first valid hit determinitically
                 }                
             }          
 

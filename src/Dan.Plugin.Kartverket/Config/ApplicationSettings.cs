@@ -39,5 +39,7 @@ namespace Dan.Plugin.Kartverket.Config
         public string MatrikkelOEDPw { get; set; }
 
         public string CoordinatesLookupUrl { get; set; }
+        public string ConnectionString { get; set; }
+
     }
 }

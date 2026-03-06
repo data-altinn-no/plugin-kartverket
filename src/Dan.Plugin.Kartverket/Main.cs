@@ -131,6 +131,12 @@ namespace Dan.Plugin.Kartverket
 
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var evidenceHarvesterRequest = JsonConvert.DeserializeObject<EvidenceHarvesterRequest>(requestBody);
+            if (evidenceHarvesterRequest is null)
+            {
+                var badRequest = req.CreateResponse(HttpStatusCode.BadRequest);
+                await badRequest.WriteStringAsync("Invalid request payload.");
+                return badRequest;
+            }
 
             await requestContextService.SetRequestContext(evidenceHarvesterRequest.ServiceContext);
 
@@ -144,7 +150,7 @@ namespace Dan.Plugin.Kartverket
         {
             var result = await diheWrapper.GetLandRentalInformation(evidenceHarvesterRequest.SubjectParty.GetAsString(false));
 
-            var ecb = new EvidenceBuilder(new Metadata(), "LandRental");
+            var ecb = new EvidenceBuilder(new Metadata(), "Jordleie");
             ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
             return ecb.GetEvidenceValues();
         }

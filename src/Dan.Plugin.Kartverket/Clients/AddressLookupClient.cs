@@ -77,15 +77,15 @@ namespace Dan.Plugin.Kartverket.Clients
                 if (!string.IsNullOrEmpty(matrikkelNumber))
                     queryParams.Add("matrikkelnummer=" + Uri.EscapeDataString(matrikkelNumber));
                 if (!string.IsNullOrEmpty(gnr))
-                    queryParams.Add("&gardsnummer=" + Uri.EscapeDataString(gnr));
+                    queryParams.Add("gardsnummer=" + Uri.EscapeDataString(gnr));
                 if (!string.IsNullOrEmpty(bnr))
-                    queryParams.Add("&bruksnummer=" + Uri.EscapeDataString(bnr));
+                    queryParams.Add("bruksnummer=" + Uri.EscapeDataString(bnr));
                 if (!string.IsNullOrEmpty(snr))
-                    queryParams.Add("&seksjonsnummer=" + Uri.EscapeDataString(snr));
+                    queryParams.Add("seksjonsnummer=" + Uri.EscapeDataString(snr));
                 if (!string.IsNullOrEmpty(fnr))
-                    queryParams.Add("&festenummer=" + Uri.EscapeDataString(fnr));
+                    queryParams.Add("festenummer=" + Uri.EscapeDataString(fnr));
                 if (!string.IsNullOrEmpty(kommunenr))
-                    queryParams.Add("&kommunenummer=" + Uri.EscapeDataString(kommunenr));
+                    queryParams.Add("kommunenummer=" + Uri.EscapeDataString(kommunenr));
 
                 if (queryParams.Count > 0)
                     urlBuilder.Append("?").Append(string.Join("&", queryParams));
