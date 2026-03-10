@@ -1,15 +1,10 @@
 using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.ar50;
-using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Models;
-using Microsoft.Extensions.FileProviders;
-using NetTopologySuite.Geometries;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using static Dan.Plugin.Kartverket.Clients.ar50.ar50repo;
+using static Dan.Plugin.Kartverket.Clients.ar50.Ar5repo;
 
 namespace Dan.Plugin.Kartverket
 {
@@ -24,8 +19,8 @@ namespace Dan.Plugin.Kartverket
     {
         private readonly IAddressLookupClient _geonorgeClient;
         private readonly IKartverketGrunnbokMatrikkelService _kartverketService;
-        private readonly Iar50Repo _ar50Repo;
-        public DiHeWrapper(IAddressLookupClient addressLookupClient, IKartverketGrunnbokMatrikkelService _kartverketGMService, Iar50Repo ar50Repo)
+        private readonly IAr5Repo _ar50Repo;
+        public DiHeWrapper(IAddressLookupClient addressLookupClient, IKartverketGrunnbokMatrikkelService _kartverketGMService, IAr5Repo ar50Repo)
         {
             _geonorgeClient = addressLookupClient;
             _kartverketService = _kartverketGMService;
@@ -51,7 +46,7 @@ namespace Dan.Plugin.Kartverket
                         jordtypeList.Add(new JordType
                         {
                             FeatureId = jordtype.Objectid,
-                            ArealType = ar5Mapper.MapArealType(jordtype.ArealType),
+                            ArealType = Ar5Mapper.MapArealType(jordtype.ArealType),
                             Areal = jordtype.ShapeArea,
                             GeoJson = jordtype.Shape
                         });
@@ -61,7 +56,6 @@ namespace Dan.Plugin.Kartverket
                         Matrikkelnumber = matrikkelNumber,
                         JordType = jordtypeList
                     };
-                    break; //keep first valid hit determinitically
                 }                
             }          
 

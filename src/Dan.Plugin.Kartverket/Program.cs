@@ -10,7 +10,7 @@ using Dan.Plugin.Kartverket.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using static Dan.Plugin.Kartverket.Clients.ar50.ar50repo;
+using static Dan.Plugin.Kartverket.Clients.ar50.Ar5repo;
 using static Dan.Plugin.Kartverket.Clients.IAddressLookupClient;
 
 var host = new HostBuilder()
@@ -39,7 +39,7 @@ var host = new HostBuilder()
             services.AddTransient<IMatrikkelBygningClientService, MatrikkelBygningClientService>();
             services.AddTransient<IMatrikkelBruksenhetService, MatrikkelBruksenhetService>();
             services.AddTransient<IMatrikkelAdresseClientService, MatrikkelAdresseClientService>();
-            services.AddTransient<Iar50Repo, ar50repo>();
+            services.AddTransient<IAr5Repo, Ar5repo>();
             services.AddScoped<IRequestContextService, RequestContextService>(); //needs to be scoped
 
 
