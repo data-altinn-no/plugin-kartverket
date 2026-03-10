@@ -10,6 +10,7 @@ using Dan.Plugin.Kartverket.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Npgsql;
 using static Dan.Plugin.Kartverket.Clients.ar50.Ar5repo;
 using static Dan.Plugin.Kartverket.Clients.IAddressLookupClient;
 
@@ -17,11 +18,17 @@ var host = new HostBuilder()
         .ConfigureDanPluginDefaults()
         .ConfigureServices((context, services) =>
         {
+
             var configurationRoot = context.Configuration;
             services.Configure<ApplicationSettings>(configurationRoot);
             services.AddTransient<IAddressLookupClient, AddressLookupClient>();
             services.AddTransient<IDDWrapper, DDWrapper>();
             services.AddTransient<IDiHeWrapper, DiHeWrapper>();
+
+            //PostgresSql dataSource
+            var connectionString = configurationRoot.GetValue<string>("ConnectionString");
+            var dataSource = new NpgsqlDataSourceBuilder(connectionString).Build();
+            services.AddSingleton(dataSource);
 
             //Matrikkel og grunnbok services
             services.AddTransient<IKartverketGrunnbokMatrikkelService, KartverketGrunnbokMatrikkelService>();
@@ -40,7 +47,7 @@ var host = new HostBuilder()
             services.AddTransient<IMatrikkelBruksenhetService, MatrikkelBruksenhetService>();
             services.AddTransient<IMatrikkelAdresseClientService, MatrikkelAdresseClientService>();
             services.AddTransient<IAr5Repo, Ar5repo>();
-            services.AddScoped<IRequestContextService, RequestContextService>(); //needs to be scoped
+            services.AddScoped<IRequestContextService, RequestContextService>(); //needs to be scoped            
 
 
             //KartverketClient

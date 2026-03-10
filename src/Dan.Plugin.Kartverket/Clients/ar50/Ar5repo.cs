@@ -15,13 +15,11 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
 {
     public class Ar5repo : IAr5Repo
     {
-        private readonly string ConnectionString;
-        private readonly ApplicationSettings _settings;
+        private readonly NpgsqlDataSource _dataSource;
 
-        public Ar5repo(IOptions<ApplicationSettings> settings)
+        public Ar5repo(NpgsqlDataSource dataSource)
         {
-            _settings = settings.Value;
-            ConnectionString = _settings.ConnectionString;
+            _dataSource = dataSource;
         }
 
         public async Task<List<Ar5OmradeDbModel>> GetOmrade(string coordinates)
@@ -73,14 +71,12 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
             {
                 throw new ArgumentException("At least 3 coordinate pairs required for polygon");
             }
-
-            var dataSourceBuilder = new NpgsqlDataSourceBuilder(ConnectionString);
-            dataSourceBuilder.UseNetTopologySuite();
-            await using var dataSource = dataSourceBuilder.Build();
-            await using var connection = await dataSource.OpenConnectionAsync();
+                      
+            await using var connection = await _dataSource.OpenConnectionAsync();
 
             //Checks if the geometry intersects with any of the areas in the fkb_ar5_omrade table,
             //if so, retrieves the relevant information about those areas.
+            //25533 is an EPSG-code for a specific coordinate reference system (CRS) used in Norway, known as EUREF89 / UTM zone 33N.
             string sql = @"
                             WITH eiendom AS (
                                 SELECT ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833) AS shape
@@ -95,7 +91,6 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
                             FROM fkb_ar5_omrade o, eiendom e
                             WHERE ST_Intersects(o.shape, e.shape)
                             ORDER BY ST_Area(ST_Intersection(o.shape, e.shape)) DESC;";
-
 
             var results = (await connection.QueryAsync<Ar5OmradeDbModel>(
                 sql,
