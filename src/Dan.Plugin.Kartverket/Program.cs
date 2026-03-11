@@ -1,4 +1,6 @@
 using Altinn.ApiClients.Maskinporten.Extensions;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using Dan.Common;
 using Dan.Common.Extensions;
 using Dan.Plugin.Kartverket;
@@ -11,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
+using System;
 using static Dan.Plugin.Kartverket.Clients.ar50.Ar5repo;
 using static Dan.Plugin.Kartverket.Clients.IAddressLookupClient;
 
@@ -21,14 +24,26 @@ var host = new HostBuilder()
 
             var configurationRoot = context.Configuration;
             services.Configure<ApplicationSettings>(configurationRoot);
+            services.Configure<KeyVaultConnectionStringSettings>(opt =>
+            {
+                opt.SecretName = configurationRoot["KeyVaultConnectionStringSettings:SecretName"];
+                opt.AzureKeyVaultName = configurationRoot["KeyVaultConnectionStringSettings:AzureKeyVaultName"];
+            });
+
             services.AddTransient<IAddressLookupClient, AddressLookupClient>();
             services.AddTransient<IDDWrapper, DDWrapper>();
             services.AddTransient<IDiHeWrapper, DiHeWrapper>();
 
             //PostgresSql dataSource
-            var connectionString = configurationRoot.GetValue<string>("ConnectionString");
-            var dataSource = new NpgsqlDataSourceBuilder(connectionString).Build();
-            services.AddSingleton(dataSource);
+            services.AddSingleton<KeyVaultConnectionString>();
+            services.AddSingleton<NpgsqlDataSource>(sp =>
+            {
+                var keyVault = sp.GetRequiredService<KeyVaultConnectionString>();
+                var connectionString = keyVault.GetConnectionString().GetAwaiter().GetResult();
+
+                return new NpgsqlDataSourceBuilder(connectionString).Build();
+            });
+
 
             //Matrikkel og grunnbok services
             services.AddTransient<IKartverketGrunnbokMatrikkelService, KartverketGrunnbokMatrikkelService>();
@@ -49,7 +64,7 @@ var host = new HostBuilder()
             services.AddTransient<IAr5Repo, Ar5repo>();
             services.AddScoped<IRequestContextService, RequestContextService>(); //needs to be scoped            
 
-
+            
             //KartverketClient
             services.AddMaskinportenHttpClient<KeyVaultMaskinportenClientDefinition, KartverketClient>(configurationRoot.GetSection("MPKartverket"),
     clientDefinition =>
@@ -66,6 +81,8 @@ var host = new HostBuilder()
                 })
                 .AddPolicyHandlerFromRegistry(Constants.SafeHttpClientPolicy);
         })
+
+
         .Build();
 
     await host.RunAsync();
