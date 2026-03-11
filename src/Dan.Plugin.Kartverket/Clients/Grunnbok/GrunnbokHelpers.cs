@@ -38,13 +38,13 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             }
             else if(serviceContext.ToUpper() == "EDUEDILIGENCE")
             {
-                credentials.UserName.UserName = settings.GrunnbokUser;
+                credentials.UserName.UserName = settings.GrunnbokEDueDiligenceUser;
                 credentials.UserName.Password = settings.GrunnbokEDueDiligencePw;
             }
             else if(serviceContext.ToUpper() == "OED"|| serviceContext.ToUpper() == "DIGITALDODSBO")
             {
                 credentials.UserName.UserName = settings.GrunnbokUser;
-                credentials.UserName.Password = settings.GrunnbokEDueDiligencePw;
+                credentials.UserName.Password = settings.GrunnbokPw;
             }
             else
             {
