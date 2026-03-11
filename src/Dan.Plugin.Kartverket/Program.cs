@@ -24,26 +24,15 @@ var host = new HostBuilder()
 
             var configurationRoot = context.Configuration;
             services.Configure<ApplicationSettings>(configurationRoot);
-            services.Configure<KeyVaultConnectionStringSettings>(opt =>
-            {
-                opt.SecretName = configurationRoot["KeyVaultConnectionStringSettings:SecretName"];
-                opt.AzureKeyVaultName = configurationRoot["KeyVaultConnectionStringSettings:AzureKeyVaultName"];
-            });
 
             services.AddTransient<IAddressLookupClient, AddressLookupClient>();
             services.AddTransient<IDDWrapper, DDWrapper>();
             services.AddTransient<IDiHeWrapper, DiHeWrapper>();
 
             //PostgresSql dataSource
-            services.AddSingleton<KeyVaultConnectionString>();
-            services.AddSingleton<NpgsqlDataSource>(sp =>
-            {
-                var keyVault = sp.GetRequiredService<KeyVaultConnectionString>();
-                var connectionString = keyVault.GetConnectionString().GetAwaiter().GetResult();
-
-                return new NpgsqlDataSourceBuilder(connectionString).Build();
-            });
-
+            var connectionString = configurationRoot.GetValue<string>("ConnectionString");
+            var dataSource = new NpgsqlDataSourceBuilder(connectionString).Build();
+            services.AddSingleton(dataSource);
 
             //Matrikkel og grunnbok services
             services.AddTransient<IKartverketGrunnbokMatrikkelService, KartverketGrunnbokMatrikkelService>();
