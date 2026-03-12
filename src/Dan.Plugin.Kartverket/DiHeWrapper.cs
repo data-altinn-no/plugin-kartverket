@@ -1,5 +1,4 @@
 using Dan.Plugin.Kartverket.Clients;
-using Dan.Plugin.Kartverket.Clients.ar50;
 using Dan.Plugin.Kartverket.Models;
 using System.Collections.Generic;
 using System.Text;
@@ -46,7 +45,7 @@ namespace Dan.Plugin.Kartverket
                         jordtypeList.Add(new JordType
                         {
                             FeatureId = jordtype.Objectid,
-                            ArealType = Ar5Mapper.MapArealType(jordtype.ArealType),
+                            ArealType = jordtype.ArealType.ToString(),
                             Areal = jordtype.ShapeArea,
                             GeoJson = jordtype.Shape
                         });
