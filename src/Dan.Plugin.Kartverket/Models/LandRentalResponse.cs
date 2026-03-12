@@ -24,7 +24,7 @@ namespace Dan.Plugin.Kartverket.Models
     public class JordType
     {
         public int FeatureId { get; set; }
-        public ArealType ArealType { get; set; }
+        public string ArealType { get; set; }
         public double Areal { get; set; }
         public string GeoJson { get; set; }
     }

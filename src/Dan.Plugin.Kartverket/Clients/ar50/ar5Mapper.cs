@@ -6,15 +6,15 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
     public static class Ar5Mapper
     {
 
-        public static ArealType MapArealType(string arealType)
+        public static string MapArealType(string arealType)
         {
             if (string.IsNullOrWhiteSpace(arealType))
-                return ArealType.IkkeKartlagt;
+                return ArealType.IkkeKartlagt.ToString();
 
             if (Enum.TryParse<ArealType>(arealType, ignoreCase: true, out var result))
-                return result;
+                return result.ToString();
 
-            return ArealType.IkkeKartlagt;
+            return ArealType.IkkeKartlagt.ToString();
         }
     }
 }
