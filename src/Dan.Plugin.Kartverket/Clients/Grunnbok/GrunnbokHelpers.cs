@@ -1,9 +1,7 @@
 using Dan.Plugin.Kartverket.Clients.Grunnbok.GrunnbokContextHelpers;
 using Dan.Plugin.Kartverket.Clients.Matrikkel.MatrikkelContextHelpers;
 using Dan.Plugin.Kartverket.Config;
-using Kartverket.Matrikkel.AdresseService;
 using System;
-using System.Data;
 using System.Net;
 using System.ServiceModel;
 using System.ServiceModel.Description;

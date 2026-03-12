@@ -1,6 +1,4 @@
-using Dan.Plugin.Kartverket.Config;
 using Dapper;
-using Microsoft.Extensions.Options;
 using NetTopologySuite;
 using NetTopologySuite.Geometries;
 using Npgsql;

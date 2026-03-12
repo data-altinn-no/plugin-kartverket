@@ -1,6 +1,4 @@
 using Altinn.ApiClients.Maskinporten.Extensions;
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 using Dan.Common;
 using Dan.Common.Extensions;
 using Dan.Plugin.Kartverket;
@@ -13,7 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
-using System;
 using static Dan.Plugin.Kartverket.Clients.ar50.Ar5repo;
 using static Dan.Plugin.Kartverket.Clients.IAddressLookupClient;
 
