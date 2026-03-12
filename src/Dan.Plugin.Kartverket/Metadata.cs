@@ -191,6 +191,29 @@ namespace Dan.Plugin.Kartverket
                             RequiredScopes = new List<string> { "altinn:dataaltinnno/dihe" }
                         }
                     }
+                },
+                new EvidenceCode()
+                {
+                    EvidenceCodeName = "Jordleie",
+                    EvidenceSource = SOURCE,
+                    BelongsToServiceContexts = new List<string>() { SERVICECONTEXT_DIHE },
+                    RequiredScopes = "",
+                    Values = new List<EvidenceValue>
+                    {
+                        new()
+                        {
+                            EvidenceValueName = "default",
+                            ValueType = EvidenceValueType.JsonSchema,
+                            JsonSchemaDefintion = JsonSchema.FromType<LandRentalResponse>().ToJson(Formatting.Indented)
+                        }
+                    },
+                    AuthorizationRequirements = new List<Requirement>
+                    {
+                        new MaskinportenScopeRequirement
+                        {
+                            RequiredScopes = new List<string> { "altinn:dataaltinnno/dihe" }
+                        }
+                    }
                 }
             };
         }

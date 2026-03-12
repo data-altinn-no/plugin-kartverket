@@ -1,9 +1,7 @@
 using Dan.Plugin.Kartverket.Clients.Grunnbok.GrunnbokContextHelpers;
 using Dan.Plugin.Kartverket.Clients.Matrikkel.MatrikkelContextHelpers;
 using Dan.Plugin.Kartverket.Config;
-using Kartverket.Matrikkel.AdresseService;
 using System;
-using System.Data;
 using System.Net;
 using System.ServiceModel;
 using System.ServiceModel.Description;
@@ -33,18 +31,18 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             if (serviceContext.ToUpper() == "DIGITALEHELGELAND")
             {
-                credentials.UserName.UserName = settings.GrunnbokUser;
-                credentials.UserName.Password = settings.GrunnbokEDueDiligencePw;
+                credentials.UserName.UserName = settings.GrunnbokUserDigitaleHelgeland;
+                credentials.UserName.Password = settings.GrunnbokPwDigitaleHelgeland;
             }
             else if(serviceContext.ToUpper() == "EDUEDILIGENCE")
             {
-                credentials.UserName.UserName = settings.GrunnbokUser;
+                credentials.UserName.UserName = settings.GrunnbokEDueDiligenceUser;
                 credentials.UserName.Password = settings.GrunnbokEDueDiligencePw;
             }
             else if(serviceContext.ToUpper() == "OED"|| serviceContext.ToUpper() == "DIGITALDODSBO")
             {
                 credentials.UserName.UserName = settings.GrunnbokUser;
-                credentials.UserName.Password = settings.GrunnbokEDueDiligencePw;
+                credentials.UserName.Password = settings.GrunnbokPw;
             }
             else
             {
@@ -59,8 +57,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             if (serviceContext.ToUpper() == "DIGITALEHELGELAND")
             {
-                credentials.UserName.UserName = settings.MatrikkelUser;
-                credentials.UserName.Password = settings.MatrikkelPw;
+                credentials.UserName.UserName = settings.MatrikkelUserDigitaleHelgeland;
+                credentials.UserName.Password = settings.MatrikkelPwDigitaleHelgeland;
             }
             else if(serviceContext.ToUpper() == "EDUEDILIGENCE")
             {

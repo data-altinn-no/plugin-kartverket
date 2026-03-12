@@ -3,22 +3,33 @@ using Dan.Common;
 using Dan.Common.Extensions;
 using Dan.Plugin.Kartverket;
 using Dan.Plugin.Kartverket.Clients;
+using Dan.Plugin.Kartverket.Clients.ar50;
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Clients.Matrikkel;
 using Dan.Plugin.Kartverket.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Npgsql;
+using static Dan.Plugin.Kartverket.Clients.ar50.Ar5repo;
+using static Dan.Plugin.Kartverket.Clients.IAddressLookupClient;
 
 var host = new HostBuilder()
         .ConfigureDanPluginDefaults()
         .ConfigureServices((context, services) =>
         {
+
             var configurationRoot = context.Configuration;
             services.Configure<ApplicationSettings>(configurationRoot);
+
             services.AddTransient<IAddressLookupClient, AddressLookupClient>();
             services.AddTransient<IDDWrapper, DDWrapper>();
             services.AddTransient<IDiHeWrapper, DiHeWrapper>();
+
+            //PostgresSql dataSource
+            var connectionString = configurationRoot.GetValue<string>("ConnectionString");
+            var dataSource = new NpgsqlDataSourceBuilder(connectionString).Build();
+            services.AddSingleton(dataSource);
 
             //Matrikkel og grunnbok services
             services.AddTransient<IKartverketGrunnbokMatrikkelService, KartverketGrunnbokMatrikkelService>();
@@ -36,9 +47,10 @@ var host = new HostBuilder()
             services.AddTransient<IMatrikkelBygningClientService, MatrikkelBygningClientService>();
             services.AddTransient<IMatrikkelBruksenhetService, MatrikkelBruksenhetService>();
             services.AddTransient<IMatrikkelAdresseClientService, MatrikkelAdresseClientService>();
-            services.AddScoped<IRequestContextService, RequestContextService>(); //needs to be scoped
+            services.AddTransient<IAr5Repo, Ar5repo>();
+            services.AddScoped<IRequestContextService, RequestContextService>(); //needs to be scoped            
 
-
+            
             //KartverketClient
             services.AddMaskinportenHttpClient<KeyVaultMaskinportenClientDefinition, KartverketClient>(configurationRoot.GetSection("MPKartverket"),
     clientDefinition =>
@@ -55,6 +67,8 @@ var host = new HostBuilder()
                 })
                 .AddPolicyHandlerFromRegistry(Constants.SafeHttpClientPolicy);
         })
+
+
         .Build();
 
     await host.RunAsync();
