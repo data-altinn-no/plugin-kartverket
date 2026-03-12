@@ -10,6 +10,7 @@ using Dan.Plugin.Kartverket.Test.TestHelpers;
 using FakeItEasy;
 using Newtonsoft.Json;
 using Xunit;
+using static Dan.Plugin.Kartverket.Clients.IAddressLookupClient;
 using static Dan.Plugin.Kartverket.Test.TestHelpers.TestHelpers;
 
 namespace Dan.Plugin.Kartverket.Test.Clients;

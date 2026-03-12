@@ -7,20 +7,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-using static Dan.Plugin.Kartverket.Clients.Grunnbok.StoreServiceClientService;
+using static Dan.Plugin.Kartverket.Clients.ar50.Ar5repo;
 
 namespace Dan.Plugin.Kartverket.Test.Services
 {
     public class DiHeWrapperTest
     {
-        private readonly IKartverketGrunnbokMatrikkelService _kartverketService;
-        private readonly IStoreServiceClientService _storeServiceClientService;
+        private readonly IKartverketGrunnbokMatrikkelService _kartverketService;        
         private readonly IAddressLookupClient _addressLookupClient;
+        private readonly IAr5Repo _ar5Repo;
 
         public DiHeWrapperTest()
         {
             _kartverketService = A.Fake<IKartverketGrunnbokMatrikkelService>();
-            _storeServiceClientService = A.Fake<IStoreServiceClientService>();
+            _ar5Repo = A.Fake<IAr5Repo>();
             _addressLookupClient = A.Fake<IAddressLookupClient>();
         }
 
@@ -30,7 +30,7 @@ namespace Dan.Plugin.Kartverket.Test.Services
             var _diHeWrapper = new DiHeWrapper(
                 _addressLookupClient,
                 _kartverketService,
-                _storeServiceClientService);
+                _ar5Repo);
 
             var propertyList = new List<PropertyWithOwners>
             {
