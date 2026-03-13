@@ -1,4 +1,5 @@
 using Dan.Common;
+using Dan.Common.Exceptions;
 using Dan.Common.Extensions;
 using Dan.Common.Models;
 using Dan.Common.Util;
@@ -151,7 +152,9 @@ namespace Dan.Plugin.Kartverket
             var ecb = new EvidenceBuilder(new Metadata(), "Jordleie");
 
             if (!evidenceHarvesterRequest.TryGetParameter("Matrikkelnummer", out string matrikkelnummer))
-                throw new Exception("Parameter 'Matrikkelnummer' mangler.");
+            {
+                throw new EvidenceSourcePermanentClientException(Metadata.ERROR_INCORRECT_VALUE, "Matrikkelnummer is missing or incorrect");
+            }
 
             var result = await diheWrapper.GetLandRentalInformation(matrikkelnummer);
 

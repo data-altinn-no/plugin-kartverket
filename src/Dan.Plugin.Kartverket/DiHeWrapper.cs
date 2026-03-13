@@ -28,10 +28,10 @@ namespace Dan.Plugin.Kartverket
 
         public async Task<LandRentalResponse> GetLandRentalInformation(string matrikkelNumber)
         {
-            var result = new LandRentalResponse();
-            
+            var jordTypeList = new List<JordType>();
+
             var coordinates = await _geonorgeClient.GetCoordinatesForProperty(matrikkelNumber);
-            if (coordinates != null)
+            if (coordinates.Count > 0)
             {
                 foreach (var coordinateset in coordinates)
                 {
@@ -39,10 +39,9 @@ namespace Dan.Plugin.Kartverket
                     if (ar5Response is null)
                         continue;
 
-                    var jordtypeList = new List<JordType>();
                     foreach (var jordtype in ar5Response)
                     {
-                        jordtypeList.Add(new JordType
+                        jordTypeList.Add(new JordType
                         {
                             FeatureId = jordtype.Objectid,
                             ArealType = jordtype.ArealType.ToString(),
@@ -50,15 +49,15 @@ namespace Dan.Plugin.Kartverket
                             GeoJson = jordtype.Shape
                         });
                     }
-                    result = new LandRentalResponse
-                    {
-                        Matrikkelnumber = matrikkelNumber,
-                        JordType = jordtypeList
-                    };
+                    
                 }                
             }          
 
-            return result;
+            return new LandRentalResponse
+            {
+                Matrikkelnumber = matrikkelNumber,
+                JordType = jordTypeList
+            };
         }
 
         public async Task<MotorizedTrafficResponse> GetMotorizedTrafficInformation(string identifier)
