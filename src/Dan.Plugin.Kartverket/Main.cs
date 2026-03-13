@@ -121,7 +121,7 @@ namespace Dan.Plugin.Kartverket
             );
         }
 
-        [Function("LandRental")]
+        [Function("Jordleie")]
         public async Task<HttpResponseData> LandRental([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequestData req, FunctionContext context)
         {
             _logger.LogInformation("Running func 'LandRental'");
