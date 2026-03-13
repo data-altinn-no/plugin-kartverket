@@ -213,6 +213,15 @@ namespace Dan.Plugin.Kartverket
                         {
                             RequiredScopes = new List<string> { "altinn:dataaltinnno/dihe" }
                         }
+                    },
+                    Parameters = new List<EvidenceParameter>()
+                    {
+                        new EvidenceParameter
+                        {
+                            EvidenceParamName = "Matrikkelnummer",
+                            ParamType = EvidenceParamType.String,
+                            Required = true
+                        }
                     }
                 }
             };

@@ -148,9 +148,13 @@ namespace Dan.Plugin.Kartverket
 
         private async Task<List<EvidenceValue>> GetEvidenceValuesLandRental(EvidenceHarvesterRequest evidenceHarvesterRequest, IDiHeWrapper diheWrapper)
         {
-            var result = await diheWrapper.GetLandRentalInformation(evidenceHarvesterRequest.SubjectParty.GetAsString(false));
-
             var ecb = new EvidenceBuilder(new Metadata(), "Jordleie");
+
+            if (!evidenceHarvesterRequest.TryGetParameter("Matrikkelnummer", out string matrikkelnummer))
+                throw new Exception("Parameter 'Matrikkelnummer' mangler.");
+
+            var result = await diheWrapper.GetLandRentalInformation(matrikkelnummer);
+
             ecb.AddEvidenceValue("default", JsonConvert.SerializeObject(result), Metadata.SOURCE, false);
             return ecb.GetEvidenceValues();
         }
