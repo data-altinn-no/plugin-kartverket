@@ -10,7 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Dan.Plugin.Kartverket.Clients
@@ -19,7 +21,6 @@ namespace Dan.Plugin.Kartverket.Clients
     {
         public Task<KartverketResponse> Get(KartverketResponse kartverket);
         public Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo);
-
         public Task<List<List<double>>> GetCoordinatesForProperty(
             string? matrikkelNumber = null,
             string? gnr = null,
@@ -28,13 +29,11 @@ namespace Dan.Plugin.Kartverket.Clients
             string? fnr = null,
             string? kommunenr = null);
 
-
         public class AddressLookupClient : IAddressLookupClient
         {
             private readonly HttpClient _httpClient;
             private readonly ApplicationSettings _settings;
             private IKartverketGrunnbokMatrikkelService _kartverketGrunnbokMatrikkelService;
-
 
             public AddressLookupClient(IHttpClientFactory httpClientFactory, IOptions<ApplicationSettings> settings, IKartverketGrunnbokMatrikkelService matrikkelService)
             {
@@ -100,27 +99,25 @@ namespace Dan.Plugin.Kartverket.Clients
                     var response = await _httpClient.GetAsync(urlBuilder.ToString());
                     response.EnsureSuccessStatusCode();
 
-                    var content = await response.Content.ReadAsStringAsync();
-                    var json = JObject.Parse(content);
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
 
-                    var features = json["features"];
-                    if (features == null)
+                    var geocodingResponse =
+                        await response.Content.ReadFromJsonAsync<GeocodingResponse>(options);
+
+                    if (geocodingResponse?.Features == null)
                         return new List<List<double>>();
 
-                    var coordinates = new List<List<double>>();
-
-                    foreach (var feature in features)
-                    {
-                        var coordsToken = feature["geometry"]?["coordinates"];
-                        if (coordsToken != null)
-                        {
-                            coordinates.AddRange(ExtractCoordinates(coordsToken));
-                        }
-                    }
+                    var coordinates = geocodingResponse.Features
+                        .Where(f => f?.Geometry?.Coordinates != null)
+                        .Select(f => f.Geometry.Coordinates)
+                        .ToList();
 
                     return coordinates;
                 }
-                catch (Exception e) when (e is HttpRequestException or JsonException)
+                catch (Exception e)
                 {
                     throw new EvidenceSourcePermanentServerException(
                         Metadata.ERROR_CCR_UPSTREAM_ERROR,

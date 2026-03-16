@@ -26,7 +26,7 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
                 throw new ArgumentException("Coordinates required");
 
             if (coordinates.Count % 2 != 0)
-                throw new ArgumentException($"Invalid coordinate format {coordinates}");
+                throw new ArgumentException($"Invalid coordinate format: [{string.Join(", ", coordinates)}]");
 
             //4326 is the Spatial Reference System Identifier (SRID) for WGS 84,
             //common coordinate system used for geographic data.
@@ -65,7 +65,8 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
 
             //Checks if the geometry intersects with any of the areas in the fkb_ar5_omrade table,
             //if so, retrieves the relevant information about those areas.
-            //25533 is an EPSG-code for a specific coordinate reference system (CRS) used in Norway, known as EUREF89 / UTM zone 33N.
+            //25833 is an EPSG-code for a specific coordinate reference system (CRS) used in Norway, known as EUREF89 / UTM zone 33N.
+            //4326 is the Spatial Reference System Identifier (SRID) for WGS 84,
             string sql = @"
                             WITH eiendom AS (
                                 SELECT ST_Transform(
