@@ -51,7 +51,7 @@ namespace Dan.Plugin.Kartverket
                         });
                     }
                     
-                }             
+                }                
             }          
 
             return new LandRentalResponse
