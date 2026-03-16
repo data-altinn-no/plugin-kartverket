@@ -20,7 +20,7 @@ namespace Dan.Plugin.Kartverket.Clients
         public Task<KartverketResponse> Get(KartverketResponse kartverket);
         public Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo);
 
-        public Task<List<string>> GetCoordinatesForProperty(
+        public Task<List<List<double>>> GetCoordinatesForProperty(
             string? matrikkelNumber = null,
             string? gnr = null,
             string? bnr = null,
@@ -66,7 +66,12 @@ namespace Dan.Plugin.Kartverket.Clients
                 return kartverket;
             }
 
-            public async Task<List<string>> GetCoordinatesForProperty(string matrikkelNumber = null, string gnr = null, string bnr = null, string snr = null, string fnr = null,
+            public async Task<List<List<double>>> GetCoordinatesForProperty(
+                string matrikkelNumber = null,
+                string gnr = null,
+                string bnr = null,
+                string snr = null,
+                string fnr = null,
                 string kommunenr = null)
             {
                 var urlBuilder = new StringBuilder();
@@ -89,6 +94,7 @@ namespace Dan.Plugin.Kartverket.Clients
 
                 if (queryParams.Count > 0)
                     urlBuilder.Append("?").Append(string.Join("&", queryParams));
+
                 try
                 {
                     var response = await _httpClient.GetAsync(urlBuilder.ToString());
@@ -96,27 +102,33 @@ namespace Dan.Plugin.Kartverket.Clients
 
                     var content = await response.Content.ReadAsStringAsync();
                     var json = JObject.Parse(content);
+
                     var features = json["features"];
                     if (features == null)
-                        return new List<string>();
+                        return new List<List<double>>();
 
-                    var coordinates = features
-                        .Where(f => f["geometry"]?["coordinates"] != null)
-                        .Where(f => f["geometry"]["coordinates"].Count() >= 2)
-                        .Select(f =>
+                    var coordinates = new List<List<double>>();
+
+                    foreach (var feature in features)
+                    {
+                        var coordsToken = feature["geometry"]?["coordinates"];
+                        if (coordsToken != null)
                         {
-                            var coords = f["geometry"]["coordinates"];
-                            return $"{coords[0]},{coords[1]}";
-                        }).ToList();
+                            coordinates.AddRange(ExtractCoordinates(coordsToken));
+                        }
+                    }
 
                     return coordinates;
-
                 }
                 catch (Exception e) when (e is HttpRequestException or JsonException)
                 {
-                    throw new EvidenceSourcePermanentServerException(Metadata.ERROR_CCR_UPSTREAM_ERROR, null, e);
+                    throw new EvidenceSourcePermanentServerException(
+                        Metadata.ERROR_CCR_UPSTREAM_ERROR,
+                        null,
+                        e);
                 }
             }
+        
 
             public async Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo)
             {
@@ -275,6 +287,35 @@ namespace Dan.Plugin.Kartverket.Clients
                         property.Municipality = address.Kommunenavn;
                     }
                 }
+            }
+
+            private static List<List<double>> ExtractCoordinates(JToken token)
+            {
+                var result = new List<List<double>>();
+
+                if (token is JArray arr)
+                {
+                    // Base case: coordinate pair
+                    if (arr.Count >= 2 &&
+                        (arr[0].Type == JTokenType.Float || arr[0].Type == JTokenType.Integer) &&
+                        (arr[1].Type == JTokenType.Float || arr[1].Type == JTokenType.Integer))
+                    {
+                        result.Add(new List<double>
+                        {
+                            arr[0].Value<double>(),
+                            arr[1].Value<double>()
+                        });
+                    }
+                    else
+                    {
+                        foreach (var child in arr)
+                        {
+                            result.AddRange(ExtractCoordinates(child));
+                        }
+                    }
+                }
+
+                return result;
             }
         }
     }
