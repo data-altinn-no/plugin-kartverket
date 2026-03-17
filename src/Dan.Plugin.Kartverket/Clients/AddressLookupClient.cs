@@ -10,7 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Dan.Plugin.Kartverket.Clients
@@ -19,8 +21,7 @@ namespace Dan.Plugin.Kartverket.Clients
     {
         public Task<KartverketResponse> Get(KartverketResponse kartverket);
         public Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo);
-
-        public Task<List<string>> GetCoordinatesForProperty(
+        public Task<List<List<double>>> GetCoordinatesForProperty(
             string? matrikkelNumber = null,
             string? gnr = null,
             string? bnr = null,
@@ -28,13 +29,11 @@ namespace Dan.Plugin.Kartverket.Clients
             string? fnr = null,
             string? kommunenr = null);
 
-
         public class AddressLookupClient : IAddressLookupClient
         {
             private readonly HttpClient _httpClient;
             private readonly ApplicationSettings _settings;
             private IKartverketGrunnbokMatrikkelService _kartverketGrunnbokMatrikkelService;
-
 
             public AddressLookupClient(IHttpClientFactory httpClientFactory, IOptions<ApplicationSettings> settings, IKartverketGrunnbokMatrikkelService matrikkelService)
             {
@@ -66,7 +65,12 @@ namespace Dan.Plugin.Kartverket.Clients
                 return kartverket;
             }
 
-            public async Task<List<string>> GetCoordinatesForProperty(string matrikkelNumber = null, string gnr = null, string bnr = null, string snr = null, string fnr = null,
+            public async Task<List<List<double>>> GetCoordinatesForProperty(
+                string matrikkelNumber = null,
+                string gnr = null,
+                string bnr = null,
+                string snr = null,
+                string fnr = null,
                 string kommunenr = null)
             {
                 var urlBuilder = new StringBuilder();
@@ -89,34 +93,39 @@ namespace Dan.Plugin.Kartverket.Clients
 
                 if (queryParams.Count > 0)
                     urlBuilder.Append("?").Append(string.Join("&", queryParams));
+
                 try
                 {
                     var response = await _httpClient.GetAsync(urlBuilder.ToString());
                     response.EnsureSuccessStatusCode();
 
-                    var content = await response.Content.ReadAsStringAsync();
-                    var json = JObject.Parse(content);
-                    var features = json["features"];
-                    if (features == null)
-                        return new List<string>();
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
 
-                    var coordinates = features
-                        .Where(f => f["geometry"]?["coordinates"] != null)
-                        .Where(f => f["geometry"]["coordinates"].Count() >= 2)
-                        .Select(f =>
-                        {
-                            var coords = f["geometry"]["coordinates"];
-                            return $"{coords[0]},{coords[1]}";
-                        }).ToList();
+                    var geocodingResponse =
+                        await response.Content.ReadFromJsonAsync<GeocodingResponse>(options);
+
+                    if (geocodingResponse?.Features == null)
+                        return new List<List<double>>();
+
+                    var coordinates = geocodingResponse.Features
+                        .Where(f => f?.Geometry?.Coordinates != null)
+                        .Select(f => f.Geometry.Coordinates)
+                        .ToList();
 
                     return coordinates;
-
                 }
-                catch (Exception e) when (e is HttpRequestException or JsonException)
+                catch (Exception e)
                 {
-                    throw new EvidenceSourcePermanentServerException(Metadata.ERROR_CCR_UPSTREAM_ERROR, null, e);
+                    throw new EvidenceSourcePermanentServerException(
+                        Metadata.ERROR_CCR_UPSTREAM_ERROR,
+                        null,
+                        e);
                 }
             }
+        
 
             public async Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo)
             {
@@ -276,6 +285,7 @@ namespace Dan.Plugin.Kartverket.Clients
                     }
                 }
             }
+
         }
     }
 

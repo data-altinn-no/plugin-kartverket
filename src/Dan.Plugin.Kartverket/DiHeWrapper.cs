@@ -1,9 +1,9 @@
 using Dan.Plugin.Kartverket.Clients;
+using Dan.Plugin.Kartverket.Clients.ar50;
 using Dan.Plugin.Kartverket.Models;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using static Dan.Plugin.Kartverket.Clients.ar50.Ar5repo;
 
 namespace Dan.Plugin.Kartverket
 {
@@ -33,9 +33,10 @@ namespace Dan.Plugin.Kartverket
             var coordinates = await _geonorgeClient.GetCoordinatesForProperty(matrikkelNumber);
             if (coordinates.Count > 0)
             {
-                foreach (var coordinateset in coordinates)
+                foreach (var coordinateSet in coordinates)
                 {
-                    var ar5Response = await _ar50Repo.GetOmrade(coordinateset);
+                    var ar5Response = await _ar50Repo.GetOmrade(coordinateSet);
+
                     if (ar5Response is null)
                         continue;
 

@@ -1,13 +1,12 @@
 using AwesomeAssertions;
 using Dan.Plugin.Kartverket.Clients;
-using Dan.Plugin.Kartverket.Clients.Grunnbok;
+using Dan.Plugin.Kartverket.Clients.ar50;
 using Dan.Plugin.Kartverket.Models;
 using FakeItEasy;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-using static Dan.Plugin.Kartverket.Clients.ar50.Ar5repo;
 
 namespace Dan.Plugin.Kartverket.Test.Services
 {

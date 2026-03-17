@@ -20,17 +20,13 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
             _dataSource = dataSource;
         }
 
-        public async Task<List<Ar5OmradeDbModel>> GetOmrade(string coordinates)
+        public async Task<List<Ar5OmradeDbModel>> GetOmrade(List<double> coordinates)
         {
-            if (string.IsNullOrWhiteSpace(coordinates))
+            if (coordinates == null || coordinates.Count < 2)
                 throw new ArgumentException("Coordinates required");
 
-            coordinates = ConvertCoordinates(coordinates);
-            coordinates = coordinates.Replace(" ", "");
-            var cords = coordinates.Split(',');
-
-            if (cords.Length % 2 != 0)
-                throw new ArgumentException("Invalid coordinate format");
+            if (coordinates.Count % 2 != 0)
+                throw new ArgumentException($"Invalid coordinate format: [{string.Join(", ", coordinates)}]");
 
             //4326 is the Spatial Reference System Identifier (SRID) for WGS 84,
             //common coordinate system used for geographic data.
@@ -41,23 +37,18 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
             Geometry inputGeometry;
 
             // 📍 ONE POINT
-            if (cords.Length == 2)
+            if (coordinates.Count == 2)
             {
-                var longitute = double.Parse(cords[0], CultureInfo.InvariantCulture);
-                var latitude = double.Parse(cords[1], CultureInfo.InvariantCulture);
-
-                inputGeometry = geometryFactory.CreatePoint(new Coordinate(longitute, latitude));
+                inputGeometry = geometryFactory.CreatePoint(new Coordinate(coordinates[0], coordinates[1]));
             }
             // 🔷 POLYGON
-            else if (cords.Length >= 6)
+            else if (coordinates.Count >= 6)
             {
                 var coordinatesList = new List<Coordinate>();
 
-                for (int i = 0; i < cords.Length; i += 2)
+                for (int i = 0; i < coordinates.Count; i += 2)
                 {
-                    var longitude = double.Parse(cords[i], CultureInfo.InvariantCulture);
-                    var latitude = double.Parse(cords[i + 1], CultureInfo.InvariantCulture);
-                    coordinatesList.Add(new Coordinate(longitude, latitude));
+                    coordinatesList.Add(new Coordinate(coordinates[i], coordinates[i + 1]));
                 }
 
                 if (!coordinatesList.First().Equals2D(coordinatesList.Last()))
@@ -69,15 +60,19 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
             {
                 throw new ArgumentException("At least 3 coordinate pairs required for polygon");
             }
-                      
+
             await using var connection = await _dataSource.OpenConnectionAsync();
 
             //Checks if the geometry intersects with any of the areas in the fkb_ar5_omrade table,
             //if so, retrieves the relevant information about those areas.
-            //25533 is an EPSG-code for a specific coordinate reference system (CRS) used in Norway, known as EUREF89 / UTM zone 33N.
+            //25833 is an EPSG-code for a specific coordinate reference system (CRS) used in Norway, known as EUREF89 / UTM zone 33N.
+            //4326 is the Spatial Reference System Identifier (SRID) for WGS 84,
             string sql = @"
                             WITH eiendom AS (
-                                SELECT ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833) AS shape
+                                SELECT ST_Transform(
+                                    ST_SetSRID(ST_GeomFromText(@geom), 4326),
+                                    25833
+                                ) AS shape
                             )
                             SELECT
                                 o.objectid AS ""Objectid"",
@@ -98,21 +93,11 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
 
             return results;
         }
-
-        // use . instead of , for coordinates for better seperation in sql query
-        private string ConvertCoordinates(string coordinates)
-        {
-            coordinates = coordinates.Replace(" ", "");
-
-            var regex = new System.Text.RegularExpressions.Regex(@"(\d+),(\d+)");
-            coordinates = regex.Replace(coordinates, "$1.$2");
-            return coordinates;
-        }
-
-        public interface IAr5Repo
-        {
-            Task<List<Ar5OmradeDbModel>> GetOmrade(string coordinates);
-        }
-
     }
+
+    public interface IAr5Repo
+    {
+        Task<List<Ar5OmradeDbModel>> GetOmrade(List<double> coordinates);
+    }
+
 }
