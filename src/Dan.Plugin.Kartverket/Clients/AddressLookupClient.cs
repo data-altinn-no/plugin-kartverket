@@ -286,34 +286,6 @@ namespace Dan.Plugin.Kartverket.Clients
                 }
             }
 
-            private static List<List<double>> ExtractCoordinates(JToken token)
-            {
-                var result = new List<List<double>>();
-
-                if (token is JArray arr)
-                {
-                    // Base case: coordinate pair
-                    if (arr.Count >= 2 &&
-                        (arr[0].Type == JTokenType.Float || arr[0].Type == JTokenType.Integer) &&
-                        (arr[1].Type == JTokenType.Float || arr[1].Type == JTokenType.Integer))
-                    {
-                        result.Add(new List<double>
-                        {
-                            arr[0].Value<double>(),
-                            arr[1].Value<double>()
-                        });
-                    }
-                    else
-                    {
-                        foreach (var child in arr)
-                        {
-                            result.AddRange(ExtractCoordinates(child));
-                        }
-                    }
-                }
-
-                return result;
-            }
         }
     }
 
