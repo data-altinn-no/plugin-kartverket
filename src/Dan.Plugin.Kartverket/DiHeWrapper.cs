@@ -69,9 +69,9 @@ namespace Dan.Plugin.Kartverket
             foreach (var property in kartverketResponse)
             {
                 var martikkelNumber = BuildMatrikkelNumber(property.PropertyData.Kommunenummer, property.PropertyData.Gardsnummer, property.PropertyData.Bruksnummer, property.PropertyData.Festenummer);
-                var coordinates = "";
+                var coordinates = new List<List<double>>();
                 if(!string.IsNullOrEmpty(martikkelNumber))
-                    coordinates = string.Join(", ", await _geonorgeClient.GetCoordinatesForProperty(martikkelNumber, property.PropertyData.Gardsnummer, property.PropertyData.Bruksnummer, property.PropertyData.Seksjonsnummer, property.PropertyData.Festenummer, property.PropertyData.Kommunenummer));
+                    coordinates = await _geonorgeClient.GetCoordinatesForProperty(martikkelNumber, property.PropertyData.Gardsnummer, property.PropertyData.Bruksnummer, property.PropertyData.Seksjonsnummer, property.PropertyData.Festenummer, property.PropertyData.Kommunenummer);
 
                 result.Properties.Add( new MotorizedTrafficProperty
                 {

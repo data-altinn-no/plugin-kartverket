@@ -24,7 +24,7 @@ namespace Dan.Plugin.Kartverket.Models
         /// Latitude and Longitude Coordinates separated by comma
         /// </summary>
         [JsonProperty("Coordinates")]
-        public string Coordinates { get; set; }
+        public List<List<double>> Coordinates { get; set; }
     }
 
     public class CoOwner {
