@@ -21,6 +21,7 @@ namespace Dan.Plugin.Kartverket.Models
         /// Jordtype - Type of dirt/land
         /// </summary>
         public List<JordType> JordType { get; set; }
+        public string Adresse { get; set; }
 
     }
 

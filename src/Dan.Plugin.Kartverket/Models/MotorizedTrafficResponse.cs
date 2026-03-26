@@ -21,10 +21,20 @@ namespace Dan.Plugin.Kartverket.Models
         [JsonProperty("CoOwners")]
         public List<CoOwner> CoOwners { get; set; } = new();
         /// <summary>
-        /// Latitude and Longitude Coordinates separated by comma
+        /// Latitude and Longitude Coordinates
         /// </summary>
         [JsonProperty("Coordinates")]
         public List<List<double>> Coordinates { get; set; }
+        /// <summary>
+        /// Address of property
+        /// </summary>
+        [JsonProperty("Address")]
+        public Address Address { get; set; }
+        /// <summary>
+        /// If the property is a fritidsbolig or not
+        /// </summary>
+        [JsonProperty("IsFritidsbolig")]
+        public bool IsFritidsbolig { get; set; }
     }
 
     public class CoOwner {
@@ -57,6 +67,12 @@ namespace Dan.Plugin.Kartverket.Models
         /// </summary>
         [JsonProperty("CoOwners")]
         public List<CoOwner> Owners { get; set; }
+        /// <summary>
+        /// Property address. From Geonorge
+        /// </summary>
+        [JsonProperty("Address")]
+        public Address Address { get; set; }
+        public bool IsFritidsbolig { get; set; }
     }
 
     public class PropertyData
@@ -73,5 +89,15 @@ namespace Dan.Plugin.Kartverket.Models
         public string Festenummer { get; set; }
         [JsonProperty("Seksjonsnummer")]
         public string Seksjonsnummer { get; set; }
+    }
+
+    public class Address
+    {
+        [JsonProperty("Street")]
+        public string Street { get; set; }
+        [JsonProperty("PostalCode")]
+        public string PostalCode { get; set; }
+        [JsonProperty("City")]
+        public string City { get; set; }
     }
 }

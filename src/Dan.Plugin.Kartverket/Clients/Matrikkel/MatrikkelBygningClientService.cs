@@ -8,6 +8,10 @@ using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using Kartverket.Matrikkel.BygningService;
+using MatrikkelenhetId = Kartverket.Matrikkel.BygningService.MatrikkelenhetId;
+using MatrikkelContext = Kartverket.Matrikkel.BygningService.MatrikkelContext;
+using Timestamp = Kartverket.Matrikkel.BygningService.Timestamp;
+using KoordinatsystemKodeId = Kartverket.Matrikkel.BygningService.KoordinatsystemKodeId;
 
 namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 {
@@ -55,6 +59,33 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             return result;
         }
 
+        public async Task<findAlleBygningstypeKoderResponse> GetBygningsType()
+        {
+            var result = new findAlleBygningstypeKoderResponse();
+
+            var client = CreateClient();
+
+            var request = new findAlleBygningstypeKoderRequest()
+            {
+                matrikkelContext = GetContext(),                
+            };
+
+            try
+            {
+                result = await client.findAlleBygningstypeKoderAsync(request);
+            }
+            catch
+            {
+                _logger.LogError($"Feil ved innhenting av bygningstype");
+            }
+            finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
+            }
+            return result;
+        }
+
         private MatrikkelContext GetContext()
         {
             return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp, KoordinatsystemKodeId>(_requestContextService.ServiceContext);
@@ -83,5 +114,6 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
     public interface IMatrikkelBygningClientService
     {
         Task<List<long>> GetBygningerForMatrikkelenhet(long matrikkelEnhetId);
+        Task<findAlleBygningstypeKoderResponse> GetBygningsType();
     }
 }

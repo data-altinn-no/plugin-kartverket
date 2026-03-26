@@ -276,7 +276,7 @@ namespace Dan.Plugin.Kartverket.Clients
 
                 foreach (var id in bruksenhetider)
                 {
-                    result += "/n" + await _matrikkelBruksenhetService.GetAddressForBruksenhet(id.value);
+                    result += await _matrikkelBruksenhetService.GetAddressForBruksenhet(id.value);
                 }
 
                 return result;
@@ -365,6 +365,20 @@ namespace Dan.Plugin.Kartverket.Clients
                     if (matrikkelenhetgrunnbok != null)
                         kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
 
+                    var address = await GetAddressForSection(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer, matrikkelenhetgrunnbok.festenummer, kommune.Number, matrikkelenhetgrunnbok.seksjonsnummer);
+
+                    //check if property is fritidsbolig
+                    var isFritidsbolig = false;
+                    var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer, matrikkelenhetgrunnbok.festenummer, matrikkelenhetgrunnbok.seksjonsnummer, kommune.Number);
+                    var bruksenhetIds = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
+                    if(bruksenhetIds.Any())
+                    {
+                        var bruksenhet = await _matrikkelStoreClient.GetBruksenhet(bruksenhetIds.FirstOrDefault().value);
+                        var bruksenhetstype = await _matrikkelStoreClient.GetBruksenhetstype(bruksenhet.bruksenhetstypeKodeId.value);
+                        isFritidsbolig = bruksenhetstype.kodeverdi.Equals("F") ? true : false;
+                    }
+                    
+
                     result.Add(new PropertyWithOwners()
                     {
                         PropertyData = new PropertyData()
@@ -376,7 +390,12 @@ namespace Dan.Plugin.Kartverket.Clients
                             Festenummer = matrikkelenhetgrunnbok?.festenummer.ToString() ?? null,
                             Seksjonsnummer = matrikkelenhetgrunnbok?.seksjonsnummer.ToString() ?? null
                         },
-                        Owners = listOfCoOwners
+                        Owners = listOfCoOwners,
+                        Address = new Address()
+                        {
+                            Street = address ?? null,
+                        },
+                        IsFritidsbolig = isFritidsbolig
                     });
                 }
                 catch (Exception ex)

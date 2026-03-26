@@ -19,6 +19,7 @@ namespace Dan.Plugin.Kartverket
         private readonly IAddressLookupClient _geonorgeClient;
         private readonly IKartverketGrunnbokMatrikkelService _kartverketService;
         private readonly IAr5Repo _ar50Repo;
+
         public DiHeWrapper(IAddressLookupClient addressLookupClient, IKartverketGrunnbokMatrikkelService _kartverketGMService, IAr5Repo ar50Repo)
         {
             _geonorgeClient = addressLookupClient;
@@ -73,11 +74,20 @@ namespace Dan.Plugin.Kartverket
                 if(!string.IsNullOrEmpty(martikkelNumber))
                     coordinates = await _geonorgeClient.GetCoordinatesForProperty(martikkelNumber, property.PropertyData.Gardsnummer, property.PropertyData.Bruksnummer, property.PropertyData.Seksjonsnummer, property.PropertyData.Festenummer, property.PropertyData.Kommunenummer);
 
+                var adresseInfo = await _geonorgeClient.Search(property.Address.Street, property.PropertyData.Kommunenummer, null);
+
                 result.Properties.Add( new MotorizedTrafficProperty
                 {
                     MatrikkelNumber = martikkelNumber,
                     Coordinates = coordinates,
-                    CoOwners = property.Owners
+                    CoOwners = property.Owners,
+                    Address = new Address
+                    {
+                        Street = property.Address.Street,
+                        PostalCode = adresseInfo?.Adresser.FirstOrDefault()?.Postnummer,
+                        City = adresseInfo?.Adresser.FirstOrDefault()?.Poststed
+                    },
+                    IsFritidsbolig = property.IsFritidsbolig
                 });
             }
 

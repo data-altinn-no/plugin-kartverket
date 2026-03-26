@@ -4,7 +4,6 @@ using Dan.Plugin.Kartverket.Config;
 using Dan.Plugin.Kartverket.Models;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -133,7 +132,7 @@ namespace Dan.Plugin.Kartverket.Clients
 
                 var urlBuilder = new StringBuilder();
                 urlBuilder.Append(_settings.AddressLookupUrl).Append("/sok?");
-                urlBuilder.Append("&fuzzy=false").Append("&");
+                urlBuilder.Append("fuzzy=false").Append("&");
 
 
                 if (!string.IsNullOrEmpty(municipalityNo))
