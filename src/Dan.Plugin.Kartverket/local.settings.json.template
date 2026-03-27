@@ -18,6 +18,10 @@
     "MP3LandbrukScope": "ldir:eiendom",
     "MP3LandbrukAzureKeyVaultName": "kv-nadobe-prod-staging",
     "MP3LandbrukSecretName": "digdir-cert",
-    "AddressLookupUrl": "https://ws.geonorge.no/adresser/v1"
+    "AddressLookupUrl": "https://ws.geonorge.no/adresser/v1",
+    "CoordinatesLookupUrl": "https://ws.geonorge.no/eiendom/v1",
+    "ConnectionString": "Host=localhost;Port=5432;Username=postgres;Password=PASSWORD;Database=Geo",
+    "GrunnbokRootUrl": "https://etgltest.grunnbok.no/grunnbok/wsapi/v2/",
+    "MatrikkelRootUrl": "https://prodtest.matrikkel.no/matrikkelapi/wsapi/v1/"
   }
 }
