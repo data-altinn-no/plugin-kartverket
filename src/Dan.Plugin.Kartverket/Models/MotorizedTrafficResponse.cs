@@ -29,7 +29,7 @@ namespace Dan.Plugin.Kartverket.Models
         /// Address of property
         /// </summary>
         [JsonProperty("Address")]
-        public Address Address { get; set; }
+        public List<Address> Address { get; set; }
         /// <summary>
         /// If the property is a fritidsbolig or not
         /// </summary>
@@ -71,7 +71,11 @@ namespace Dan.Plugin.Kartverket.Models
         /// Property address. From Geonorge
         /// </summary>
         [JsonProperty("Address")]
-        public Address Address { get; set; }
+        public List<Address> Addresses { get; set; }
+        /// <summary>
+        /// If the property is a fritidsbolig or not
+        /// </summary>
+        [JsonProperty("IsFritidsbolig")]
         public bool IsFritidsbolig { get; set; }
     }
 

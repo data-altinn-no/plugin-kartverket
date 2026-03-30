@@ -75,19 +75,34 @@ namespace Dan.Plugin.Kartverket
                 if(!string.IsNullOrEmpty(martikkelNumber))
                     coordinates = await _geonorgeClient.GetCoordinatesForProperty(martikkelNumber, property.PropertyData.Gardsnummer, property.PropertyData.Bruksnummer, property.PropertyData.Seksjonsnummer, property.PropertyData.Festenummer, property.PropertyData.Kommunenummer);
 
-                var adresseInfo = await _geonorgeClient.Search(property.Address.Street, property.PropertyData.Kommunenummer, null);
+                var adresser = new List<Address>();
+                foreach (var singleAdress in property.Addresses)
+                {
+                    var adresseInfo = await _geonorgeClient.Search
+                        (singleAdress.Street,
+                        property.PropertyData.Kommunenummer,                       
+                        null,
+                        property.PropertyData.Kommunenavn);
+
+                    if(adresseInfo.Adresser.Any())
+                    {
+                        var address = new Address
+                        {
+                            Street = singleAdress.Street ?? adresseInfo.Adresser.FirstOrDefault()?.Adressetekst,
+                            PostalCode = adresseInfo?.Adresser.FirstOrDefault()?.Postnummer,
+                            City = adresseInfo?.Adresser.FirstOrDefault()?.Poststed
+                        };
+                        adresser.Add(address);
+                    }
+                    
+                }
 
                 result.Properties.Add( new MotorizedTrafficProperty
                 {
                     MatrikkelNumber = martikkelNumber,
                     Coordinates = coordinates,
                     CoOwners = property.Owners,
-                    Address = new Address
-                    {
-                        Street = property.Address.Street,
-                        PostalCode = adresseInfo?.Adresser.FirstOrDefault()?.Postnummer,
-                        City = adresseInfo?.Adresser.FirstOrDefault()?.Poststed
-                    },
+                    Address = adresser,
                     IsFritidsbolig = property.IsFritidsbolig
                 });
             }

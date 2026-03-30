@@ -270,20 +270,22 @@ namespace Dan.Plugin.Kartverket.Clients
             try
             {
                 var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(gaardsNo, bruksNo, festeNo, sectionNo, municipalityNo);
-                var test = await _matrikkelStoreClient.GetMatrikkelenhet(matrikkelenhetid.value);
                 var bruksenhetider = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
-                var result = string.Empty;
+
+                var addresses = new List<string>();
 
                 foreach (var id in bruksenhetider)
                 {
-                    result += await _matrikkelBruksenhetService.GetAddressForBruksenhet(id.value);
+                    var address = await _matrikkelBruksenhetService.GetAddressForBruksenhet(id.value);
+
+                    if (!string.IsNullOrWhiteSpace(address))
+                        addresses.Add(address);
                 }
 
-                return result;
+                return string.Join("\n", addresses);
             }
             catch (Exception ex)
             {
-                //just return empty string - if getaddressforbruksenhet cannot find an address, the matrikkel service also returns an empty string
                 _logger.LogError(ex, "Kartverket::OED::Error getting address for section {gaardsNo}/{bruksNo}/{festeNo}/{municipalityNo}/{sectionNo}", gaardsNo, bruksNo, festeNo, municipalityNo, sectionNo);
                 return "";
             }
@@ -365,7 +367,6 @@ namespace Dan.Plugin.Kartverket.Clients
                     if (matrikkelenhetgrunnbok != null)
                         kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
 
-                    var address = await GetAddressForSection(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer, matrikkelenhetgrunnbok.festenummer, kommune.Number, matrikkelenhetgrunnbok.seksjonsnummer);
 
                     //check if property is fritidsbolig
                     var isFritidsbolig = false;
@@ -373,11 +374,24 @@ namespace Dan.Plugin.Kartverket.Clients
                     var bruksenhetIds = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
                     if(bruksenhetIds.Any())
                     {
-                        var bruksenhet = await _matrikkelStoreClient.GetBruksenhet(bruksenhetIds.FirstOrDefault().value);
-                        var bruksenhetstype = await _matrikkelStoreClient.GetBruksenhetstype(bruksenhet.bruksenhetstypeKodeId.value);
-                        isFritidsbolig = bruksenhetstype.kodeverdi.Equals("F") ? true : false;
+                        foreach(var bruksenhetId in bruksenhetIds)
+                        {
+                            var bruksenhet = await _matrikkelStoreClient.GetBruksenhet(bruksenhetId.value);
+                            var bruksenhetstype = await _matrikkelStoreClient.GetBruksenhetstype(bruksenhet.bruksenhetstypeKodeId.value);
+                            isFritidsbolig = bruksenhetstype.kodeverdi.Equals("F") ? true : false;
+                        }
                     }
-                    
+                    var addresseListe = new List<Address>();
+                    var adresser = await GetAddressForSection(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer, matrikkelenhetgrunnbok.festenummer, kommune.Number, matrikkelenhetgrunnbok.seksjonsnummer);
+                    var adresserList = adresser.Split("\n").ToList();
+                    foreach (var addresse in adresserList)
+                    {
+                        addresseListe.Add(
+                            new Address()
+                            {
+                                Street = addresse
+                            });
+                    }                        
 
                     result.Add(new PropertyWithOwners()
                     {
@@ -391,10 +405,7 @@ namespace Dan.Plugin.Kartverket.Clients
                             Seksjonsnummer = matrikkelenhetgrunnbok?.seksjonsnummer.ToString() ?? null
                         },
                         Owners = listOfCoOwners,
-                        Address = new Address()
-                        {
-                            Street = address ?? null,
-                        },
+                        Addresses = addresseListe,
                         IsFritidsbolig = isFritidsbolig
                     });
                 }

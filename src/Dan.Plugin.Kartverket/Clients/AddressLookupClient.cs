@@ -19,7 +19,7 @@ namespace Dan.Plugin.Kartverket.Clients
     public interface IAddressLookupClient
     {
         public Task<KartverketResponse> Get(KartverketResponse kartverket);
-        public Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo);
+        public Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo, string city);
         public Task<List<List<double>>> GetCoordinatesForProperty(
             string? matrikkelNumber = null,
             string? gnr = null,
@@ -126,7 +126,7 @@ namespace Dan.Plugin.Kartverket.Clients
             }
         
 
-            public async Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo)
+            public async Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo, string city)
             {
                 HttpResponseMessage response = null;
 
@@ -146,6 +146,10 @@ namespace Dan.Plugin.Kartverket.Clients
                 if (!string.IsNullOrEmpty(flatNo))
                 {
                     urlBuilder.Append("bruksenhetsnummer=").Append(flatNo).Append('&');
+                }
+                if(!string.IsNullOrEmpty(city))
+                {
+                    urlBuilder.Append("kommunenavn=").Append(city).Append('&');
                 }
 
                 try
