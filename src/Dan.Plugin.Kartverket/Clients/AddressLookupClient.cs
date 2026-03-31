@@ -28,6 +28,14 @@ namespace Dan.Plugin.Kartverket.Clients
             string? fnr = null,
             string? kommunenr = null);
 
+        public Task<OutputAdresseList> SearchByMatrikkelNumber(
+            string municipalityNumber,
+            string holdingNumber,
+            string subholdingNumber,
+            string leaseNumber,
+            string streetName
+        );
+
         public class AddressLookupClient : IAddressLookupClient
         {
             private readonly HttpClient _httpClient;
@@ -176,6 +184,85 @@ namespace Dan.Plugin.Kartverket.Clients
                 catch (HttpRequestException e)
                 {
                     throw new EvidenceSourcePermanentServerException(Metadata.ERROR_CCR_UPSTREAM_ERROR, null, e);
+                }
+                finally
+                {
+                    response?.Dispose();
+                }
+            }
+
+            public async Task<OutputAdresseList> SearchByMatrikkelNumber(
+                string municipalityNumber,
+                string holdingNumber,
+                string subholdingNumber,
+                string leaseNumber,
+                string addressText
+            )
+            {
+                HttpResponseMessage response = null;
+
+                var urlBuilder = new StringBuilder();
+                urlBuilder.Append(_settings.AddressLookupUrl).Append("/sok?");
+                urlBuilder.Append("fuzzy=false").Append("&");
+
+                if (!string.IsNullOrEmpty(municipalityNumber))
+                {
+                    urlBuilder
+                        .Append("kommunenummer=")
+                        .Append(int.Parse(municipalityNumber).ToString("d4"))
+                        .Append('&');
+                }
+                if (!string.IsNullOrEmpty(holdingNumber))
+                {
+                    urlBuilder.Append("gardsnummer=").Append(holdingNumber).Append('&');
+                }
+                if (!string.IsNullOrEmpty(subholdingNumber))
+                {
+                    urlBuilder.Append("bruksnummer=").Append(subholdingNumber).Append('&');
+                }
+                if (!string.IsNullOrEmpty(leaseNumber))
+                {
+                    urlBuilder.Append("festenummer=").Append(leaseNumber).Append('&');
+                }
+                if (!string.IsNullOrEmpty(addressText))
+                {
+                    urlBuilder.Append("adressetekst=").Append(addressText).Append('&');
+                }
+
+                try
+                {
+                    urlBuilder.Append("treffPerSide=100").Append('&');
+                    urlBuilder.Length--;
+
+                    response = await _httpClient.GetAsync(urlBuilder.ToString());
+                    var responseData = await response.Content.ReadAsStringAsync();
+                    switch (response.StatusCode)
+                    {
+                        case HttpStatusCode.OK:
+                            {
+                                return JsonConvert.DeserializeObject<OutputAdresseList>(responseData);
+                            }
+                        default:
+                            {
+                                throw new EvidenceSourcePermanentClientException(
+                                    Metadata.ERROR_CCR_UPSTREAM_ERROR,
+                                    $"External API call to Geonorge failed ({(int)response.StatusCode} - {response.StatusCode})"
+                                        + (
+                                            string.IsNullOrEmpty(responseData)
+                                                ? string.Empty
+                                                : $", details: {responseData}"
+                                        )
+                                );
+                            }
+                    }
+                }
+                catch (HttpRequestException e)
+                {
+                    throw new EvidenceSourcePermanentServerException(
+                        Metadata.ERROR_CCR_UPSTREAM_ERROR,
+                        null,
+                        e
+                    );
                 }
                 finally
                 {

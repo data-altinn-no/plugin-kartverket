@@ -63,48 +63,63 @@ namespace Dan.Plugin.Kartverket
             };
         }
 
-        public async Task<MotorizedTrafficResponse> GetMotorizedTrafficInformation(string identifier)
+        public async Task<MotorizedTrafficResponse> GetMotorizedTrafficInformation(
+           string identifier
+       )
         {
             var result = new MotorizedTrafficResponse();
 
             var kartverketResponse = await _kartverketService.FindOwnedProperties(identifier);
             foreach (var property in kartverketResponse)
             {
-                var martikkelNumber = BuildMatrikkelNumber(property.PropertyData.Kommunenummer, property.PropertyData.Gardsnummer, property.PropertyData.Bruksnummer, property.PropertyData.Festenummer);
+                var martikkelNumber = BuildMatrikkelNumber(
+                    property.PropertyData.Kommunenummer,
+                    property.PropertyData.Gardsnummer,
+                    property.PropertyData.Bruksnummer,
+                    property.PropertyData.Festenummer
+                );
+
                 var coordinates = new List<List<double>>();
-                if(!string.IsNullOrEmpty(martikkelNumber))
-                    coordinates = await _geonorgeClient.GetCoordinatesForProperty(martikkelNumber, property.PropertyData.Gardsnummer, property.PropertyData.Bruksnummer, property.PropertyData.Seksjonsnummer, property.PropertyData.Festenummer, property.PropertyData.Kommunenummer);
+                if (!string.IsNullOrEmpty(martikkelNumber))
+                    coordinates = await _geonorgeClient.GetCoordinatesForProperty(
+                        martikkelNumber,
+                        property.PropertyData.Gardsnummer,
+                        property.PropertyData.Bruksnummer,
+                        property.PropertyData.Seksjonsnummer,
+                        property.PropertyData.Festenummer,
+                        property.PropertyData.Kommunenummer
+                    );
 
                 var adresser = new List<Address>();
-                foreach (var singleAdress in property.Addresses)
-                {
-                    var adresseInfo = await _geonorgeClient.Search
-                        (singleAdress.Street,
-                        property.PropertyData.Kommunenummer,                       
-                        null,
-                        property.PropertyData.Kommunenavn);
+                var adresseInfo = await _geonorgeClient.SearchByMatrikkelNumber(
+                    property.PropertyData.Kommunenummer,
+                    property.PropertyData.Gardsnummer,
+                    property.PropertyData.Bruksnummer,
+                    property.PropertyData.Festenummer,
+                    property.Addresses.FirstOrDefault().Street
+                );
 
-                    if(adresseInfo.Adresser.Any())
+                foreach (var adresse in adresseInfo.Adresser)
+                {
+                    Address address = new Address
                     {
-                        var address = new Address
-                        {
-                            Street = singleAdress.Street ?? adresseInfo.Adresser.FirstOrDefault()?.Adressetekst,
-                            PostalCode = adresseInfo?.Adresser.FirstOrDefault()?.Postnummer,
-                            City = adresseInfo?.Adresser.FirstOrDefault()?.Poststed
-                        };
-                        adresser.Add(address);
-                    }
-                    
+                        Street = adresse.Adressetekst,
+                        PostalCode = adresse.Postnummer,
+                        City = adresse.Poststed,
+                    };
+                    adresser.Add(address);
                 }
 
-                result.Properties.Add( new MotorizedTrafficProperty
-                {
-                    MatrikkelNumber = martikkelNumber,
-                    Coordinates = coordinates,
-                    CoOwners = property.Owners,
-                    Address = adresser,
-                    IsFritidsbolig = property.IsFritidsbolig
-                });
+                result.Properties.Add(
+                    new MotorizedTrafficProperty
+                    {
+                        MatrikkelNumber = martikkelNumber,
+                        Coordinates = coordinates,
+                        CoOwners = property.Owners,
+                        Address = adresser,
+                        IsFritidsbolig = property.IsFritidsbolig,
+                    }
+                );
             }
 
             return result;
