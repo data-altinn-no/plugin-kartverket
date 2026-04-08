@@ -33,8 +33,12 @@ namespace Dan.Plugin.Kartverket.Clients
             string holdingNumber,
             string subholdingNumber,
             string leaseNumber,
-            string streetName
+            string streetName,
+            string postalCode,
+            string postalCity //poststed, not kommunenavn
         );
+
+
 
         public class AddressLookupClient : IAddressLookupClient
         {
@@ -196,7 +200,9 @@ namespace Dan.Plugin.Kartverket.Clients
                 string holdingNumber,
                 string subholdingNumber,
                 string leaseNumber,
-                string addressText
+                string addressText,
+                string postalCode,
+                string postalCity
             )
             {
                 HttpResponseMessage response = null;
@@ -227,6 +233,14 @@ namespace Dan.Plugin.Kartverket.Clients
                 if (!string.IsNullOrEmpty(addressText))
                 {
                     urlBuilder.Append("adressetekst=").Append(addressText).Append('&');
+                }
+                if (!string.IsNullOrEmpty(postalCode))
+                {
+                    urlBuilder.Append("postnummer=").Append(postalCode).Append('&');
+                }
+                if (!string.IsNullOrEmpty(postalCity))
+                {
+                    urlBuilder.Append("poststed=").Append(postalCity).Append('&');
                 }
 
                 try

@@ -4,6 +4,7 @@ using Dan.Plugin.Kartverket.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Dan.Plugin.Kartverket
@@ -91,25 +92,69 @@ namespace Dan.Plugin.Kartverket
                     );
 
                 var adresser = new List<Address>();
-                var adresseInfo = await _geonorgeClient.SearchByMatrikkelNumber(
-                    property.PropertyData.Kommunenummer,
-                    property.PropertyData.Gardsnummer,
-                    property.PropertyData.Bruksnummer,
-                    property.PropertyData.Festenummer,
-                    property.Addresses.FirstOrDefault().Street
-                );
-
-                foreach (var adresse in adresseInfo.Adresser)
+                if (property.Addresses.Any())
                 {
-                    Address address = new Address
+                    foreach (var address in property.Addresses)
                     {
-                        Street = adresse.Adressetekst,
-                        PostalCode = adresse.Postnummer,
-                        City = adresse.Poststed,
-                    };
-                    adresser.Add(address);
-                }
+                        //sometimes we get the matrikkelnummer instead of streetname, so we check if the
+                        //it is a matrikkelnumber first, and split it up if it is
+                        var pattern = @"^\d+/\d+/\d+$";
 
+                        if (Regex.IsMatch(address.Street, pattern))
+                        {
+                            var splitted = address.Street.Split('/');
+                            var data = await _geonorgeClient.SearchByMatrikkelNumber(null, splitted[0].ToString(), splitted[1].ToString(), splitted[2].ToString(), null, address.PostalCode, address.City);
+
+                            foreach (var adresse in data.Adresser)
+                            {
+                                adresser.Add(new Address
+                                {
+                                    Street = adresse.Adressetekst,
+                                    PostalCode = adresse.Postnummer,
+                                    City = adresse.Poststed,
+                                });
+                            }
+
+                        }
+                        else
+                        {
+
+                            var adresseInfo = await _geonorgeClient.SearchByMatrikkelNumber(
+                                property.PropertyData.Kommunenummer,
+                                property.PropertyData.Gardsnummer,
+                                property.PropertyData.Bruksnummer,
+                                property.PropertyData.Festenummer,
+                                property.Addresses.FirstOrDefault().Street,
+                                null,
+                                null);
+
+                            foreach (var adresse in adresseInfo.Adresser)
+                            {
+                                adresser.Add(new Address
+                                {
+                                    Street = adresse.Adressetekst,
+                                    PostalCode = adresse.Postnummer,
+                                    City = adresse.Poststed,
+                                });
+                            }
+                        }
+                        //sometimes duplicates can happen after looking up the address 
+                        //filter out duplicates
+                        adresser = adresser
+                            .Where(a => !string.IsNullOrWhiteSpace(a.Street) &&
+                                    !string.IsNullOrWhiteSpace(a.PostalCode) &&
+                                    !string.IsNullOrWhiteSpace(a.City))
+                        .GroupBy(a => new
+                        {
+                            Street = a.Street?.Trim().ToLower(),
+                            PostalCode = a.PostalCode?.Trim(),
+                            City = a.City?.Trim().ToLower()
+                        })
+                        .Select(g => g.First())
+                        .ToList();
+                    }                   
+                }
+                
                 result.Properties.Add(
                     new MotorizedTrafficProperty
                     {
