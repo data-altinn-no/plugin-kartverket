@@ -34,6 +34,8 @@ namespace Dan.Plugin.Kartverket
             var jordTypeList = new List<JordType>();
 
             var coordinates = await _geonorgeClient.GetCoordinatesForProperty(matrikkelNumber);
+            var propertyHasFritidsbolig = await _kartverketService.PropertyHasFritidsbolig(matrikkelNumber);
+
             if (coordinates.Count > 0)
             {
                 foreach (var coordinateSet in coordinates)
@@ -50,17 +52,20 @@ namespace Dan.Plugin.Kartverket
                             FeatureId = jordtype.Objectid,
                             ArealType = jordtype.ArealType.ToString(),
                             Areal = jordtype.ShapeArea,
-                            GeoJson = jordtype.Shape
+                            GeoJson = jordtype.Shape                            
                         });
-                    }
-                    
+                    }                    
                 }                
-            }          
+            }
+
+            var addressResponse = await _kartverketService.GetAdresseByMatrikkelNumber(matrikkelNumber);           
 
             return new LandRentalResponse
             {
                 Matrikkelnumber = matrikkelNumber,
-                JordType = jordTypeList
+                JordType = jordTypeList,
+                Adresse = addressResponse,
+                EiendomHarFritidsbolig = propertyHasFritidsbolig
             };
         }
 

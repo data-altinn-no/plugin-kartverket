@@ -21,6 +21,8 @@ namespace Dan.Plugin.Kartverket.Clients
         public Task<List<PropertyWithOwners>> FindOwnedProperties(string identifier);
         public Task<KartverketResponse> GetAddresses(KartverketResponse kartverketResponse, bool singleAddress = false);
         public Task<string> GetAddressForSection(int gaardsNo, int bruksNo, int festeNo, string municipalityNo, int sectionNo);
+        public Task<bool> PropertyHasFritidsbolig(string matrikkelNumber);
+        Task<List<Address>> GetAdresseByMatrikkelNumber(string matrikkelNumber);
     }
 
     public class KartverketGrunnbokMatrikkelService : IKartverketGrunnbokMatrikkelService
@@ -499,6 +501,82 @@ namespace Dan.Plugin.Kartverket.Clients
                 });
             }
             return result;
+        }
+
+        public async Task<bool> PropertyHasFritidsbolig(string matrikkelNumber)
+        {
+            var matrikkelnummerSplit = matrikkelNumber.Split('-', '/');
+            var kommunenr = matrikkelnummerSplit[0];
+            var gnr = matrikkelnummerSplit.Length > 1 ? Convert.ToInt32(matrikkelnummerSplit[1]) : 0;
+            var bnr = matrikkelnummerSplit.Length > 2 ? Convert.ToInt32(matrikkelnummerSplit[2]) : 0;
+            var fnr = matrikkelnummerSplit.Length > 3 ? Convert.ToInt32(matrikkelnummerSplit[3]) : 0;
+            var snr = matrikkelnummerSplit.Length > 4 ? Convert.ToInt32(matrikkelnummerSplit[4]) : 0;
+
+            var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(gnr, bnr, fnr, snr, kommunenr);
+            var bruksenhetIder = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
+
+            foreach(var bruksenhetId in bruksenhetIder)
+            {
+                var bruksenhet = await _matrikkelStoreClient.GetBruksenhet(bruksenhetId.value);
+                if (bruksenhet.bruksenhetstypeKodeId != null)
+                {
+                    var bruksenhetstype = await _matrikkelStoreClient.GetBruksenhetstype(bruksenhet.bruksenhetstypeKodeId.value);
+                    if (bruksenhetstype.kodeverdi.Equals("F"))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public async Task<List<Address>> GetAdresseByMatrikkelNumber(string matrikkelNumber)
+        {
+            var matrikkelnummerSplit = matrikkelNumber.Split('-', '/');
+            var kommunenr = matrikkelnummerSplit[0];
+            var gnr = matrikkelnummerSplit.Length > 1 ? Convert.ToInt32(matrikkelnummerSplit[1]) : 0;
+            var bnr = matrikkelnummerSplit.Length > 2 ? Convert.ToInt32(matrikkelnummerSplit[2]) : 0;
+            var fnr = matrikkelnummerSplit.Length > 3 ? Convert.ToInt32(matrikkelnummerSplit[3]) : 0;
+            var snr = matrikkelnummerSplit.Length > 4 ? Convert.ToInt32(matrikkelnummerSplit[4]) : 0;
+
+            var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(gnr, bnr, fnr, snr, kommunenr);
+
+            var adresseList = new List<Address>();
+
+            var adresse = await GetAddressByMatrikkelenhetId(matrikkelenhetid.value);
+            if(adresse != null)
+            {
+                adresseList.Add(adresse);
+
+            }
+
+            var bruksenhetIder = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
+            foreach (var bruksenhetId in bruksenhetIder)
+            {
+                var bruksenhet = await _matrikkelStoreClient.GetBruksenhet(bruksenhetId.value);
+                if (bruksenhet.adresseId != null)
+                {
+                    var adresseByBruksenhet = await GetAddresseByBruksenhet(bruksenhet, matrikkelenhetid.value);
+                    if (adresseByBruksenhet != null)
+                        adresseList.Add(adresseByBruksenhet);
+                }
+            }
+            
+            //remove duplicates and empty addresses, some properties have multiple bruksenheter and matrikkelenhet linked to the same address which causes duplicates in the list
+            adresseList = adresseList
+                .Where(a => !string.IsNullOrWhiteSpace(a.Street) &&
+                            !string.IsNullOrWhiteSpace(a.PostalCode) &&
+                            !string.IsNullOrWhiteSpace(a.City))
+                .GroupBy(a => new
+                {
+                    Street = a.Street?.Trim().ToLower(),
+                    PostalCode = a.PostalCode?.Trim(),
+                    City = a.City?.Trim().ToLower()
+                })
+                .Select(g => g.First())
+                .ToList();
+
+            return adresseList;
         }
 
         private async Task<Address> GetAddressByMatrikkelenhetId(long matrikkelenhetId)

@@ -168,6 +168,48 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             return new MatrikkelenhetId();
         }
 
+        public async Task<MatrikkelenhetId> GetMatrikkelenhetByMatrikkelnummer(int gnr, int bnr, string kommuneIdent)
+        {
+            findMatrikkelenhetResponse result = null;
+            var client = CreateClient();
+
+            var request = new findMatrikkelenhetRequest()
+            {
+                matrikkelContext = GetContext(),
+                matrikkelenhetIdent = new MatrikkelenhetIdent()
+                {
+                    bruksnummer = bnr,
+                    bruksnummerSpecified = true,
+                    gardsnummer = gnr,
+                    gardsnummerSpecified = true,
+                    kommuneIdent = new KommuneIdent()
+                    {
+                        kommunenummer = kommuneIdent
+                    },
+                    festenummerSpecified = false,
+                    seksjonsnummerSpecified = false
+                },
+
+            };
+
+            try
+            {
+                result = await client.findMatrikkelenhetAsync(request);
+                return result.@return;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            finally
+            {
+                try { await client.CloseAsync(); }
+                catch { client.Abort(); }
+            }
+
+            return new MatrikkelenhetId();
+        }
+
         private MatrikkelContext GetContext()
         {
             return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp, KoordinatsystemKodeId>(_requestContextService.ServiceContext);
@@ -199,5 +241,6 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         Task<MatrikkelenhetMedTeigerTransfer> GetMatrikkelEnhetMedTeiger(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent);
 
         Task<MatrikkelEnhetMedteig> GetMatrikkelEnhetTeig(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent);
+        Task<MatrikkelenhetId> GetMatrikkelenhetByMatrikkelnummer(int gnr, int bnr, string kommuneIdent);
     }
 }
