@@ -97,67 +97,70 @@ namespace Dan.Plugin.Kartverket
                     );
 
                 var adresser = new List<Address>();
+                //sometimes we get the matrikkelnummer instead of streetname, so we check if the
+                //it is a matrikkelnumber first, and split it up if it is
+                var matrikkelpattern = @"^\d+/\d+/\d+$";
+                var matrikkelpattern2 = @"^\d{4}-\d+/\d+/\d+$";
                 if (property.Addresses.Any())
                 {
+
                     foreach (var address in property.Addresses)
                     {
-                        //sometimes we get the matrikkelnummer instead of streetname, so we check if the
-                        //it is a matrikkelnumber first, and split it up if it is
-                        var pattern = @"^\d+/\d+/\d+$";
+                        string kommunenr = null;
+                        string gnr = null;
+                        string bnr = null;
+                        string fnr = null;
 
-                        if (Regex.IsMatch(address.Street, pattern))
+                        if (Regex.IsMatch(address.Street, matrikkelpattern))
                         {
-                            var splitted = address.Street.Split('/');
-                            var data = await _geonorgeClient.SearchByMatrikkelNumber(null, splitted[0].ToString(), splitted[1].ToString(), splitted[2].ToString(), null, address.PostalCode, address.City);
-
-                            foreach (var adresse in data.Adresser)
-                            {
-                                adresser.Add(new Address
-                                {
-                                    Street = adresse.Adressetekst,
-                                    PostalCode = adresse.Postnummer,
-                                    City = adresse.Poststed,
-                                });
-                            }
-
+                            var parts = address.Street.Split('/');
+                            gnr = parts[0];
+                            bnr = parts[1];
+                            fnr = parts[2];
                         }
-                        else
+                        else if (Regex.IsMatch(address.Street, matrikkelpattern2))
                         {
-
-                            var adresseInfo = await _geonorgeClient.SearchByMatrikkelNumber(
-                                property.PropertyData.Kommunenummer,
-                                property.PropertyData.Gardsnummer,
-                                property.PropertyData.Bruksnummer,
-                                property.PropertyData.Festenummer,
-                                property.Addresses.FirstOrDefault().Street,
-                                null,
-                                null);
-
-                            foreach (var adresse in adresseInfo.Adresser)
-                            {
-                                adresser.Add(new Address
-                                {
-                                    Street = adresse.Adressetekst,
-                                    PostalCode = adresse.Postnummer,
-                                    City = adresse.Poststed,
-                                });
-                            }
+                            var parts = address.Street.Split('-', '/');
+                            kommunenr = parts[0];
+                            gnr = parts[1];
+                            bnr = parts[2];
+                            fnr = parts[3];
                         }
-                        //sometimes duplicates can happen after looking up the address 
-                        //filter out duplicates
-                        adresser = adresser
-                            .Where(a => !string.IsNullOrWhiteSpace(a.Street) &&
-                                    !string.IsNullOrWhiteSpace(a.PostalCode) &&
-                                    !string.IsNullOrWhiteSpace(a.City))
-                        .GroupBy(a => new
+
+                        var data = await _geonorgeClient.SearchByMatrikkelNumber(
+                            kommunenr ?? property.PropertyData.Kommunenummer,
+                            gnr ?? property.PropertyData.Gardsnummer,
+                            bnr ?? property.PropertyData.Bruksnummer,
+                            fnr ?? property.PropertyData.Festenummer,
+                            address.Street,
+                            address.PostalCode,
+                            address.City);
+
+                        foreach (var adresse in data.Adresser)
                         {
-                            Street = a.Street?.Trim().ToLower(),
-                            PostalCode = a.PostalCode?.Trim(),
-                            City = a.City?.Trim().ToLower()
-                        })
-                        .Select(g => g.First())
-                        .ToList();
-                    }                   
+                            adresser.Add(new Address
+                            {
+                                Street = adresse.Adressetekst,
+                                PostalCode = adresse.Postnummer,
+                                City = adresse.Poststed,
+                            });
+                        }
+                    }
+                    //sometimes duplicates can happen after looking up the address 
+                    //filter out duplicates
+                    adresser = adresser
+                        .Where(a => !string.IsNullOrWhiteSpace(a.Street) &&
+                                !string.IsNullOrWhiteSpace(a.PostalCode) &&
+                                !string.IsNullOrWhiteSpace(a.City))
+                    .GroupBy(a => new
+                    {
+                        Street = a.Street?.Trim().ToLower(),
+                        PostalCode = a.PostalCode?.Trim(),
+                        City = a.City?.Trim().ToLower()
+                    })
+                    .Select(g => g.First())
+                    .ToList();
+                                       
                 }
                 
                 result.Properties.Add(

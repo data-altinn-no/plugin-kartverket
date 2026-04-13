@@ -370,7 +370,8 @@ namespace Dan.Plugin.Kartverket.Clients
                         kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
 
                     var addresseList = new List<Address>();
-                    var isFritidsbolig = false;
+                    var boligType = new List<string>();
+
                     var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer, matrikkelenhetgrunnbok.festenummer, matrikkelenhetgrunnbok.seksjonsnummer, kommune.Number);
                     var bruksenhetIds = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
                     if(bruksenhetIds.Any())
@@ -382,7 +383,7 @@ namespace Dan.Plugin.Kartverket.Clients
                             if(bruksenhet.bruksenhetstypeKodeId != null)
                             {
                                 var bruksenhetstype = await _matrikkelStoreClient.GetBruksenhetstype(bruksenhet.bruksenhetstypeKodeId.value);
-                                isFritidsbolig = bruksenhetstype.kodeverdi.Equals("F") ? true : false;
+                                boligType.Add(bruksenhetstype.kodeverdi);
                             }                                
 
                             //get address
@@ -427,7 +428,7 @@ namespace Dan.Plugin.Kartverket.Clients
                         },
                         Owners = listOfCoOwners,
                         Addresses = addresseList,
-                        IsFritidsbolig = isFritidsbolig
+                        IsFritidsbolig = boligType.Contains("F")
                     });
                 }
                 catch (Exception ex)
