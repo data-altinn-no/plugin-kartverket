@@ -1,3 +1,4 @@
+using Altinn.App.ExternalApi.AddressLookup;
 using AwesomeAssertions;
 using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.ar50;
@@ -12,7 +13,7 @@ namespace Dan.Plugin.Kartverket.Test.Services
 {
     public class DiHeWrapperTest
     {
-        private readonly IKartverketGrunnbokMatrikkelService _kartverketService;        
+        private readonly IKartverketGrunnbokMatrikkelService _kartverketService;
         private readonly IAddressLookupClient _addressLookupClient;
         private readonly IAr5Repo _ar5Repo;
 
@@ -49,7 +50,18 @@ namespace Dan.Plugin.Kartverket.Test.Services
                         {
                             OwnerShare = "1/2"
                         }
+                    },
+                    IsFritidsbolig = false,
+                    Addresses = new List<Address>
+                    {
+                        new Address
+                        {
+                            Street = "Testveien 1",
+                            PostalCode = "1234",
+                            City = "Testbyen"
+                        }
                     }
+
                 },
                 new PropertyWithOwners
                 {
@@ -67,6 +79,16 @@ namespace Dan.Plugin.Kartverket.Test.Services
                         {
                             OwnerShare = "1/2"
                         }
+                    },
+                    IsFritidsbolig = true,
+                    Addresses = new List<Address>
+                    {
+                        new Address
+                        {
+                            Street = "Hytteveien 3",
+                            PostalCode = "1234",
+                            City = "Testbyen"
+                        }
                     }
                 }
             };
@@ -74,6 +96,22 @@ namespace Dan.Plugin.Kartverket.Test.Services
             // Arrange
             A.CallTo(() => _kartverketService.FindOwnedProperties(A<string>._))
                 .Returns(propertyList);
+
+            A.CallTo(() => _addressLookupClient.SearchByMatrikkelNumber(A<string>._, A<string>._, A<string>._, A<string>._, A<string>._, A<string>._, A<string>._))
+                .Returns(new OutputAdresseList()
+                {
+                    Adresser = new List<OutputAdresse>() {
+                         new OutputAdresse()
+                         {
+
+                            Adressekode = 123,
+                            Adressenavn = "Testveien 1",
+                            Postnummer = "1234",
+                            Poststed = "Testbyen",
+                            Adressetekst = "Test"
+                         }
+                    }
+                });
 
             // Act
             var result = await _diHeWrapper.GetMotorizedTrafficInformation("2020202");

@@ -4,7 +4,6 @@ using Dan.Plugin.Kartverket.Config;
 using Dan.Plugin.Kartverket.Models;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,7 @@ namespace Dan.Plugin.Kartverket.Clients
     public interface IAddressLookupClient
     {
         public Task<KartverketResponse> Get(KartverketResponse kartverket);
-        public Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo);
+        public Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo, string city);
         public Task<List<List<double>>> GetCoordinatesForProperty(
             string? matrikkelNumber = null,
             string? gnr = null,
@@ -28,6 +27,18 @@ namespace Dan.Plugin.Kartverket.Clients
             string? snr = null,
             string? fnr = null,
             string? kommunenr = null);
+
+        public Task<OutputAdresseList> SearchByMatrikkelNumber(
+            string municipalityNumber,
+            string holdingNumber,
+            string subholdingNumber,
+            string leaseNumber,
+            string streetName,
+            string postalCode,
+            string postalCity //poststed, not kommunenavn
+        );
+
+
 
         public class AddressLookupClient : IAddressLookupClient
         {
@@ -127,13 +138,13 @@ namespace Dan.Plugin.Kartverket.Clients
             }
         
 
-            public async Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo)
+            public async Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo, string city)
             {
                 HttpResponseMessage response = null;
 
                 var urlBuilder = new StringBuilder();
                 urlBuilder.Append(_settings.AddressLookupUrl).Append("/sok?");
-                urlBuilder.Append("&fuzzy=false").Append("&");
+                urlBuilder.Append("fuzzy=false").Append("&");
 
 
                 if (!string.IsNullOrEmpty(municipalityNo))
@@ -147,6 +158,10 @@ namespace Dan.Plugin.Kartverket.Clients
                 if (!string.IsNullOrEmpty(flatNo))
                 {
                     urlBuilder.Append("bruksenhetsnummer=").Append(flatNo).Append('&');
+                }
+                if(!string.IsNullOrEmpty(city))
+                {
+                    urlBuilder.Append("kommunenavn=").Append(city).Append('&');
                 }
 
                 try
@@ -173,6 +188,95 @@ namespace Dan.Plugin.Kartverket.Clients
                 catch (HttpRequestException e)
                 {
                     throw new EvidenceSourcePermanentServerException(Metadata.ERROR_CCR_UPSTREAM_ERROR, null, e);
+                }
+                finally
+                {
+                    response?.Dispose();
+                }
+            }
+
+            public async Task<OutputAdresseList> SearchByMatrikkelNumber(
+                string municipalityNumber,
+                string holdingNumber,
+                string subholdingNumber,
+                string leaseNumber,
+                string addressText,
+                string postalCode,
+                string postalCity
+            )
+            {
+                HttpResponseMessage response = null;
+
+                var urlBuilder = new StringBuilder();
+                urlBuilder.Append(_settings.AddressLookupUrl).Append("/sok?");
+                urlBuilder.Append("fuzzy=false").Append("&");
+
+                if (!string.IsNullOrEmpty(municipalityNumber))
+                {
+                    urlBuilder
+                        .Append("kommunenummer=")
+                        .Append(int.Parse(municipalityNumber).ToString("d4"))
+                        .Append('&');
+                }
+                if (!string.IsNullOrEmpty(holdingNumber))
+                {
+                    urlBuilder.Append("gardsnummer=").Append(holdingNumber).Append('&');
+                }
+                if (!string.IsNullOrEmpty(subholdingNumber))
+                {
+                    urlBuilder.Append("bruksnummer=").Append(subholdingNumber).Append('&');
+                }
+                if (!string.IsNullOrEmpty(leaseNumber))
+                {
+                    urlBuilder.Append("festenummer=").Append(leaseNumber).Append('&');
+                }
+                if (!string.IsNullOrEmpty(addressText))
+                {
+                    urlBuilder.Append("adressetekst=").Append(Uri.EscapeDataString(addressText)).Append('&');
+                }
+                if (!string.IsNullOrEmpty(postalCode))
+                {
+                    urlBuilder.Append("postnummer=").Append(postalCode).Append('&');
+                }
+                if (!string.IsNullOrEmpty(postalCity))
+                {
+                    urlBuilder.Append("poststed=").Append(postalCity).Append('&');
+                }
+
+                try
+                {
+                    urlBuilder.Append("treffPerSide=100").Append('&');
+                    urlBuilder.Length--;
+
+                    response = await _httpClient.GetAsync(urlBuilder.ToString());
+                    var responseData = await response.Content.ReadAsStringAsync();
+                    switch (response.StatusCode)
+                    {
+                        case HttpStatusCode.OK:
+                            {
+                                return JsonConvert.DeserializeObject<OutputAdresseList>(responseData);
+                            }
+                        default:
+                            {
+                                throw new EvidenceSourcePermanentClientException(
+                                    Metadata.ERROR_CCR_UPSTREAM_ERROR,
+                                    $"External API call to Geonorge failed ({(int)response.StatusCode} - {response.StatusCode})"
+                                        + (
+                                            string.IsNullOrEmpty(responseData)
+                                                ? string.Empty
+                                                : $", details: {responseData}"
+                                        )
+                                );
+                            }
+                    }
+                }
+                catch (HttpRequestException e)
+                {
+                    throw new EvidenceSourcePermanentServerException(
+                        Metadata.ERROR_CCR_UPSTREAM_ERROR,
+                        null,
+                        e
+                    );
                 }
                 finally
                 {

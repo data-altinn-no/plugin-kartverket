@@ -267,6 +267,38 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             return result;
         }
 
+        public async Task<BruksenhetstypeKode> GetBruksenhetstype(long bruksenhetstypeKodeId)
+        {
+            BruksenhetstypeKode result = null;
+            var client = CreateClient();
+
+            var request = new getObjectRequest()
+            {
+                matrikkelContext = GetContext(),
+                id = new BruksenhetstypeKodeId()
+                {
+                    value = bruksenhetstypeKodeId
+                }
+            };
+
+            try
+            {
+                var response = await client.getObjectAsync(request);
+                result = (BruksenhetstypeKode)response.@return;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            finally
+            {
+                try { client.Close(); }
+                catch { client.Abort(); }
+            }
+
+            return result;
+        }
+
         private MatrikkelContext GetContext()
         {
             return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp, KoordinatsystemKodeId>(_requestContextService.ServiceContext);
@@ -290,6 +322,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             return client;
         }
 
+        
     }
 
     public interface IMatrikkelStoreClientService
@@ -307,5 +340,6 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
         public Task<Bruksenhet> GetBruksenhet(long ident);
 
         public Task<Kommune> GetKommune(long ident);
+        public Task<BruksenhetstypeKode> GetBruksenhetstype(long ident);
     }
 }

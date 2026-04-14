@@ -181,7 +181,7 @@ namespace Dan.Plugin.Kartverket
                 property.MunicipalityNumber = borettslag?.Adresse?.Vegadresse?.Kommune?.Kommunenummer;
                 property.Municipality = borettslag?.Adresse?.Vegadresse?.Kommune?.Navn;   
 
-                var postalcodes = await _geonorgeClient.Search(address, borettslag?.Adresse?.Vegadresse?.Kommune?.Kommunenummer, borettslag?.Adresse?.Vegadresse?.Bolignummer);
+                var postalcodes = await _geonorgeClient.Search(address, borettslag?.Adresse?.Vegadresse?.Kommune?.Kommunenummer, borettslag?.Adresse?.Vegadresse?.Bolignummer, null);
                 if (postalcodes?.Adresser?.Count > 1)
                     _logger.LogWarning($"Geonorge returned multiple addresses for {address}/{borettslag?.Adresse.Vegadresse.Kommune.Kommunenummer}/{borettslag?.Adresse.Vegadresse.Bolignummer}");
 
