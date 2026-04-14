@@ -82,7 +82,8 @@ namespace Dan.Plugin.Kartverket
                     property.PropertyData.Kommunenummer,
                     property.PropertyData.Gardsnummer,
                     property.PropertyData.Bruksnummer,
-                    property.PropertyData.Festenummer
+                    property.PropertyData.Festenummer,
+                    property.PropertyData.Seksjonsnummer
                 );
 
                 var coordinates = new List<List<double>>();
@@ -111,14 +112,14 @@ namespace Dan.Plugin.Kartverket
                         string bnr = null;
                         string fnr = null;
 
-                        if (Regex.IsMatch(address.Street, matrikkelpattern))
+                        if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern))
                         {
                             var parts = address.Street.Split('/');
                             gnr = parts[0];
                             bnr = parts[1];
                             fnr = parts[2];
                         }
-                        else if (Regex.IsMatch(address.Street, matrikkelpattern2))
+                        else if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern2))
                         {
                             var parts = address.Street.Split('-', '/');
                             kommunenr = parts[0];
@@ -178,17 +179,20 @@ namespace Dan.Plugin.Kartverket
             return result;
         }
 
-        private string BuildMatrikkelNumber(string kommuneNr, string gardsNr, string bruksNr, string festeNr)
+        private string BuildMatrikkelNumber(string kommuneNr, string gardsNr, string bruksNr, string festeNr, string seksjonsNr)
         {
             var stringBuilder = new StringBuilder();
             if (!string.IsNullOrEmpty(kommuneNr))
                 stringBuilder.Append(kommuneNr + "-");
-            if(!string.IsNullOrEmpty(gardsNr) && gardsNr != "0")
+            if(!string.IsNullOrEmpty(gardsNr))
                 stringBuilder.Append($"{gardsNr}");
-            if(!string.IsNullOrEmpty(bruksNr) && bruksNr != "0")
+            if(!string.IsNullOrEmpty(bruksNr))
                 stringBuilder.Append($"/{bruksNr}");
-            if(!string.IsNullOrEmpty(festeNr) && festeNr != "0")
+            if(!string.IsNullOrEmpty(festeNr))
                 stringBuilder.Append($"/{festeNr}");
+            if(!string.IsNullOrEmpty(seksjonsNr))
+                stringBuilder.Append($"/{seksjonsNr}");
+
 
             return stringBuilder.ToString();
         }

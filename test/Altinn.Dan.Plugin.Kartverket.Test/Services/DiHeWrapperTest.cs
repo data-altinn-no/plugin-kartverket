@@ -106,14 +106,16 @@ namespace Dan.Plugin.Kartverket.Test.Services
 
                             Adressekode = 123,
                             Adressenavn = "Testveien 1",
+                            Postnummer = "1234",
+                            Poststed = "Testbyen",
                             Adressetekst = "Test"
                          }
                     }
                 });
 
-        // Act
-        var result = await _diHeWrapper.GetMotorizedTrafficInformation("2020202");
-        result.Properties.Count().Should().Be(2);
+            // Act
+            var result = await _diHeWrapper.GetMotorizedTrafficInformation("2020202");
+            result.Properties.Count().Should().Be(2);
+        }
     }
-}
 }

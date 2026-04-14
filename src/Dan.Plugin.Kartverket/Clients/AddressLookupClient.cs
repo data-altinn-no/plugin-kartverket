@@ -232,7 +232,7 @@ namespace Dan.Plugin.Kartverket.Clients
                 }
                 if (!string.IsNullOrEmpty(addressText))
                 {
-                    urlBuilder.Append("adressetekst=").Append(addressText).Append('&');
+                    urlBuilder.Append("adressetekst=").Append(Uri.EscapeDataString(addressText)).Append('&');
                 }
                 if (!string.IsNullOrEmpty(postalCode))
                 {
