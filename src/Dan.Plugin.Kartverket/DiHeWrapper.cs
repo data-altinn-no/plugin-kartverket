@@ -1,6 +1,7 @@
 using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.ar50;
 using Dan.Plugin.Kartverket.Models;
+using Microsoft.IdentityModel.Protocols.WsAddressing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,13 +59,61 @@ namespace Dan.Plugin.Kartverket
                 }                
             }
 
-            var addressResponse = await _kartverketService.GetAdresseByMatrikkelNumber(matrikkelNumber);           
+            var addressResponse = await _kartverketService.GetAdresseByMatrikkelNumber(matrikkelNumber);
+            //sometimes we get the matrikkelnummer instead of streetname, so we check if the address is a matrikkelnumber first, and split it up if it is
+            var matrikkelpattern = @"^\d+/\d+/\d+$";
+            var matrikkelpattern2 = @"^\d{4}-\d+/\d+/\d+$";
+
+            var adresse = new List<Address>();
+            foreach (var address in addressResponse)
+            {
+                string streetAddress = address.Street;
+                string kommunenr = matrikkelNumber.Split('-').FirstOrDefault();
+                string gnr = null;
+                string bnr = null;
+                string fnr = null;
+               
+                if (Regex.IsMatch(address.Street, matrikkelpattern))
+                {
+                    var parts = address.Street.Split('/');
+                    gnr = parts[0];
+                    bnr = parts[1];
+                    fnr = parts[2];
+                    streetAddress = null; // Clear the street address since it's actually a matrikkel number
+                }
+                else if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern2))
+                {
+                    var parts = address.Street.Split('-', '/');
+                    kommunenr = parts[0];
+                    gnr = parts[1];
+                    bnr = parts[2];
+                    fnr = parts[3];
+                    streetAddress = null; // Clear the street address since it's actually a matrikkel number
+                }
+
+                var addressByMatrikkelNumber = await _geonorgeClient.SearchByMatrikkelNumber(
+                    kommunenr,
+                    gnr,
+                    bnr,
+                    fnr,
+                    streetAddress,
+                    address.PostalCode,
+                    address.City);
+
+                adresse.AddRange(addressByMatrikkelNumber.Adresser.Select(a => new Address
+                {
+                    Street = a.Adressetekst,
+                    PostalCode = a.Postnummer,
+                    City = a.Poststed
+                }));
+            }
+            
 
             return new LandRentalResponse
             {
                 Matrikkelnumber = matrikkelNumber,
                 JordType = jordTypeList,
-                Adresse = addressResponse,
+                Adresse = adresse,
                 EiendomHarFritidsbolig = propertyHasFritidsbolig
             };
         }
@@ -95,15 +144,15 @@ namespace Dan.Plugin.Kartverket
                         property.PropertyData.Seksjonsnummer,
                         property.PropertyData.Festenummer,
                         property.PropertyData.Kommunenummer
-                    );
+                    );                
 
                 var adresser = new List<Address>();
-                //sometimes we get the matrikkelnummer instead of streetname, so we check if the
-                //it is a matrikkelnumber first, and split it up if it is
-                var matrikkelpattern = @"^\d+/\d+/\d+$";
-                var matrikkelpattern2 = @"^\d{4}-\d+/\d+/\d+$";
+
                 if (property.Addresses.Any())
                 {
+                    //sometimes we get the matrikkelnummer instead of streetname, so we check if the address is a matrikkelnumber first, and split it up if it is
+                    var matrikkelpattern = @"^\d+/\d+/\d+$";
+                    var matrikkelpattern2 = @"^\d{4}-\d+/\d+/\d+$";
 
                     foreach (var address in property.Addresses)
                     {
@@ -111,6 +160,7 @@ namespace Dan.Plugin.Kartverket
                         string gnr = null;
                         string bnr = null;
                         string fnr = null;
+                        string streetAddress = address.Street;                        
 
                         if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern))
                         {
@@ -126,6 +176,7 @@ namespace Dan.Plugin.Kartverket
                             gnr = parts[1];
                             bnr = parts[2];
                             fnr = parts[3];
+                            streetAddress = null; // Clear the street address since it's actually a matrikkel number
                         }
 
                         var data = await _geonorgeClient.SearchByMatrikkelNumber(
@@ -133,7 +184,7 @@ namespace Dan.Plugin.Kartverket
                             gnr ?? property.PropertyData.Gardsnummer,
                             bnr ?? property.PropertyData.Bruksnummer,
                             fnr ?? property.PropertyData.Festenummer,
-                            address.Street,
+                            streetAddress,
                             address.PostalCode,
                             address.City);
 
