@@ -168,7 +168,6 @@ namespace Dan.Plugin.Kartverket
                             gnr = parts[0];
                             bnr = parts[1];
                             fnr = parts[2];
-                            streetAddress = null; // Clear the street address since it's actually a matrikkel number
                         }
                         else if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern2))
                         {
