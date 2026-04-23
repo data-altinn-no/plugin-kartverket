@@ -65,7 +65,7 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
             //if so, retrieves the relevant information about those areas.
             //25833 is an EPSG-code for a specific coordinate reference system (CRS) used in Norway, known as EUREF89 / UTM zone 33N.
             //4326 is the Spatial Reference System Identifier (SRID) for WGS 84,
-            //4258 is the format of the GeoJson we get
+            //4258 is the EPSG coordinate reference system used for the returned GeoJSON coordinates.
             string sql = @"
                         WITH eiendom AS (
                             SELECT ST_Transform(
