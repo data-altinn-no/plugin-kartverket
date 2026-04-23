@@ -30,6 +30,9 @@ namespace Dan.Plugin.Kartverket.Models
         public int FeatureId { get; set; }
         public string ArealType { get; set; }
         public double Areal { get; set; }
+        /// <summary>
+        /// GeoJSON geometry with coordinates in EPSG:4258.
+        /// </summary>
         public string GeoJson { get; set; }
     }
 

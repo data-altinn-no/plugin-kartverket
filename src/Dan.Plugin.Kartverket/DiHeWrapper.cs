@@ -53,7 +53,8 @@ namespace Dan.Plugin.Kartverket
                             FeatureId = jordtype.Objectid,
                             ArealType = jordtype.ArealType.ToString(),
                             Areal = jordtype.ShapeArea,
-                            GeoJson = jordtype.Shape                            
+                            GeoJson = jordtype.GeoJson,
+                            
                         });
                     }                    
                 }                
@@ -72,8 +73,8 @@ namespace Dan.Plugin.Kartverket
                 string gnr = null;
                 string bnr = null;
                 string fnr = null;
-               
-                if (Regex.IsMatch(address.Street, matrikkelpattern))
+
+                if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern))
                 {
                     var parts = address.Street.Split('/');
                     gnr = parts[0];
@@ -168,6 +169,7 @@ namespace Dan.Plugin.Kartverket
                             gnr = parts[0];
                             bnr = parts[1];
                             fnr = parts[2];
+                            streetAddress = null;
                         }
                         else if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern2))
                         {
