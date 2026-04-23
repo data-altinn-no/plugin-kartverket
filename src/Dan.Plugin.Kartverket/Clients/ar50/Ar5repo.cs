@@ -4,10 +4,8 @@ using NetTopologySuite.Geometries;
 using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using static Dan.Plugin.Kartverket.Clients.ar50.Ar5repo;
 
 namespace Dan.Plugin.Kartverket.Clients.ar50
 {
@@ -67,23 +65,24 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
             //if so, retrieves the relevant information about those areas.
             //25833 is an EPSG-code for a specific coordinate reference system (CRS) used in Norway, known as EUREF89 / UTM zone 33N.
             //4326 is the Spatial Reference System Identifier (SRID) for WGS 84,
+            //4258 is the format of the GeoJson we get
             string sql = @"
-                            WITH eiendom AS (
-                                SELECT ST_Transform(
-                                    ST_SetSRID(ST_GeomFromText(@geom), 4326),
-                                    25833
-                                ) AS shape
-                            )
-                            SELECT
-                                o.objectid AS ""Objectid"",
-                                o.lokalid AS ""LokalId"",
-                                o.arealtype AS ""ArealType"",
-                                o.shape_area AS ""ShapeArea"",
-                                o.shape_length AS ""ShapeLength"",
-                                ST_AsText(o.shape) AS ""Shape""
-                            FROM fkb_ar5_omrade o, eiendom e
-                            WHERE ST_Intersects(o.shape, e.shape)
-                            ORDER BY ST_Area(ST_Intersection(o.shape, e.shape)) DESC;";
+                        WITH eiendom AS (
+                            SELECT ST_Transform(
+                                ST_SetSRID(ST_GeomFromText(@geom), 4326),
+                                25833
+                            ) AS shape
+                        )
+                        SELECT
+                            o.objectid AS ""Objectid"",
+                            o.lokalid AS ""LokalId"",
+                            o.arealtype AS ""ArealType"",
+                            o.shape_area AS ""ShapeArea"",
+                            o.shape_length AS ""ShapeLength"",
+                            ST_AsGeoJSON(ST_Transform(o.shape, 4258)) AS ""GeoJson""
+                        FROM fkb_ar5_omrade o, eiendom e
+                        WHERE ST_Intersects(o.shape, e.shape)
+                        ORDER BY ST_Area(ST_Intersection(o.shape, e.shape)) DESC;";
 
             var results = (await connection.QueryAsync<Ar5OmradeDbModel>(
                 sql,

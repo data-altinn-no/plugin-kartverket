@@ -53,7 +53,8 @@ namespace Dan.Plugin.Kartverket
                             FeatureId = jordtype.Objectid,
                             ArealType = jordtype.ArealType.ToString(),
                             Areal = jordtype.ShapeArea,
-                            GeoJson = jordtype.Shape                            
+                            GeoJson = jordtype.GeoJson,
+                            
                         });
                     }                    
                 }                
