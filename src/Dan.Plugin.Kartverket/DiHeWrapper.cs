@@ -1,6 +1,7 @@
 using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.ar50;
 using Dan.Plugin.Kartverket.Models;
+using Microsoft.IdentityModel.Protocols.WsAddressing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
