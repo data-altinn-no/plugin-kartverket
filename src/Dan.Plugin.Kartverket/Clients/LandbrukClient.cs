@@ -3,7 +3,6 @@ using Dan.Common.Exceptions;
 using Dan.Plugin.Kartverket.Config;
 using Dan.Plugin.Kartverket.Models;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +10,9 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Dan.Plugin.Kartverket.Landbruk.Models;
+using MatrikkelRespons = Dan.Plugin.Kartverket.Landbruk.Models.MatrikkelRespons;
+using MatrikkelNummer = Dan.Plugin.Kartverket.Landbruk.Models.MatrikkelNummer;
 
 namespace Dan.Plugin.Kartverket.Clients
 {
@@ -54,7 +56,8 @@ namespace Dan.Plugin.Kartverket.Clients
                 {
                     case HttpStatusCode.OK:
                     {
-                        return JsonConvert.DeserializeObject<ICollection<MatrikkelRespons>>(responseData);
+                        var result = JsonConvert.DeserializeObject<ICollection<MatrikkelRespons>>(responseData);
+                        return result;
                     }
                     default:
                     {
