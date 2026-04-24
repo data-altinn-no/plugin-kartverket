@@ -27,7 +27,7 @@ namespace Dan.Plugin.Kartverket.Clients
             string? snr = null,
             string? fnr = null,
             string? kommunenr = null,
-            bool includeWholeomrade = false);
+            bool includeWholeOmrade = false);
 
         public Task<OutputAdresseList> SearchByMatrikkelNumber(
             string municipalityNumber,
