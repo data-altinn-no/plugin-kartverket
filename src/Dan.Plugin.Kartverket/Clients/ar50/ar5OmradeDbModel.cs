@@ -7,8 +7,7 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
     {
         public int Objectid { get; set; }
         public ArealType ArealType { get; set; }
-        public double ShapeLength { get; set; }
-        public double ShapeArea { get; set; }
+        public double ClippedArea { get; set; }
         public string GeoJson { get; set; }
     }
 }
