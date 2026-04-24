@@ -1,7 +1,6 @@
 using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.ar50;
 using Dan.Plugin.Kartverket.Models;
-using Microsoft.IdentityModel.Protocols.WsAddressing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,7 +33,7 @@ namespace Dan.Plugin.Kartverket
         {
             var jordTypeList = new List<JordType>();
 
-            var coordinates = await _geonorgeClient.GetCoordinatesForProperty(matrikkelNumber);
+            var coordinates = await _geonorgeClient.GetCoordinatesForProperty(matrikkelNumber, includeWholeomrade: true);
             var propertyHasFritidsbolig = await _kartverketService.PropertyHasFritidsbolig(matrikkelNumber);
 
             if (coordinates.Count > 0)
@@ -54,10 +53,11 @@ namespace Dan.Plugin.Kartverket
                             ArealType = jordtype.ArealType.ToString(),
                             Areal = jordtype.ShapeArea,
                             GeoJson = jordtype.GeoJson,
-                            
+
                         });
-                    }                    
-                }                
+                    }
+
+                }
             }
 
             var addressResponse = await _kartverketService.GetAdresseByMatrikkelNumber(matrikkelNumber);
@@ -108,7 +108,7 @@ namespace Dan.Plugin.Kartverket
                     City = a.Poststed
                 }));
             }
-            
+
 
             return new LandRentalResponse
             {
@@ -136,7 +136,7 @@ namespace Dan.Plugin.Kartverket
                     property.PropertyData.Seksjonsnummer
                 );
 
-                var coordinates = new List<List<double>>();
+                var coordinates = new List<List<List<double>>>();
                 if (!string.IsNullOrEmpty(martikkelNumber))
                     coordinates = await _geonorgeClient.GetCoordinatesForProperty(
                         martikkelNumber,
@@ -144,8 +144,8 @@ namespace Dan.Plugin.Kartverket
                         property.PropertyData.Bruksnummer,
                         property.PropertyData.Seksjonsnummer,
                         property.PropertyData.Festenummer,
-                        property.PropertyData.Kommunenummer
-                    );                
+                        property.PropertyData.Kommunenummer                        
+                    );
 
                 var adresser = new List<Address>();
 
@@ -161,7 +161,7 @@ namespace Dan.Plugin.Kartverket
                         string gnr = null;
                         string bnr = null;
                         string fnr = null;
-                        string streetAddress = address.Street;                        
+                        string streetAddress = address.Street;
 
                         if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern))
                         {
@@ -214,9 +214,9 @@ namespace Dan.Plugin.Kartverket
                     })
                     .Select(g => g.First())
                     .ToList();
-                                       
+
                 }
-                
+
                 result.Properties.Add(
                     new MotorizedTrafficProperty
                     {
@@ -237,13 +237,13 @@ namespace Dan.Plugin.Kartverket
             var stringBuilder = new StringBuilder();
             if (!string.IsNullOrEmpty(kommuneNr))
                 stringBuilder.Append(kommuneNr + "-");
-            if(!string.IsNullOrEmpty(gardsNr))
+            if (!string.IsNullOrEmpty(gardsNr))
                 stringBuilder.Append($"{gardsNr}");
-            if(!string.IsNullOrEmpty(bruksNr))
+            if (!string.IsNullOrEmpty(bruksNr))
                 stringBuilder.Append($"/{bruksNr}");
-            if(!string.IsNullOrEmpty(festeNr))
+            if (!string.IsNullOrEmpty(festeNr))
                 stringBuilder.Append($"/{festeNr}");
-            if(!string.IsNullOrEmpty(seksjonsNr))
+            if (!string.IsNullOrEmpty(seksjonsNr))
                 stringBuilder.Append($"/{seksjonsNr}");
 
 

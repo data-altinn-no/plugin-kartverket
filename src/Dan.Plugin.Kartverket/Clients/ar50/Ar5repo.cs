@@ -18,13 +18,10 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
             _dataSource = dataSource;
         }
 
-        public async Task<List<Ar5OmradeDbModel>> GetOmrade(List<double> coordinates)
+        public async Task<List<Ar5OmradeDbModel>> GetOmrade(List<List<double>> coordinates)
         {
-            if (coordinates == null || coordinates.Count < 2)
+            if (coordinates == null || coordinates.Count < 1)
                 throw new ArgumentException("Coordinates required");
-
-            if (coordinates.Count % 2 != 0)
-                throw new ArgumentException($"Invalid coordinate format: [{string.Join(", ", coordinates)}]");
 
             //4326 is the Spatial Reference System Identifier (SRID) for WGS 84,
             //common coordinate system used for geographic data.
@@ -35,18 +32,25 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
             Geometry inputGeometry;
 
             // 📍 ONE POINT
-            if (coordinates.Count == 2)
+            if (coordinates.Count == 1)
             {
-                inputGeometry = geometryFactory.CreatePoint(new Coordinate(coordinates[0], coordinates[1]));
+                var point = coordinates[0];
+                if (point.Count != 2)
+                    throw new ArgumentException("Each coordinate must have exactly 2 values [longitude, latitude]");
+
+                inputGeometry = geometryFactory.CreatePoint(new Coordinate(point[0], point[1]));
             }
             // 🔷 POLYGON
-            else if (coordinates.Count >= 6)
+            else if (coordinates.Count >= 3)
             {
                 var coordinatesList = new List<Coordinate>();
 
-                for (int i = 0; i < coordinates.Count; i += 2)
+                foreach (var point in coordinates)
                 {
-                    coordinatesList.Add(new Coordinate(coordinates[i], coordinates[i + 1]));
+                    if (point.Count != 2)
+                        throw new ArgumentException("Each coordinate must have exactly 2 values [longitude, latitude]");
+
+                    coordinatesList.Add(new Coordinate(point[0], point[1]));
                 }
 
                 if (!coordinatesList.First().Equals2D(coordinatesList.Last()))
@@ -96,7 +100,7 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
 
     public interface IAr5Repo
     {
-        Task<List<Ar5OmradeDbModel>> GetOmrade(List<double> coordinates);
+        Task<List<Ar5OmradeDbModel>> GetOmrade(List<List<double>> coordinates);
     }
 
 }

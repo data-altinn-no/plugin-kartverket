@@ -20,13 +20,14 @@ namespace Dan.Plugin.Kartverket.Clients
     {
         public Task<KartverketResponse> Get(KartverketResponse kartverket);
         public Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo, string city);
-        public Task<List<List<double>>> GetCoordinatesForProperty(
+        public Task<List<List<List<double>>>> GetCoordinatesForProperty(
             string? matrikkelNumber = null,
             string? gnr = null,
             string? bnr = null,
             string? snr = null,
             string? fnr = null,
-            string? kommunenr = null);
+            string? kommunenr = null,
+            bool includeWholeomrade = false);
 
         public Task<OutputAdresseList> SearchByMatrikkelNumber(
             string municipalityNumber,
@@ -76,13 +77,14 @@ namespace Dan.Plugin.Kartverket.Clients
                 return kartverket;
             }
 
-            public async Task<List<List<double>>> GetCoordinatesForProperty(
-                string matrikkelNumber = null,
-                string gnr = null,
-                string bnr = null,
-                string snr = null,
-                string fnr = null,
-                string kommunenr = null)
+            public async Task<List<List<List<double>>>> GetCoordinatesForProperty(
+    string matrikkelNumber = null,
+    string gnr = null,
+    string bnr = null,
+    string snr = null,
+    string fnr = null,
+    string kommunenr = null,
+    bool includeWholeOmrade = false)
             {
                 var urlBuilder = new StringBuilder();
                 urlBuilder.Append(_settings.CoordinatesLookupUrl).Append("/geokoding");
@@ -102,8 +104,10 @@ namespace Dan.Plugin.Kartverket.Clients
                 if (!string.IsNullOrEmpty(kommunenr))
                     queryParams.Add("kommunenummer=" + Uri.EscapeDataString(kommunenr));
 
-                if (queryParams.Count > 0)
-                    urlBuilder.Append("?").Append(string.Join("&", queryParams));
+                queryParams.Add($"omrade={(includeWholeOmrade ? "true" : "false")}");
+                queryParams.Add("utkoordsys=4258");
+
+                urlBuilder.Append("?").Append(string.Join("&", queryParams));
 
                 try
                 {
@@ -119,11 +123,11 @@ namespace Dan.Plugin.Kartverket.Clients
                         await response.Content.ReadFromJsonAsync<GeocodingResponse>(options);
 
                     if (geocodingResponse?.Features == null)
-                        return new List<List<double>>();
+                        return new List<List<List<double>>>();
 
                     var coordinates = geocodingResponse.Features
-                        .Where(f => f?.Geometry?.Coordinates != null)
-                        .Select(f => f.Geometry.Coordinates)
+                        .Where(f => f?.Geometry?.Coordinates.ValueKind == JsonValueKind.Array)
+                        .SelectMany(f => NormalizeCoordinates(f.Geometry.Coordinates))
                         .ToList();
 
                     return coordinates;
@@ -136,7 +140,7 @@ namespace Dan.Plugin.Kartverket.Clients
                         e);
                 }
             }
-        
+
 
             public async Task<OutputAdresseList> Search(string address, string municipalityNo, string flatNo, string city)
             {
@@ -388,6 +392,59 @@ namespace Dan.Plugin.Kartverket.Clients
                         property.Municipality = address.Kommunenavn;
                     }
                 }
+            }
+
+            private static List<List<List<double>>> NormalizeCoordinates(JsonElement coords)
+            {
+                if (coords.ValueKind != JsonValueKind.Array || coords.GetArrayLength() == 0)
+                    return new List<List<List<double>>>();
+
+                var first = coords[0];
+
+                // CASE 1: [x, y]  (rare, but possible)
+                if (first.ValueKind == JsonValueKind.Number)
+                {
+                    var point = coords.EnumerateArray()
+                        .Select(v => v.GetDouble())
+                        .ToList();
+
+                    return new List<List<List<double>>>
+        {
+            new List<List<double>> { point }
+        };
+                }
+
+                // CASE 2: [[x,y], [x,y]]  (omrade=false)
+                if (first.ValueKind == JsonValueKind.Array)
+                {
+                    var second = first[0];
+
+                    // [[x,y]]
+                    if (second.ValueKind == JsonValueKind.Number)
+                    {
+                        var ring = coords.EnumerateArray()
+                            .Select(pair => pair.EnumerateArray()
+                                .Select(v => v.GetDouble())
+                                .ToList())
+                            .ToList();
+
+                        return new List<List<List<double>>> { ring };
+                    }
+
+                    // [[[x,y]]] (Polygon)
+                    if (second.ValueKind == JsonValueKind.Array)
+                    {
+                        return coords.EnumerateArray()
+                            .Select(ring => ring.EnumerateArray()
+                                .Select(pair => pair.EnumerateArray()
+                                    .Select(v => v.GetDouble())
+                                    .ToList())
+                                .ToList())
+                            .ToList();
+                    }
+                }
+
+                throw new NotSupportedException("Unsupported coordinate structure");
             }
 
         }
