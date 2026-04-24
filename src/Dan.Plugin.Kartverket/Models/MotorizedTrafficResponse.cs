@@ -24,7 +24,7 @@ namespace Dan.Plugin.Kartverket.Models
         /// Latitude and Longitude Coordinates
         /// </summary>
         [JsonProperty("Coordinates")]
-        public List<List<double>> Coordinates { get; set; }
+        public List<List<List<double>>> Coordinates { get; set; }
         /// <summary>
         /// Address of property
         /// </summary>
