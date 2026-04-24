@@ -2,7 +2,7 @@
     {
         "matrikkelnummer": {
             "kommunenr": "1860",
-            "gardsnr": 134,
+            "gaardsnr": 134,
             "bruksnr": 14,
             "festenr": 0
         },
@@ -11,7 +11,7 @@
         "tilknyttetLandbrukseiendom": {
             "matrikkelnummer": {
                 "kommunenr": "1860",
-                "gardsnr": 134,
+                "gaardsnr": 134,
                 "bruksnr": 14,
                 "festenr": 0
             },
@@ -23,7 +23,7 @@
     {
         "matrikkelnummer": {
             "kommunenr": "3014",
-            "gardsnr": 848,
+            "gaardsnr": 848,
             "bruksnr": 1,
             "festenr": 0
         },
@@ -32,7 +32,7 @@
         "tilknyttetLandbrukseiendom": {
             "matrikkelnummer": {
                 "kommunenr": "3014",
-                "gardsnr": 848,
+                "gaardsnr": 848,
                 "bruksnr": 1,
                 "festenr": 0
             },
@@ -44,7 +44,7 @@
     {
         "matrikkelnummer": {
             "kommunenr": "1860",
-            "gardsnr": 43,
+            "gaardsnr": 43,
             "bruksnr": 3,
             "festenr": 0
         },
