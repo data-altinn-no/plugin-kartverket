@@ -72,21 +72,27 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
             //4258 is the EPSG coordinate reference system used for the returned GeoJSON coordinates.
             string sql = @"
                         WITH eiendom AS (
-                            SELECT ST_Transform(
-                                ST_SetSRID(ST_GeomFromText(@geom), 4326),
-                                25833
-                            ) AS shape
-                        )
+                        SELECT ST_Transform(
+                            ST_SetSRID(ST_GeomFromText(@geom), 4326),
+                            25833
+                        ) AS shape
+                    ),
+                    intersections AS (
                         SELECT
-                            o.objectid AS ""Objectid"",
-                            o.lokalid AS ""LokalId"",
-                            o.arealtype AS ""ArealType"",
-                            o.shape_area AS ""ShapeArea"",
-                            o.shape_length AS ""ShapeLength"",
-                            ST_AsGeoJSON(ST_Transform(o.shape, 4258)) AS ""GeoJson""
-                        FROM fkb_ar5_omrade o, eiendom e
-                        WHERE ST_Intersects(o.shape, e.shape)
-                        ORDER BY ST_Area(ST_Intersection(o.shape, e.shape)) DESC;";
+                            o.objectid,
+                            o.arealtype,
+                            ST_Intersection(o.shape, e.shape) AS geom
+                        FROM fkb_ar5_omrade o
+                        JOIN eiendom e
+                            ON ST_Intersects(o.shape, e.shape)
+                    )
+                    SELECT
+                        objectid AS ""Objectid"",
+                        arealtype AS ""ArealType"",
+                        ST_Area(geom) AS ""ClippedArea"",
+                        ST_AsGeoJSON(ST_Transform(geom, 4258)) AS ""GeoJson""
+                    FROM intersections
+                    WHERE NOT ST_IsEmpty(geom)";
 
             var results = (await connection.QueryAsync<Ar5OmradeDbModel>(
                 sql,
