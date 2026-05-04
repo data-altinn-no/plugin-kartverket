@@ -72,17 +72,19 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
             //4258 is the EPSG coordinate reference system used for the returned GeoJSON coordinates.
             string sql = @"
                         WITH eiendom AS (
-                        SELECT ST_Transform(
-                            ST_SetSRID(ST_GeomFromText(@geom), 4326),
-                            25833
+                        SELECT ST_Buffer(
+                            ST_Transform(
+                                ST_SetSRID(ST_GeomFromText(@geom), 4326),
+                                25833
+                            ),
+                            0
                         ) AS shape
                     ),
                     intersections AS (
                         SELECT
                             o.objectid,
                             o.arealtype,
-                            ST_Intersection(o.shape, e.shape) AS geom,
-                            e.shape AS eiendom_geom
+                            ST_Intersection(o.shape, e.shape) AS geom
                         FROM fkb_ar5_omrade o
                         JOIN eiendom e
                             ON ST_Intersects(o.shape, e.shape)
@@ -95,8 +97,7 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
                     FROM intersections
                     WHERE 
                         NOT ST_IsEmpty(geom)
-                        AND ST_Area(geom) > 10
-                        AND ST_Within(geom, eiendom_geom);";
+                        AND ST_Area(geom) > 10;";
 
             var results = (await connection.QueryAsync<Ar5OmradeDbModel>(
                 sql,
