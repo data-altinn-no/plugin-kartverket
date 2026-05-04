@@ -92,7 +92,9 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
                         ST_Area(geom) AS ""ClippedArea"",
                         ST_AsGeoJSON(ST_Transform(geom, 4258)) AS ""GeoJson""
                     FROM intersections
-                    WHERE NOT ST_IsEmpty(geom)";
+                    WHERE 
+                        NOT ST_IsEmpty(geom)
+                        AND ST_Area(geom) > 10;";
 
             var results = (await connection.QueryAsync<Ar5OmradeDbModel>(
                 sql,
