@@ -74,11 +74,11 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
                         WITH eiendom AS (
                         SELECT CASE
                             WHEN ST_GeometryType(
-                                ST_Transform(ST_SetSRID(ST_GeomFromText(`@geom`), 4326), 25833)
+                                ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833)
                             ) = 'ST_Polygon'
-                        THEN ST_Transform(ST_SetSRID(ST_GeomFromText(`@geom`), 4326), 25833)
+                        THEN ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833)
                         ELSE ST_Buffer(
-                            ST_Transform(ST_SetSRID(ST_GeomFromText(`@geom`), 4326), 25833),
+                            ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833),
                             0
                         )
                         END AS shape
