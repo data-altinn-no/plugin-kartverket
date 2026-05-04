@@ -72,10 +72,16 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
             //4258 is the EPSG coordinate reference system used for the returned GeoJSON coordinates.
             string sql = @"
                         WITH eiendom AS (
-                        SELECT ST_Transform(
-                            ST_SetSRID(ST_GeomFromText(@geom), 4326),
-                            25833
-                        ) AS shape
+                        SELECT CASE
+                            WHEN ST_GeometryType(
+                                ST_Transform(ST_SetSRID(ST_GeomFromText(`@geom`), 4326), 25833)
+                            ) = 'ST_Polygon'
+                        THEN ST_Transform(ST_SetSRID(ST_GeomFromText(`@geom`), 4326), 25833)
+                        ELSE ST_Buffer(
+                            ST_Transform(ST_SetSRID(ST_GeomFromText(`@geom`), 4326), 25833),
+                            0
+                        )
+                        END AS shape
                     ),
                     intersections AS (
                         SELECT
@@ -92,6 +98,7 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
                         ST_Area(geom) AS ""ClippedArea"",
                         ST_AsGeoJSON(ST_Transform(geom, 4258)) AS ""GeoJson""
                     FROM intersections
+                    -- ST_Area(geom) > 10 - Threshold of 10 m² filters out topology slivers from ST_Intersection
                     WHERE 
                         NOT ST_IsEmpty(geom)
                         AND ST_Area(geom) > 10;";
