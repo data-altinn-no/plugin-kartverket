@@ -81,7 +81,8 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
                         SELECT
                             o.objectid,
                             o.arealtype,
-                            ST_Intersection(o.shape, e.shape) AS geom
+                            ST_Intersection(o.shape, e.shape) AS geom,
+                            e.shape AS eiendom_geom
                         FROM fkb_ar5_omrade o
                         JOIN eiendom e
                             ON ST_Intersects(o.shape, e.shape)
@@ -94,7 +95,8 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
                     FROM intersections
                     WHERE 
                         NOT ST_IsEmpty(geom)
-                        AND ST_Area(geom) > 10;";
+                        AND ST_Area(geom) > 10
+                        AND ST_Within(geom, eiendom_geom);";
 
             var results = (await connection.QueryAsync<Ar5OmradeDbModel>(
                 sql,
