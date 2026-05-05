@@ -32,7 +32,7 @@ namespace Dan.Plugin.Kartverket.Landbruk.Models
         [Newtonsoft.Json.JsonProperty("kommunenr", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Kommunenr { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("gardsnr", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("gaardsnr", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int? Gardsnr { get; set; }
 
         [Newtonsoft.Json.JsonProperty("bruksnr", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
