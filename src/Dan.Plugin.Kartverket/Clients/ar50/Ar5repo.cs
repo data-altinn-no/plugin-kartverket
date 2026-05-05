@@ -71,47 +71,41 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
             //4326 is the Spatial Reference System Identifier (SRID) for WGS 84,
             //4258 is the EPSG coordinate reference system used for the returned GeoJSON coordinates.
             string sql = @"
-                        WITH input_geom AS (
-                        SELECT ST_Transform(
-                            ST_SetSRID(ST_GeomFromText(@geom), 4326),
-                            25833
-                        ) AS geom
-                    ),
-
-                    -- 🔹 Finn relevante AR5 grenser rundt input
-                    grenser AS (
-                        SELECT g.shape
-                        FROM fkb_ar5_grense g
-                        JOIN input_geom i
-                            ON ST_Intersects(g.shape, i.geom)
-                    ),
-
-                    -- 🔹 Bygg polygon(er) fra grensene (inkludert hull)
-                    eiendom AS (
-                        SELECT ST_BuildArea(ST_Union(shape)) AS shape
-                        FROM grenser
-                    ),
-
-                    -- 🔹 Klipp AR5-områder mot eiendommen
-                    intersections AS (
+                        WITH geom AS (
                         SELECT
-                            o.objectid,
-                            o.arealtype,
-                            o.shape AS original_geom,
-                            ST_Intersection(o.shape, e.shape) AS geom
-                        FROM fkb_ar5_omrade o
-                        JOIN eiendom e
-                            ON ST_Intersects(o.shape, e.shape)
+                            CASE
+                                WHEN ST_GeometryType(
+                                    ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833)
+                                ) = 'ST_Polygon'
+                                    THEN ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833)
+                                ELSE ST_Buffer(
+                                    ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833),
+                                    1
+                                )
+                            END AS geom
+                    ),
+
+                    eiendom AS (
+                        SELECT ST_BuildArea(ST_Union(g.shape)) AS shape
+                        FROM fkb_ar5_grense g
+                        JOIN geom i
+                            ON ST_DWithin(g.shape, i.geom, 1)
                     )
 
                     SELECT
-                        objectid AS ""Objectid"",
-                        arealtype AS ""ArealType"",
-                        ST_Area(geom) AS ""ClippedArea"",
-                        ST_AsGeoJSON(ST_Transform(geom, 4258)) AS ""GeoJson""
-                    FROM intersections
-                    WHERE 
-                        NOT ST_IsEmpty(geom)";
+                        o.objectid AS ""Objectid"",
+                        o.arealtype AS ""ArealType"",
+                        ST_Area(ST_Intersection(o.shape, e.shape)) AS ""ClippedArea"",
+                        ST_AsGeoJSON(
+                            ST_Transform(
+                                ST_Intersection(o.shape, e.shape),
+                                4258
+                            )
+                        ) AS ""GeoJson""
+                    FROM fkb_ar5_omrade o
+                    JOIN eiendom e
+                        ON ST_Intersects(o.shape, e.shape)
+                    WHERE NOT ST_IsEmpty(ST_Intersection(o.shape, e.shape));";
 
             var results = (await connection.QueryAsync<Ar5OmradeDbModel>(
                 sql,
