@@ -73,23 +73,25 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
             string sql = @"
                         WITH geom AS (
                         SELECT
-                            CASE
-                                WHEN ST_GeometryType(
-                                    ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833)
-                                ) = 'ST_Polygon'
-                                    THEN ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833)
-                                ELSE ST_Buffer(
-                                    ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833),
-                                    1
+                            ST_MakeValid(
+                                ST_Transform(
+                                    ST_SetSRID(ST_GeomFromText(@geom), 4326),
+                                    25833
                                 )
-                            END AS geom
+                            ) AS geom
                     ),
 
                     eiendom AS (
-                        SELECT ST_BuildArea(ST_Union(g.shape)) AS shape
+                        SELECT
+                            ST_Union(g.shape) AS shape
                         FROM fkb_ar5_grense g
                         JOIN geom i
-                            ON ST_DWithin(g.shape, i.geom, 1)
+                            ON ST_Intersects(g.shape, i.geom)
+                    ),
+
+                    eiendom_poly AS (
+                        SELECT ST_MakeValid(ST_BuildArea(shape)) AS shape
+                        FROM eiendom
                     )
 
                     SELECT
@@ -103,7 +105,7 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
                             )
                         ) AS ""GeoJson""
                     FROM fkb_ar5_omrade o
-                    JOIN eiendom e
+                    JOIN eiendom_poly e
                         ON ST_Intersects(o.shape, e.shape)
                     WHERE NOT ST_IsEmpty(ST_Intersection(o.shape, e.shape));";
 
