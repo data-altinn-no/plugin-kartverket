@@ -38,6 +38,15 @@ namespace Dan.Plugin.Kartverket.Clients
             string postalCode,
             string postalCity //poststed, not kommunenavn
         );
+        public Task<List<List<List<List<double>>>>> GetCoordinatesForLandRental(
+            string? matrikkelNumber = null,
+            string? gnr = null,
+            string? bnr = null,
+            string? snr = null,
+            string? fnr = null,
+            string? kommunenr = null,
+            bool includeWholeOmrade = false
+        );
 
 
 
@@ -394,6 +403,68 @@ namespace Dan.Plugin.Kartverket.Clients
                 }
             }
 
+            public async Task<List<List<List<List<double>>>>> GetCoordinatesForLandRental(string matrikkelNumber = null, string gnr = null, string bnr = null, string snr = null, string fnr = null, string kommunenr = null, bool includeWholeOmrade = false)
+            {
+                var urlBuilder = new StringBuilder();
+                urlBuilder.Append(_settings.CoordinatesLookupUrl).Append("/geokoding");
+
+                var queryParams = new List<string>();
+
+                if (!string.IsNullOrEmpty(matrikkelNumber))
+                    queryParams.Add("matrikkelnummer=" + Uri.EscapeDataString(matrikkelNumber));
+                if (!string.IsNullOrEmpty(gnr))
+                    queryParams.Add("gardsnummer=" + Uri.EscapeDataString(gnr));
+                if (!string.IsNullOrEmpty(bnr))
+                    queryParams.Add("bruksnummer=" + Uri.EscapeDataString(bnr));
+                if (!string.IsNullOrEmpty(snr))
+                    queryParams.Add("seksjonsnummer=" + Uri.EscapeDataString(snr));
+                if (!string.IsNullOrEmpty(fnr))
+                    queryParams.Add("festenummer=" + Uri.EscapeDataString(fnr));
+                if (!string.IsNullOrEmpty(kommunenr))
+                    queryParams.Add("kommunenummer=" + Uri.EscapeDataString(kommunenr));
+
+                queryParams.Add($"omrade={(includeWholeOmrade ? "true" : "false")}");
+                queryParams.Add("utkoordsys=4258");
+
+                urlBuilder.Append("?").Append(string.Join("&", queryParams));
+                System.Console.WriteLine(urlBuilder.ToString());
+
+                try
+                {
+                    var response = await _httpClient.GetAsync(urlBuilder.ToString());
+                    response.EnsureSuccessStatusCode();
+
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                    var geocodingResponse =
+                        await response.Content.ReadFromJsonAsync<GeocodingResponse>(options);
+
+                    if (geocodingResponse?.Features == null)
+                        return new List<List<List<List<double>>>>();
+
+                    List<List<List<List<double>>>> coordinatesList = new List<List<List<List<double>>>>();
+
+                    foreach (var feature in geocodingResponse.Features)
+                    {
+                        if (feature?.Geometry?.Coordinates.ValueKind != JsonValueKind.Array)
+                            continue;
+
+                        coordinatesList.Add(NormalizeCoordinates(feature.Geometry.Coordinates));
+
+                    }
+
+                    return coordinatesList;
+                }
+                catch (Exception e)
+                {
+                    throw new EvidenceSourcePermanentServerException(
+                        Metadata.ERROR_CCR_UPSTREAM_ERROR,
+                        null,
+                        e
+                    );
+                }
+            }
+
             private static List<List<List<double>>> NormalizeCoordinates(JsonElement coords)
             {
                 if (coords.ValueKind != JsonValueKind.Array || coords.GetArrayLength() == 0)
@@ -446,7 +517,7 @@ namespace Dan.Plugin.Kartverket.Clients
 
                 throw new NotSupportedException("Unsupported coordinate structure");
             }
-
+            
         }
     }
 
