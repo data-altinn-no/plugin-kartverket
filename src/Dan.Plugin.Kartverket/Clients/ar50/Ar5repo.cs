@@ -1,6 +1,8 @@
 using Dapper;
 using NetTopologySuite;
 using NetTopologySuite.Geometries;
+using NetTopologySuite.Geometries.Utilities;
+using NetTopologySuite.Operation.Union;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,7 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
             _dataSource = dataSource;
         }
 
-        public async Task<List<Ar5OmradeDbModel>> GetOmrade(List<List<double>> coordinates)
+        public async Task<List<Ar5OmradeDbModel>> GetOmrade(List<List<List<double>>> coordinates)
         {
             if (coordinates == null || coordinates.Count < 1)
                 throw new ArgumentException("Coordinates required");
@@ -29,39 +31,42 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
             //By using SRID 4326, the code ensures that the input geometry is correctly interpreted as geographic coordinates,
             //allowing for accurate spatial operations and queries against the database that also uses this coordinate system.
             var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
-            Geometry inputGeometry;
 
-            // 📍 ONE POINT
-            if (coordinates.Count == 1)
+
+            // Convert all inputs to polygons first
+            var polygons = coordinates.Select(poly =>
             {
-                var point = coordinates[0];
-                if (point.Count != 2)
-                    throw new ArgumentException("Each coordinate must have exactly 2 values [longitude, latitude]");
+                var coords = poly.Select(p => new Coordinate(p[0], p[1])).ToArray();
+                var ring = geometryFactory.CreateLinearRing(coords);
+                return geometryFactory.CreatePolygon(ring);
+            }).ToList();
+            var unionAll = CascadedPolygonUnion.Union(polygons.Cast<Geometry>().ToList());
 
-                inputGeometry = geometryFactory.CreatePoint(new Coordinate(point[0], point[1]));
-            }
-            // 🔷 POLYGON
-            else if (coordinates.Count >= 3)
+
+            // Finn hull
+            var holes = polygons.Where(p =>
+                polygons.Any(o =>
+                    !ReferenceEquals(p, o) &&
+                    o.Covers(p)
+                )
+            ).ToList();
+
+            // Subtract hull
+            Geometry result = unionAll;
+
+            if (holes.Any())
             {
-                var coordinatesList = new List<Coordinate>();
+                var holeUnion = CascadedPolygonUnion.Union(holes.Cast<Geometry>().ToList());
+                holeUnion = GeometryFixer.Fix(holeUnion);
 
-                foreach (var point in coordinates)
-                {
-                    if (point.Count != 2)
-                        throw new ArgumentException("Each coordinate must have exactly 2 values [longitude, latitude]");
-
-                    coordinatesList.Add(new Coordinate(point[0], point[1]));
-                }
-
-                if (!coordinatesList.First().Equals2D(coordinatesList.Last()))
-                    coordinatesList.Add(coordinatesList.First());
-
-                inputGeometry = geometryFactory.CreatePolygon(coordinatesList.ToArray());
+                result = result.Difference(holeUnion);
             }
             else
             {
-                throw new ArgumentException("At least 3 coordinate pairs required for polygon");
+                result = unionAll;
             }
+
+            result = GeometryFixer.Fix(result);
 
             await using var connection = await _dataSource.OpenConnectionAsync();
 
@@ -71,45 +76,40 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
             //4326 is the Spatial Reference System Identifier (SRID) for WGS 84,
             //4258 is the EPSG coordinate reference system used for the returned GeoJSON coordinates.
             string sql = @"
-                        WITH geom AS (
-                        SELECT
-                            CASE
-                                WHEN ST_GeometryType(
-                                    ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833)
-                                ) = 'ST_Polygon'
-                                    THEN ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833)
-                                ELSE ST_Buffer(
-                                    ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833),
-                                    1
-                                )
-                            END AS geom
+                        WITH eiendom AS (
+                        SELECT CASE
+                            WHEN ST_GeometryType(
+                                ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833)
+                            ) = 'ST_Polygon'
+                        THEN ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833)
+                        ELSE ST_Buffer(
+                            ST_Transform(ST_SetSRID(ST_GeomFromText(@geom), 4326), 25833),
+                            0
+                        )
+                        END AS shape
                     ),
-
-                    eiendom AS (
-                        SELECT ST_BuildArea(ST_Union(g.shape)) AS shape
-                        FROM fkb_ar5_grense g
-                        JOIN geom i
-                            ON ST_DWithin(g.shape, i.geom, 1)
+                    intersections AS (
+                        SELECT
+                            o.objectid,
+                            o.arealtype,
+                            ST_Intersection(o.shape, e.shape) AS geom
+                        FROM fkb_ar5_omrade o
+                        JOIN eiendom e
+                            ON ST_Intersects(o.shape, e.shape)
                     )
-
                     SELECT
-                        o.objectid AS ""Objectid"",
-                        o.arealtype AS ""ArealType"",
-                        ST_Area(ST_Intersection(o.shape, e.shape)) AS ""ClippedArea"",
-                        ST_AsGeoJSON(
-                            ST_Transform(
-                                ST_Intersection(o.shape, e.shape),
-                                4258
-                            )
-                        ) AS ""GeoJson""
-                    FROM fkb_ar5_omrade o
-                    JOIN eiendom e
-                        ON ST_Intersects(o.shape, e.shape)
-                    WHERE NOT ST_IsEmpty(ST_Intersection(o.shape, e.shape));";
+                        objectid AS ""Objectid"",
+                        arealtype AS ""ArealType"",
+                        ST_Area(geom) AS ""ClippedArea"",
+                        ST_AsGeoJSON(ST_Transform(geom, 4258)) AS ""GeoJson""
+                    FROM intersections
+                    -- ST_Area(geom) > 10 - Threshold of 10 m² filters out topology slivers from ST_Intersection
+                    WHERE
+                        NOT ST_IsEmpty(geom)";
 
             var results = (await connection.QueryAsync<Ar5OmradeDbModel>(
                 sql,
-                new { geom = inputGeometry.AsText() }
+                new { geom = result.AsText() }
             )).ToList();
 
 
@@ -119,7 +119,7 @@ namespace Dan.Plugin.Kartverket.Clients.ar50
 
     public interface IAr5Repo
     {
-        Task<List<Ar5OmradeDbModel>> GetOmrade(List<List<double>> coordinates);
+        Task<List<Ar5OmradeDbModel>> GetOmrade(List<List<List<double>>> coordinates);
     }
 
 }

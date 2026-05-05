@@ -33,7 +33,7 @@ namespace Dan.Plugin.Kartverket
         {
             var jordTypeList = new List<JordType>();
 
-            var coordinates = await _geonorgeClient.GetCoordinatesForProperty(matrikkelNumber, includeWholeOmrade: true);
+            var coordinates = await _geonorgeClient.GetCoordinatesForLandRental(matrikkelNumber, includeWholeOmrade: true);
             var propertyHasFritidsbolig = await _kartverketService.PropertyHasFritidsbolig(matrikkelNumber);
 
             if (coordinates.Count > 0)
