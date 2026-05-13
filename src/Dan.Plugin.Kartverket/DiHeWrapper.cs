@@ -73,6 +73,7 @@ namespace Dan.Plugin.Kartverket
             }
 
             var adresse = addressLookupResults
+                .Where(r => r?.Adresser != null)
                 .SelectMany(r => r.Adresser)
                 .Select(a => new Address
                 {
@@ -80,6 +81,16 @@ namespace Dan.Plugin.Kartverket
                     PostalCode = a.Postnummer,
                     City = a.Poststed
                 })
+                .Where(a => !string.IsNullOrWhiteSpace(a.Street)
+                            && !string.IsNullOrWhiteSpace(a.PostalCode)
+                            && !string.IsNullOrWhiteSpace(a.City))
+               .GroupBy(a => new
+                {
+                    Street = a.Street?.Trim().ToLower(),
+                    PostalCode = a.PostalCode?.Trim(),
+                    City = a.City?.Trim().ToLower()
+                })
+                .Select(g => g.First())
                 .ToList();
 
             return new LandRentalResponse
