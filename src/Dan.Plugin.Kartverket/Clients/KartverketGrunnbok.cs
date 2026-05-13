@@ -393,6 +393,9 @@ namespace Dan.Plugin.Kartverket.Clients
                         });
                     }
 
+                    if(matrikkelenhetgrunnbok.kommuneId?.value == null)
+                        continue;
+
                     var kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
                     if (kommune == null)
                         continue;
