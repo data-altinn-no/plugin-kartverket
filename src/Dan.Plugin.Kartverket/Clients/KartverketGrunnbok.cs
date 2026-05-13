@@ -304,30 +304,45 @@ namespace Dan.Plugin.Kartverket.Clients
             {
                 var regenhetsandelfromstore = await _storeServiceClient.GetRettighetsandeler(registerenhetsrettsandelid);
 
+                if (regenhetsandelfromstore == null)
+                    continue;
+
                 //Skip if property is historical, as we only want currently owned properties.
                 if (regenhetsandelfromstore.historisk)
                     continue;
                 try
                 {
+                    if (regenhetsandelfromstore.registerenhetsrettId?.value == null)
+                        continue;
+
                     var matrikkelenhetgrunnbok = await _storeServiceClient.GetMatrikkelEnhetFromRegisterRettighetsandel(regenhetsandelfromstore.registerenhetsrettId.value);
+                    if (matrikkelenhetgrunnbok == null)
+                        continue;
 
                     var listOfCoOwners = new List<CoOwner>();
 
                     var share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}";
-                    if (regenhetsandelfromstore.teller != regenhetsandelfromstore.nevner && matrikkelenhetgrunnbok != null)
+                    if (regenhetsandelfromstore.teller != regenhetsandelfromstore.nevner)
                     {
+                        if (matrikkelenhetgrunnbok.id?.value == null)
+                            continue;
+
                         var registerenhetId = matrikkelenhetgrunnbok.id.value;
 
                         var registerEnhetTilRegisterenhetsrettId = await _registerenhetsrettClientService.GetRetterForEnheter(registerenhetId);
+                        if (registerEnhetTilRegisterenhetsrettId?.Values == null)
+                            continue;
 
                         var registerEnhetIdTilRegisterenhetsrettIds = registerEnhetTilRegisterenhetsrettId.Values
                             .SelectMany(rettid => rettid.Select(ids => ids.value))
                             .ToList();
-
+                        
                         foreach (var registerEnhetId in registerEnhetIdTilRegisterenhetsrettIds)
                         {
-                            var andelerIRetter = await _regRettsandelsClientService.GetAndelerIRetter(regenhetsandelfromstore.registerenhetsrettId.value);
-                            var andelerIRetterValues = andelerIRetter.Body.@return.Values;
+                            var andelerIRetter = await _regRettsandelsClientService.GetAndelerIRetter(registerEnhetId);
+                            var andelerIRetterValues = andelerIRetter?.Body?.@return?.Values;
+                            if (andelerIRetterValues == null)
+                                continue;
 
                             var firstAndel = andelerIRetterValues.FirstOrDefault();
                             if (firstAndel == null)
@@ -335,55 +350,77 @@ namespace Dan.Plugin.Kartverket.Clients
 
                             foreach (var andel in firstAndel)
                             {
+                                if (andel?.value == null)
+                                    continue;
+
                                 var andeler = await _storeServiceClient.GetRettighetsandeler(andel.value.ToString());
 
-                                if (!andeler.historisk)
-                                {
-                                    var coOwner = await _storeServiceClient.GetPerson(andeler.rettighetshaverId.value);
-                                    if (coOwner == null)
-                                        continue;
+                                if (andeler == null || andeler.historisk)
+                                    continue;
+                                
+                                if (andeler.rettighetshaverId?.value == null)
+                                    continue;
 
-                                    listOfCoOwners.Add(new CoOwner()
-                                    {
-                                        Identifier = coOwner.identifikasjonsnummer ?? null,
-                                        Name = coOwner.navn ?? null,
-                                        OwnerShare = $"{andeler.teller}/{andeler.nevner}" ?? null
-                                    });
-                                }
+                                var coOwner = await _storeServiceClient.GetPerson(andeler.rettighetshaverId.value);
+                                if (coOwner == null)
+                                    continue;
+
+                                listOfCoOwners.Add(new CoOwner()
+                                {
+                                    Identifier = coOwner.identifikasjonsnummer,
+                                    Name = coOwner.navn,
+                                    OwnerShare = $"{andeler.teller}/{andeler.nevner}"
+                                });
+                                
                             }
                         }
                     }
                     else
                     {
                         //for single owners
+                        if (regenhetsandelfromstore.rettighetshaverId?.value == null)
+                            continue;
+
                         var owner = await _storeServiceClient.GetPerson(regenhetsandelfromstore.rettighetshaverId.value);
+                        if (owner == null)
+                            continue;
+
                         listOfCoOwners.Add(new CoOwner
                         {
-                            Identifier = owner.identifikasjonsnummer ?? null,
-                            Name = owner.navn ?? null,
-                            OwnerShare = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}" ?? null
+                            Identifier = owner.identifikasjonsnummer,
+                            Name = owner.navn,
+                            OwnerShare = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}"
                         });
                     }
 
-                    var kommune = new Models.Kommune();
-                    if (matrikkelenhetgrunnbok != null)
-                        kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
+                    if(matrikkelenhetgrunnbok.kommuneId?.value == null)
+                        continue;
+
+                    var kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
+                    if (kommune == null)
+                        continue;
 
                     var addresseList = new List<Address>();
                     var boligType = new List<string>();
 
                     var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer, matrikkelenhetgrunnbok.festenummer, matrikkelenhetgrunnbok.seksjonsnummer, kommune.Number);
+                    if (matrikkelenhetid?.value == null)
+                        continue;
+
                     var bruksenhetIds = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
-                    if(bruksenhetIds.Any())
+                    if (bruksenhetIds != null && bruksenhetIds.Any())
                     {
                         foreach(var bruksenhetId in bruksenhetIds)
                         {
                             //check if property is fritidsbolig
                             var bruksenhet = await _matrikkelStoreClient.GetBruksenhet(bruksenhetId.value);
-                            if(bruksenhet.bruksenhetstypeKodeId != null)
+                            if(bruksenhet == null)
+                                continue;
+                            if (bruksenhet.bruksenhetstypeKodeId != null)
                             {
                                 var bruksenhetstype = await _matrikkelStoreClient.GetBruksenhetstype(bruksenhet.bruksenhetstypeKodeId.value);
-                                boligType.Add(bruksenhetstype.kodeverdi);
+                                if (bruksenhetstype != null)
+                                    boligType.Add(bruksenhetstype.kodeverdi);
                             }                                
 
                             //get address
@@ -398,7 +435,8 @@ namespace Dan.Plugin.Kartverket.Clients
 
                         //we need to get the address one more time in case the bruksenhet didn't have a addresseId
                         var adresseByMatrikkelenhetId = await GetAddressByMatrikkelenhetId(matrikkelenhetid.value);
-                        addresseList.Add(adresseByMatrikkelenhetId); 
+                        if (adresseByMatrikkelenhetId != null)
+                            addresseList.Add(adresseByMatrikkelenhetId); 
                     }
 
                     //remove duplicates and empty addresses, some properties have multiple bruksenheter and matrikkelenhet linked to the same address which causes duplicates in the list
@@ -466,6 +504,8 @@ namespace Dan.Plugin.Kartverket.Clients
                 var ownershipTransfer = await _informasjonsServiceClientService.GetOwnershipInfo(matrikkelenhetgrunnbok.id.value);
 
                 var kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
+                if (kommune == null)
+                    continue;
 
                 var matrikkelenhetid =
                     await _matrikkelenhetServiceClient.GetMatrikkelenhet(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer, matrikkelenhetgrunnbok.festenummer, matrikkelenhetgrunnbok.seksjonsnummer, kommune.Number);
@@ -473,11 +513,11 @@ namespace Dan.Plugin.Kartverket.Clients
                 var bygningsider = await _matrikkelbygningClientService.GetBygningerForMatrikkelenhet(matrikkelenhetid.value);
 
                 var buildings = new List<double>();
-                foreach (var id in bygningsider)
-                {
-                    var temp = await _matrikkelStoreClient.GetBygning(id);
-                    buildings.Add(temp == null ? 0 : temp.bebygdAreal);
-                }
+                    foreach (var id in bygningsider)
+                    {
+                        var temp = await _matrikkelStoreClient.GetBygning(id);
+                        buildings.Add(temp == null ? 0 : temp.bebygdAreal);
+                    }
 
                 var matrikkelEnhet = await _matrikkelenhetServiceClient.GetMatrikkelEnhetTeig(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer,
                     matrikkelenhetgrunnbok.festenummer, matrikkelenhetgrunnbok.seksjonsnummer, kommune.Number);
@@ -514,6 +554,9 @@ namespace Dan.Plugin.Kartverket.Clients
             var snr = matrikkelnummerSplit.Length > 4 ? Convert.ToInt32(matrikkelnummerSplit[4]) : 0;
 
             var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(gnr, bnr, fnr, snr, kommunenr);
+            if (matrikkelenhetid?.value == null)
+                return false;
+
             var bruksenhetIder = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
 
             foreach(var bruksenhetId in bruksenhetIder)
