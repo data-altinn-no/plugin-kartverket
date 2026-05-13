@@ -1,3 +1,4 @@
+using Altinn.App.ExternalApi.AddressLookup;
 using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.ar50;
 using Dan.Plugin.Kartverket.Models;
@@ -33,82 +34,64 @@ namespace Dan.Plugin.Kartverket
         {
             var jordTypeList = new List<JordType>();
 
-            var coordinates = await _geonorgeClient.GetCoordinatesForLandRental(matrikkelNumber, includeWholeOmrade: true);
-            var propertyHasFritidsbolig = await _kartverketService.PropertyHasFritidsbolig(matrikkelNumber);
+            var coordinatesTask =  _geonorgeClient.GetCoordinatesForLandRental(matrikkelNumber, includeWholeOmrade: true);
+            var propertyHasFritidsboligTask =  _kartverketService.PropertyHasFritidsbolig(matrikkelNumber);
+            var addressResponseTask =  _kartverketService.GetAdresseByMatrikkelNumber(matrikkelNumber);
 
-            if (coordinates.Count > 0)
+            await Task.WhenAll(coordinatesTask, propertyHasFritidsboligTask, addressResponseTask);
+
+            var coordinates = await coordinatesTask;
+            var propertyHasFritidsbolig = await propertyHasFritidsboligTask;
+            var addressResponse = await addressResponseTask;
+
+            var ar5Tasks = coordinates
+                .Select(coordinateSet => _ar50Repo.GetOmrade(coordinateSet))
+                .ToList();
+
+            var addressLookupTasks = addressResponse
+                .Select(address => LookupAddressAsync(address, matrikkelNumber))
+                .ToList();
+
+            var ar5Results = await Task.WhenAll(ar5Tasks);
+            var addressLookupResults = await Task.WhenAll(addressLookupTasks);
+
+            foreach (var ar5Response in ar5Results)
             {
-                foreach (var coordinateSet in coordinates)
+                if (ar5Response is null)
+                    continue;
+
+                foreach (var jordtype in ar5Response)
                 {
-                    var ar5Response = await _ar50Repo.GetOmrade(coordinateSet);
-
-                    if (ar5Response is null)
-                        continue;
-
-                    foreach (var jordtype in ar5Response)
+                    jordTypeList.Add(new JordType
                     {
-                        jordTypeList.Add(new JordType
-                        {
-                            FeatureId = jordtype.Objectid,
-                            ArealType = jordtype.ArealType.ToString(),
-                            Areal = jordtype.ClippedArea,
-                            GeoJson = jordtype.GeoJson,
-
-                        });
-                    }
-
+                        FeatureId = jordtype.Objectid,
+                        ArealType = jordtype.ArealType.ToString(),
+                        Areal = jordtype.ClippedArea,
+                        GeoJson = jordtype.GeoJson,
+                    });
                 }
             }
 
-            var addressResponse = await _kartverketService.GetAdresseByMatrikkelNumber(matrikkelNumber);
-            //sometimes we get the matrikkelnummer instead of streetname, so we check if the address is a matrikkelnumber first, and split it up if it is
-            var matrikkelpattern = @"^\d+/\d+/\d+$";
-            var matrikkelpattern2 = @"^\d{4}-\d+/\d+/\d+$";
-
-            var adresse = new List<Address>();
-            foreach (var address in addressResponse)
-            {
-                string streetAddress = address.Street;
-                string kommunenr = matrikkelNumber.Split('-').FirstOrDefault();
-                string gnr = null;
-                string bnr = null;
-                string fnr = null;
-
-                if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern))
-                {
-                    var parts = address.Street.Split('/');
-                    gnr = parts[0];
-                    bnr = parts[1];
-                    fnr = parts[2];
-                    streetAddress = null; // Clear the street address since it's actually a matrikkel number
-                }
-                else if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern2))
-                {
-                    var parts = address.Street.Split('-', '/');
-                    kommunenr = parts[0];
-                    gnr = parts[1];
-                    bnr = parts[2];
-                    fnr = parts[3];
-                    streetAddress = null; // Clear the street address since it's actually a matrikkel number
-                }
-
-                var addressByMatrikkelNumber = await _geonorgeClient.SearchByMatrikkelNumber(
-                    kommunenr,
-                    gnr,
-                    bnr,
-                    fnr,
-                    streetAddress,
-                    address.PostalCode,
-                    address.City);
-
-                adresse.AddRange(addressByMatrikkelNumber.Adresser.Select(a => new Address
+            var adresse = addressLookupResults
+                .Where(r => r?.Adresser != null)
+                .SelectMany(r => r.Adresser)
+                .Select(a => new Address
                 {
                     Street = a.Adressetekst,
                     PostalCode = a.Postnummer,
                     City = a.Poststed
-                }));
-            }
-
+                })
+                .Where(a => !string.IsNullOrWhiteSpace(a.Street)
+                            && !string.IsNullOrWhiteSpace(a.PostalCode)
+                            && !string.IsNullOrWhiteSpace(a.City))
+               .GroupBy(a => new
+                {
+                    Street = a.Street?.Trim().ToLower(),
+                    PostalCode = a.PostalCode?.Trim(),
+                    City = a.City?.Trim().ToLower()
+                })
+                .Select(g => g.First())
+                .ToList();
 
             return new LandRentalResponse
             {
@@ -119,9 +102,7 @@ namespace Dan.Plugin.Kartverket
             };
         }
 
-        public async Task<MotorizedTrafficResponse> GetMotorizedTrafficInformation(
-           string identifier
-       )
+        public async Task<MotorizedTrafficResponse> GetMotorizedTrafficInformation(string identifier)
         {
             var result = new MotorizedTrafficResponse();
 
@@ -230,6 +211,45 @@ namespace Dan.Plugin.Kartverket
             }
 
             return result;
+        }
+
+        private Task<OutputAdresseList> LookupAddressAsync(Address address, string matrikkelNumber)
+        {
+            const string matrikkelpattern = @"^\d+/\d+/\d+$";
+            const string matrikkelpattern2 = @"^\d{4}-\d+/\d+/\d+$";
+
+            string streetAddress = address.Street;
+            string kommunenr = matrikkelNumber.Split('-').FirstOrDefault();
+            string gnr = null;
+            string bnr = null;
+            string fnr = null;
+
+            if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern))
+            {
+                var parts = address.Street.Split('/');
+                gnr = parts[0];
+                bnr = parts[1];
+                fnr = parts[2];
+                streetAddress = null;
+            }
+            else if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern2))
+            {
+                var parts = address.Street.Split('-', '/');
+                kommunenr = parts[0];
+                gnr = parts[1];
+                bnr = parts[2];
+                fnr = parts[3];
+                streetAddress = null;
+            }
+
+            return _geonorgeClient.SearchByMatrikkelNumber(
+                kommunenr,
+                gnr,
+                bnr,
+                fnr,
+                streetAddress,
+                address.PostalCode,
+                address.City);
         }
 
         private string BuildMatrikkelNumber(string kommuneNr, string gardsNr, string bruksNr, string festeNr, string seksjonsNr)

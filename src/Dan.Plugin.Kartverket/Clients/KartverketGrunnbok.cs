@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MatrikkelenhetId = Kartverket.Matrikkel.MatrikkelenhetService.MatrikkelenhetId;
 
 namespace Dan.Plugin.Kartverket.Clients
 {
@@ -506,14 +507,12 @@ namespace Dan.Plugin.Kartverket.Clients
 
         public async Task<bool> PropertyHasFritidsbolig(string matrikkelNumber)
         {
-            var matrikkelnummerSplit = matrikkelNumber.Split('-', '/');
-            var kommunenr = matrikkelnummerSplit[0];
-            var gnr = matrikkelnummerSplit.Length > 1 ? Convert.ToInt32(matrikkelnummerSplit[1]) : 0;
-            var bnr = matrikkelnummerSplit.Length > 2 ? Convert.ToInt32(matrikkelnummerSplit[2]) : 0;
-            var fnr = matrikkelnummerSplit.Length > 3 ? Convert.ToInt32(matrikkelnummerSplit[3]) : 0;
-            var snr = matrikkelnummerSplit.Length > 4 ? Convert.ToInt32(matrikkelnummerSplit[4]) : 0;
+            var matrikkelenhetid = await GetMatrikkelenhetByMatrikelNumber(matrikkelNumber);
+            if(matrikkelenhetid == null || matrikkelenhetid.value == 0)
+            {                
+                return false;
+            }
 
-            var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(gnr, bnr, fnr, snr, kommunenr);
             var bruksenhetIder = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
 
             foreach(var bruksenhetId in bruksenhetIder)
@@ -533,14 +532,12 @@ namespace Dan.Plugin.Kartverket.Clients
 
         public async Task<List<Address>> GetAdresseByMatrikkelNumber(string matrikkelNumber)
         {
-            var matrikkelnummerSplit = matrikkelNumber.Split('-', '/');
-            var kommunenr = matrikkelnummerSplit[0];
-            var gnr = matrikkelnummerSplit.Length > 1 ? Convert.ToInt32(matrikkelnummerSplit[1]) : 0;
-            var bnr = matrikkelnummerSplit.Length > 2 ? Convert.ToInt32(matrikkelnummerSplit[2]) : 0;
-            var fnr = matrikkelnummerSplit.Length > 3 ? Convert.ToInt32(matrikkelnummerSplit[3]) : 0;
-            var snr = matrikkelnummerSplit.Length > 4 ? Convert.ToInt32(matrikkelnummerSplit[4]) : 0;
-
-            var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(gnr, bnr, fnr, snr, kommunenr);
+            var matrikkelenhetid = await GetMatrikkelenhetByMatrikelNumber(matrikkelNumber);
+            if(matrikkelenhetid == null || matrikkelenhetid.value == 0)
+            {
+                _logger.LogWarning($"No matrikkelenhet found for matrikkel number {matrikkelNumber}");
+                return new List<Address>();
+            }
 
             var adresseList = new List<Address>();
 
@@ -548,7 +545,6 @@ namespace Dan.Plugin.Kartverket.Clients
             if(adresse != null)
             {
                 adresseList.Add(adresse);
-
             }
 
             var bruksenhetIder = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
@@ -663,5 +659,25 @@ namespace Dan.Plugin.Kartverket.Clients
 
             return theAddress;
         }
+
+        private async Task<MatrikkelenhetId> GetMatrikkelenhetByMatrikelNumber(string matrikkelNumber)
+        {
+            if(string.IsNullOrEmpty(matrikkelNumber))
+                throw new ArgumentException("Matrikkel number cannot be null or empty", nameof(matrikkelNumber));           
+
+            var matrikkelnummerSplit = matrikkelNumber.Split('-', '/');
+
+            if(matrikkelnummerSplit.Length == 0)
+                throw new ArgumentException("Matrikkel number must contain at least a municipality number and a gnr", nameof(matrikkelNumber));
+
+            var kommunenr = matrikkelnummerSplit[0];
+            var gnr = matrikkelnummerSplit.Length > 1 && Int32.TryParse(matrikkelnummerSplit[1], out var gnrVal) ? gnrVal : 0;
+            var bnr = matrikkelnummerSplit.Length > 2 && Int32.TryParse(matrikkelnummerSplit[2], out var bnrVal) ? bnrVal : 0;
+            var fnr = matrikkelnummerSplit.Length > 3 && Int32.TryParse(matrikkelnummerSplit[3], out var fnrVal) ? fnrVal : 0;
+            var snr = matrikkelnummerSplit.Length > 4 && Int32.TryParse(matrikkelnummerSplit[4], out var snrVal) ? snrVal : 0;
+
+            return await _matrikkelenhetServiceClient.GetMatrikkelenhet(gnr, bnr, fnr, snr, kommunenr);
+        }
+        
     }
 }
