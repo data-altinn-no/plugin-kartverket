@@ -62,8 +62,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             }
             else if(serviceContext.ToUpper() == "EDUEDILIGENCE")
             {
-                credentials.UserName.UserName = settings.MatrikkelUser;
-                credentials.UserName.Password = settings.MatrikkelPw;
+                credentials.UserName.UserName = settings.MatrikkelEDueDiligenceUser;
+                credentials.UserName.Password = settings.MatrikkelEDueDiligencePw;
             }
             else if(serviceContext.ToUpper() == "OED"|| serviceContext.ToUpper() == "DIGITALDODSBO")
             {
