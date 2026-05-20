@@ -203,6 +203,8 @@ namespace Dan.Plugin.Kartverket.Clients
         private async Task<string> BuildVegadresseString(Vegadresse roadAddress)
         {
             var veg = await _matrikkelStoreClient.GetVeg(roadAddress.vegId.value);
+            if (veg == null)
+                return string.Empty;
             return veg.adressenavn + " " + roadAddress.nummer + roadAddress.bokstav;
         }
 
@@ -501,7 +503,6 @@ namespace Dan.Plugin.Kartverket.Clients
             if(adresse != null)
             {
                 adresseList.Add(adresse);
-
             }
 
             var bruksenhetIder = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
