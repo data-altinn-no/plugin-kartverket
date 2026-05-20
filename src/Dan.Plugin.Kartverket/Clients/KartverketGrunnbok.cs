@@ -10,12 +10,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BruksenhetServiceBruksenhetId = Kartverket.Matrikkel.BruksenhetService.BruksenhetId;
+using AdresseServiceAdresseId = Kartverket.Matrikkel.AdresseService.AdresseId;
 
 namespace Dan.Plugin.Kartverket.Clients
 {
     public interface IKartverketGrunnbokMatrikkelService
     {
-        //public Task<KartverketResponse> Get(string ssn);
         public Task<List<PropertyModel>> FindProperties(string identifier);
 
         public Task<List<PropertyWithOwners>> FindOwnedProperties(string identifier);
@@ -97,15 +98,7 @@ namespace Dan.Plugin.Kartverket.Clients
 
         private async Task UpdatePropertyAddresses(Property property, bool singleAddress = false)
         {
-            int gnr, bnr, fnr, snr = 0;
-            long knr = 0;
-
-            //parse property numbers as kartverket expects integers
-            Int32.TryParse(property.HoldingNumber, out gnr);
-            Int32.TryParse(property.SubholdingNumber, out bnr);
-            Int32.TryParse(property.LeaseNumber, out fnr);
-            Int32.TryParse(property.SectionNumber, out snr);
-            long.TryParse(property.MunicipalityNumber, out knr);
+            var (gnr, bnr, fnr, snr, knr) = ParseMatrikkelKey(property);
 
             //resulting list of addresses for the property
             var addressList = new List<string>();
@@ -135,91 +128,35 @@ namespace Dan.Plugin.Kartverket.Clients
                 if (matrikkelenhetid?.value == null || matrikkelenhetid.value == 0)
                     return;
 
-                var bruksenhetider = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
+                var bruksenhetListTask = _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
+                var matrikkelAddrListTask = _matrikkelAdresseClientService.GetAdresserForMatrikkelenhet(matrikkelenhetid.value);
+                await Task.WhenAll(bruksenhetListTask, matrikkelAddrListTask).ConfigureAwait(false);
 
-                foreach (var id in bruksenhetider)
+                // Fan-out: alle bruksenheter + alle matrikkelenhet-adresser samtidig
+                var bruksenhetTasks = bruksenhetListTask.Result.Select(id => FetchFromBruksenhetAsync(id));
+                var matrikkelTasks = matrikkelAddrListTask.Result.Reverse().Select(addr => FetchFromMatrikkelAddressAsync(addr));
+
+                var allResults = await Task.WhenAll(bruksenhetTasks.Concat(matrikkelTasks)).ConfigureAwait(false);
+
+                // Fan-in: deterministisk fletting, beholder dagens "første-vinner"-semantikk for postnummer
+                foreach (var result in allResults)
                 {
-                    if (singleAddress && addressList.Count > 1)
-                        break;
+                    if (result is null) continue;
+                    if (singleAddress && addressList.Count > 1) break;
 
-                    var bruksenhet = await _matrikkelStoreClient.GetBruksenhet(id.value);
+                    var tuple = result.Value;
 
-                    if (bruksenhet?.adresseId?.value == null)
-                        continue;
+                    if (!string.IsNullOrEmpty(tuple.street) && !addressList.Contains(tuple.street))
+                        addressList.Add(tuple.street);
 
-                    var adresse = await _matrikkelStoreClient.GetAdresse(bruksenhet.adresseId.value);
-                    bool addressFound = false, postalCodeFound = false;
-
-                    if (adresse is Vegadresse roadAddress)
+                    if ((string.IsNullOrEmpty(property.PostalCode) || string.IsNullOrEmpty(property.City))
+                        && !string.IsNullOrEmpty(tuple.postal))
                     {
-                        var veg = await _matrikkelStoreClient.GetVeg(roadAddress.vegId.value);
-                        var tmpAddress = veg.adressenavn + " " + roadAddress.nummer + roadAddress.bokstav;
-
-                        if (!string.IsNullOrEmpty(tmpAddress))
-                        {
-                            if (!addressList.Contains(tmpAddress))
-                            {
-                                addressList.Add(tmpAddress);
-                                addressFound = true;
-                            }
-                        }
-
-                        if (string.IsNullOrEmpty(property.PostalCode) || string.IsNullOrEmpty(property.City))
-                        {
-                            (property.PostalCode, property.City) = await GetPostalInformation(adresse.kretsIds);
-                            postalCodeFound = true;
-                        }
-                        else
-                        {
-                            postalCodeFound = true;
-                        }
+                        property.PostalCode = tuple.postal;
+                        property.City = tuple.city;
                     }
-
-                    if (!postalCodeFound && !addressFound)
-                    {
-                        var result = await _matrikkelBruksenhetService.GetAddressForBruksenhet(id.value);
-
-                        if (!string.IsNullOrEmpty(result))
-                        {
-                            if (!addressList.Contains(result))
-                            {
-                                addressList.Add(result);
-                            }
-                        }
-                    }
-                    addressFound = false;
-                    postalCodeFound = false;
                 }
 
-                var matrikkelUnitAddressList = await _matrikkelAdresseClientService.GetAdresserForMatrikkelenhet(matrikkelenhetid.value);
-
-                foreach (var address in matrikkelUnitAddressList.Reverse())
-                {
-                    if (singleAddress && addressList.Count > 1)
-                        break;
-
-                    var matrikkelAdress = await _matrikkelStoreClient.GetAdresse(address.value);
-
-                    if (matrikkelAdress is Vegadresse roadAddress)
-                    {
-                        var vegId = ((Vegadresse)matrikkelAdress).vegId.value;
-                        var veg = await _matrikkelStoreClient.GetVeg(vegId);
-
-                        var tmpadress = veg.adressenavn + " " + roadAddress.nummer + roadAddress.bokstav;
-                        if (!string.IsNullOrEmpty(tmpadress))
-                        {
-                            if (!addressList.Contains(tmpadress))
-                            {
-                                addressList.Add(tmpadress);
-                            }
-                        }
-
-                        if (string.IsNullOrEmpty(property.PostalCode) || string.IsNullOrEmpty(property.City))
-                        {
-                            (property.PostalCode, property.City) = await GetPostalInformation(matrikkelAdress.kretsIds);
-                        }
-                    }                    
-                }
                 _logger.LogInformation($"Found {addressList.Count} addresses for property gnr = {gnr}, bnr = {bnr}, fnr = {fnr}, snr = {snr}, knr = {property.MunicipalityNumber}");
 
                 //if consumer only wants a single address, return the first one found and avoid concatinating multiple addresses
@@ -227,8 +164,8 @@ namespace Dan.Plugin.Kartverket.Clients
                 {
                     if (addressList.Count > 0)
                     {
-                        property.AddressList.Add(addressList.First());
-                        property.Address = addressList.First();
+                        property.AddressList.Add(addressList[0]);
+                        property.Address = addressList[0];
                         property.HasMoreAddresses = (addressList.Count > 1);
                     }
                     else
@@ -251,6 +188,22 @@ namespace Dan.Plugin.Kartverket.Clients
             {
                 _logger.LogError(ex, "Kartverket::OED::Error getting addresses for property gnr = {gnr}, bnr = {bnr}, fnr = {fnr}, snr = {snr}, knr = {knr}", gnr, bnr, fnr, snr, knr);
             }
+        }
+
+        private static (int gnr, int bnr, int fnr, int snr, long knr) ParseMatrikkelKey(Property property)
+        {
+            int.TryParse(property.HoldingNumber, out var gnr);
+            int.TryParse(property.SubholdingNumber, out var bnr);
+            int.TryParse(property.LeaseNumber, out var fnr);
+            int.TryParse(property.SectionNumber, out var snr);
+            long.TryParse(property.MunicipalityNumber, out var knr);
+            return (gnr, bnr, fnr, snr, knr);
+        }
+
+        private async Task<string> BuildVegadresseString(Vegadresse roadAddress)
+        {
+            var veg = await _matrikkelStoreClient.GetVeg(roadAddress.vegId.value);
+            return veg.adressenavn + " " + roadAddress.nummer + roadAddress.bokstav;
         }
 
         private async Task<(string code, string city)> GetPostalInformation(KretsId[] kretsList)
@@ -662,6 +615,45 @@ namespace Dan.Plugin.Kartverket.Clients
             }
 
             return theAddress;
+        }
+
+        private async Task<(string street, string postal, string city)?> FetchFromBruksenhetAsync(BruksenhetServiceBruksenhetId id)
+        {
+            var bruksenhet = await _matrikkelStoreClient.GetBruksenhet(id.value).ConfigureAwait(false);
+            if (bruksenhet?.adresseId?.value == null)
+                return null;
+
+            var adresse = await _matrikkelStoreClient.GetAdresse(bruksenhet.adresseId.value).ConfigureAwait(false);
+
+            if (adresse is Vegadresse roadAddress)
+            {
+                // De to kallene er uavhengige — kjør dem parallelt:
+                var streetTask = BuildVegadresseString(roadAddress);
+                var postalTask = GetPostalInformation(adresse.kretsIds);
+                await Task.WhenAll(streetTask, postalTask).ConfigureAwait(false);
+
+                var postal = postalTask.Result;
+                return (streetTask.Result, postal.code, postal.city);
+            }
+
+            // Fallback når det ikke er en Vegadresse
+            var fallbackStreet = await _matrikkelBruksenhetService.GetAddressForBruksenhet(id.value).ConfigureAwait(false);
+            return (fallbackStreet, (string)null, (string)null);
+        }
+
+        private async Task<(string street, string postal, string city)?> FetchFromMatrikkelAddressAsync(AdresseServiceAdresseId addr)
+        {
+            var matrikkelAdress = await _matrikkelStoreClient.GetAdresse(addr.value).ConfigureAwait(false);
+
+            if (matrikkelAdress is not Vegadresse roadAddress)
+                return null;
+
+            var streetTask = BuildVegadresseString(roadAddress);
+            var postalTask = GetPostalInformation(matrikkelAdress.kretsIds);
+            await Task.WhenAll(streetTask, postalTask).ConfigureAwait(false);
+
+            var postal = postalTask.Result;
+            return (streetTask.Result, postal.code, postal.city);
         }
     }
 }

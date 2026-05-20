@@ -37,17 +37,21 @@ namespace Dan.Plugin.Kartverket
         }
 
         public async Task<KartverketResponse> GetDDGrunnbok(string ssn, bool addressLookup = true, bool singleAddress = false)
-        {
+        {            
+            var props =  _kartverketClient.FindRegisterenhetsrettsandelerForPerson(ssn);
+            var propsWithRights = _kartverketClient.FindRettigheterForPerson(ssn);
+            await Task.WhenAll(props, propsWithRights).ConfigureAwait(false);
 
-            var props = await _kartverketClient.FindRegisterenhetsrettsandelerForPerson(ssn);
-            var propsWithRights = await _kartverketClient.FindRettigheterForPerson(ssn);
+            var mapPropsTask = MapToInternal(props.Result);
+            var mapPropsWithRightsTask = MapToInternal(propsWithRights.Result);
+            await Task.WhenAll(mapPropsTask, mapPropsWithRightsTask).ConfigureAwait(false);
 
             var grunnbokResponse = new KartverketResponse
             {
                 PropertyRights = new PropertyRights
                 {
-                    Properties = await MapToInternal(props),
-                    PropertiesWithRights = await MapToInternal(propsWithRights)
+                    Properties = mapPropsTask.Result,
+                    PropertiesWithRights = mapPropsWithRightsTask.Result
                 }
             };
 
