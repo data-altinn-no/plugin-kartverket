@@ -20,6 +20,9 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             myBinding.Security.Mode = BasicHttpSecurityMode.Transport;
             myBinding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic;
             myBinding.MaxReceivedMessageSize = maxMessageSize;
+            myBinding.SendTimeout = TimeSpan.FromSeconds(30);
+            myBinding.ReceiveTimeout = TimeSpan.FromSeconds(30);
+            myBinding.OpenTimeout = TimeSpan.FromSeconds(30);
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
             return myBinding;
@@ -62,8 +65,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             }
             else if(serviceContext.ToUpper() == "EDUEDILIGENCE")
             {
-                credentials.UserName.UserName = settings.MatrikkelUser;
-                credentials.UserName.Password = settings.MatrikkelPw;
+                credentials.UserName.UserName = settings.MatrikkelEDueDiligenceUser;
+                credentials.UserName.Password = settings.MatrikkelEDueDiligencePw;
             }
             else if(serviceContext.ToUpper() == "OED"|| serviceContext.ToUpper() == "DIGITALDODSBO")
             {
