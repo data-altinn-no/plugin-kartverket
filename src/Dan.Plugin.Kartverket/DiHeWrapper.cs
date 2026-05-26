@@ -219,10 +219,27 @@ namespace Dan.Plugin.Kartverket
             const string matrikkelpattern2 = @"^\d{4}-\d+/\d+/\d+$";
 
             string streetAddress = address.Street;
-            string kommunenr = matrikkelNumber.Split('-').FirstOrDefault();
             string gnr = null;
             string bnr = null;
             string fnr = null;
+            string kommunenr = null;
+
+            // Derive defaults from incoming matrikkelNumber parameter
+            if(Regex.IsMatch(matrikkelNumber, matrikkelpattern2))
+            {
+                var p = matrikkelNumber.Split('-', '/');
+                kommunenr = p[0];
+                gnr = p[1];
+                bnr = p[2];
+                fnr = p[3];
+            }
+            else if (Regex.IsMatch(matrikkelNumber, matrikkelpattern))
+            {
+                var p = matrikkelNumber.Split('/');
+                gnr = p[0];
+                bnr = p[1];
+                fnr = p[2];
+            }
 
             if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern))
             {

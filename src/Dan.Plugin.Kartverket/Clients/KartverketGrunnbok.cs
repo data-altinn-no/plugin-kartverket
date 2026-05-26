@@ -617,7 +617,7 @@ namespace Dan.Plugin.Kartverket.Clients
 
         private async Task<MatrikkelenhetId> GetMatrikkelenhetByMatrikelNumber(string matrikkelNumber)
         {
-            if(string.IsNullOrEmpty(matrikkelNumber))
+            if(string.IsNullOrWhiteSpace(matrikkelNumber))
                 throw new ArgumentException("Matrikkel number cannot be null or empty", nameof(matrikkelNumber));           
 
             var matrikkelnummerSplit = matrikkelNumber.Split('-', '/');
@@ -625,7 +625,10 @@ namespace Dan.Plugin.Kartverket.Clients
             if(matrikkelnummerSplit.Length == 0)
                 throw new ArgumentException("Matrikkel number must contain at least a municipality number and a gnr", nameof(matrikkelNumber));
 
-            var kommunenr = matrikkelnummerSplit[0];
+            var kommunenr = matrikkelnummerSplit[0]?.Trim();
+            if(string.IsNullOrWhiteSpace(kommunenr))
+                throw new ArgumentException("Matrikkel number must contain a valid municipality number", nameof(matrikkelNumber));
+
             var gnr = matrikkelnummerSplit.Length > 1 && Int32.TryParse(matrikkelnummerSplit[1], out var gnrVal) ? gnrVal : 0;
             var bnr = matrikkelnummerSplit.Length > 2 && Int32.TryParse(matrikkelnummerSplit[2], out var bnrVal) ? bnrVal : 0;
             var fnr = matrikkelnummerSplit.Length > 3 && Int32.TryParse(matrikkelnummerSplit[3], out var fnrVal) ? fnrVal : 0;
