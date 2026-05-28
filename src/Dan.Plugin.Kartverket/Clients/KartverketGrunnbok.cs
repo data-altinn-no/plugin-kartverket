@@ -250,68 +250,88 @@ namespace Dan.Plugin.Kartverket.Clients
 
         public async Task<List<PropertyWithOwners>> FindOwnedProperties(string identifier)
         {
-            var result = new List<PropertyWithOwners>();
-
             var ident = await _identServiceClient.GetPersonIdentity(identifier);
-
             var registerRettsAndelList = await _regRettsandelsClientService.GetAndelerForRettighetshaver(ident);
-            foreach (var registerenhetsrettsandelid in registerRettsAndelList)
+
+            var propertyTasks = registerRettsAndelList.Select(GetPropertiesWithOwners);
+            var properties = await Task.WhenAll(propertyTasks);
+            return properties.Where(propertyWithOwner => propertyWithOwner != null).ToList();
+        }
+
+        private async Task<PropertyWithOwners> GetPropertiesWithOwners(string registerenhetsrettsandelid)
+        {
+            var regenhetsandelfromstore = await _storeServiceClient.GetRettighetsandeler(registerenhetsrettsandelid);
+
+            if (regenhetsandelfromstore == null)
+                return null;
+
+            //Skip if property is historical, as we only want currently owned properties.
+            if (regenhetsandelfromstore.historisk)
+                return null;
+
+            try
             {
-                var regenhetsandelfromstore = await _storeServiceClient.GetRettighetsandeler(registerenhetsrettsandelid);
+                var matrikkelenhetgrunnbok = await _storeServiceClient.GetMatrikkelEnhetFromRegisterRettighetsandel(regenhetsandelfromstore.registerenhetsrettId.value);
 
-                //Skip if property is historical, as we only want currently owned properties.
-                if (regenhetsandelfromstore.historisk)
-                    continue;
-                try
+                if (matrikkelenhetgrunnbok == null)
+                    return null;
+
+                // Start GetKommune early — runs concurrently with co-owner logic below
+                var kommuneTask = _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
+
+                // Find co-owners
+                var listOfCoOwners = new List<CoOwner>();
+                var share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}";
+                if (regenhetsandelfromstore.teller != regenhetsandelfromstore.nevner)
                 {
-                    var matrikkelenhetgrunnbok = await _storeServiceClient.GetMatrikkelEnhetFromRegisterRettighetsandel(regenhetsandelfromstore.registerenhetsrettId.value);
+                    var registerenhetId = matrikkelenhetgrunnbok.id.value;
 
-                    var listOfCoOwners = new List<CoOwner>();
+                    var registerEnhetTilRegisterenhetsrettId = await _registerenhetsrettClientService.GetRetterForEnheter(registerenhetId);
 
-                    var share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}";
-                    if (regenhetsandelfromstore.teller != regenhetsandelfromstore.nevner && matrikkelenhetgrunnbok != null)
+                    var registerEnhetIdTilRegisterenhetsrettIds = registerEnhetTilRegisterenhetsrettId?.Values?
+                        .SelectMany(rettid => rettid.Select(ids => ids.value))
+                        .ToList() ?? new List<string>();
+
+                    foreach (var registerEnhetId in registerEnhetIdTilRegisterenhetsrettIds)
                     {
-                        var registerenhetId = matrikkelenhetgrunnbok.id.value;
+                        var andelerIRetter = await _regRettsandelsClientService.GetAndelerIRetter(regenhetsandelfromstore.registerenhetsrettId.value);
 
-                        var registerEnhetTilRegisterenhetsrettId = await _registerenhetsrettClientService.GetRetterForEnheter(registerenhetId);
+                        var andelerIRetterValues = andelerIRetter?.Body?.@return?.Values;
 
-                        var registerEnhetIdTilRegisterenhetsrettIds = registerEnhetTilRegisterenhetsrettId.Values
-                            .SelectMany(rettid => rettid.Select(ids => ids.value))
-                            .ToList();
+                        var firstAndel = andelerIRetterValues?.FirstOrDefault();
+                        if (firstAndel == null)
+                            continue;
 
-                        foreach (var registerEnhetId in registerEnhetIdTilRegisterenhetsrettIds)
+                        var andelTasks = firstAndel.Select(async andel =>
                         {
-                            var andelerIRetter = await _regRettsandelsClientService.GetAndelerIRetter(regenhetsandelfromstore.registerenhetsrettId.value);
-                            var andelerIRetterValues = andelerIRetter.Body.@return.Values;
+                            var andeler = await _storeServiceClient.GetRettighetsandeler(andel.value.ToString());
 
-                            var firstAndel = andelerIRetterValues.FirstOrDefault();
-                            if (firstAndel == null)
-                                continue;
+                            if (andeler == null || andeler.historisk)
+                                return null;
 
-                            foreach (var andel in firstAndel)
+                            var coOwner = await _storeServiceClient.GetPerson(andeler.rettighetshaverId.value);
+                            if (coOwner == null)
+                                return null;
+
+                            return new CoOwner()
                             {
-                                var andeler = await _storeServiceClient.GetRettighetsandeler(andel.value.ToString());
+                                Identifier = coOwner.identifikasjonsnummer ?? null,
+                                Name = coOwner.navn ?? null,
+                                OwnerShare = $"{andeler.teller}/{andeler.nevner}" ?? null
+                            };
+                        });
 
-                                if (!andeler.historisk)
-                                {
-                                    var coOwner = await _storeServiceClient.GetPerson(andeler.rettighetshaverId.value);
-                                    if (coOwner == null)
-                                        continue;
-
-                                    listOfCoOwners.Add(new CoOwner()
-                                    {
-                                        Identifier = coOwner.identifikasjonsnummer ?? null,
-                                        Name = coOwner.navn ?? null,
-                                        OwnerShare = $"{andeler.teller}/{andeler.nevner}" ?? null
-                                    });
-                                }
-                            }
-                        }
+                        var coOwners = await Task.WhenAll(andelTasks);
+                        listOfCoOwners.AddRange(coOwners.Where(c => c != null));
                     }
-                    else
+                }
+                else
+                {
+                    //for single owners
+                    var owner = await _storeServiceClient.GetPerson(regenhetsandelfromstore.rettighetshaverId.value);
+
+                    if (owner != null)
                     {
-                        //for single owners
-                        var owner = await _storeServiceClient.GetPerson(regenhetsandelfromstore.rettighetshaverId.value);
                         listOfCoOwners.Add(new CoOwner
                         {
                             Identifier = owner.identifikasjonsnummer ?? null,
@@ -319,80 +339,95 @@ namespace Dan.Plugin.Kartverket.Clients
                             OwnerShare = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}" ?? null
                         });
                     }
+                }                
 
-                    var kommune = new Models.Kommune();
-                    if (matrikkelenhetgrunnbok != null)
-                        kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
+                // GetKommune has been running concurrently — collect result now
+                var kommune = await kommuneTask ?? new Models.Kommune();
 
-                    var addresseList = new List<Address>();
-                    var boligType = new List<string>();
+                // Find Address and if the property is a fritidsbolig
+                var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer, matrikkelenhetgrunnbok.festenummer, matrikkelenhetgrunnbok.seksjonsnummer, kommune.Number);
 
-                    var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer, matrikkelenhetgrunnbok.festenummer, matrikkelenhetgrunnbok.seksjonsnummer, kommune.Number);
-                    var bruksenhetIds = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
-                    if(bruksenhetIds.Any())
+                if (matrikkelenhetid == null)
+                    return null;
+
+                var bruksenhetIds = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
+
+                var addresseList = new List<Address>();
+                var boligType = new List<string>();
+
+                if (bruksenhetIds?.Any() == true)
+                {
+                    var bruksenhetResultsTask = Task.WhenAll(bruksenhetIds.Select(id => GetAddressAndBoligTypeByBruksenhet(id.value, matrikkelenhetid.value)));
+                    var matrikkelAdresseTask = GetAddressByMatrikkelenhetId(matrikkelenhetid.value);
+
+                    await Task.WhenAll(bruksenhetResultsTask, matrikkelAdresseTask);
+
+                    foreach (var (address, type) in bruksenhetResultsTask.Result)
                     {
-                        foreach(var bruksenhetId in bruksenhetIds)
-                        {
-                            //check if property is fritidsbolig
-                            var bruksenhet = await _matrikkelStoreClient.GetBruksenhet(bruksenhetId.value);
-                            if(bruksenhet.bruksenhetstypeKodeId != null)
-                            {
-                                var bruksenhetstype = await _matrikkelStoreClient.GetBruksenhetstype(bruksenhet.bruksenhetstypeKodeId.value);
-                                boligType.Add(bruksenhetstype.kodeverdi);
-                            }                                
-
-                            //get address
-                            if(bruksenhet.adresseId != null)
-                            {
-                                var adresseByBruksenhet = await GetAddresseByBruksenhet(bruksenhet, matrikkelenhetid.value);
-                                if (adresseByBruksenhet != null)
-                                    addresseList.Add(adresseByBruksenhet);
-                            }
-                                
-                        }
-
-                        //we need to get the address one more time in case the bruksenhet didn't have a addresseId
-                        var adresseByMatrikkelenhetId = await GetAddressByMatrikkelenhetId(matrikkelenhetid.value);
-                        addresseList.Add(adresseByMatrikkelenhetId); 
+                        if (address != null) addresseList.Add(address);
+                        if (type != null) boligType.Add(type);
                     }
 
-                    //remove duplicates and empty addresses, some properties have multiple bruksenheter and matrikkelenhet linked to the same address which causes duplicates in the list
-                    addresseList = addresseList
-                        .Where(a => !string.IsNullOrWhiteSpace(a.Street) &&
-                                    !string.IsNullOrWhiteSpace(a.PostalCode) &&
-                                    !string.IsNullOrWhiteSpace(a.City))
-                        .GroupBy(a => new
-                        {
-                            Street = a.Street?.Trim().ToLower(),
-                            PostalCode = a.PostalCode?.Trim(),
-                            City = a.City?.Trim().ToLower()
-                        })
-                        .Select(g => g.First())
-                        .ToList();
+                    //we need to get the address one more time in case the bruksenhet didn't have a addresseId
+                    if (matrikkelAdresseTask.Result != null)
+                        addresseList.Add(matrikkelAdresseTask.Result);
+                }
 
-                    result.Add(new PropertyWithOwners()
+                //remove duplicates and empty addresses, some properties have multiple bruksenheter and matrikkelenhet linked to the same address which causes duplicates in the list
+                addresseList = addresseList
+                    .Where(a => !string.IsNullOrWhiteSpace(a.Street) &&
+                                !string.IsNullOrWhiteSpace(a.PostalCode) &&
+                                !string.IsNullOrWhiteSpace(a.City))
+                    .GroupBy(a => new
                     {
-                        PropertyData = new PropertyData()
-                        {
-                            Kommunenummer = kommune.Number ?? null,
-                            Kommunenavn = kommune.Name ?? null,
-                            Bruksnummer = matrikkelenhetgrunnbok?.bruksnummer.ToString() ?? null,
-                            Gardsnummer = matrikkelenhetgrunnbok?.gaardsnummer.ToString() ?? null,
-                            Festenummer = matrikkelenhetgrunnbok?.festenummer.ToString() ?? null,
-                            Seksjonsnummer = matrikkelenhetgrunnbok?.seksjonsnummer.ToString() ?? null
-                        },
-                        Owners = listOfCoOwners,
-                        Addresses = addresseList,
-                        IsFritidsbolig = boligType.Contains("F")
-                    });
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Error when calling FindOwnedProperties");
-                }
-            }
+                        Street = a.Street?.Trim().ToLower(),
+                        PostalCode = a.PostalCode?.Trim(),
+                        City = a.City?.Trim().ToLower()
+                    })
+                    .Select(g => g.First())
+                    .ToList();
 
-            return result;
+                return new PropertyWithOwners()
+                {
+                    PropertyData = new PropertyData()
+                    {
+                        Kommunenummer = kommune.Number ?? null,
+                        Kommunenavn = kommune.Name ?? null,
+                        Bruksnummer = matrikkelenhetgrunnbok?.bruksnummer.ToString() ?? null,
+                        Gardsnummer = matrikkelenhetgrunnbok?.gaardsnummer.ToString() ?? null,
+                        Festenummer = matrikkelenhetgrunnbok?.festenummer.ToString() ?? null,
+                        Seksjonsnummer = matrikkelenhetgrunnbok?.seksjonsnummer.ToString() ?? null
+                    },
+                    Owners = listOfCoOwners,
+                    Addresses = addresseList,
+                    IsFritidsbolig = boligType.Contains("F")
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error when calling FindOwnedProperties");
+                return null;
+            }
+        }
+
+        private async Task<(Address address, string boligType)> GetAddressAndBoligTypeByBruksenhet(long bruksenhetId, long matrikkelenhetId)
+        {
+            var bruksenhet = await _matrikkelStoreClient.GetBruksenhet(bruksenhetId);
+
+            if (bruksenhet == null)
+                return (null, null);
+
+            var bruksenhetsTypeTask = bruksenhet.bruksenhetstypeKodeId != null
+                ? _matrikkelStoreClient.GetBruksenhetstype(bruksenhet.bruksenhetstypeKodeId.value)
+                : Task.FromResult<BruksenhetstypeKode>(null);
+
+            var adresseTask = bruksenhet.adresseId != null
+                ? GetAddresseByBruksenhet(bruksenhet, matrikkelenhetId)
+                : Task.FromResult<Address>(null);
+
+            await Task.WhenAll(bruksenhetsTypeTask, adresseTask);
+
+            return (adresseTask.Result, bruksenhetsTypeTask.Result?.kodeverdi);
         }
 
         public async Task<List<PropertyModel>> FindProperties(string identifier)

@@ -119,15 +119,17 @@ namespace Dan.Plugin.Kartverket
             };
         }
 
-        public async Task<MotorizedTrafficResponse> GetMotorizedTrafficInformation(
-           string identifier
-       )
+        public async Task<MotorizedTrafficResponse> GetMotorizedTrafficInformation(string identifier)
         {
             var result = new MotorizedTrafficResponse();
-
             var kartverketResponse = await _kartverketService.FindOwnedProperties(identifier);
-            foreach (var property in kartverketResponse)
+
+            var propertyTasks = kartverketResponse.Select(async property =>
             {
+                // 9. Guard: PropertyData kan være null
+                if (property?.PropertyData == null)
+                    return null;
+
                 var martikkelNumber = BuildMatrikkelNumber(
                     property.PropertyData.Kommunenummer,
                     property.PropertyData.Gardsnummer,
@@ -136,99 +138,32 @@ namespace Dan.Plugin.Kartverket
                     property.PropertyData.Seksjonsnummer
                 );
 
-                var coordinates = new List<List<List<double>>>();
-                if (!string.IsNullOrEmpty(martikkelNumber))
-                    coordinates = await _geonorgeClient.GetCoordinatesForProperty(
+                var coordinatesTask = string.IsNullOrEmpty(martikkelNumber)
+                    ? Task.FromResult(new List<List<List<double>>>())
+                    : _geonorgeClient.GetCoordinatesForProperty(
                         martikkelNumber,
                         property.PropertyData.Gardsnummer,
                         property.PropertyData.Bruksnummer,
                         property.PropertyData.Seksjonsnummer,
                         property.PropertyData.Festenummer,
-                        property.PropertyData.Kommunenummer                        
-                    );
+                        property.PropertyData.Kommunenummer);
 
-                var adresser = new List<Address>();
+                var adresseTask = GetAdresserForProperty(property);
 
-                if (property.Addresses.Any())
+                await Task.WhenAll(coordinatesTask, adresseTask);
+
+                return new MotorizedTrafficProperty
                 {
-                    //sometimes we get the matrikkelnummer instead of streetname, so we check if the address is a matrikkelnumber first, and split it up if it is
-                    var matrikkelpattern = @"^\d+/\d+/\d+$";
-                    var matrikkelpattern2 = @"^\d{4}-\d+/\d+/\d+$";
+                    MatrikkelNumber = martikkelNumber,
+                    Coordinates = await coordinatesTask,
+                    CoOwners = property.Owners,
+                    Address = await adresseTask,
+                    IsFritidsbolig = property.IsFritidsbolig,
+                };
+            });
 
-                    foreach (var address in property.Addresses)
-                    {
-                        string kommunenr = null;
-                        string gnr = null;
-                        string bnr = null;
-                        string fnr = null;
-                        string streetAddress = address.Street;
-
-                        if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern))
-                        {
-                            var parts = address.Street.Split('/');
-                            gnr = parts[0];
-                            bnr = parts[1];
-                            fnr = parts[2];
-                            streetAddress = null;
-                        }
-                        else if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern2))
-                        {
-                            var parts = address.Street.Split('-', '/');
-                            kommunenr = parts[0];
-                            gnr = parts[1];
-                            bnr = parts[2];
-                            fnr = parts[3];
-                            streetAddress = null; // Clear the street address since it's actually a matrikkel number
-                        }
-
-                        var data = await _geonorgeClient.SearchByMatrikkelNumber(
-                            kommunenr ?? property.PropertyData.Kommunenummer,
-                            gnr ?? property.PropertyData.Gardsnummer,
-                            bnr ?? property.PropertyData.Bruksnummer,
-                            fnr ?? property.PropertyData.Festenummer,
-                            streetAddress,
-                            address.PostalCode,
-                            address.City);
-
-                        foreach (var adresse in data.Adresser)
-                        {
-                            adresser.Add(new Address
-                            {
-                                Street = adresse.Adressetekst,
-                                PostalCode = adresse.Postnummer,
-                                City = adresse.Poststed,
-                            });
-                        }
-                    }
-                    //sometimes duplicates can happen after looking up the address 
-                    //filter out duplicates
-                    adresser = adresser
-                        .Where(a => !string.IsNullOrWhiteSpace(a.Street) &&
-                                !string.IsNullOrWhiteSpace(a.PostalCode) &&
-                                !string.IsNullOrWhiteSpace(a.City))
-                    .GroupBy(a => new
-                    {
-                        Street = a.Street?.Trim().ToLower(),
-                        PostalCode = a.PostalCode?.Trim(),
-                        City = a.City?.Trim().ToLower()
-                    })
-                    .Select(g => g.First())
-                    .ToList();
-
-                }
-
-                result.Properties.Add(
-                    new MotorizedTrafficProperty
-                    {
-                        MatrikkelNumber = martikkelNumber,
-                        Coordinates = coordinates,
-                        CoOwners = property.Owners,
-                        Address = adresser,
-                        IsFritidsbolig = property.IsFritidsbolig,
-                    }
-                );
-            }
-
+            var properties = await Task.WhenAll(propertyTasks);
+            result.Properties.AddRange(properties.Where(p => p != null));
             return result;
         }
 
@@ -248,6 +183,77 @@ namespace Dan.Plugin.Kartverket
 
 
             return stringBuilder.ToString();
+        }
+
+        private async Task<List<Address>> GetAdresserForProperty(PropertyWithOwners property)
+        {
+            if (!property.Addresses.Any())
+                return new List<Address>();
+
+            //sometimes we get the matrikkelnummer instead of streetname, so we check if the address is a matrikkelnumber first, and split it up if it is
+            var matrikkelpattern = @"^\d+/\d+/\d+$";
+            var matrikkelpattern2 = @"^\d{4}-\d+/\d+/\d+$";
+
+            var addressTasks = property.Addresses.Select(async address =>
+            {
+                string kommunenr = null;
+                string gnr = null;
+                string bnr = null;
+                string fnr = null;
+                string streetAddress = address.Street;
+
+                if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern))
+                {
+                    var parts = address.Street.Split('/');
+                    gnr = parts[0];
+                    bnr = parts[1];
+                    fnr = parts[2];
+                    streetAddress = null;
+                }
+                else if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern2))
+                {
+                    var parts = address.Street.Split('-', '/');
+                    kommunenr = parts[0];
+                    gnr = parts[1];
+                    bnr = parts[2];
+                    fnr = parts[3];
+                    streetAddress = null; // Clear the street address since it's actually a matrikkel number
+                }
+
+                return await _geonorgeClient.SearchByMatrikkelNumber(
+                    kommunenr ?? property.PropertyData.Kommunenummer,
+                    gnr ?? property.PropertyData.Gardsnummer,
+                    bnr ?? property.PropertyData.Bruksnummer,
+                    fnr ?? property.PropertyData.Festenummer,
+                    streetAddress,
+                    address.PostalCode,
+                    address.City);
+            });
+
+            var results = await Task.WhenAll(addressTasks);
+
+            //sometimes duplicates can happen after looking up the address
+            //filter out duplicates
+            return results
+                .Where(r => r?.Adresser != null)
+                .SelectMany(r => r.Adresser)
+                .Select(a => new Address
+                {
+                    Street = a.Adressetekst,
+                    PostalCode = a.Postnummer,
+                    City = a.Poststed,
+                })
+                .Where(a => !string.IsNullOrWhiteSpace(a.Street) &&
+                            !string.IsNullOrWhiteSpace(a.PostalCode) &&
+                            !string.IsNullOrWhiteSpace(a.City))
+                .GroupBy(a => new
+                {
+                    Street = a.Street?.Trim().ToLower(),
+                    PostalCode = a.PostalCode?.Trim(),
+                    City = a.City?.Trim().ToLower()
+                })
+                .Select(g => g.First())
+                .ToList();
         }
     }
 }
