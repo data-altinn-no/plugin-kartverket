@@ -126,7 +126,6 @@ namespace Dan.Plugin.Kartverket
 
             var propertyTasks = kartverketResponse.Select(async property =>
             {
-                // 9. Guard: PropertyData kan være null
                 if (property?.PropertyData == null)
                     return null;
 
