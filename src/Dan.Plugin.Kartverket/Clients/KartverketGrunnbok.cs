@@ -260,17 +260,14 @@ namespace Dan.Plugin.Kartverket.Clients
 
         private async Task<PropertyWithOwners> GetPropertiesWithOwners(string registerenhetsrettsandelid)
         {
-            var regenhetsandelfromstore = await _storeServiceClient.GetRettighetsandeler(registerenhetsrettsandelid);
-
-            if (regenhetsandelfromstore == null)
-                return null;
-
-            //Skip if property is historical, as we only want currently owned properties.
-            if (regenhetsandelfromstore.historisk)
-                return null;
-
             try
             {
+                var regenhetsandelfromstore = await _storeServiceClient.GetRettighetsandeler(registerenhetsrettsandelid);
+
+                //Skip if null or if property is historical, as we only want currently owned properties.
+                if (regenhetsandelfromstore == null || regenhetsandelfromstore.historisk)
+                    return null;
+
                 var matrikkelenhetgrunnbok = await _storeServiceClient.GetMatrikkelEnhetFromRegisterRettighetsandel(regenhetsandelfromstore.registerenhetsrettId.value);
 
                 if (matrikkelenhetgrunnbok == null)
@@ -294,7 +291,7 @@ namespace Dan.Plugin.Kartverket.Clients
 
                     foreach (var registerEnhetId in registerEnhetIdTilRegisterenhetsrettIds)
                     {
-                        var andelerIRetter = await _regRettsandelsClientService.GetAndelerIRetter(regenhetsandelfromstore.registerenhetsrettId.value);
+                        var andelerIRetter = await _regRettsandelsClientService.GetAndelerIRetter(registerEnhetId);
 
                         var andelerIRetterValues = andelerIRetter?.Body?.@return?.Values;
 
@@ -355,10 +352,11 @@ namespace Dan.Plugin.Kartverket.Clients
                 var addresseList = new List<Address>();
                 var boligType = new List<string>();
 
+                var matrikkelAdresseTask = GetAddressByMatrikkelenhetId(matrikkelenhetid.value);
+
                 if (bruksenhetIds?.Any() == true)
                 {
                     var bruksenhetResultsTask = Task.WhenAll(bruksenhetIds.Select(id => GetAddressAndBoligTypeByBruksenhet(id.value, matrikkelenhetid.value)));
-                    var matrikkelAdresseTask = GetAddressByMatrikkelenhetId(matrikkelenhetid.value);
 
                     await Task.WhenAll(bruksenhetResultsTask, matrikkelAdresseTask);
 
@@ -367,11 +365,15 @@ namespace Dan.Plugin.Kartverket.Clients
                         if (address != null) addresseList.Add(address);
                         if (type != null) boligType.Add(type);
                     }
-
-                    //we need to get the address one more time in case the bruksenhet didn't have a addresseId
-                    if (matrikkelAdresseTask.Result != null)
-                        addresseList.Add(matrikkelAdresseTask.Result);
                 }
+                else
+                {
+                    await matrikkelAdresseTask;
+                }
+
+                //we need to get the address one more time in case the bruksenhet didn't have a addresseId
+                if (matrikkelAdresseTask.Result != null)
+                    addresseList.Add(matrikkelAdresseTask.Result);
 
                 //remove duplicates and empty addresses, some properties have multiple bruksenheter and matrikkelenhet linked to the same address which causes duplicates in the list
                 addresseList = addresseList

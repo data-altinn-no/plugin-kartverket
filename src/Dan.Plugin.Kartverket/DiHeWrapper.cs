@@ -1,6 +1,8 @@
 using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.ar50;
 using Dan.Plugin.Kartverket.Models;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,12 +23,14 @@ namespace Dan.Plugin.Kartverket
         private readonly IAddressLookupClient _geonorgeClient;
         private readonly IKartverketGrunnbokMatrikkelService _kartverketService;
         private readonly IAr5Repo _ar50Repo;
+        private readonly ILogger<DiHeWrapper> _logger;
 
-        public DiHeWrapper(IAddressLookupClient addressLookupClient, IKartverketGrunnbokMatrikkelService _kartverketGMService, IAr5Repo ar50Repo)
+        public DiHeWrapper(IAddressLookupClient addressLookupClient, IKartverketGrunnbokMatrikkelService _kartverketGMService, IAr5Repo ar50Repo, ILogger<DiHeWrapper> logger)
         {
             _geonorgeClient = addressLookupClient;
             _kartverketService = _kartverketGMService;
             _ar50Repo = ar50Repo;
+            _logger = logger;
         }
 
         public async Task<LandRentalResponse> GetLandRentalInformation(string matrikkelNumber)
@@ -126,39 +130,47 @@ namespace Dan.Plugin.Kartverket
 
             var propertyTasks = kartverketResponse.Select(async property =>
             {
-                if (property?.PropertyData == null)
-                    return null;
+                try
+                {
+                    if (property?.PropertyData == null)
+                        return null;
 
-                var martikkelNumber = BuildMatrikkelNumber(
-                    property.PropertyData.Kommunenummer,
-                    property.PropertyData.Gardsnummer,
-                    property.PropertyData.Bruksnummer,
-                    property.PropertyData.Festenummer,
-                    property.PropertyData.Seksjonsnummer
-                );
-
-                var coordinatesTask = string.IsNullOrEmpty(martikkelNumber)
-                    ? Task.FromResult(new List<List<List<double>>>())
-                    : _geonorgeClient.GetCoordinatesForProperty(
-                        martikkelNumber,
+                    var martikkelNumber = BuildMatrikkelNumber(
+                        property.PropertyData.Kommunenummer,
                         property.PropertyData.Gardsnummer,
                         property.PropertyData.Bruksnummer,
-                        property.PropertyData.Seksjonsnummer,
                         property.PropertyData.Festenummer,
-                        property.PropertyData.Kommunenummer);
+                        property.PropertyData.Seksjonsnummer
+                    );
 
-                var adresseTask = GetAdresserForProperty(property);
+                    var coordinatesTask = string.IsNullOrEmpty(martikkelNumber)
+                        ? Task.FromResult(new List<List<List<double>>>())
+                        : _geonorgeClient.GetCoordinatesForProperty(
+                            martikkelNumber,
+                            property.PropertyData.Gardsnummer,
+                            property.PropertyData.Bruksnummer,
+                            property.PropertyData.Seksjonsnummer,
+                            property.PropertyData.Festenummer,
+                            property.PropertyData.Kommunenummer);
 
-                await Task.WhenAll(coordinatesTask, adresseTask);
+                    var adresseTask = GetAdresserForProperty(property);
 
-                return new MotorizedTrafficProperty
+                    await Task.WhenAll(coordinatesTask, adresseTask);
+
+                    return new MotorizedTrafficProperty
+                    {
+                        MatrikkelNumber = martikkelNumber,
+                        Coordinates = await coordinatesTask,
+                        CoOwners = property.Owners,
+                        Address = await adresseTask,
+                        IsFritidsbolig = property.IsFritidsbolig,
+                    };
+                }
+                catch (Exception ex)
                 {
-                    MatrikkelNumber = martikkelNumber,
-                    Coordinates = await coordinatesTask,
-                    CoOwners = property.Owners,
-                    Address = await adresseTask,
-                    IsFritidsbolig = property.IsFritidsbolig,
-                };
+                    _logger.LogError(ex, "Error processing property in GetMotorizedTrafficInformation");
+                    return null;
+                }
             });
 
             var properties = await Task.WhenAll(propertyTasks);
@@ -186,14 +198,15 @@ namespace Dan.Plugin.Kartverket
 
         private async Task<List<Address>> GetAdresserForProperty(PropertyWithOwners property)
         {
-            if (!property.Addresses.Any())
+            var addresses = property?.Addresses?.Where(a => a != null).ToList();
+            if (addresses == null || addresses.Count == 0)
                 return new List<Address>();
 
             //sometimes we get the matrikkelnummer instead of streetname, so we check if the address is a matrikkelnumber first, and split it up if it is
             var matrikkelpattern = @"^\d+/\d+/\d+$";
             var matrikkelpattern2 = @"^\d{4}-\d+/\d+/\d+$";
 
-            var addressTasks = property.Addresses.Select(async address =>
+            var addressTasks = addresses.Select(async address =>
             {
                 string kommunenr = null;
                 string gnr = null;
