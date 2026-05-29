@@ -4,6 +4,7 @@ using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.ar50;
 using Dan.Plugin.Kartverket.Models;
 using FakeItEasy;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,12 +17,14 @@ namespace Dan.Plugin.Kartverket.Test.Services
         private readonly IKartverketGrunnbokMatrikkelService _kartverketService;
         private readonly IAddressLookupClient _addressLookupClient;
         private readonly IAr5Repo _ar5Repo;
+        private readonly ILogger<DiHeWrapper> _logger;
 
         public DiHeWrapperTest()
         {
             _kartverketService = A.Fake<IKartverketGrunnbokMatrikkelService>();
             _ar5Repo = A.Fake<IAr5Repo>();
             _addressLookupClient = A.Fake<IAddressLookupClient>();
+            _logger = A.Fake<ILogger<DiHeWrapper>>();
         }
 
         [Fact]
@@ -30,7 +33,8 @@ namespace Dan.Plugin.Kartverket.Test.Services
             var _diHeWrapper = new DiHeWrapper(
                 _addressLookupClient,
                 _kartverketService,
-                _ar5Repo);
+                _ar5Repo,
+                _logger);
 
             var propertyList = new List<PropertyWithOwners>
             {
