@@ -19,8 +19,9 @@ namespace Dan.Plugin.Kartverket.Clients
     /// cheap, short-lived channel is still created per call.
     ///
     /// Credentials live on the factory, not the channel, so the cache key must include the service
-    /// context (which selects the username/password). The set of (endpoint, context) pairs is small
-    /// and bounded.
+    /// context (which selects the username/password). Callers upper-case the context in the key to
+    /// match the case-insensitive credential selection, so differently-cased spellings of the same
+    /// context share one factory. The set of (endpoint, context) pairs is small and bounded.
     /// </summary>
     public static class WcfChannelFactoryCache<TChannel>
     {

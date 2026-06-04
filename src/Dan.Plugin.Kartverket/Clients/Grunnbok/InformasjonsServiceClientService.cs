@@ -189,7 +189,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             var endpointAddress = $"{_settings.GrunnbokRootUrl}InformasjonServiceWS";
 
             return WcfChannelFactoryCache<InformasjonService>.CreateChannel(
-                $"{endpointAddress}|{serviceContext}",
+                $"{endpointAddress}|{serviceContext.ToUpperInvariant()}",
                 new EndpointAddress(endpointAddress),
                 GrunnbokHelpers.GetBasicHttpBinding(),
                 credentials => GrunnbokHelpers.SetGrunnbokWSCredentials(credentials, _settings, serviceContext));

@@ -60,7 +60,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             var serviceContext = _requestContextService.ServiceContext;
 
             return WcfChannelFactoryCache<KommuneService>.CreateChannel(
-                $"{endpointAddress}|{serviceContext}",
+                $"{endpointAddress}|{serviceContext.ToUpperInvariant()}",
                 new EndpointAddress(endpointAddress),
                 GrunnbokHelpers.GetBasicHttpBinding(),
                 credentials => GrunnbokHelpers.SetMatrikkelWSCredentials(credentials, _settings, serviceContext));
