@@ -24,6 +24,9 @@ var host = new HostBuilder()
             var configurationRoot = context.Configuration;
             services.Configure<ApplicationSettings>(configurationRoot);
 
+            //Shared in-memory cache for slow-changing matrikkel reference data (kommuner, veger, kretser, code lists)
+            services.AddMemoryCache();
+
             services.AddTransient<IAddressLookupClient, AddressLookupClient>();
             services.AddTransient<IDDWrapper, DDWrapper>();
             services.AddTransient<IDiHeWrapper, DiHeWrapper>();

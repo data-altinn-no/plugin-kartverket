@@ -1,4 +1,5 @@
 using Kartverket.Matrikkel.StoreService;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Dan.Plugin.Kartverket.Clients.Matrikkel.Interfaces
@@ -14,5 +15,13 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel.Interfaces
         Task<Bruksenhet> GetBruksenhet(long ident);
         Task<Kommune> GetKommune(long ident);
         Task<BruksenhetstypeKode> GetBruksenhetstype(long ident);
+
+        // Bulk variants: one StoreService round trip for the whole id set (missing ids are omitted)
+        Task<List<Bruksenhet>> GetBruksenheter(IEnumerable<long> idents);
+        Task<List<Adresse>> GetAdresser(IEnumerable<long> idents);
+        Task<List<Bygning>> GetBygninger(IEnumerable<long> idents);
+        Task<List<Veg>> GetVeger(IEnumerable<long> idents);
+        Task<List<Krets>> GetKretser(IEnumerable<long> idents);
+        Task<List<BruksenhetstypeKode>> GetBruksenhetstyper(IEnumerable<long> idents);
     }
 }
