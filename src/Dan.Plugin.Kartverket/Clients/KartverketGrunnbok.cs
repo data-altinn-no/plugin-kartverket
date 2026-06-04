@@ -435,8 +435,6 @@ namespace Dan.Plugin.Kartverket.Clients
 
         public async Task<List<PropertyModel>> FindProperties(string identifier)
         {
-            var result = new List<PropertyModel>();
-
             //Get grunnbok identifier for
             var ident = await _identServiceClient.GetPersonIdentity(identifier);
 
@@ -446,53 +444,67 @@ namespace Dan.Plugin.Kartverket.Clients
             var numbersToRemove = Math.Min(10, regrettsandelListe.Count);
             regrettsandelListe.RemoveRange(numbersToRemove, regrettsandelListe.Count - numbersToRemove);
 
-            foreach (var registerenhetsrettsandelid in regrettsandelListe)
+            // The properties are independent of each other — resolve them concurrently.
+            // Task.WhenAll preserves the input order in the result array.
+            var propertyModels = await Task.WhenAll(regrettsandelListe.Select(GetPropertyModel));
+            return propertyModels.ToList();
+        }
+
+        private async Task<PropertyModel> GetPropertyModel(string registerenhetsrettsandelid)
+        {
+            var regenhetsandelfromstore = await _storeServiceClient.GetRettighetsandeler(registerenhetsrettsandelid);
+
+            var matrikkelenhetgrunnbok = await _storeServiceClient.GetMatrikkelEnhetFromRegisterRettighetsandel(regenhetsandelfromstore.registerenhetsrettId.value);
+
+            // Heftelser, ownership info and kommune only depend on matrikkelenhetgrunnbok — run them concurrently
+            var heftelserTask = GetHeftelserWithPawnOwnerNames(matrikkelenhetgrunnbok.id.value);
+            var ownershipTransferTask = _informasjonsServiceClientService.GetOwnershipInfo(matrikkelenhetgrunnbok.id.value);
+            var kommuneTask = _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
+
+            var kommune = await kommuneTask;
+
+            var matrikkelenhetid =
+                await _matrikkelenhetServiceClient.GetMatrikkelenhet(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer, matrikkelenhetgrunnbok.festenummer, matrikkelenhetgrunnbok.seksjonsnummer, kommune.Number);
+
+            // The teig lookup is independent of the building lookups — run it alongside them
+            var matrikkelEnhetTask = _matrikkelenhetServiceClient.GetMatrikkelEnhetTeig(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer,
+                matrikkelenhetgrunnbok.festenummer, matrikkelenhetgrunnbok.seksjonsnummer, kommune.Number);
+
+            var bygningsider = await _matrikkelbygningClientService.GetBygningerForMatrikkelenhet(matrikkelenhetid.value);
+
+            // One bulk call for all buildings instead of one call per id; missing buildings
+            // are omitted, matching the previous behaviour of contributing 0 to the sum
+            var bygninger = await _matrikkelStoreClient.GetBygninger(bygningsider);
+            var buildings = bygninger.Select(b => b.bebygdAreal).ToList();
+
+            var matrikkelEnhet = await matrikkelEnhetTask;
+            var heftelserFromRettsstiftelse = await heftelserTask;
+            var ownershipTransfer = await ownershipTransferTask;
+
+            return new PropertyModel()
             {
-                var regenhetsandelfromstore = await _storeServiceClient.GetRettighetsandeler(registerenhetsrettsandelid);
-
-                var matrikkelenhetgrunnbok = await _storeServiceClient.GetMatrikkelEnhetFromRegisterRettighetsandel(regenhetsandelfromstore.registerenhetsrettId.value);
-
-                var heftelserFromRettsstiftelse = await _rettsstiftelseClientService.GetHeftelser(matrikkelenhetgrunnbok.id.value);
-
-                heftelserFromRettsstiftelse = await _storeServiceClient.GetPawnOwnerNames(heftelserFromRettsstiftelse);
-
-                var ownershipTransfer = await _informasjonsServiceClientService.GetOwnershipInfo(matrikkelenhetgrunnbok.id.value);
-
-                var kommune = await _storeServiceClient.GetKommune(matrikkelenhetgrunnbok.kommuneId.value);
-
-                var matrikkelenhetid =
-                    await _matrikkelenhetServiceClient.GetMatrikkelenhet(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer, matrikkelenhetgrunnbok.festenummer, matrikkelenhetgrunnbok.seksjonsnummer, kommune.Number);
-
-                var bygningsider = await _matrikkelbygningClientService.GetBygningerForMatrikkelenhet(matrikkelenhetid.value);
-
-                // One bulk call for all buildings instead of one call per id; missing buildings
-                // are omitted, matching the previous behaviour of contributing 0 to the sum
-                var bygninger = await _matrikkelStoreClient.GetBygninger(bygningsider);
-                var buildings = bygninger.Select(b => b.bebygdAreal).ToList();
-
-                var matrikkelEnhet = await _matrikkelenhetServiceClient.GetMatrikkelEnhetTeig(matrikkelenhetgrunnbok.gaardsnummer, matrikkelenhetgrunnbok.bruksnummer,
-                    matrikkelenhetgrunnbok.festenummer, matrikkelenhetgrunnbok.seksjonsnummer, kommune.Number);
-
-                result.Add(new PropertyModel()
+                Grunnbok = new GrunnboksInformasjon()
                 {
-                    Grunnbok = new GrunnboksInformasjon()
-                    {
-                        bnr = matrikkelenhetgrunnbok.bruksnummer.ToString(),
-                        gnr = matrikkelenhetgrunnbok.gaardsnummer.ToString(),
-                        TeigAreas = matrikkelEnhet.Teiger,
-                        CountyMunicipality = kommune.Name,
-                        BuildingArea = buildings.Sum()
-                    },
-                    Documents = heftelserFromRettsstiftelse,
-                    HasCulturalHeritageSite = matrikkelEnhet.HasCulturalHeritageSite,
-                    Owners = new Rettighetshavere()
-                    {
-                        EstablishedDate = (ownershipTransfer == null) ? null : ownershipTransfer.EstablishedDate,
-                        Share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}",
-                        Price = (ownershipTransfer == null) ? "" : $"{ownershipTransfer.Price} {ownershipTransfer.CurrencyCode}" }
-                });
-            }
-            return result;
+                    bnr = matrikkelenhetgrunnbok.bruksnummer.ToString(),
+                    gnr = matrikkelenhetgrunnbok.gaardsnummer.ToString(),
+                    TeigAreas = matrikkelEnhet.Teiger,
+                    CountyMunicipality = kommune.Name,
+                    BuildingArea = buildings.Sum()
+                },
+                Documents = heftelserFromRettsstiftelse,
+                HasCulturalHeritageSite = matrikkelEnhet.HasCulturalHeritageSite,
+                Owners = new Rettighetshavere()
+                {
+                    EstablishedDate = (ownershipTransfer == null) ? null : ownershipTransfer.EstablishedDate,
+                    Share = $"{regenhetsandelfromstore.teller}/{regenhetsandelfromstore.nevner}",
+                    Price = (ownershipTransfer == null) ? "" : $"{ownershipTransfer.Price} {ownershipTransfer.CurrencyCode}" }
+            };
+        }
+
+        private async Task<List<PawnDocument>> GetHeftelserWithPawnOwnerNames(string registerenhetid)
+        {
+            var heftelser = await _rettsstiftelseClientService.GetHeftelser(registerenhetid);
+            return await _storeServiceClient.GetPawnOwnerNames(heftelser);
         }
 
         public async Task<bool> PropertyHasFritidsbolig(string matrikkelNumber)
