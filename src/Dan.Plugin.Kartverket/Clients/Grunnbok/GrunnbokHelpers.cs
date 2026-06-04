@@ -2,7 +2,6 @@ using Dan.Plugin.Kartverket.Clients.Grunnbok.GrunnbokContextHelpers;
 using Dan.Plugin.Kartverket.Clients.Matrikkel.MatrikkelContextHelpers;
 using Dan.Plugin.Kartverket.Config;
 using System;
-using System.Net;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using IGrunnbokSnapshotTimestamp = Dan.Plugin.Kartverket.Clients.Grunnbok.GrunnbokContextHelpers.ISnapshotTimestamp;
@@ -15,16 +14,18 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         private static readonly DateTime SNAPSHOT_VERSJON_DATO = new DateTime(9999, 1, 1, 0, 0, 0);
         public static BasicHttpBinding GetBasicHttpBinding()
         {
-            long maxMessageSize = 2048000;
             BasicHttpBinding myBinding = new BasicHttpBinding();
             myBinding.Security.Mode = BasicHttpSecurityMode.Transport;
             myBinding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic;
-            myBinding.MaxReceivedMessageSize = maxMessageSize;
+            myBinding.MaxReceivedMessageSize = int.MaxValue;
+            myBinding.MaxBufferSize = int.MaxValue;
             myBinding.SendTimeout = TimeSpan.FromSeconds(30);
             myBinding.ReceiveTimeout = TimeSpan.FromSeconds(30);
             myBinding.OpenTimeout = TimeSpan.FromSeconds(30);
+            // Without an explicit CloseTimeout, closing a slow/half-open channel can block
+            // the request thread for the WCF default of 1 minute - far past the 30s above.
+            myBinding.CloseTimeout = TimeSpan.FromSeconds(30);
 
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
             return myBinding;
         }
 

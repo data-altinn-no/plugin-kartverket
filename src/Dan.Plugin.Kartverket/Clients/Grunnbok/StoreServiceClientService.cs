@@ -1,3 +1,4 @@
+using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.Grunnbok.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Dan.Plugin.Kartverket.Models;
@@ -124,12 +125,11 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             }
             finally
             {
-                try { client.Close(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
         }
 
-        private StoreServiceClient CreateClient()
+        private StoreService CreateClient()
         {
             var serviceContext = _requestContextService.ServiceContext;
 
@@ -139,19 +139,13 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                     "ServiceContext is not set. Ensure SetRequestContext() is called before using StoreServiceClientService.");
             }
 
-            var binding = GrunnbokHelpers.GetBasicHttpBinding();
+            var endpointAddress = $"{_settings.GrunnbokRootUrl}StoreServiceWS";
 
-            var endpoint = new EndpointAddress(
-                $"{_settings.GrunnbokRootUrl}StoreServiceWS");
-
-            var client = new StoreServiceClient(binding, endpoint);
-
-            GrunnbokHelpers.SetGrunnbokWSCredentials(
-                client.ClientCredentials,
-                _settings,
-                serviceContext);
-
-            return client;
+            return WcfChannelFactoryCache<StoreService>.CreateChannel(
+                $"{endpointAddress}|{serviceContext}",
+                new EndpointAddress(endpointAddress),
+                GrunnbokHelpers.GetBasicHttpBinding(),
+                credentials => GrunnbokHelpers.SetGrunnbokWSCredentials(credentials, _settings, serviceContext));
         }
     }
 }

@@ -1,3 +1,4 @@
+using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.Grunnbok.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Grunnbok.RegisterenhetsrettService;
@@ -51,8 +52,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             }
             finally
             {
-                try { client.Close(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
 
             return result;
@@ -63,7 +63,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>(_requestContextService.ServiceContext);
         }
 
-        private RegisterenhetsrettServiceClient CreateClient()
+        private RegisterenhetsrettService CreateClient()
         {
             var serviceContext = _requestContextService.ServiceContext;
 
@@ -73,19 +73,13 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                     "ServiceContext is not set. Ensure SetRequestContext() is called before using RegisterenhetsrettClientService.");
             }
 
-            var binding = GrunnbokHelpers.GetBasicHttpBinding();
+            var endpointAddress = $"{_settings.GrunnbokRootUrl}RegisterenhetsrettServiceWS";
 
-            var endpoint = new EndpointAddress(
-                $"{_settings.GrunnbokRootUrl}RegisterenhetsrettServiceWS");
-
-            var client = new RegisterenhetsrettServiceClient(binding, endpoint);
-
-            GrunnbokHelpers.SetGrunnbokWSCredentials(
-                client.ClientCredentials,
-                _settings,
-                serviceContext);
-
-            return client;
+            return WcfChannelFactoryCache<RegisterenhetsrettService>.CreateChannel(
+                $"{endpointAddress}|{serviceContext}",
+                new EndpointAddress(endpointAddress),
+                GrunnbokHelpers.GetBasicHttpBinding(),
+                credentials => GrunnbokHelpers.SetGrunnbokWSCredentials(credentials, _settings, serviceContext));
         }
 
     }

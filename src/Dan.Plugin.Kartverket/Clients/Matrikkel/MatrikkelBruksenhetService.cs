@@ -1,3 +1,4 @@
+using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Clients.Matrikkel.Interfaces;
 using Dan.Plugin.Kartverket.Config;
@@ -48,8 +49,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             }
             finally
             {
-                try { client.Close(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
             return Array.Empty<BruksenhetId>();
         }
@@ -76,8 +76,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             }
             finally
             {
-                try { client.Close(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
         }
 
@@ -86,22 +85,16 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp, KoordinatsystemKodeId>(_requestContextService.ServiceContext);
         }
 
-        private BruksenhetServiceClient CreateClient()
+        private BruksenhetService CreateClient()
         {
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+            var endpointAddress = _settings.MatrikkelRootUrl + "BruksenhetServiceWS";
+            var serviceContext = _requestContextService.ServiceContext;
 
-            var client = new BruksenhetServiceClient(
-                myBinding,
-                new EndpointAddress(_settings.MatrikkelRootUrl + "BruksenhetServiceWS")
-            );
-
-            GrunnbokHelpers.SetMatrikkelWSCredentials(
-                client.ClientCredentials,
-                _settings,
-                _requestContextService.ServiceContext
-            );
-
-            return client;
+            return WcfChannelFactoryCache<BruksenhetService>.CreateChannel(
+                $"{endpointAddress}|{serviceContext}",
+                new EndpointAddress(endpointAddress),
+                GrunnbokHelpers.GetBasicHttpBinding(),
+                credentials => GrunnbokHelpers.SetMatrikkelWSCredentials(credentials, _settings, serviceContext));
         }
 
     }

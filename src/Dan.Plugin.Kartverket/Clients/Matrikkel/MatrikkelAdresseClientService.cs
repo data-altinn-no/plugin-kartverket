@@ -1,3 +1,4 @@
+using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Clients.Matrikkel.Interfaces;
 using Dan.Plugin.Kartverket.Config;
@@ -48,8 +49,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             }
             finally
             {
-                try { client.Close(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
 
             return Array.Empty<AdresseId>();
@@ -78,8 +78,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             }
             finally
             {
-                try { client.Close(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
             return Array.Empty<AdresseId>();
         }
@@ -93,22 +92,16 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
                 (_requestContextService.ServiceContext);
         }
 
-        private AdresseServiceClient CreateClient()
+        private AdresseService CreateClient()
         {
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+            var endpointAddress = _settings.MatrikkelRootUrl + "AdresseServiceWS";
+            var serviceContext = _requestContextService.ServiceContext;
 
-            var client = new AdresseServiceClient(
-                myBinding,
-                new EndpointAddress(_settings.MatrikkelRootUrl + "AdresseServiceWS")
-            );
-
-            GrunnbokHelpers.SetMatrikkelWSCredentials(
-                client.ClientCredentials,
-                _settings,
-                _requestContextService.ServiceContext
-            );
-
-            return client;
+            return WcfChannelFactoryCache<AdresseService>.CreateChannel(
+                $"{endpointAddress}|{serviceContext}",
+                new EndpointAddress(endpointAddress),
+                GrunnbokHelpers.GetBasicHttpBinding(),
+                credentials => GrunnbokHelpers.SetMatrikkelWSCredentials(credentials, _settings, serviceContext));
         }
 
     }

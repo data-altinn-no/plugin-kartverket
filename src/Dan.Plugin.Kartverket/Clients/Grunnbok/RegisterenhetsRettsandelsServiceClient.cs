@@ -1,3 +1,4 @@
+using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.Grunnbok.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Grunnbok.RegisterenhetsrettsandelService;
@@ -62,8 +63,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             }
             finally
             {
-                try { await client.CloseAsync(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
 
             return result;
@@ -100,8 +100,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             }
             finally
             {
-                try { await client.CloseAsync(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
 
             return result;
@@ -112,7 +111,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext, Timestamp>(_requestContextService.ServiceContext);
         }
 
-        private RegisterenhetsrettsandelServiceClient CreateClient()
+        private RegisterenhetsrettsandelService CreateClient()
         {
             var serviceContext = _requestContextService.ServiceContext;
 
@@ -120,19 +119,13 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                 throw new InvalidOperationException(
                     "ServiceContext is not set. Ensure SetRequestContext() is called before using RegisterenhetsRettsandelsServiceClientService.");
 
-            var binding = GrunnbokHelpers.GetBasicHttpBinding();
+            var endpointAddress = $"{_settings.GrunnbokRootUrl}RegisterenhetsrettsandelServiceWS";
 
-            var endpoint = new EndpointAddress(
-                $"{_settings.GrunnbokRootUrl}RegisterenhetsrettsandelServiceWS");
-
-            var client = new RegisterenhetsrettsandelServiceClient(binding, endpoint);
-
-            GrunnbokHelpers.SetGrunnbokWSCredentials(
-                client.ClientCredentials,
-                _settings,
-                serviceContext);
-
-            return client;
+            return WcfChannelFactoryCache<RegisterenhetsrettsandelService>.CreateChannel(
+                $"{endpointAddress}|{serviceContext}",
+                new EndpointAddress(endpointAddress),
+                GrunnbokHelpers.GetBasicHttpBinding(),
+                credentials => GrunnbokHelpers.SetGrunnbokWSCredentials(credentials, _settings, serviceContext));
         }
 
     }
