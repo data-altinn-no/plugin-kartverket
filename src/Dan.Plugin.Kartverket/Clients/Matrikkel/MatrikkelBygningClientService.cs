@@ -1,4 +1,6 @@
+using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
+using Dan.Plugin.Kartverket.Clients.Matrikkel.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -17,9 +19,9 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 {
     public class MatrikkelBygningClientService : IMatrikkelBygningClientService
     {
-        private ApplicationSettings _settings;
-        private ILogger _logger;
-        private IRequestContextService _requestContextService;
+        private readonly ApplicationSettings _settings;
+        private readonly ILogger _logger;
+        private readonly IRequestContextService _requestContextService;
         public MatrikkelBygningClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
@@ -44,16 +46,18 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             try
             {
                 var response = await client.findByggForMatrikkelenhetAsync(request);
-                result.AddRange(response.@return.Select(x=>x.value).ToList());
+                if (response.@return != null)
+                {
+                    result.AddRange(response.@return.Select(x => x.value));
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(ex, "Feil ved innhenting av bygg for matrikkelenhet {MatrikkelenhetId}", matrikkelEnhetId);
             }
             finally
             {
-                try { client.Close(); }
-                catch{ client.Abort();}
+                await ((IClientChannel)client).CloseChannelAsync();
             }
 
             return result;
@@ -74,14 +78,13 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             {
                 result = await client.findAlleBygningstypeKoderAsync(request);
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogError($"Feil ved innhenting av bygningstype");
+                _logger.LogError(ex, "Feil ved innhenting av bygningstype");
             }
             finally
             {
-                try { client.Close(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
             return result;
         }
@@ -91,29 +94,17 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp, KoordinatsystemKodeId>(_requestContextService.ServiceContext);
         }
 
-        private BygningServiceClient CreateClient()
+        private BygningService CreateClient()
         {
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+            var endpointAddress = _settings.MatrikkelRootUrl + "BygningServiceWS";
+            var serviceContext = _requestContextService.ServiceContext;
 
-            var client = new BygningServiceClient(
-                myBinding,
-                new EndpointAddress(_settings.MatrikkelRootUrl + "BygningServiceWS")
-            );
-
-            GrunnbokHelpers.SetMatrikkelWSCredentials(
-                client.ClientCredentials,
-                _settings,
-                _requestContextService.ServiceContext
-            );
-
-            return client;
+            return WcfChannelFactoryCache<BygningService>.CreateChannel(
+                $"{endpointAddress}|{serviceContext.ToUpperInvariant()}",
+                new EndpointAddress(endpointAddress),
+                GrunnbokHelpers.GetBasicHttpBinding(),
+                credentials => GrunnbokHelpers.SetMatrikkelWSCredentials(credentials, _settings, serviceContext));
         }
-        
-    }
 
-    public interface IMatrikkelBygningClientService
-    {
-        Task<List<long>> GetBygningerForMatrikkelenhet(long matrikkelEnhetId);
-        Task<findAlleBygningstypeKoderResponse> GetBygningsType();
     }
 }

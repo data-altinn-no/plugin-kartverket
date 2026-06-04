@@ -1,4 +1,6 @@
+using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
+using Dan.Plugin.Kartverket.Clients.Matrikkel.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Matrikkel.AdresseService;
 using Microsoft.Extensions.Logging;
@@ -14,9 +16,9 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 {
     public class MatrikkelAdresseClientService : IMatrikkelAdresseClientService
     {
-        private ApplicationSettings _settings;
-        private ILogger _logger;
-        private IRequestContextService _requestContextService;
+        private readonly ApplicationSettings _settings;
+        private readonly ILogger _logger;
+        private readonly IRequestContextService _requestContextService;
 
         public MatrikkelAdresseClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
@@ -37,9 +39,9 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             try
             {
                 var response = await client.findAdresserForMatrikkelenhetAsync(request);
-                var result = response.@return;
 
-                return result;
+                // Empty SOAP results can come back as null - normalize so callers never see null
+                return response.@return ?? Array.Empty<AdresseId>();
             }
             catch (Exception ex)
             {
@@ -47,8 +49,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             }
             finally
             {
-                try { client.Close(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
 
             return Array.Empty<AdresseId>();
@@ -69,7 +70,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             try
             {
                 var response = await client.findAdresserAsync(request);
-                return response.@return;
+                return response.@return ?? Array.Empty<AdresseId>();
             }
             catch (Exception ex)
             {
@@ -77,8 +78,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             }
             finally
             {
-                try { client.Close(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
             return Array.Empty<AdresseId>();
         }
@@ -92,29 +92,17 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
                 (_requestContextService.ServiceContext);
         }
 
-        private AdresseServiceClient CreateClient()
+        private AdresseService CreateClient()
         {
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+            var endpointAddress = _settings.MatrikkelRootUrl + "AdresseServiceWS";
+            var serviceContext = _requestContextService.ServiceContext;
 
-            var client = new AdresseServiceClient(
-                myBinding,
-                new EndpointAddress(_settings.MatrikkelRootUrl + "AdresseServiceWS")
-            );
-
-            GrunnbokHelpers.SetMatrikkelWSCredentials(
-                client.ClientCredentials,
-                _settings,
-                _requestContextService.ServiceContext
-            );
-
-            return client;
+            return WcfChannelFactoryCache<AdresseService>.CreateChannel(
+                $"{endpointAddress}|{serviceContext.ToUpperInvariant()}",
+                new EndpointAddress(endpointAddress),
+                GrunnbokHelpers.GetBasicHttpBinding(),
+                credentials => GrunnbokHelpers.SetMatrikkelWSCredentials(credentials, _settings, serviceContext));
         }
 
-    }
-
-    public interface IMatrikkelAdresseClientService
-    {
-        Task<AdresseId[]> GetAdresserForMatrikkelenhet(long matrikkelEnhetId);
-        Task<AdresseId[]> FindAdresser(string adresseNavn, string kommuneNo);
     }
 }

@@ -5,7 +5,9 @@ using Dan.Plugin.Kartverket;
 using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.ar50;
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
+using Dan.Plugin.Kartverket.Clients.Grunnbok.Interfaces;
 using Dan.Plugin.Kartverket.Clients.Matrikkel;
+using Dan.Plugin.Kartverket.Clients.Matrikkel.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +23,9 @@ var host = new HostBuilder()
 
             var configurationRoot = context.Configuration;
             services.Configure<ApplicationSettings>(configurationRoot);
+
+            //Shared in-memory cache for slow-changing matrikkel reference data (kommuner, veger, kretser, code lists)
+            services.AddMemoryCache();
 
             services.AddTransient<IAddressLookupClient, AddressLookupClient>();
             services.AddTransient<IDDWrapper, DDWrapper>();

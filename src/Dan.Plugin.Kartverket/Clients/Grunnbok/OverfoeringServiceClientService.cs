@@ -1,3 +1,5 @@
+using Dan.Plugin.Kartverket.Clients;
+using Dan.Plugin.Kartverket.Clients.Grunnbok.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Grunnbok.OverfoeringService;
 using Microsoft.Extensions.Logging;
@@ -11,9 +13,9 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
     public class OverfoeringServiceClientService : IOverfoeringServiceClientService
     {
-        private ApplicationSettings _settings;
-        private ILogger _logger;
-        private IRequestContextService _requestContextService;
+        private readonly ApplicationSettings _settings;
+        private readonly ILogger _logger;
+        private readonly IRequestContextService _requestContextService;
 
         public OverfoeringServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
@@ -58,8 +60,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             }
             finally
             {
-                try { client.Close(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
 
             return string.Empty;
@@ -70,7 +71,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext,Timestamp>(_requestContextService.ServiceContext);
         }
 
-        private OverfoeringServiceClient CreateClient()
+        private OverfoeringService CreateClient()
         {
             var serviceContext = _requestContextService.ServiceContext;
 
@@ -80,25 +81,14 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                     "ServiceContext is not set. Ensure SetRequestContext() is called before using OverfoeringServiceClientService.");
             }
 
-            var binding = GrunnbokHelpers.GetBasicHttpBinding();
+            var endpointAddress = $"{_settings.GrunnbokRootUrl}OverfoeringServiceWS";
 
-            var endpoint = new EndpointAddress(
-                $"{_settings.GrunnbokRootUrl}OverfoeringServiceWS");
-
-            var client = new OverfoeringServiceClient(binding, endpoint);
-
-            GrunnbokHelpers.SetGrunnbokWSCredentials(
-                client.ClientCredentials,
-                _settings,
-                serviceContext);
-
-            return client;
+            return WcfChannelFactoryCache<OverfoeringService>.CreateChannel(
+                $"{endpointAddress}|{serviceContext.ToUpperInvariant()}",
+                new EndpointAddress(endpointAddress),
+                GrunnbokHelpers.GetBasicHttpBinding(),
+                credentials => GrunnbokHelpers.SetGrunnbokWSCredentials(credentials, _settings, serviceContext));
         }
 
-    }
-
-    public interface IOverfoeringServiceClientService
-    {
-        public Task<string> GetOverfoeringerTil(List<string> ids);
     }
 }

@@ -1,4 +1,6 @@
+using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
+using Dan.Plugin.Kartverket.Clients.Matrikkel.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Matrikkel.MatrikkelenhetService;
 using Microsoft.Extensions.Logging;
@@ -15,9 +17,9 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 {
     public class MatrikkelenhetClientService : IMatrikkelenhetClientService
     {
-        private ApplicationSettings _settings;
-        private ILogger _logger;
-        private IRequestContextService _requestContextService;
+        private readonly ApplicationSettings _settings;
+        private readonly ILogger _logger;
+        private readonly IRequestContextService _requestContextService;
 
         public MatrikkelenhetClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
@@ -28,7 +30,6 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         public async Task<List<MatrikkelenhetId>> GetMatrikkelenheterForPerson(long ident)
         {
-            findEideMatrikkelenheterForPersonResponse result = null;
             var client = CreateClient();
 
             var request = new findEideMatrikkelenheterForPersonRequest()
@@ -42,7 +43,8 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             try
             {
-                result = await client.findEideMatrikkelenheterForPersonAsync(request);
+                var result = await client.findEideMatrikkelenheterForPersonAsync(request);
+                return result.@return.ToList();
             }
             catch (Exception ex)
             {
@@ -50,12 +52,10 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             }
             finally
             {
-                try { await client.CloseAsync(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
 
-            return result.@return.ToList();
-
+            return new List<MatrikkelenhetId>();
         }
 
         public async Task<MatrikkelenhetMedTeigerTransfer> GetMatrikkelEnhetMedTeiger(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent)
@@ -95,8 +95,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             }
             finally
             {
-                try { await client.CloseAsync(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
 
             return new findMatrikkelenhetMedTeigerResponse().@return;
@@ -161,8 +160,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             }
             finally
             {
-                try { await client.CloseAsync(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
 
             return new MatrikkelenhetId();
@@ -203,8 +201,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             }
             finally
             {
-                try { await client.CloseAsync(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
 
             return new MatrikkelenhetId();
@@ -215,32 +212,16 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp, KoordinatsystemKodeId>(_requestContextService.ServiceContext);
         }        
 
-        private MatrikkelenhetServiceClient CreateClient()
+        private MatrikkelenhetService CreateClient()
         {
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+            var endpointAddress = _settings.MatrikkelRootUrl + "MatrikkelenhetServiceWS";
+            var serviceContext = _requestContextService.ServiceContext;
 
-            var client = new MatrikkelenhetServiceClient(
-                myBinding,
-                new EndpointAddress(_settings.MatrikkelRootUrl + "MatrikkelenhetServiceWS")
-            );
-
-            GrunnbokHelpers.SetMatrikkelWSCredentials(
-                client.ClientCredentials,
-                _settings,
-                _requestContextService.ServiceContext
-            );
-
-            return client;
+            return WcfChannelFactoryCache<MatrikkelenhetService>.CreateChannel(
+                $"{endpointAddress}|{serviceContext.ToUpperInvariant()}",
+                new EndpointAddress(endpointAddress),
+                GrunnbokHelpers.GetBasicHttpBinding(),
+                credentials => GrunnbokHelpers.SetMatrikkelWSCredentials(credentials, _settings, serviceContext));
         }
-    }
-
-    public interface IMatrikkelenhetClientService
-    {
-        Task<MatrikkelenhetId> GetMatrikkelenhet(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent);
-        Task<List<MatrikkelenhetId>> GetMatrikkelenheterForPerson(long ident);
-        Task<MatrikkelenhetMedTeigerTransfer> GetMatrikkelEnhetMedTeiger(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent);
-
-        Task<MatrikkelEnhetMedteig> GetMatrikkelEnhetTeig(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent);
-        Task<MatrikkelenhetId> GetMatrikkelenhetByMatrikkelnummer(int gnr, int bnr, string kommuneIdent);
     }
 }

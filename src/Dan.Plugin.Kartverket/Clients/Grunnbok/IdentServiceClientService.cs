@@ -1,3 +1,5 @@
+using Dan.Plugin.Kartverket.Clients;
+using Dan.Plugin.Kartverket.Clients.Grunnbok.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Grunnbok.IdentService;
 using Microsoft.Extensions.Logging;
@@ -11,9 +13,9 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
     public class IdentServiceClientService : IIdentServiceClientService
     {
-        private ApplicationSettings _settings;
-        private ILogger _logger;
-        private IRequestContextService _requestContextService;
+        private readonly ApplicationSettings _settings;
+        private readonly ILogger _logger;
+        private readonly IRequestContextService _requestContextService;
         public IdentServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
@@ -56,8 +58,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             }
             finally
             {
-                try { await identService.CloseAsync(); }
-                catch { identService.Abort(); }
+                await ((IClientChannel)identService).CloseChannelAsync();
             }
 
             return identity;
@@ -68,31 +69,24 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             return GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext, Timestamp>(_requestContextService.ServiceContext);
         }
 
-        private IdentServiceClient CreateClient()
+        private IdentService CreateClient()
         {
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+            var serviceContext = _requestContextService.ServiceContext;
 
-            if (string.IsNullOrWhiteSpace(_requestContextService.ServiceContext))
+            if (string.IsNullOrWhiteSpace(serviceContext))
             {
                 throw new InvalidOperationException(
                     "ServiceContext is not set. Ensure SetRequestContext() is called before using IdentServiceClientService.");
             }
-            var client = new IdentServiceClient(
-                myBinding,
-                new EndpointAddress(_settings.GrunnbokRootUrl + "IdentServiceWS"));
 
-            GrunnbokHelpers.SetGrunnbokWSCredentials(
-                client.ClientCredentials,
-                _settings,
-                _requestContextService.ServiceContext);
+            var endpointAddress = _settings.GrunnbokRootUrl + "IdentServiceWS";
 
-            return client;
+            return WcfChannelFactoryCache<IdentService>.CreateChannel(
+                $"{endpointAddress}|{serviceContext.ToUpperInvariant()}",
+                new EndpointAddress(endpointAddress),
+                GrunnbokHelpers.GetBasicHttpBinding(),
+                credentials => GrunnbokHelpers.SetGrunnbokWSCredentials(credentials, _settings, serviceContext));
         }
 
     }
-
-    public interface IIdentServiceClientService
-        {
-            public Task<string> GetPersonIdentity(string personId);
-        }
-    }
+}

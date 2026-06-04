@@ -1,4 +1,6 @@
+using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
+using Dan.Plugin.Kartverket.Clients.Matrikkel.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Matrikkel.KommuneService;
 using Microsoft.Extensions.Logging;
@@ -42,8 +44,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             }
             finally
             {
-                try { client.Close(); }
-                catch { client.Abort(); }
+                await ((IClientChannel)client).CloseChannelAsync();
             }
             return string.Empty;
         }
@@ -53,27 +54,16 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp, KoordinatsystemKodeId>(_requestContextService.ServiceContext);
         }
 
-        private KommuneServiceClient CreateClient()
+        private KommuneService CreateClient()
         {
-            var myBinding = GrunnbokHelpers.GetBasicHttpBinding();
+            var endpointAddress = _settings.MatrikkelRootUrl + "KommuneServiceWS";
+            var serviceContext = _requestContextService.ServiceContext;
 
-            var client = new KommuneServiceClient(
-                myBinding,
-                new EndpointAddress(_settings.MatrikkelRootUrl + "KommuneServiceWS")
-            );
-
-            GrunnbokHelpers.SetMatrikkelWSCredentials(
-                client.ClientCredentials,
-                _settings,
-                _requestContextService.ServiceContext
-            );
-
-            return client;
+            return WcfChannelFactoryCache<KommuneService>.CreateChannel(
+                $"{endpointAddress}|{serviceContext.ToUpperInvariant()}",
+                new EndpointAddress(endpointAddress),
+                GrunnbokHelpers.GetBasicHttpBinding(),
+                credentials => GrunnbokHelpers.SetMatrikkelWSCredentials(credentials, _settings, serviceContext));
         }
-    }
-
-    public interface IMatrikkelKommuneClientService
-    {
-        public Task<string> GetKommune(string kommunenummer);
     }
 }

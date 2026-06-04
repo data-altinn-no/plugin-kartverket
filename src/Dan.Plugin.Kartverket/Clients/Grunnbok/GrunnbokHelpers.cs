@@ -2,7 +2,6 @@ using Dan.Plugin.Kartverket.Clients.Grunnbok.GrunnbokContextHelpers;
 using Dan.Plugin.Kartverket.Clients.Matrikkel.MatrikkelContextHelpers;
 using Dan.Plugin.Kartverket.Config;
 using System;
-using System.Net;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using IGrunnbokSnapshotTimestamp = Dan.Plugin.Kartverket.Clients.Grunnbok.GrunnbokContextHelpers.ISnapshotTimestamp;
@@ -15,16 +14,24 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         private static readonly DateTime SNAPSHOT_VERSJON_DATO = new DateTime(9999, 1, 1, 0, 0, 0);
         public static BasicHttpBinding GetBasicHttpBinding()
         {
-            long maxMessageSize = 2048000;
             BasicHttpBinding myBinding = new BasicHttpBinding();
             myBinding.Security.Mode = BasicHttpSecurityMode.Transport;
             myBinding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic;
-            myBinding.MaxReceivedMessageSize = maxMessageSize;
+            myBinding.MaxReceivedMessageSize = int.MaxValue;
+            myBinding.MaxBufferSize = int.MaxValue;
+            // Transport limits and XML reader quotas are separate in WCF; without raising the
+            // quotas, large bulk responses still fail with quota-exceeded exceptions
+            myBinding.ReaderQuotas.MaxArrayLength = int.MaxValue;
+            myBinding.ReaderQuotas.MaxStringContentLength = int.MaxValue;
+            myBinding.ReaderQuotas.MaxBytesPerRead = int.MaxValue;
+            myBinding.ReaderQuotas.MaxNameTableCharCount = int.MaxValue;
             myBinding.SendTimeout = TimeSpan.FromSeconds(30);
             myBinding.ReceiveTimeout = TimeSpan.FromSeconds(30);
             myBinding.OpenTimeout = TimeSpan.FromSeconds(30);
+            // Without an explicit CloseTimeout, closing a slow/half-open channel can block
+            // the request thread for the WCF default of 1 minute - far past the 30s above.
+            myBinding.CloseTimeout = TimeSpan.FromSeconds(30);
 
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
             return myBinding;
         }
 
@@ -32,17 +39,20 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         {
             ArgumentException.ThrowIfNullOrEmpty(serviceContext, nameof(serviceContext));
 
-            if (serviceContext.ToUpper() == "DIGITALEHELGELAND")
+            // Invariant casing to match the channel factory cache key normalization
+            var normalizedServiceContext = serviceContext.ToUpperInvariant();
+
+            if (normalizedServiceContext == "DIGITALEHELGELAND")
             {
                 credentials.UserName.UserName = settings.GrunnbokUserDigitaleHelgeland;
                 credentials.UserName.Password = settings.GrunnbokPwDigitaleHelgeland;
             }
-            else if(serviceContext.ToUpper() == "EDUEDILIGENCE")
+            else if(normalizedServiceContext == "EDUEDILIGENCE")
             {
                 credentials.UserName.UserName = settings.GrunnbokEDueDiligenceUser;
                 credentials.UserName.Password = settings.GrunnbokEDueDiligencePw;
             }
-            else if(serviceContext.ToUpper() == "OED"|| serviceContext.ToUpper() == "DIGITALDODSBO")
+            else if(normalizedServiceContext == "OED" || normalizedServiceContext == "DIGITALDODSBO")
             {
                 credentials.UserName.UserName = settings.GrunnbokUser;
                 credentials.UserName.Password = settings.GrunnbokPw;
@@ -51,24 +61,27 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             {
                 throw new ArgumentException("Invalid service context", nameof(serviceContext));
             }
-                
+
         }
 
         public static void SetMatrikkelWSCredentials(ClientCredentials credentials, ApplicationSettings settings, string serviceContext)
         {
             ArgumentException.ThrowIfNullOrEmpty(serviceContext, nameof(serviceContext));
 
-            if (serviceContext.ToUpper() == "DIGITALEHELGELAND")
+            // Invariant casing to match the channel factory cache key normalization
+            var normalizedServiceContext = serviceContext.ToUpperInvariant();
+
+            if (normalizedServiceContext == "DIGITALEHELGELAND")
             {
                 credentials.UserName.UserName = settings.MatrikkelUserDigitaleHelgeland;
                 credentials.UserName.Password = settings.MatrikkelPwDigitaleHelgeland;
             }
-            else if(serviceContext.ToUpper() == "EDUEDILIGENCE")
+            else if(normalizedServiceContext == "EDUEDILIGENCE")
             {
                 credentials.UserName.UserName = settings.MatrikkelEDueDiligenceUser;
                 credentials.UserName.Password = settings.MatrikkelEDueDiligencePw;
             }
-            else if(serviceContext.ToUpper() == "OED"|| serviceContext.ToUpper() == "DIGITALDODSBO")
+            else if(normalizedServiceContext == "OED" || normalizedServiceContext == "DIGITALDODSBO")
             {
                 credentials.UserName.UserName = settings.MatrikkelUser;
                 credentials.UserName.Password = settings.MatrikkelPw;
@@ -77,7 +90,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             {
                 throw new ArgumentException("Invalid service context", nameof(serviceContext));
             }
-            
+
         }
 
         public static TContext CreateGrunnbokContext<TContext, TTimestamp>(string serviceContext)
