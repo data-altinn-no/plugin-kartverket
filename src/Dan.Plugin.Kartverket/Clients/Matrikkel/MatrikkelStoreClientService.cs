@@ -188,7 +188,8 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             return GrunnbokHelpers.CreateMatrikkelContext<MatrikkelContext, Timestamp, KoordinatsystemKodeId>(_requestContextService.ServiceContext);
         }
 
-        private StoreService CreateClient()
+        // Virtual so tests can substitute a fake StoreService without going through WCF
+        protected virtual StoreService CreateClient()
         {
             var endpointAddress = _settings.MatrikkelRootUrl + "StoreServiceWS";
             var serviceContext = _requestContextService.ServiceContext;
