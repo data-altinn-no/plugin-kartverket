@@ -1,4 +1,5 @@
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
+using Dan.Plugin.Kartverket.Clients.Matrikkel.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Matrikkel.AdresseService;
 using Microsoft.Extensions.Logging;
@@ -14,9 +15,9 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 {
     public class MatrikkelAdresseClientService : IMatrikkelAdresseClientService
     {
-        private ApplicationSettings _settings;
-        private ILogger _logger;
-        private IRequestContextService _requestContextService;
+        private readonly ApplicationSettings _settings;
+        private readonly ILogger _logger;
+        private readonly IRequestContextService _requestContextService;
 
         public MatrikkelAdresseClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
@@ -110,11 +111,5 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             return client;
         }
 
-    }
-
-    public interface IMatrikkelAdresseClientService
-    {
-        Task<AdresseId[]> GetAdresserForMatrikkelenhet(long matrikkelEnhetId);
-        Task<AdresseId[]> FindAdresser(string adresseNavn, string kommuneNo);
     }
 }

@@ -1,4 +1,5 @@
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
+using Dan.Plugin.Kartverket.Clients.Matrikkel.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Matrikkel.MatrikkelenhetService;
 using Microsoft.Extensions.Logging;
@@ -15,9 +16,9 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 {
     public class MatrikkelenhetClientService : IMatrikkelenhetClientService
     {
-        private ApplicationSettings _settings;
-        private ILogger _logger;
-        private IRequestContextService _requestContextService;
+        private readonly ApplicationSettings _settings;
+        private readonly ILogger _logger;
+        private readonly IRequestContextService _requestContextService;
 
         public MatrikkelenhetClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
@@ -232,15 +233,5 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             return client;
         }
-    }
-
-    public interface IMatrikkelenhetClientService
-    {
-        Task<MatrikkelenhetId> GetMatrikkelenhet(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent);
-        Task<List<MatrikkelenhetId>> GetMatrikkelenheterForPerson(long ident);
-        Task<MatrikkelenhetMedTeigerTransfer> GetMatrikkelEnhetMedTeiger(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent);
-
-        Task<MatrikkelEnhetMedteig> GetMatrikkelEnhetTeig(int gnr, int bnr, int fnr, int seksjonsnummer, string kommuneIdent);
-        Task<MatrikkelenhetId> GetMatrikkelenhetByMatrikkelnummer(int gnr, int bnr, string kommuneIdent);
     }
 }

@@ -1,4 +1,5 @@
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
+using Dan.Plugin.Kartverket.Clients.Matrikkel.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Matrikkel.KommuneService;
 using Microsoft.Extensions.Logging;
@@ -70,10 +71,5 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             return client;
         }
-    }
-
-    public interface IMatrikkelKommuneClientService
-    {
-        public Task<string> GetKommune(string kommunenummer);
     }
 }

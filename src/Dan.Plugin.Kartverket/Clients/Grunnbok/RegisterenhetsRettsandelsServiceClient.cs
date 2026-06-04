@@ -1,3 +1,4 @@
+using Dan.Plugin.Kartverket.Clients.Grunnbok.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Grunnbok.RegisterenhetsrettsandelService;
 using Microsoft.Extensions.Logging;
@@ -134,11 +135,5 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             return client;
         }
 
-    }
-
-    public interface IRegisterenhetsRettsandelsServiceClientService
-    {
-        public Task<List<string>> GetAndelerForRettighetshaver(string personident);
-        public Task<findAndelerIRetterResponse> GetAndelerIRetter(string registerenhetsid);
     }
 }

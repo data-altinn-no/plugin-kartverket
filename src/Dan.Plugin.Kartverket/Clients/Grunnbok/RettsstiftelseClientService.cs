@@ -1,3 +1,4 @@
+using Dan.Plugin.Kartverket.Clients.Grunnbok.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Dan.Plugin.Kartverket.Models;
 using Kartverket.Grunnbok.RettsstiftelseService;
@@ -14,9 +15,9 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
     public class RettsstiftelseClientService : IRettsstiftelseClientService
     {
-        private ApplicationSettings _settings;
-        private ILogger _logger;
-        private IRequestContextService _requestContextService;
+        private readonly ApplicationSettings _settings;
+        private readonly ILogger _logger;
+        private readonly IRequestContextService _requestContextService;
 
         public RettsstiftelseClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
@@ -142,12 +143,6 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             return client;
         }
-
-    }
-
-    public interface IRettsstiftelseClientService
-    {
-        public Task<List<PawnDocument>> GetHeftelser(string registerenhetid);
 
     }
 }

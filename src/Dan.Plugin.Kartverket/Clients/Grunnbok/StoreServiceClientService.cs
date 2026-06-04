@@ -1,3 +1,4 @@
+using Dan.Plugin.Kartverket.Clients.Grunnbok.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Dan.Plugin.Kartverket.Models;
 using Kartverket.Grunnbok.StoreService;
@@ -22,8 +23,8 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
     public class StoreServiceClientService : IStoreServiceClientService
     {
-        private ApplicationSettings _settings;
-        private ILogger _logger;
+        private readonly ApplicationSettings _settings;
+        private readonly ILogger _logger;
         private readonly IRequestContextService _requestContextService;
 
         public StoreServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
@@ -35,197 +36,41 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
         public async Task<KommuneDAN> GetKommune(string kommuneIdent)
         {
-            KommuneDAN result = null;
-            var client = CreateClient();
+            var kommune = await GetObject<Kommune>(new KommuneId { value = kommuneIdent });
 
-            var request = GetRequest();
-
-            request.id = new KommuneId()
-            {
-                value = kommuneIdent
-            };
-
-            try
-            {
-                var storeServiceResponse = await client.getObjectAsync(request);
-                var temp = (Kommune)storeServiceResponse.@return;
-                result = new KommuneDAN()
+            return kommune == null
+                ? null
+                : new KommuneDAN
                 {
-                    Name = temp.navn,
-                    Number = temp.kommunenummer
+                    Name = kommune.navn,
+                    Number = kommune.kommunenummer
                 };
-            }
-            catch (FaultException fex)
-            {
-                _logger.LogError(fex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-            }
-
-            return result;
         }
 
-        public async Task<Registerenhetsrettsandel> GetRettighetsandeler(string id)
-        {
-            Registerenhetsrettsandel result = null;
-            var client = CreateClient();
+        public Task<Registerenhetsrettsandel> GetRettighetsandeler(string id)
+            => GetObject<Registerenhetsrettsandel>(new RegisterenhetsrettsandelId { value = id });
 
-            var request = GetRequest();
+        public Task<Registerenhetsrett> GetRegisterenhetsrett(string id)
+            => GetObject<Registerenhetsrett>(new RegisterenhetsrettId { value = id });
 
-            request.id = new RegisterenhetsrettsandelId()
-            {
-                value = id
-            };
+        public Task<Rettsstiftelse> GetRettsstiftelse(string id)
+            => GetObject<Rettsstiftelse>(new RettsstiftelseId { value = id });
 
-            try
-            {
-                var storeServiceResponse = await client.getObjectAsync(request);
-                result = (Registerenhetsrettsandel)storeServiceResponse.@return;
-            }
-            catch (FaultException fex)
-            {
-                _logger.LogError(fex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-            }
+        public Task<Matrikkelenhet> GetRegisterenhet(string registerenhetid)
+            => GetObject<Matrikkelenhet>(new RegisterenhetId { value = registerenhetid });
 
-            return result;
-        }
+        public Task<Dokument> GetDokument(string id)
+            => GetObject<Dokument>(new DokumentId { value = id });
 
-        public async Task<Registerenhetsrett> GetRegisterenhetsrett(string id)
-        {
-            Registerenhetsrett result = null;
-            var client = CreateClient();
-
-            var request = GetRequest();
-
-            request.id = new RegisterenhetsrettId()
-            {
-                value = id
-            };
-
-            try
-            {
-                var rettsendringer = await client.getObjectAsync(request);
-                result = (Registerenhetsrett)rettsendringer.@return;
-            }
-            catch (FaultException fex)
-            {
-                _logger.LogError(fex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-            }
-
-            return result;
-        }
-
-        public async Task<Rettsstiftelse> GetRettsstiftelse(string id)
-        {
-            Rettsstiftelse result = null;
-            var client = CreateClient();
-
-            var request = GetRequest();
-
-            request.id = new RettsstiftelseId()
-            {
-                value = id
-            };
-
-            try
-            {
-                var storeServiceResponse = await client.getObjectAsync(request);
-                result = (Rettsstiftelse)storeServiceResponse.@return;
-            }
-            catch (FaultException fex)
-            {
-                _logger.LogError(fex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-            }
-
-            return result;
-        }
-
-        public async Task<Matrikkelenhet> GetRegisterenhet(string registerenhetid)
-        {
-            Matrikkelenhet result = null;
-            var client = CreateClient();
-
-            var request = GetRequest();
-
-            request.id = new RegisterenhetId()
-            {
-                value = registerenhetid
-            };
-
-            try
-            {
-                var storeServiceResponse = await client.getObjectAsync(request);
-                result = (Matrikkelenhet)storeServiceResponse.@return;
-            }
-            catch (FaultException fex)
-            {
-                _logger.LogError(fex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-            }
-
-            return result;
-        }
-
-        public async Task<Dokument> GetDokument(string id)
-        {
-            Dokument result = null;
-            var client = CreateClient();
-            var request = GetRequest();
-
-            request.id = new DokumentId()
-            {
-                value = id
-            };
-
-            try
-            {
-                var storeServiceResponse = await client.getObjectAsync(request);
-                result = (Dokument)storeServiceResponse.@return;
-            }
-            catch (FaultException fex)
-            {
-                _logger.LogError(fex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-            }
-
-            return result;
-        }
+        public Task<Person> GetPerson(string personId)
+            => GetObject<Person>(new PersonId { value = personId });
 
         public async Task<List<PawnDocument>> GetPawnOwnerNames(List<PawnDocument> input)
         {
-            var client = CreateClient();
-
             foreach (var inputItem in input)
             {
-                var request = GetRequest();
-                request.id = new PersonId()
-                {
-                    value = inputItem.OwnerId.ToString()
-                };
-
-                var response = await client.getObjectAsync(request);
-
-                inputItem.Owner = ((Person)response.@return).navn;
+                var person = await GetObject<Person>(new PersonId { value = inputItem.OwnerId.ToString() });
+                inputItem.Owner = person?.navn;
             }
 
             return input;
@@ -235,12 +80,10 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         {
             try
             {
-                //var retter = await GetRettighetsandeler(registerrettighetsandelid);
                 var rrrett = await GetRegisterenhetsrett(registerenhetsrettId);
                 var rregenhet = await GetRegisterenhet(rrrett.registerenhetId.value);
 
                 return rregenhet;
-
             }
             catch (FaultException fex)
             {
@@ -254,37 +97,36 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             return new Matrikkelenhet();
         }
 
-        public async Task<Person> GetPerson(string personId)
+        private async Task<T> GetObject<T>(GrunnbokBubbleObjectId id) where T : class
         {
             var client = CreateClient();
 
-            Person result = null;
-            var request = GetRequest();
-            request.id = new PersonId()
+            var request = new getObjectRequest
             {
-                value = personId
+                grunnbokContext = GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext, Timestamp>(_requestContextService.ServiceContext),
+                id = id
             };
+
             try
             {
-                var storeServiceResponse = await client.getObjectAsync(request);
-                result = (Person)storeServiceResponse.@return;
+                var response = await client.getObjectAsync(request);
+                return (T)(object)response.@return;
             }
             catch (FaultException fex)
             {
                 _logger.LogError(fex.Message);
+                return null;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+                return null;
             }
-            return result;
-        }
-        private getObjectRequest GetRequest()
-        {
-            return new getObjectRequest()
+            finally
             {
-                grunnbokContext = GrunnbokHelpers.CreateGrunnbokContext<GrunnbokContext, Timestamp>(_requestContextService.ServiceContext)
-            };
+                try { client.Close(); }
+                catch { client.Abort(); }
+            }
         }
 
         private StoreServiceClient CreateClient()
@@ -311,19 +153,5 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 
             return client;
         }
-
-    }            
-        
-        public interface IStoreServiceClientService
-        {
-            public Task<KommuneDAN> GetKommune(string kommuneIdent);
-            public Task<Registerenhetsrettsandel> GetRettighetsandeler(string id);
-            public Task<Registerenhetsrett> GetRegisterenhetsrett(string id);
-            public Task<Rettsstiftelse> GetRettsstiftelse(string id);
-            public Task<Dokument> GetDokument(string id);
-            public Task<List<PawnDocument>> GetPawnOwnerNames(List<PawnDocument> input);
-            public Task<Matrikkelenhet> GetRegisterenhet(string registerenhetid);
-            public Task<Matrikkelenhet> GetMatrikkelEnhetFromRegisterRettighetsandel(string registerrettighetsandelid);
-            public Task<Person> GetPerson(string personId);
-        }
+    }
 }

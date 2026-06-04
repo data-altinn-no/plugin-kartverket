@@ -1,4 +1,5 @@
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
+using Dan.Plugin.Kartverket.Clients.Matrikkel.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Matrikkel.PersonService;
 using Microsoft.Extensions.Logging;
@@ -11,9 +12,9 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 {
     public class MatrikkelPersonClientService : IMatrikkelPersonClientService
     {
-        private ApplicationSettings _settings;
-        private ILogger _logger;
-        private IRequestContextService _requestContextService;
+        private readonly ApplicationSettings _settings;
+        private readonly ILogger _logger;
+        private readonly IRequestContextService _requestContextService;
 
         public MatrikkelPersonClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
@@ -100,13 +101,5 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             return client;
         }
-    }
-
-    public interface IMatrikkelPersonClientService
-    {
-        Task<long> GetOrganization(string orgno);
-
-        Task<long> GetPerson(string nin);
-
     }
 }

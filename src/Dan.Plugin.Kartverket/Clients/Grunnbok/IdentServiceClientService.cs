@@ -1,3 +1,4 @@
+using Dan.Plugin.Kartverket.Clients.Grunnbok.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Grunnbok.IdentService;
 using Microsoft.Extensions.Logging;
@@ -11,9 +12,9 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
     public class IdentServiceClientService : IIdentServiceClientService
     {
-        private ApplicationSettings _settings;
-        private ILogger _logger;
-        private IRequestContextService _requestContextService;
+        private readonly ApplicationSettings _settings;
+        private readonly ILogger _logger;
+        private readonly IRequestContextService _requestContextService;
         public IdentServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
@@ -90,9 +91,4 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         }
 
     }
-
-    public interface IIdentServiceClientService
-        {
-            public Task<string> GetPersonIdentity(string personId);
-        }
-    }
+}

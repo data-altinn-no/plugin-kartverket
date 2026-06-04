@@ -1,4 +1,5 @@
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
+using Dan.Plugin.Kartverket.Clients.Matrikkel.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -17,9 +18,9 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 {
     public class MatrikkelBygningClientService : IMatrikkelBygningClientService
     {
-        private ApplicationSettings _settings;
-        private ILogger _logger;
-        private IRequestContextService _requestContextService;
+        private readonly ApplicationSettings _settings;
+        private readonly ILogger _logger;
+        private readonly IRequestContextService _requestContextService;
         public MatrikkelBygningClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
             _settings = settings.Value;
@@ -108,12 +109,6 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
             return client;
         }
-        
-    }
 
-    public interface IMatrikkelBygningClientService
-    {
-        Task<List<long>> GetBygningerForMatrikkelenhet(long matrikkelEnhetId);
-        Task<findAlleBygningstypeKoderResponse> GetBygningsType();
     }
 }

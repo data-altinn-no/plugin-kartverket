@@ -1,3 +1,4 @@
+using Dan.Plugin.Kartverket.Clients.Grunnbok.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Dan.Plugin.Kartverket.Models;
 using Kartverket.Grunnbok.InformasjonsService;
@@ -12,11 +13,9 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
     public class InformasjonsServiceClientService : IInformasjonsServiceClientService
     {
-        private ApplicationSettings _settings;
-        private ILogger _logger;
-        private IRequestContextService _requestContextService;
-
-        private InformasjonServiceClient _client;
+        private readonly ApplicationSettings _settings;
+        private readonly ILogger _logger;
+        private readonly IRequestContextService _requestContextService;
 
         public InformasjonsServiceClientService(IOptions<ApplicationSettings> settings, ILoggerFactory factory, IRequestContextService requestContextService)
         {
@@ -206,16 +205,5 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             return client;
         }
 
-    }
-
-    public interface IInformasjonsServiceClientService
-    {
-        public Task<OwnerShipTransferInfo> GetOwnershipInfo(string registerenhetsid);
-
-        public Task<HeftelseInformasjonTransfer> GetPawnStuff(string registerenhetid);
-
-        public Task<HeftelseInformasjonTransfer> GetHeftelser(string registerenhetid);
-
-        public Task<RettsstiftelseInformasjonTransfer> GetRettsstiftelse(string rettstiftelseid);
     }
 }

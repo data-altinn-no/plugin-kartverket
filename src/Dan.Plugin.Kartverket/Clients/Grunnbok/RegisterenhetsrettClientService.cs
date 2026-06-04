@@ -1,3 +1,4 @@
+using Dan.Plugin.Kartverket.Clients.Grunnbok.Interfaces;
 using Dan.Plugin.Kartverket.Config;
 using Kartverket.Grunnbok.RegisterenhetsrettService;
 using Microsoft.Extensions.Logging;
@@ -10,9 +11,9 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
 {
     public class RegisterenhetsrettClientService : IRegisterenhetsrettClientService
     {
-        private ApplicationSettings _settings;
-        private ILogger _logger;
-        private IRequestContextService _requestContextService;
+        private readonly ApplicationSettings _settings;
+        private readonly ILogger _logger;
+        private readonly IRequestContextService _requestContextService;
 
         public RegisterenhetsrettClientService(ILoggerFactory factory, IOptions<ApplicationSettings> settings, IRequestContextService requestContextService)
         {
@@ -87,10 +88,5 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             return client;
         }
 
-    }
-
-    public interface IRegisterenhetsrettClientService
-    {
-        public Task<RegisterenhetIdTilRegisterenhetsrettIdsMap> GetRetterForEnheter(string registerenhetsid);
     }
 }
