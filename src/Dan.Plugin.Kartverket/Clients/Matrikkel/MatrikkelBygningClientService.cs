@@ -46,11 +46,14 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             try
             {
                 var response = await client.findByggForMatrikkelenhetAsync(request);
-                result.AddRange(response.@return.Select(x=>x.value).ToList());
+                if (response.@return != null)
+                {
+                    result.AddRange(response.@return.Select(x => x.value));
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(ex, "Feil ved innhenting av bygg for matrikkelenhet {MatrikkelenhetId}", matrikkelEnhetId);
             }
             finally
             {
@@ -75,9 +78,9 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             {
                 result = await client.findAlleBygningstypeKoderAsync(request);
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogError($"Feil ved innhenting av bygningstype");
+                _logger.LogError(ex, "Feil ved innhenting av bygningstype");
             }
             finally
             {

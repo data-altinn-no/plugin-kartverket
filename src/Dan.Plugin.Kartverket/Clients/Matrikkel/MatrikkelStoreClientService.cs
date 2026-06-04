@@ -97,7 +97,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(ex, "Error fetching {Type} {Id} from matrikkel store", typeof(T).Name, id?.value);
                 return null;
             }
             finally
@@ -157,13 +157,14 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
 
         private async Task<List<T>> GetCachedObjects<T>(IEnumerable<long> idents, Func<long, MatrikkelBubbleId> toBubbleId) where T : MatrikkelBubbleObject
         {
-            var result = new List<T>();
+            var orderedIdents = idents.ToList();
+            var resolved = new Dictionary<long, T>();
             var missing = new List<long>();
 
-            foreach (var ident in idents.Distinct())
+            foreach (var ident in orderedIdents.Distinct())
             {
                 if (_cache.TryGetValue(CacheKey<T>(ident), out T cached))
-                    result.Add(cached);
+                    resolved[ident] = cached;
                 else
                     missing.Add(ident);
             }
@@ -174,11 +175,16 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
                 foreach (var item in fetched)
                 {
                     _cache.Set(CacheKey<T>(item.id.value), item, ReferenceDataTtl);
-                    result.Add(item);
+                    resolved[item.id.value] = item;
                 }
             }
 
-            return result;
+            // Preserve the caller's ordering and duplicates; ids that did not resolve are omitted,
+            // matching getObjectsIgnoreMissing semantics
+            return orderedIdents
+                .Where(resolved.ContainsKey)
+                .Select(ident => resolved[ident])
+                .ToList();
         }
 
         private static string CacheKey<T>(long ident) => $"matrikkelstore:{typeof(T).Name}:{ident}";

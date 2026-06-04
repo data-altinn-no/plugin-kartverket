@@ -39,9 +39,9 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             try
             {
                 var response = await client.findBruksenheterForMatrikkelenhetAsync(request);
-                var result = response.@return;
 
-                return result;
+                // Empty SOAP results can come back as null - normalize so callers never see null
+                return response.@return ?? Array.Empty<BruksenhetId>();
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
             try
             {
                 var response = await client.findOffisiellAdresseForBruksenhetAsync(request);
-                return response.@return;
+                return response.@return ?? string.Empty;
             }
             catch (Exception ex)
             {

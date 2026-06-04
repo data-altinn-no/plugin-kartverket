@@ -144,6 +144,20 @@ namespace Dan.Plugin.Kartverket.Test.Clients
         }
 
         [Fact]
+        public async Task GetKretser_PreservesCallerOrderAndDuplicates_AcrossCacheHitsAndMisses()
+        {
+            SetupGetObjects(ids => ids
+                .Select(id => (MatrikkelBubbleObject)new Postnummeromrade { id = new KretsId { value = id } })
+                .ToArray());
+
+            // Warm the cache with id 1 only, then request a mix of hits, misses and duplicates
+            await _service.GetKretser(new long[] { 1 });
+            var result = await _service.GetKretser(new long[] { 5, 1, 5, 3 });
+
+            result.Select(k => k.id.value).Should().Equal(5, 1, 5, 3);
+        }
+
+        [Fact]
         public async Task GetKretser_WithAllIdsCached_DoesNotCallService()
         {
             SetupGetObjects(ids => ids

@@ -113,14 +113,17 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
                 var response = await client.getObjectAsync(request);
                 return (T)(object)response.@return;
             }
+            // Grunnbok faults both for real failures and for not-found objects (e.g. a person that
+            // no longer exists), and callers rely on null meaning "missing - skip". Returning null
+            // is therefore kept deliberately; the full exception is logged for troubleshooting.
             catch (FaultException fex)
             {
-                _logger.LogError(fex.Message);
+                _logger.LogError(fex, "Grunnbok StoreService getObjectAsync fault for {IdType} {Id}", id?.GetType().Name, id?.value);
                 return null;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(ex, "Grunnbok StoreService getObjectAsync failed for {IdType} {Id}", id?.GetType().Name, id?.value);
                 return null;
             }
             finally

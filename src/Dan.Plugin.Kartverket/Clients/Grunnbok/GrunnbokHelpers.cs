@@ -19,6 +19,12 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             myBinding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic;
             myBinding.MaxReceivedMessageSize = int.MaxValue;
             myBinding.MaxBufferSize = int.MaxValue;
+            // Transport limits and XML reader quotas are separate in WCF; without raising the
+            // quotas, large bulk responses still fail with quota-exceeded exceptions
+            myBinding.ReaderQuotas.MaxArrayLength = int.MaxValue;
+            myBinding.ReaderQuotas.MaxStringContentLength = int.MaxValue;
+            myBinding.ReaderQuotas.MaxBytesPerRead = int.MaxValue;
+            myBinding.ReaderQuotas.MaxNameTableCharCount = int.MaxValue;
             myBinding.SendTimeout = TimeSpan.FromSeconds(30);
             myBinding.ReceiveTimeout = TimeSpan.FromSeconds(30);
             myBinding.OpenTimeout = TimeSpan.FromSeconds(30);
@@ -33,17 +39,20 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
         {
             ArgumentException.ThrowIfNullOrEmpty(serviceContext, nameof(serviceContext));
 
-            if (serviceContext.ToUpper() == "DIGITALEHELGELAND")
+            // Invariant casing to match the channel factory cache key normalization
+            var normalizedServiceContext = serviceContext.ToUpperInvariant();
+
+            if (normalizedServiceContext == "DIGITALEHELGELAND")
             {
                 credentials.UserName.UserName = settings.GrunnbokUserDigitaleHelgeland;
                 credentials.UserName.Password = settings.GrunnbokPwDigitaleHelgeland;
             }
-            else if(serviceContext.ToUpper() == "EDUEDILIGENCE")
+            else if(normalizedServiceContext == "EDUEDILIGENCE")
             {
                 credentials.UserName.UserName = settings.GrunnbokEDueDiligenceUser;
                 credentials.UserName.Password = settings.GrunnbokEDueDiligencePw;
             }
-            else if(serviceContext.ToUpper() == "OED"|| serviceContext.ToUpper() == "DIGITALDODSBO")
+            else if(normalizedServiceContext == "OED" || normalizedServiceContext == "DIGITALDODSBO")
             {
                 credentials.UserName.UserName = settings.GrunnbokUser;
                 credentials.UserName.Password = settings.GrunnbokPw;
@@ -52,24 +61,27 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             {
                 throw new ArgumentException("Invalid service context", nameof(serviceContext));
             }
-                
+
         }
 
         public static void SetMatrikkelWSCredentials(ClientCredentials credentials, ApplicationSettings settings, string serviceContext)
         {
             ArgumentException.ThrowIfNullOrEmpty(serviceContext, nameof(serviceContext));
 
-            if (serviceContext.ToUpper() == "DIGITALEHELGELAND")
+            // Invariant casing to match the channel factory cache key normalization
+            var normalizedServiceContext = serviceContext.ToUpperInvariant();
+
+            if (normalizedServiceContext == "DIGITALEHELGELAND")
             {
                 credentials.UserName.UserName = settings.MatrikkelUserDigitaleHelgeland;
                 credentials.UserName.Password = settings.MatrikkelPwDigitaleHelgeland;
             }
-            else if(serviceContext.ToUpper() == "EDUEDILIGENCE")
+            else if(normalizedServiceContext == "EDUEDILIGENCE")
             {
                 credentials.UserName.UserName = settings.MatrikkelEDueDiligenceUser;
                 credentials.UserName.Password = settings.MatrikkelEDueDiligencePw;
             }
-            else if(serviceContext.ToUpper() == "OED"|| serviceContext.ToUpper() == "DIGITALDODSBO")
+            else if(normalizedServiceContext == "OED" || normalizedServiceContext == "DIGITALDODSBO")
             {
                 credentials.UserName.UserName = settings.MatrikkelUser;
                 credentials.UserName.Password = settings.MatrikkelPw;
@@ -78,7 +90,7 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             {
                 throw new ArgumentException("Invalid service context", nameof(serviceContext));
             }
-            
+
         }
 
         public static TContext CreateGrunnbokContext<TContext, TTimestamp>(string serviceContext)
