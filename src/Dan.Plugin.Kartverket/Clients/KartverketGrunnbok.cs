@@ -205,7 +205,7 @@ namespace Dan.Plugin.Kartverket.Clients
                 return ("", "");
 
             // One (cached) bulk lookup for the whole krets list instead of one call per id
-            var kretser = (await _matrikkelStoreClient.GetKretser(kretsList.Select(k => k.value)))
+            var kretser = (await _matrikkelStoreClient.GetKretser(kretsList.Select(k => k.value).Distinct()))
                 .ToDictionary(k => k.id.value);
 
             return GetPostalInformation(kretsList, kretser);
@@ -552,7 +552,7 @@ namespace Dan.Plugin.Kartverket.Clients
             }
 
             var bruksenhetIder = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
-            var bruksenheter = (await _matrikkelStoreClient.GetBruksenheter(bruksenhetIder.Select(id => id.value)))
+            var bruksenheter = (await _matrikkelStoreClient.GetBruksenheter(bruksenhetIder.Select(id => id.value).Distinct()))
                 .ToDictionary(b => b.id.value);
 
             foreach (var bruksenhetId in bruksenhetIder)
@@ -587,7 +587,7 @@ namespace Dan.Plugin.Kartverket.Clients
             var theAddress = new Address();
 
             var matrikkelEnhetAddresseListe = await _matrikkelAdresseClientService.GetAdresserForMatrikkelenhet(matrikkelenhetId);
-            var adresser = (await _matrikkelStoreClient.GetAdresser(matrikkelEnhetAddresseListe.Select(a => a.value)))
+            var adresser = (await _matrikkelStoreClient.GetAdresser(matrikkelEnhetAddresseListe.Select(a => a.value).Distinct()))
                 .ToDictionary(a => a.id.value);
 
             foreach(var adresse in matrikkelEnhetAddresseListe)
@@ -654,7 +654,7 @@ namespace Dan.Plugin.Kartverket.Clients
                     theAddress.Street = addresse;
 
                 var matrikkelEnhetAddresseListe = await _matrikkelAdresseClientService.GetAdresserForMatrikkelenhet(matrikkelenhetId);
-                var matrikkelAdresser = (await _matrikkelStoreClient.GetAdresser(matrikkelEnhetAddresseListe.Select(a => a.value)))
+                var matrikkelAdresser = (await _matrikkelStoreClient.GetAdresser(matrikkelEnhetAddresseListe.Select(a => a.value).Distinct()))
                     .ToDictionary(a => a.id.value);
                 foreach (var add in matrikkelEnhetAddresseListe)
                 {
@@ -682,7 +682,7 @@ namespace Dan.Plugin.Kartverket.Clients
         private async Task<List<(string street, string postal, string city)?>> FetchAddressTuples(
             BruksenhetServiceBruksenhetId[] bruksenhetIds, AdresseServiceAdresseId[] matrikkelAddrIds)
         {
-            var bruksenheter = (await _matrikkelStoreClient.GetBruksenheter(bruksenhetIds.Select(id => id.value)).ConfigureAwait(false))
+            var bruksenheter = (await _matrikkelStoreClient.GetBruksenheter(bruksenhetIds.Select(id => id.value).Distinct()).ConfigureAwait(false))
                 .ToDictionary(b => b.id.value);
 
             var adresseIds = bruksenheter.Values
@@ -696,8 +696,8 @@ namespace Dan.Plugin.Kartverket.Clients
 
             // Veger og kretser er cachede referansedata — hent alle i ett kall per type
             var vegadresser = adresser.Values.OfType<Vegadresse>().ToList();
-            var vegerTask = _matrikkelStoreClient.GetVeger(vegadresser.Where(v => v.vegId != null).Select(v => v.vegId.value));
-            var kretserTask = _matrikkelStoreClient.GetKretser(vegadresser.SelectMany(v => v.kretsIds ?? Array.Empty<KretsId>()).Select(k => k.value));
+            var vegerTask = _matrikkelStoreClient.GetVeger(vegadresser.Where(v => v.vegId != null).Select(v => v.vegId.value).Distinct());
+            var kretserTask = _matrikkelStoreClient.GetKretser(vegadresser.SelectMany(v => v.kretsIds ?? Array.Empty<KretsId>()).Select(k => k.value).Distinct());
             await Task.WhenAll(vegerTask, kretserTask).ConfigureAwait(false);
             var veger = vegerTask.Result.ToDictionary(v => v.id.value);
             var kretser = kretserTask.Result.ToDictionary(k => k.id.value);

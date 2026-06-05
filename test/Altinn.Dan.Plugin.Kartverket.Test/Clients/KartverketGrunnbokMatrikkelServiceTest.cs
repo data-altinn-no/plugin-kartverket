@@ -301,6 +301,80 @@ namespace Dan.Plugin.Kartverket.Test.Clients
             A.CallTo(() => _matrikkelStoreService.GetKrets(A<long>._)).MustNotHaveHappened();
         }
 
+        [Fact]
+        public async Task GetAddresses_WithAddressesSharingVegAndKrets_DeduplicatesReferenceIdLookups()
+        {
+            var property = new Property
+            {
+                MunicipalityNumber = "1860",
+                HoldingNumber = "134",
+                SubholdingNumber = "14",
+                LeaseNumber = "0",
+                SectionNumber = "0"
+            };
+            var input = new KartverketResponse
+            {
+                PropertyRights = new PropertyRights
+                {
+                    Properties = new List<Property> { property },
+                    PropertiesWithRights = new List<PropertyWithRights>()
+                }
+            };
+
+            A.CallTo(() => _matrikkelenhetService.GetMatrikkelenhet(134, 14, 0, 0, "1860"))
+                .Returns(new MatrikkelenhetServiceMatrikkelenhetId { value = 10 });
+            A.CallTo(() => _matrikkelStoreService.GetKommune(1860))
+                .Returns(new MatrikkelStoreKommune { kommunenavn = "Testkommune" });
+
+            A.CallTo(() => _bruksenhetService.GetBruksenheter(10)).Returns(new[]
+            {
+                new BruksenhetServiceBruksenhetId { value = 1 },
+                new BruksenhetServiceBruksenhetId { value = 2 }
+            });
+            A.CallTo(() => _adresseService.GetAdresserForMatrikkelenhet(10))
+                .Returns(Array.Empty<AdresseServiceAdresseId>());
+
+            // Both bruksenheter have their own address on the same veg and in the same krets —
+            // the veg/krets bulk lookups must be deduplicated before hitting the store client
+            A.CallTo(() => _matrikkelStoreService.GetBruksenheter(A<IEnumerable<long>>._)).Returns(new List<Bruksenhet>
+            {
+                new() { id = new BruksenhetId { value = 1 }, adresseId = new AdresseId { value = 20 } },
+                new() { id = new BruksenhetId { value = 2 }, adresseId = new AdresseId { value = 21 } }
+            });
+            A.CallTo(() => _matrikkelStoreService.GetAdresser(A<IEnumerable<long>>._)).Returns(new List<Adresse>
+            {
+                new Vegadresse { id = new AdresseId { value = 20 }, vegId = new VegId { value = 30 }, nummer = 1, bokstav = "A", kretsIds = new[] { new KretsId { value = 40 } } },
+                new Vegadresse { id = new AdresseId { value = 21 }, vegId = new VegId { value = 30 }, nummer = 2, bokstav = "B", kretsIds = new[] { new KretsId { value = 40 } } }
+            });
+
+            // Like the real store client, the fakes return one object per requested id and
+            // preserve duplicates — duplicate ids would make the ToDictionary fan-in throw
+            IEnumerable<long> requestedVegIds = null;
+            A.CallTo(() => _matrikkelStoreService.GetVeger(A<IEnumerable<long>>._))
+                .ReturnsLazily((IEnumerable<long> ids) =>
+                {
+                    requestedVegIds = ids.ToList();
+                    return Task.FromResult(ids.Select(id => new Veg { id = new VegId { value = id }, adressenavn = "Testveien" }).ToList());
+                });
+            IEnumerable<long> requestedKretsIds = null;
+            A.CallTo(() => _matrikkelStoreService.GetKretser(A<IEnumerable<long>>._))
+                .ReturnsLazily((IEnumerable<long> ids) =>
+                {
+                    requestedKretsIds = ids.ToList();
+                    return Task.FromResult(ids.Select(id => (Krets)new Postnummeromrade { id = new KretsId { value = id }, kretsnummer = 1234, kretsnavn = "Testbyen" }).ToList());
+                });
+
+            var result = await CreateService().GetAddresses(input);
+
+            requestedVegIds.Should().Equal(30);
+            requestedKretsIds.Should().Equal(40);
+
+            var updated = result.PropertyRights.Properties.Single();
+            updated.AddressList.Should().Equal("Testveien 1A", "Testveien 2B");
+            updated.PostalCode.Should().Be("1234");
+            updated.City.Should().Be("Testbyen");
+        }
+
         #endregion
 
         #region PropertyHasFritidsbolig
