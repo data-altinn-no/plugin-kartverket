@@ -35,84 +35,44 @@ namespace Dan.Plugin.Kartverket
 
         public async Task<LandRentalResponse> GetLandRentalInformation(string matrikkelNumber)
         {
+            // Run coordinates, fritidsbolig check and address lookup in parallel
+            var coordinatesTask = _geonorgeClient.GetCoordinatesForLandRental(matrikkelNumber, includeWholeOmrade: true);
+            var fritidsboligTask = _kartverketService.PropertyHasFritidsbolig(matrikkelNumber);
+            var addressResponseTask = _kartverketService.GetAdresseByMatrikkelNumber(matrikkelNumber);
+
+            await Task.WhenAll(coordinatesTask, fritidsboligTask, addressResponseTask);
+
+            var coordinates = await coordinatesTask;
+            var propertyHasFritidsbolig = await fritidsboligTask;
+            var addressResponse = await addressResponseTask;
+
+            // Run all AR5 area lookups in parallel
             var jordTypeList = new List<JordType>();
-
-            var coordinates = await _geonorgeClient.GetCoordinatesForLandRental(matrikkelNumber, includeWholeOmrade: true);
-            var propertyHasFritidsbolig = await _kartverketService.PropertyHasFritidsbolig(matrikkelNumber);
-
             if (coordinates.Count > 0)
             {
-                foreach (var coordinateSet in coordinates)
+                var ar5Results = await Task.WhenAll(coordinates.Select(c => _ar50Repo.GetOmrade(c)));
+
+                foreach (var ar5Response in ar5Results)
                 {
-                    var ar5Response = await _ar50Repo.GetOmrade(coordinateSet);
-
-                    if (ar5Response is null)
-                        continue;
-
-                    foreach (var jordtype in ar5Response)
+                    if (ar5Response is null) continue;
+                    jordTypeList.AddRange(ar5Response.Select(jordtype => new JordType
                     {
-                        jordTypeList.Add(new JordType
-                        {
-                            FeatureId = jordtype.Objectid,
-                            ArealType = jordtype.ArealType.ToString(),
-                            Areal = jordtype.ClippedArea,
-                            GeoJson = jordtype.GeoJson,
-
-                        });
-                    }
-
+                        FeatureId = jordtype.Objectid,
+                        ArealType = jordtype.ArealType.ToString(),
+                        Areal = jordtype.ClippedArea,
+                        GeoJson = jordtype.GeoJson,
+                    }));
                 }
             }
 
-            var addressResponse = await _kartverketService.GetAdresseByMatrikkelNumber(matrikkelNumber);
-            //sometimes we get the matrikkelnummer instead of streetname, so we check if the address is a matrikkelnumber first, and split it up if it is
-            var matrikkelpattern = @"^\d+/\d+/\d+$";
-            var matrikkelpattern2 = @"^\d{4}-\d+/\d+/\d+$";
-
-            var adresse = new List<Address>();
-            foreach (var address in addressResponse)
-            {
-                string streetAddress = address.Street;
-                string kommunenr = matrikkelNumber.Split('-').FirstOrDefault();
-                string gnr = null;
-                string bnr = null;
-                string fnr = null;
-
-                if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern))
-                {
-                    var parts = address.Street.Split('/');
-                    gnr = parts[0];
-                    bnr = parts[1];
-                    fnr = parts[2];
-                    streetAddress = null; // Clear the street address since it's actually a matrikkel number
-                }
-                else if (!string.IsNullOrEmpty(address.Street) && Regex.IsMatch(address.Street, matrikkelpattern2))
-                {
-                    var parts = address.Street.Split('-', '/');
-                    kommunenr = parts[0];
-                    gnr = parts[1];
-                    bnr = parts[2];
-                    fnr = parts[3];
-                    streetAddress = null; // Clear the street address since it's actually a matrikkel number
-                }
-
-                var addressByMatrikkelNumber = await _geonorgeClient.SearchByMatrikkelNumber(
-                    kommunenr,
-                    gnr,
-                    bnr,
-                    fnr,
-                    streetAddress,
-                    address.PostalCode,
-                    address.City);
-
-                adresse.AddRange(addressByMatrikkelNumber.Adresser.Select(a => new Address
-                {
-                    Street = a.Adressetekst,
-                    PostalCode = a.Postnummer,
-                    City = a.Poststed
-                }));
-            }
-
+            // Parse fallback values from matrikkelNumber and run address lookups in parallel
+            var parts = matrikkelNumber.Split('-', '/');
+            var adresse = await GetAdresserForProperty(
+                addressResponse,
+                fallbackKommunenr: parts.ElementAtOrDefault(0),
+                fallbackGnr: parts.ElementAtOrDefault(1),
+                fallbackBnr: parts.ElementAtOrDefault(2),
+                fallbackFnr: parts.ElementAtOrDefault(3));
 
             return new LandRentalResponse
             {
@@ -153,16 +113,21 @@ namespace Dan.Plugin.Kartverket
                             property.PropertyData.Festenummer,
                             property.PropertyData.Kommunenummer);
 
-                    var adresseTask = GetAdresserForProperty(property);
+                    var adresseTask = GetAdresserForProperty(
+                        property.Addresses,
+                        fallbackKommunenr: property.PropertyData.Kommunenummer,
+                        fallbackGnr: property.PropertyData.Gardsnummer,
+                        fallbackBnr: property.PropertyData.Bruksnummer,
+                        fallbackFnr: property.PropertyData.Festenummer);
 
                     await Task.WhenAll(coordinatesTask, adresseTask);
 
                     return new MotorizedTrafficProperty
                     {
                         MatrikkelNumber = martikkelNumber,
-                        Coordinates = await coordinatesTask,
+                        Coordinates = coordinatesTask.Result,
                         CoOwners = property.Owners,
-                        Address = await adresseTask,
+                        Address = adresseTask.Result,
                         IsFritidsbolig = property.IsFritidsbolig,
                     };
                 }
@@ -192,19 +157,24 @@ namespace Dan.Plugin.Kartverket
             if (!string.IsNullOrEmpty(seksjonsNr))
                 stringBuilder.Append($"/{seksjonsNr}");
 
-
             return stringBuilder.ToString();
         }
 
-        private async Task<List<Address>> GetAdresserForProperty(PropertyWithOwners property)
+        private async Task<List<Address>> GetAdresserForProperty(
+            List<Address> addresses,
+            string fallbackKommunenr,
+            string fallbackGnr,
+            string fallbackBnr,
+            string fallbackFnr)
         {
-            var addresses = property?.Addresses?.Where(a => a != null).ToList();
+            addresses = addresses?.Where(a => a != null).ToList();
             if (addresses == null || addresses.Count == 0)
                 return new List<Address>();
 
-            //sometimes we get the matrikkelnummer instead of streetname, so we check if the address is a matrikkelnumber first, and split it up if it is
-            var matrikkelpattern = @"^\d+/\d+/\d+$";
-            var matrikkelpattern2 = @"^\d{4}-\d+/\d+/\d+$";
+            // Sometimes we get the matrikkelnummer instead of streetname,
+            // so we check if the address is a matrikkel number first and split it up if it is
+            const string matrikkelpattern = @"^\d+/\d+/\d+$";
+            const string matrikkelpattern2 = @"^\d{4}-\d+/\d+/\d+$";
 
             var addressTasks = addresses.Select(async address =>
             {
@@ -233,10 +203,10 @@ namespace Dan.Plugin.Kartverket
                 }
 
                 return await _geonorgeClient.SearchByMatrikkelNumber(
-                    kommunenr ?? property.PropertyData.Kommunenummer,
-                    gnr ?? property.PropertyData.Gardsnummer,
-                    bnr ?? property.PropertyData.Bruksnummer,
-                    fnr ?? property.PropertyData.Festenummer,
+                    kommunenr ?? fallbackKommunenr,
+                    gnr ?? fallbackGnr,
+                    bnr ?? fallbackBnr,
+                    fnr ?? fallbackFnr,
                     streetAddress,
                     address.PostalCode,
                     address.City);
@@ -244,8 +214,7 @@ namespace Dan.Plugin.Kartverket
 
             var results = await Task.WhenAll(addressTasks);
 
-            //sometimes duplicates can happen after looking up the address
-            //filter out duplicates
+            // Filter out duplicates — can happen after address lookup
             return results
                 .Where(r => r?.Adresser != null)
                 .SelectMany(r => r.Adresser)

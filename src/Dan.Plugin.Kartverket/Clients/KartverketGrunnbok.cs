@@ -507,14 +507,23 @@ namespace Dan.Plugin.Kartverket.Clients
             return await _storeServiceClient.GetPawnOwnerNames(heftelser);
         }
 
+        private static (string kommunenr, int gnr, int bnr, int fnr, int snr) ParseMatrikkelNumber(string matrikkelNumber)
+        {
+            if(string.IsNullOrEmpty(matrikkelNumber))
+                return ("", 0, 0, 0, 0);
+
+            var parts = matrikkelNumber.Split('-', '/');
+            var kommunenr = parts[0];
+            int.TryParse(parts.ElementAtOrDefault(1), out var gnr);
+            int.TryParse(parts.ElementAtOrDefault(2), out var bnr);
+            int.TryParse(parts.ElementAtOrDefault(3), out var fnr);
+            int.TryParse(parts.ElementAtOrDefault(4), out var snr);
+            return (kommunenr, gnr, bnr, fnr, snr);
+        }
+
         public async Task<bool> PropertyHasFritidsbolig(string matrikkelNumber)
         {
-            var matrikkelnummerSplit = matrikkelNumber.Split('-', '/');
-            var kommunenr = matrikkelnummerSplit[0];
-            var gnr = matrikkelnummerSplit.Length > 1 ? Convert.ToInt32(matrikkelnummerSplit[1]) : 0;
-            var bnr = matrikkelnummerSplit.Length > 2 ? Convert.ToInt32(matrikkelnummerSplit[2]) : 0;
-            var fnr = matrikkelnummerSplit.Length > 3 ? Convert.ToInt32(matrikkelnummerSplit[3]) : 0;
-            var snr = matrikkelnummerSplit.Length > 4 ? Convert.ToInt32(matrikkelnummerSplit[4]) : 0;
+            var (kommunenr, gnr, bnr, fnr, snr) = ParseMatrikkelNumber(matrikkelNumber);
 
             var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(gnr, bnr, fnr, snr, kommunenr);
             var bruksenhetIder = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
@@ -534,38 +543,31 @@ namespace Dan.Plugin.Kartverket.Clients
 
         public async Task<List<Address>> GetAdresseByMatrikkelNumber(string matrikkelNumber)
         {
-            var matrikkelnummerSplit = matrikkelNumber.Split('-', '/');
-            var kommunenr = matrikkelnummerSplit[0];
-            var gnr = matrikkelnummerSplit.Length > 1 ? Convert.ToInt32(matrikkelnummerSplit[1]) : 0;
-            var bnr = matrikkelnummerSplit.Length > 2 ? Convert.ToInt32(matrikkelnummerSplit[2]) : 0;
-            var fnr = matrikkelnummerSplit.Length > 3 ? Convert.ToInt32(matrikkelnummerSplit[3]) : 0;
-            var snr = matrikkelnummerSplit.Length > 4 ? Convert.ToInt32(matrikkelnummerSplit[4]) : 0;
-
+            var (kommunenr, gnr, bnr, fnr, snr) = ParseMatrikkelNumber(matrikkelNumber);
             var matrikkelenhetid = await _matrikkelenhetServiceClient.GetMatrikkelenhet(gnr, bnr, fnr, snr, kommunenr);
 
+            // Run matrikkelenhet address lookup and bruksenhet fetch in parallel
+            var matrikkelenhetAdresseTask = GetAddressByMatrikkelenhetId(matrikkelenhetid.value);
+            var bruksenhetIderTask = _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
+            await Task.WhenAll(matrikkelenhetAdresseTask, bruksenhetIderTask);
+
             var adresseList = new List<Address>();
+            if (matrikkelenhetAdresseTask.Result != null)
+                adresseList.Add(matrikkelenhetAdresseTask.Result);
 
-            var adresse = await GetAddressByMatrikkelenhetId(matrikkelenhetid.value);
-            if(adresse != null)
-            {
-                adresseList.Add(adresse);
-            }
-
-            var bruksenhetIder = await _matrikkelBruksenhetService.GetBruksenheter(matrikkelenhetid.value);
+            var bruksenhetIder = bruksenhetIderTask.Result;
             var bruksenheter = (await _matrikkelStoreClient.GetBruksenheter(bruksenhetIder.Select(id => id.value).Distinct()))
                 .ToDictionary(b => b.id.value);
 
-            foreach (var bruksenhetId in bruksenhetIder)
-            {
-                if (bruksenheter.TryGetValue(bruksenhetId.value, out var bruksenhet) && bruksenhet.adresseId != null)
-                {
-                    var adresseByBruksenhet = await GetAddresseByBruksenhet(bruksenhet, matrikkelenhetid.value);
-                    if (adresseByBruksenhet != null)
-                        adresseList.Add(adresseByBruksenhet);
-                }
-            }
-            
-            //remove duplicates and empty addresses, some properties have multiple bruksenheter and matrikkelenhet linked to the same address which causes duplicates in the list
+            // Run all bruksenhet address lookups in parallel
+            var bruksenhetTasks = bruksenhetIder
+                .Where(id => bruksenheter.TryGetValue(id.value, out var b) && b.adresseId != null)
+                .Select(id => GetAddresseByBruksenhet(bruksenheter[id.value], matrikkelenhetid.value));
+
+            var bruksenhetAdresser = await Task.WhenAll(bruksenhetTasks);
+            adresseList.AddRange(bruksenhetAdresser.Where(a => a != null));
+
+            // Remove duplicates and empty addresses
             adresseList = adresseList
                 .Where(a => !string.IsNullOrWhiteSpace(a.Street) &&
                             !string.IsNullOrWhiteSpace(a.PostalCode) &&
@@ -597,18 +599,18 @@ namespace Dan.Plugin.Kartverket.Clients
 
                 if (matrikkelAdress is Vegadresse roadAddress)
                 {
-                    var vegId = ((Vegadresse)matrikkelAdress).vegId.value;
-                    var veg = await _matrikkelStoreClient.GetVeg(vegId);
+                    var postalTask = GetPostalInformation(matrikkelAdress.kretsIds);
+                    var vegTask = roadAddress.vegId != null
+                        ? _matrikkelStoreClient.GetVeg(roadAddress.vegId.value)
+                        : Task.FromResult<Veg>(null);
+                    await Task.WhenAll(postalTask, vegTask);
 
-                    var tmpadress = veg.adressenavn + " " + roadAddress.nummer + roadAddress.bokstav;
-                    if (!string.IsNullOrEmpty(tmpadress))
-                    {
-                        theAddress.Street = tmpadress;
-                    }
+                    var veg = await vegTask;
+                    var (postalCode, city) = await postalTask;
 
-                    (var postalCode, var city) = await GetPostalInformation(matrikkelAdress.kretsIds);
-                    if (!string.IsNullOrWhiteSpace(postalCode) && !string.IsNullOrWhiteSpace(city))
+                    if (veg != null && !string.IsNullOrWhiteSpace(postalCode) && !string.IsNullOrWhiteSpace(city))
                     {
+                        theAddress.Street = veg.adressenavn + " " + roadAddress.nummer + roadAddress.bokstav;
                         theAddress.PostalCode = postalCode;
                         theAddress.City = city;
                     }
@@ -629,39 +631,44 @@ namespace Dan.Plugin.Kartverket.Clients
 
         private async Task<Address> GetAddresseByBruksenhet(Bruksenhet bruksenhet, long matrikkelenhetId)
         {
-            Address theAddress = new Address();
+            var theAddress = new Address();
 
             var adresse = await _matrikkelStoreClient.GetAdresse(bruksenhet.adresseId.value);
             if (adresse is Vegadresse roadAddress)
             {
-                var veg = await _matrikkelStoreClient.GetVeg(roadAddress.vegId.value);
-                var tmpAddress = veg.adressenavn + " " + roadAddress.nummer + roadAddress.bokstav;
+                // GetVeg and GetPostalInformation are independent — run in parallel
+                var vegTask = _matrikkelStoreClient.GetVeg(roadAddress.vegId.value);
+                var postalTask = GetPostalInformation(adresse.kretsIds);
+                await Task.WhenAll(vegTask, postalTask);
 
-                (var postalCode, var city) = await GetPostalInformation(adresse.kretsIds);
+                var (postalCode, city) = postalTask.Result;
                 if (!string.IsNullOrWhiteSpace(postalCode) && !string.IsNullOrWhiteSpace(city))
                 {
-                    theAddress.Street = tmpAddress;
+                    theAddress.Street = vegTask.Result.adressenavn + " " + roadAddress.nummer + roadAddress.bokstav;
                     theAddress.PostalCode = postalCode;
                     theAddress.City = city;
                 }
             }
             else
             {
-                //if no address if found because it is not a vegadresse, try to get the address by the bruksenhetid, this is a fallback as some properties have addresses linked to the bruksenhet and not the matrikkelenhet
-                var addresse = await _matrikkelBruksenhetService.GetAddressForBruksenhet(bruksenhet.id.value);
+                // Fallback: get address from bruksenhet and matrikkelenhet addresses in parallel
+                var bruksenhetAdresseTask = _matrikkelBruksenhetService.GetAddressForBruksenhet(bruksenhet.id.value);
+                var matrikkelEnhetAdresseListeTask = _matrikkelAdresseClientService.GetAdresserForMatrikkelenhet(matrikkelenhetId);
+                await Task.WhenAll(bruksenhetAdresseTask, matrikkelEnhetAdresseListeTask);
 
-                if (!string.IsNullOrWhiteSpace(addresse))
-                    theAddress.Street = addresse;
+                if (!string.IsNullOrWhiteSpace(bruksenhetAdresseTask.Result))
+                    theAddress.Street = bruksenhetAdresseTask.Result;
 
-                var matrikkelEnhetAddresseListe = await _matrikkelAdresseClientService.GetAdresserForMatrikkelenhet(matrikkelenhetId);
+                var matrikkelEnhetAddresseListe = matrikkelEnhetAdresseListeTask.Result;
                 var matrikkelAdresser = (await _matrikkelStoreClient.GetAdresser(matrikkelEnhetAddresseListe.Select(a => a.value).Distinct()))
                     .ToDictionary(a => a.id.value);
+
+                // If not a Vegadresse we just get the postal code and city to use later
                 foreach (var add in matrikkelEnhetAddresseListe)
                 {
                     if (!matrikkelAdresser.TryGetValue(add.value, out var matrikkelAdress))
                         continue;
 
-                    //if the address it not VegAdreesse we just get the postalnumber and city to use later
                     (var postalCode, var city) = await GetPostalInformation(matrikkelAdress.kretsIds);
                     if (!string.IsNullOrWhiteSpace(postalCode) && !string.IsNullOrWhiteSpace(city))
                     {
