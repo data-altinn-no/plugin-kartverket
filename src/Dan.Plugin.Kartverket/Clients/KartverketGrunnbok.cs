@@ -509,6 +509,9 @@ namespace Dan.Plugin.Kartverket.Clients
 
         private static (string kommunenr, int gnr, int bnr, int fnr, int snr) ParseMatrikkelNumber(string matrikkelNumber)
         {
+            if(string.IsNullOrEmpty(matrikkelNumber))
+                return ("", 0, 0, 0, 0);
+
             var parts = matrikkelNumber.Split('-', '/');
             var kommunenr = parts[0];
             int.TryParse(parts.ElementAtOrDefault(1), out var gnr);
@@ -596,18 +599,18 @@ namespace Dan.Plugin.Kartverket.Clients
 
                 if (matrikkelAdress is Vegadresse roadAddress)
                 {
-                    var vegId = ((Vegadresse)matrikkelAdress).vegId.value;
-                    var veg = await _matrikkelStoreClient.GetVeg(vegId);
+                    var postalTask = GetPostalInformation(matrikkelAdress.kretsIds);
+                    var vegTask = roadAddress.vegId != null
+                        ? _matrikkelStoreClient.GetVeg(roadAddress.vegId.value)
+                        : Task.FromResult<Veg>(null);
+                    await Task.WhenAll(postalTask, vegTask);
 
-                    var tmpadress = veg.adressenavn + " " + roadAddress.nummer + roadAddress.bokstav;
-                    if (!string.IsNullOrEmpty(tmpadress))
-                    {
-                        theAddress.Street = tmpadress;
-                    }
+                    var veg = await vegTask;
+                    var (postalCode, city) = await postalTask;
 
-                    (var postalCode, var city) = await GetPostalInformation(matrikkelAdress.kretsIds);
-                    if (!string.IsNullOrWhiteSpace(postalCode) && !string.IsNullOrWhiteSpace(city))
+                    if (veg != null && !string.IsNullOrWhiteSpace(postalCode) && !string.IsNullOrWhiteSpace(city))
                     {
+                        theAddress.Street = veg.adressenavn + " " + roadAddress.nummer + roadAddress.bokstav;
                         theAddress.PostalCode = postalCode;
                         theAddress.City = city;
                     }
