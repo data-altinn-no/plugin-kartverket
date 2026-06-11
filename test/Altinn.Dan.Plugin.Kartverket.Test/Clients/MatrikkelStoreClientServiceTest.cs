@@ -1,4 +1,5 @@
 using AwesomeAssertions;
+using Dan.Common.Exceptions;
 using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.Matrikkel;
 using Dan.Plugin.Kartverket.Config;
@@ -100,7 +101,7 @@ namespace Dan.Plugin.Kartverket.Test.Clients
         }
 
         [Fact]
-        public async Task FailedKommuneLookup_IsNotCached()
+        public async Task FailedKommuneLookup_ThrowsTransientAndIsNotCached()
         {
             A.CallTo(() => _client.getObjectAsync(A<getObjectRequest>._))
                 .Throws<TimeoutException>().Once()
@@ -110,11 +111,33 @@ namespace Dan.Plugin.Kartverket.Test.Clients
                     @return = new Kommune { id = new KommuneId { value = 1860 }, kommunenavn = "Testkommune" }
                 }));
 
-            var failed = await _service.GetKommune(1860);
+            // A transport failure must surface as a retryable error, not as silently missing data
+            var act = () => _service.GetKommune(1860);
+            (await act.Should().ThrowAsync<EvidenceSourceTransientException>())
+                .WithInnerException(typeof(TimeoutException));
+
+            // ... and must not be pinned in the cache for the whole TTL
+            var recovered = await _service.GetKommune(1860);
+            recovered.Should().NotBeNull();
+            recovered.kommunenavn.Should().Be("Testkommune");
+        }
+
+        [Fact]
+        public async Task FaultedKommuneLookup_ReturnsNullAndIsNotCached()
+        {
+            A.CallTo(() => _client.getObjectAsync(A<getObjectRequest>._))
+                .Throws(new FaultException("ObjectNotFound")).Once()
+                .Then
+                .ReturnsLazily(() => Task.FromResult(new getObjectResponse
+                {
+                    @return = new Kommune { id = new KommuneId { value = 1860 }, kommunenavn = "Testkommune" }
+                }));
+
+            // Faults also cover not-found objects, so the null contract is kept for callers
+            var faulted = await _service.GetKommune(1860);
             var recovered = await _service.GetKommune(1860);
 
-            // A transient failure must not be pinned in the cache for the whole TTL
-            failed.Should().BeNull();
+            faulted.Should().BeNull();
             recovered.Should().NotBeNull();
             recovered.kommunenavn.Should().Be("Testkommune");
         }
@@ -213,11 +236,26 @@ namespace Dan.Plugin.Kartverket.Test.Clients
         }
 
         [Fact]
-        public async Task BulkFetch_OnError_ReturnsEmptyListInsteadOfThrowing()
+        public async Task BulkFetch_OnTransportError_ThrowsTransientException()
         {
             A.CallTo(() => _client.getObjectsIgnoreMissingAsync(A<getObjectsIgnoreMissingRequest>._))
                 .Throws<TimeoutException>();
 
+            // A transport failure must surface as a retryable error, not as silently missing data
+            var act = () => _service.GetAdresser(new long[] { 1, 2 });
+
+            (await act.Should().ThrowAsync<EvidenceSourceTransientException>())
+                .WithInnerException(typeof(TimeoutException));
+        }
+
+        [Fact]
+        public async Task BulkFetch_OnFault_ReturnsEmptyList()
+        {
+            A.CallTo(() => _client.getObjectsIgnoreMissingAsync(A<getObjectsIgnoreMissingRequest>._))
+                .Throws(new FaultException("Invalid request"));
+
+            // Faults keep the ignore-missing contract — the server rejected the request,
+            // so a retry will not help
             var result = await _service.GetAdresser(new long[] { 1, 2 });
 
             result.Should().BeEmpty();

@@ -1,3 +1,4 @@
+using Dan.Common.Exceptions;
 using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.Grunnbok;
 using Dan.Plugin.Kartverket.Clients.Matrikkel.Interfaces;
@@ -95,10 +96,20 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
                 var response = await client.getObjectAsync(request);
                 return (T)(object)response.@return;
             }
+            // The service faults both for real failures and for not-found objects, and callers
+            // rely on null meaning "missing - skip" (mirrors the Grunnbok store client)
+            catch (FaultException fex)
+            {
+                _logger.LogError(fex, "Matrikkel store fault fetching {Type} {Id}", typeof(T).Name, id?.value);
+                return null;
+            }
+            // Transport-level failures (timeouts, channel faults) must not silently degrade to
+            // "no data" — signal the DAN core to retry the harvest instead
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error fetching {Type} {Id} from matrikkel store", typeof(T).Name, id?.value);
-                return null;
+                throw new EvidenceSourceTransientException(Metadata.ERROR_CCR_UPSTREAM_ERROR,
+                    $"Matrikkel StoreService failed fetching {typeof(T).Name}", ex);
             }
             finally
             {
@@ -130,10 +141,20 @@ namespace Dan.Plugin.Kartverket.Clients.Matrikkel
                 var response = await client.getObjectsIgnoreMissingAsync(request);
                 return (response.@return ?? Array.Empty<MatrikkelBubbleObject>()).OfType<T>().ToList();
             }
+            // Faults keep the ignore-missing contract: the server processed the request and
+            // rejected it, so a retry will not help — log and omit, like missing ids
+            catch (FaultException fex)
+            {
+                _logger.LogError(fex, "Matrikkel store fault bulk fetching {Count} {Type} objects", idArray.Length, typeof(T).Name);
+                return new List<T>();
+            }
+            // Transport-level failures (timeouts, channel faults) must not silently degrade to
+            // "no data" — signal the DAN core to retry the harvest instead
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error bulk fetching {Count} {Type} objects from matrikkel store", idArray.Length, typeof(T).Name);
-                return new List<T>();
+                throw new EvidenceSourceTransientException(Metadata.ERROR_CCR_UPSTREAM_ERROR,
+                    $"Matrikkel StoreService failed bulk fetching {typeof(T).Name}", ex);
             }
             finally
             {

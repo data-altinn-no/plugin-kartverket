@@ -1,3 +1,4 @@
+using Dan.Common.Exceptions;
 using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.ar50;
 using Dan.Plugin.Kartverket.Models;
@@ -165,6 +166,12 @@ namespace Dan.Plugin.Kartverket
                         Address = await adresseTask,
                         IsFritidsbolig = property.IsFritidsbolig,
                     };
+                }
+                // Transient upstream failures must trigger a retry instead of silently dropping
+                // the property from the result
+                catch (EvidenceSourceException)
+                {
+                    throw;
                 }
                 catch (Exception ex)
                 {

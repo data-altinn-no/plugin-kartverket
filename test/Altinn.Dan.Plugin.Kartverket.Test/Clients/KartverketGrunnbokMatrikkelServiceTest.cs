@@ -1,4 +1,5 @@
 using AwesomeAssertions;
+using Dan.Common.Exceptions;
 using Dan.Plugin.Kartverket.Clients;
 using Dan.Plugin.Kartverket.Clients.Grunnbok.Interfaces;
 using Dan.Plugin.Kartverket.Clients.Matrikkel.Interfaces;
@@ -373,6 +374,65 @@ namespace Dan.Plugin.Kartverket.Test.Clients
             updated.AddressList.Should().Equal("Testveien 1A", "Testveien 2B");
             updated.PostalCode.Should().Be("1234");
             updated.City.Should().Be("Testbyen");
+        }
+
+        [Fact]
+        public async Task GetAddresses_WhenStoreClientFailsTransiently_PropagatesForRetry()
+        {
+            var input = SetupMinimalGetAddressesInput();
+            A.CallTo(() => _matrikkelStoreService.GetBruksenheter(A<IEnumerable<long>>._))
+                .Throws(new EvidenceSourceTransientException(2, "Matrikkel StoreService failed"));
+
+            // A transient upstream failure must fail the harvest so the DAN core retries it,
+            // instead of degrading to a property without addresses
+            var act = () => CreateService().GetAddresses(input);
+
+            await act.Should().ThrowAsync<EvidenceSourceTransientException>();
+        }
+
+        [Fact]
+        public async Task GetAddresses_OnUnexpectedError_PropagatesInsteadOfDegradingSilently()
+        {
+            var input = SetupMinimalGetAddressesInput();
+            A.CallTo(() => _matrikkelStoreService.GetBruksenheter(A<IEnumerable<long>>._))
+                .Throws(new InvalidOperationException("logic error"));
+
+            // Logic errors must fail the request loudly instead of silently returning the
+            // property without addresses
+            var act = () => CreateService().GetAddresses(input);
+
+            await act.Should().ThrowAsync<InvalidOperationException>();
+        }
+
+        private KartverketResponse SetupMinimalGetAddressesInput()
+        {
+            A.CallTo(() => _matrikkelenhetService.GetMatrikkelenhet(134, 14, 0, 0, "1860"))
+                .Returns(new MatrikkelenhetServiceMatrikkelenhetId { value = 10 });
+            A.CallTo(() => _matrikkelStoreService.GetKommune(1860))
+                .Returns(new MatrikkelStoreKommune { kommunenavn = "Testkommune" });
+            A.CallTo(() => _bruksenhetService.GetBruksenheter(10))
+                .Returns(new[] { new BruksenhetServiceBruksenhetId { value = 1 } });
+            A.CallTo(() => _adresseService.GetAdresserForMatrikkelenhet(10))
+                .Returns(Array.Empty<AdresseServiceAdresseId>());
+
+            return new KartverketResponse
+            {
+                PropertyRights = new PropertyRights
+                {
+                    Properties = new List<Property>
+                    {
+                        new()
+                        {
+                            MunicipalityNumber = "1860",
+                            HoldingNumber = "134",
+                            SubholdingNumber = "14",
+                            LeaseNumber = "0",
+                            SectionNumber = "0"
+                        }
+                    },
+                    PropertiesWithRights = new List<PropertyWithRights>()
+                }
+            };
         }
 
         #endregion

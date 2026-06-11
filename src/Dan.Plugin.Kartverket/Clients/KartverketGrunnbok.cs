@@ -179,13 +179,18 @@ namespace Dan.Plugin.Kartverket.Clients
                     property.HasMoreAddresses = false;
                 }
             }
-            catch (EvidenceSourcePermanentClientException ex)
+            // Framework signals (permanent client/server errors, transient upstream failures)
+            // must reach the DAN core so the request fails or is retried — already logged at source
+            catch (EvidenceSourceException)
             {
                 throw;
             }
+            // Logic errors must fail the request loudly instead of silently degrading to a
+            // property without addresses; log here to keep the property context, then rethrow
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Kartverket::OED::Error getting addresses for property gnr = {gnr}, bnr = {bnr}, fnr = {fnr}, snr = {snr}, knr = {knr}", gnr, bnr, fnr, snr, knr);
+                throw;
             }
         }
 
@@ -241,6 +246,11 @@ namespace Dan.Plugin.Kartverket.Clients
                 }
 
                 return string.Join("\n", addresses);
+            }
+            // Transient upstream failures must trigger a retry instead of an empty address
+            catch (EvidenceSourceException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -407,6 +417,12 @@ namespace Dan.Plugin.Kartverket.Clients
                     Addresses = addresseList,
                     IsFritidsbolig = boligType.Contains("F")
                 };
+            }
+            // Transient upstream failures must trigger a retry instead of silently dropping
+            // the property from the result
+            catch (EvidenceSourceException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
