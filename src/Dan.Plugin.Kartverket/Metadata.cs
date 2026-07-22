@@ -3,7 +3,6 @@ using Dan.Common.Interfaces;
 using Dan.Common.Models;
 using Dan.Plugin.Kartverket.Models;
 using Newtonsoft.Json;
-using NJsonSchema;
 using System.Collections.Generic;
 
 namespace Dan.Plugin.Kartverket
@@ -34,7 +33,7 @@ namespace Dan.Plugin.Kartverket
                         {
                             EvidenceValueName = "default",
                             ValueType = EvidenceValueType.JsonSchema,
-                            JsonSchemaDefintion = JsonSchema.FromType<KartverketResponse>().ToJson(Formatting.Indented)
+                            JsonSchemaDefintion = EvidenceValue.SchemaFromObject<KartverketResponse>(Formatting.Indented)
                         }
                     },
                     Parameters = new List<EvidenceParameter>()
@@ -66,7 +65,7 @@ namespace Dan.Plugin.Kartverket
                         {
                             EvidenceValueName = "default",
                             ValueType = EvidenceValueType.JsonSchema,
-                            JsonSchemaDefintion = JsonSchema.FromType<List<PropertyModel>>().ToJson(Formatting.Indented)
+                            JsonSchemaDefintion = EvidenceValue.SchemaFromObject<List<PropertyModel>>(Formatting.Indented)
                         }
                     },
                     AuthorizationRequirements = new List<Requirement>
@@ -89,7 +88,7 @@ namespace Dan.Plugin.Kartverket
                         {
                             EvidenceValueName = "default",
                             ValueType = EvidenceValueType.JsonSchema,
-                            JsonSchemaDefintion = JsonSchema.FromType<List<PropertyModel>>().ToJson(Formatting.Indented)
+                            JsonSchemaDefintion = EvidenceValue.SchemaFromObject<List<PropertyModel>>(Formatting.Indented)
                         }
                     },
                     AuthorizationRequirements = new List<Requirement>
@@ -151,7 +150,7 @@ namespace Dan.Plugin.Kartverket
                         {
                             EvidenceValueName = "default",
                             ValueType = EvidenceValueType.JsonSchema,
-                            JsonSchemaDefintion = JsonSchema.FromType<KartverketResponse>().ToJson(Formatting.Indented)
+                            JsonSchemaDefintion = EvidenceValue.SchemaFromObject<KartverketResponse>(Formatting.Indented)
                         }
                     },
                     AuthorizationRequirements = new List<Requirement>
@@ -174,7 +173,7 @@ namespace Dan.Plugin.Kartverket
                         {
                             EvidenceValueName = "default",
                             ValueType = EvidenceValueType.JsonSchema,
-                            JsonSchemaDefintion = JsonSchema.FromType<MotorizedTrafficResponse>().ToJson(Formatting.Indented)
+                            JsonSchemaDefintion = EvidenceValue.SchemaFromObject<MotorizedTrafficResponse>(Formatting.Indented)
                         }
                     },
                     AuthorizationRequirements = new List<Requirement>
@@ -197,7 +196,7 @@ namespace Dan.Plugin.Kartverket
                         {
                             EvidenceValueName = "default",
                             ValueType = EvidenceValueType.JsonSchema,
-                            JsonSchemaDefintion = JsonSchema.FromType<LandRentalResponse>().ToJson(Formatting.Indented)
+                            JsonSchemaDefintion = EvidenceValue.SchemaFromObject<LandRentalResponse>(Formatting.Indented)
                         }
                     },
                     AuthorizationRequirements = new List<Requirement>
