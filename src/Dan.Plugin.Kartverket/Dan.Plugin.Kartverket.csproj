@@ -10,7 +10,7 @@
     <PackageReference Include="Altinn.ApiClients.Maskinporten" Version="10.0.1" />
     <!-- Experimental pre-release: Dan.Common with OpenTelemetry instead of classic AI SDK.
          Revert to a stable Dan.Common version once this is validated and released properly. -->
-    <PackageReference Include="Dan.Common" Version="1.0.0-preview11-otel" />
+    <PackageReference Include="Dan.Common" Version="1.12.0" />
     <PackageReference Include="Dapper" Version="2.1.72" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.3.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.0.7" />
