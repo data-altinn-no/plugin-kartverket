@@ -121,7 +121,7 @@ namespace Dan.Plugin.Kartverket.Clients
 
                 var kommune = await _matrikkelStoreClient.GetKommune(knr);
 
-                if (string.IsNullOrEmpty(kommune.kommunenavn))
+                if (string.IsNullOrEmpty(kommune?.kommunenavn))
                     throw new EvidenceSourcePermanentClientException(1010, "Invalid municipality number provided");
 
                 property.Municipality = kommune.kommunenavn;
