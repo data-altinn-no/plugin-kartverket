@@ -111,7 +111,15 @@ namespace Dan.Plugin.Kartverket.Clients.Grunnbok
             try
             {
                 var response = await client.getObjectAsync(request);
-                return (T)(object)response.@return;
+                if (response.@return is T result)
+                {
+                    return result;
+                }
+
+                // e.g. a RegisterenhetId may resolve to a Borettslagsandel rather than a Matrikkelenhet
+                _logger.LogWarning("Grunnbok StoreService returned {ActualType} for {IdType} {Id}, expected {ExpectedType}",
+                    response.@return?.GetType().Name, id?.GetType().Name, id?.value, typeof(T).Name);
+                return null;
             }
             // Grunnbok faults both for real failures and for not-found objects (e.g. a person that
             // no longer exists), and callers rely on null meaning "missing - skip". Returning null
